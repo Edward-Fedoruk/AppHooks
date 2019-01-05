@@ -1,15 +1,14 @@
 import React from 'react'
 import { Route, Switch, BrowserRouter } from 'react-router-dom'
-import App from './App'
+import LogIn from './components/Authentication/LogIn'
 
-const Routes = () => {
-  return (
-    <BrowserRouter>
-      <Switch>
-        <Route path='/' exact component={App} />
-      </Switch>   
-    </BrowserRouter>
-  )
-}
+const Routes = () => (
+  <BrowserRouter>
+    <Switch>
+      <Route path='/' exact component={LogIn} />
+    </Switch>   
+  </BrowserRouter>
+)
+
 
 export default Routes

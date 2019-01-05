@@ -10,6 +10,7 @@
     "react-dom": "^16.7.0",
     "react-github-login": "^1.0.3",
     "react-google-login": "^4.0.1",
+    "react-material-ui-form-validator": "^2.0.3",
     "react-recaptcha-v3": "^1.0.2",
     "react-redux": "^6.0.0",
     "react-router-dom": "^4.3.1",
