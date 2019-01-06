@@ -14,7 +14,6 @@ const flexCenter = {
 
 const externalLogBtn = {
   ...flexCenter,
-  height: "100px",
   width: "100%",
   borderRadius: "6px",
   boxShadow: "2px 4px 10px rgba(0, 0, 0, 0.15)",
