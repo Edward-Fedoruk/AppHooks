@@ -1,20 +1,13 @@
 import React, { Component } from 'react'
-import withBackground from './withBackground' 
 import { withStyles } from '@material-ui/core/styles'
-import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
+import withBackground from "./withBackground"
+import SocialAuthentication from "./SocialAuthentication"
+import FromTitle from "./FormTitle"
+import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator'
 import { Link } from "react-router-dom"
-import { compose } from 'redux'
-import SocialAuthentication from './SocialAuthentication'
-import FormTitle from './FormTitle'
-import SubmitButton from './SubmitButton'
-
-const flexCenter = {
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-}
+import SubmitButton from "./SubmitButton"
 
 const styles = ({ breakpoints }) => ({
   paper: {
@@ -28,60 +21,68 @@ const styles = ({ breakpoints }) => ({
     [breakpoints.down(500)]: {
       width: "100%",
       minWidth: "100%",
-      height: "100%",
+      minHeight: "90vh",
       paddingTop: "10px",
       marginTop: "20%",
     },
   },
 
-  flexCenter,
-
   textField: {
     width: '100%',
-    marginTop: "20px"
+    marginTop: "10px"
   },
 
-  remindLink: {
-    textAlign: "right",
-    marginTop: "10px"
+  privacy: {
+    fontSize: "11px",
+    textAlign: "center",
+    marginTop: "18px",
+    color: "#7C7D81"
   },
 
   signLink: {
     textAlign: "center",
-    marginTop: "34px",
+    marginTop: "20px",
     color: "#7C7D81"
   },
 })
 
-class LogIn extends Component {
+class SignUp extends Component {
   state = {
     email: "",
-    password: ""
+    password: "",
+    phone: ""
   }
-
-  onSuccess = response => console.log(response)
-  onFailure = response => console.error(response)
 
   onSubmit = e => {
     e.prevetDefault()
   }
 
+  onSuccess = response => console.log(response)
+  onFailure = response => console.error(response)
+
   onChange = input => e => this.setState({ [input]: e.target.value })
+
+  componentDidMount() {
+    ValidatorForm.addValidationRule('isPhoneValid', phone => {
+      const phoneRe = /(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})/
+
+      if (phoneRe.test(phone)) return true
+      else return false
+    })
+  }
 
   render() {
     const { classes } = this.props
     return (
       <Paper className={classes.paper}>
         <SocialAuthentication 
-          onSuccess={this.onSuccess}
-          onFailure={this.onFailure}
-          text={"Log in"}
+          text={"sign up"}
+          onSuccess={this.onFailure}
+          onFailure={this.onSuccess}
         />
-        
-        <FormTitle 
-          text={"or login with email"}
+        <FromTitle 
+          text={"or sign up with email"}
         />
-
         <ValidatorForm onSubmit={this.onSubmit}>
 
           <TextValidator
@@ -98,6 +99,18 @@ class LogIn extends Component {
           />
 
           <TextValidator
+            label="+(41 20)-123-4567"
+            name="phone"
+            placeholder="e.g., +(41 20)..."
+            onChange={this.onChange('phone')}
+            className={classes.textField}
+            value={this.state.phone}
+            margin="normal"
+            validators={['required', 'isPhoneValid']}
+            errorMessages={['this field is required', 'phone is not valid']}
+          />
+
+          <TextValidator
             label="Your password"
             type="password"
             placeholder="e.g., *******"
@@ -110,22 +123,21 @@ class LogIn extends Component {
             errorMessages={['this field is required', 'password must contain at least 6 characters', 'password must contain no more then 16 characters']}
           />
 
-          <Typography className={classes.remindLink}>
-            <Link to="/">
-              Forgot password?
-            </Link>
+          <SubmitButton 
+            text={"Create an account"}
+            path={"/signup"}
+          />
+          {/* @TO DO - install recaptcha with key */}
+
+          <Typography className={classes.privacy}>
+            You agree to the AppHooks Terms of Servise and Privacy Policy
           </Typography>
 
-          <SubmitButton 
-            text={"Log in"}
-            path={"/"}
-          />
-
           <Typography className={classes.signLink}>
-            Don't have an account? 
+            Already have an account?             
             <span> </span>
-            <Link to="/signup">
-              Sign Up
+            <Link to="/">
+              Login
             </Link>
           </Typography>
         </ValidatorForm>
@@ -134,7 +146,4 @@ class LogIn extends Component {
   }
 }
 
-export default compose(
-  withBackground,
-  withStyles(styles)
-)(LogIn)
+export default withBackground(withStyles(styles)(SignUp))

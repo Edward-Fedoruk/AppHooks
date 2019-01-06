@@ -25,7 +25,7 @@ const styles = () => ({
     right: "50%",
     transform: "translate(50%, -50%)",
     textAlign: "center",
-    width: "190px"
+    width: "max-content"
   },
 })
 

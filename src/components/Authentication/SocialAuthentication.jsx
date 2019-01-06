@@ -55,7 +55,7 @@ const styles = () => ({
   },
 })
 
-const SocialAuthentication = ({ classes, onSuccess, onFailure }) => (
+const SocialAuthentication = ({ classes, onSuccess, onFailure, text }) => (
   <React.Fragment>
     <GitHubLogin 
       onSuccess={onSuccess}
@@ -63,7 +63,7 @@ const SocialAuthentication = ({ classes, onSuccess, onFailure }) => (
       className={classes.gitHubBtn}
     >
       <GitHub className={classes.buttonsIcon}/>
-      Log in with github
+      { text } with github
     </GitHubLogin>
     <GoogleLogin 
       className={classes.googleBtn}
@@ -73,7 +73,7 @@ const SocialAuthentication = ({ classes, onSuccess, onFailure }) => (
     >
       <div className={classes.flexCenter}>
         <Google className={classes.buttonsIcon}/>
-        Log in with Google
+        { text } with Google
       </div>
     </GoogleLogin>
   </React.Fragment>
@@ -81,7 +81,8 @@ const SocialAuthentication = ({ classes, onSuccess, onFailure }) => (
 
 SocialAuthentication.propTypes = {
   onSuccess: PropTypes.func.isRequired, 
-  onFailure: PropTypes.func.isRequired
+  onFailure: PropTypes.func.isRequired,
+  text: PropTypes.string.isRequired
 }
 
 export default withStyles(styles)(SocialAuthentication)
