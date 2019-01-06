@@ -111,7 +111,7 @@ class LogIn extends Component {
           />
 
           <Typography className={classes.remindLink}>
-            <Link to="/">
+            <Link to="/password">
               Forgot password?
             </Link>
           </Typography>

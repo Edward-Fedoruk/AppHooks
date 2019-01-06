@@ -4,13 +4,11 @@ import { withStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 import PropTypes from 'prop-types'
+import { paperStyles, titleStyles } from './formStyles'
 
 const styles = ({ breakpoints }) => ({
   paper: {
-    padding: "36px 50px",
-    width: "500px",
-    height: "fit-content",
-    marginTop: "8%",
+    ...paperStyles,
 
     [breakpoints.down(500)]: {
       width: "90%",
@@ -20,10 +18,7 @@ const styles = ({ breakpoints }) => ({
   },
 
   title: {
-    fontWeight: "500",
-    fontSize: "20px",
-    color: "#5A5B5F",
-    marginBottom: "25px"
+    ...titleStyles
   },
 
   p: {
@@ -42,7 +37,7 @@ const styles = ({ breakpoints }) => ({
       color: "rgb(255, 0, 0)"
     },
   },
-  
+
 })
 
 const EmailActivation = ({ classes, email }) => {
