@@ -57,18 +57,23 @@ const styles = () => ({
 const SocialAuthentication = ({ classes, onSuccess, onFailure, text }) => (
   <React.Fragment>
     <GitHubLogin 
+      className={classes.gitHubBtn}
       onSuccess={onSuccess}
       onFailure={onFailure}
-      className={classes.gitHubBtn}
+      clientId="ece43ff6f0052f0666c4"
     >
       <GitHub className={classes.buttonsIcon}/>
       { text } with github
     </GitHubLogin>
+
     <GoogleLogin 
       className={classes.googleBtn}
       icon={false}
       disabledStyle={{}}
+      onSuccess={onSuccess}
+      onFailure={onFailure}
       style={{}}
+      clientId="618395372364-bfhsfau7jtp6tocvjim89je1o98r6ve0.apps.googleusercontent.com"
     >
       <div className={classes.flexCenter}>
         <Google className={classes.buttonsIcon}/>
