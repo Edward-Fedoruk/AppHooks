@@ -19,6 +19,7 @@ const styles = () => ({
     color: "#8E8F93",
     position: "absolute",
     fontSize: "14px",
+    fontWeight: "500",
     backgroundColor: "#fff",
     padding: "0 20px",
     top: "50%",
@@ -32,7 +33,7 @@ const styles = () => ({
 const FormTitle = ({ classes, text }) => (
   <div className={classes.formTitleWrap}>
     <div className={classes.line}></div>
-    <Typography variant="title" className={classes.formTitle}>{ text }</Typography>
+    <Typography className={classes.formTitle}>{ text }</Typography>
   </div>
 )
 

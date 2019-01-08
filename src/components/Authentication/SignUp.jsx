@@ -8,6 +8,13 @@ import FromTitle from "./FormTitle"
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator'
 import { Link } from "react-router-dom"
 import SubmitButton from "./SubmitButton"
+import { createUser } from '../../actions/index'
+import { connect } from 'react-redux'
+import { compose } from 'redux'
+import PropTypes from "prop-types"
+import { withRouter } from "react-router"
+import { ReCaptcha } from 'react-recaptcha-v3'
+
 
 const styles = ({ breakpoints }) => ({
   paper: {
@@ -53,26 +60,40 @@ class SignUp extends Component {
     phone: ""
   }
 
+  static propTypes = {
+    createUser: PropTypes.func.isRequired,
+    match: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired
+  }
+
   onSubmit = e => {
-    e.prevetDefault()
+    e.preventDefault() 
+    this.props.createUser(this.state, this.props.history)
+
   }
 
   onSuccess = response => console.log(response)
   onFailure = response => console.error(response)
+
+  verifyCallback = recaptchaToken => {
+    console.log(recaptchaToken)
+  }
 
   onChange = input => e => this.setState({ [input]: e.target.value })
 
   componentDidMount() {
     ValidatorForm.addValidationRule('isPhoneValid', phone => {
       const phoneRe = /(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})/
-
       if (phoneRe.test(phone)) return true
       else return false
     })
   }
 
   render() {
-    const { classes } = this.props
+    const { classes, errors } = this.props
+    // console.log(errors)
+    
     return (
       <Paper className={classes.paper}>
         <SocialAuthentication 
@@ -86,6 +107,9 @@ class SignUp extends Component {
         <ValidatorForm onSubmit={this.onSubmit}>
 
           <TextValidator
+            error={"email" in errors}
+            helperText={"email" in errors && <span>{errors.email[0]}</span>}    
+            FormHelperTextProps={{error: true}}        
             label="Enter your email"
             name="email"
             autoFocus
@@ -99,18 +123,24 @@ class SignUp extends Component {
           />
 
           <TextValidator
+            error={"phone" in errors}
+            helperText={"phone" in errors && <span>{errors.phone[0]}</span>} 
+            FormHelperTextProps={{error: true}}           
             label="+(41 20)-123-4567"
             name="phone"
-            placeholder="e.g., +(41 20)..."
+            placeholder="phone number"
             onChange={this.onChange('phone')}
             className={classes.textField}
             value={this.state.phone}
             margin="normal"
             validators={['required', 'isPhoneValid']}
             errorMessages={['this field is required', 'phone is not valid']}
-          />
+          /> 
 
-          <TextValidator
+          <TextValidator 
+            error={"password" in errors}
+            helperText={"password" in errors && <span>{errors.password[0]}</span>} 
+            FormHelperTextProps={{error: true}}     
             label="Your password"
             type="password"
             placeholder="e.g., *******"
@@ -127,7 +157,13 @@ class SignUp extends Component {
             text={"Create an account"}
             path={"/signup"}
           />
-          {/* @TO DO - install recaptcha with key */}
+
+          {/* uncoment in production */}
+          {/* <ReCaptcha
+            sitekey="6Ld8qYcUAAAAADWP8M3N4MD7J_hfIHLvfqoY8nIH"
+            action='action_name'
+            verifyCallback={this.verifyCallback}
+          /> */}
 
           <Typography className={classes.privacy}>
             You agree to the AppHooks Terms of Servise and Privacy Policy
@@ -146,4 +182,19 @@ class SignUp extends Component {
   }
 }
 
-export default withBackground(withStyles(styles)(SignUp))
+
+
+const mapDispatchToProps = dispatch => ({
+  createUser: (userData, routeHistory) => dispatch(createUser(userData, routeHistory))
+})
+
+const mapStateToProps = ({ authentication }) => ({
+  errors: authentication.errors, 
+})
+
+export default compose(
+  withBackground,
+  withStyles(styles),
+  withRouter,
+  connect(mapStateToProps, mapDispatchToProps)
+)(SignUp)

@@ -6,6 +6,8 @@ import Typography from '@material-ui/core/Typography'
 import { paperStyles, titleStyles } from './formStyles'
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator'
 import SubmitButton from './SubmitButton'
+import { connect } from 'react-redux'
+
 
 const styles = ({ breakpoints }) => ({
   paper: {
@@ -98,4 +100,13 @@ class ResetPassword extends Component {
   }
 }
 
-export default withBackground(withStyles(styles)(ResetPassword))
+const mapStateToProps = (state) => ({
+  
+})
+
+const mapDispatchToProps = {
+  
+}
+
+
+export default withBackground(withStyles(styles)(connect()(ResetPassword)))

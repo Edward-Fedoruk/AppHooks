@@ -9,6 +9,9 @@ import { compose } from 'redux'
 import SocialAuthentication from './SocialAuthentication'
 import FormTitle from './FormTitle'
 import SubmitButton from './SubmitButton'
+import { connect } from 'react-redux'
+import { logIn } from '../../actions/index'
+import { withRouter } from "react-router"
 
 const flexCenter = {
   display: "flex",
@@ -63,13 +66,14 @@ class LogIn extends Component {
   onFailure = response => console.error(response)
 
   onSubmit = e => {
-    e.prevetDefault()
+    e.preventDefault()
+    this.props.logIn(this.state, this.props.history)
   }
 
   onChange = input => e => this.setState({ [input]: e.target.value })
 
   render() {
-    const { classes } = this.props
+    const { classes, error } = this.props
     return (
       <Paper className={classes.paper}>
         <SocialAuthentication 
@@ -83,7 +87,7 @@ class LogIn extends Component {
         />
 
         <ValidatorForm onSubmit={this.onSubmit}>
-
+          {error ? "errorrrr" : "not errrorr"}
           <TextValidator
             label="Enter your email"
             name="email"
@@ -134,7 +138,19 @@ class LogIn extends Component {
   }
 }
 
+
+const mapStateToProps = ({ authentication }) => ({
+  error: authentication.error
+})
+
+const mapDispatchToProps = dispatch => ({
+  logIn: (userData, routeHistory) => dispatch(logIn(userData, routeHistory))
+})
+
+
 export default compose(
   withBackground,
-  withStyles(styles)
+  withStyles(styles),
+  withRouter,
+  connect(mapStateToProps, mapDispatchToProps)
 )(LogIn)

@@ -7,6 +7,8 @@ import Typography from '@material-ui/core/Typography'
 import { paperStyles, titleStyles } from './formStyles'
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator'
 import SubmitButton from './SubmitButton'
+import { connect } from 'react-redux'
+import { reSendEmail } from '../../actions/index'
 
 const styles = ({ breakpoints }) => ({
   paper: {
@@ -43,11 +45,16 @@ class ForgetPassword extends React.Component {
     email: ""
   }
 
-  static PropTypes = {
-
+  static propTypes = {
+    reSendEmail: PropTypes.func.isRequired
   }
 
   onChange = input => e => this.setState({ [input]: e.target.value })
+
+  onSubmit = e => {
+    e.preventDefault()
+    this.props.reSendEmail(this.state.email)
+  }
 
   render() {
     const { classes } = this.props
@@ -60,7 +67,7 @@ class ForgetPassword extends React.Component {
           We’ve got you covered
         </Typography>
 
-        <ValidatorForm>
+        <ValidatorForm onSubmit={this.onSubmit}>
           <TextValidator
             label="Enter your email"
             name="email"
@@ -84,4 +91,10 @@ class ForgetPassword extends React.Component {
   }
 }
 
-export default withBackground(withStyles(styles)(ForgetPassword))
+
+const mapDispatchToProps = dispatch => ({
+  reSendEmail: email => dispatch(reSendEmail(email))
+})
+
+
+export default withBackground(withStyles(styles)(connect(null, mapDispatchToProps)(ForgetPassword)))

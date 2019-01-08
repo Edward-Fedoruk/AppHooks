@@ -5,6 +5,11 @@ import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 import PropTypes from 'prop-types'
 import { paperStyles, titleStyles } from './formStyles'
+import { withRouter } from "react-router"
+import { connect } from 'react-redux'
+import { compose } from 'redux'
+import { reSendEmail } from '../../actions/index'
+
 
 const styles = ({ breakpoints }) => ({
   paper: {
@@ -40,16 +45,18 @@ const styles = ({ breakpoints }) => ({
 
 })
 
-const EmailActivation = ({ classes, email }) => {
-  const resend = () => {}
+const EmailActivation = ({ classes, location, reSendEmail }) => {
+
+  const resend = () => reSendEmail({ email: location.state.userData.userEmail })
+
   return (
     <Paper className={classes.paper}>
       <Typography className={classes.title} variant="h3" align="center">
         Thank you for registration!
       </Typography>
       <Typography className={classes.p}>
-        We’ve sent a verification email to { email }
-        Please use the link provided in the email to activate
+        We’ve sent a verification email to { location.state.userData.userEmail }. 
+         Please use the link provided in the email to activate
         and start using your AppHooks account.
       </Typography>
       <Typography className={classes.p}>
@@ -60,7 +67,17 @@ const EmailActivation = ({ classes, email }) => {
 }
 
 EmailActivation.propTypes = {
-  email: PropTypes.string.isRequired
+  reSendEmail: PropTypes.func.isRequired,
+  location: PropTypes.object.isRequired
 }
 
-export default withBackground(withStyles(styles)(EmailActivation))
+const mapDispatchToProps = dispatch => ({
+  reSendEmail: email => dispatch(reSendEmail(email))
+})
+
+export default compose(
+  withBackground,
+  withStyles(styles),
+  withRouter,
+  connect(null, mapDispatchToProps)
+)(EmailActivation)
