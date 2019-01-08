@@ -6,13 +6,14 @@ import EmailActivation from './components/Authentication/EmailActivation'
 import ForgetPassword from './components/Authentication/ForgetPassword'
 import ResetPassword from './components/Authentication/ResetPassword'
 import { loadReCaptcha } from 'react-recaptcha-v3'
-
+import ProtectedRout from './ProtectedRout'
+import App from './App'
 
 class Routes extends React.Component {
 
   componentDidMount() {
-    // @TO DO - install recaptcha with key
-    // loadReCaptcha()
+    // @TO DO - uncoment in production
+    // loadReCaptcha("6Ld8qYcUAAAAADWP8M3N4MD7J_hfIHLvfqoY8nIH")
   }
 
   render() {  
@@ -21,9 +22,10 @@ class Routes extends React.Component {
         <Switch>
           <Route path='/' exact component={LogIn} />
           <Route path='/resetPassword' exact component={ResetPassword} />
-          <Route path='/password' exact component={ForgetPassword} />
           <Route path='/signup' exact component={SignUp} />
-          <Route path='/signup/success' exact component={EmailActivation} />
+          <ProtectedRout path='/password' exact component={ForgetPassword} />
+          <ProtectedRout path='/app' exact component={App} />
+          <ProtectedRout path='/signup/success' exact component={EmailActivation} />
         </Switch>   
       </BrowserRouter>
     ) 
