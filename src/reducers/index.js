@@ -1,9 +1,6 @@
 import { combineReducers } from 'redux'
-
-const testReducer = (state = {}, action) => {
-  return state
-}
+import { authentication } from './forms'
 
 export default combineReducers({
-  testReducer
+  authentication
 })
