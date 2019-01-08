@@ -14,16 +14,13 @@ const styles = () => ({
   },
 })
 
-const SubmitButton = ({ classes, path, type, onClick, text }) => (
+const SubmitButton = ({ classes, text }) => (
   <Button 
     fullWidth 
     variant="contained" 
     color="primary" 
     type="submit"
     className={classes.logIn}
-    component={Link} 
-    to={path}
-    onClick={onClick}
   >
     { text }
   </Button>
@@ -31,8 +28,6 @@ const SubmitButton = ({ classes, path, type, onClick, text }) => (
 
 
 SubmitButton.propTypes = {
-  path: PropTypes.string.isRequired,
-  type: PropTypes.string,
   text: PropTypes.string.isRequired
 }
 
