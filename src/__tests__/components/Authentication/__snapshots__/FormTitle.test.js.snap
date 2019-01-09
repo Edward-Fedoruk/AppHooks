@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FormTitle should render correctly 1`] = `
+<FormTitle
+  classes={
+    Object {
+      "formTitle": "FormTitle-formTitle-3",
+      "formTitleWrap": "FormTitle-formTitleWrap-1",
+      "line": "FormTitle-line-2",
+    }
+  }
+  text="test"
+/>
+`;

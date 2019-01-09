@@ -17,7 +17,8 @@
     "react-scripts": "2.1.2",
     "redux": "^4.0.1",
     "redux-form": "^8.1.0",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "sinon": "^7.2.2"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -35,6 +36,10 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "enzyme": "^3.8.0",
+    "enzyme-adapter-react-16": "^1.7.1",
+    "enzyme-to-json": "^3.3.5",
+    "jest": "^23.6.0",
     "redux-devtools": "^3.5.0",
     "redux-devtools-extension": "^2.13.7"
   }

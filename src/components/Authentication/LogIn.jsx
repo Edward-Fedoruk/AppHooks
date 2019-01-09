@@ -122,7 +122,6 @@ class LogIn extends Component {
 
           <SubmitButton 
             text={"Log in"}
-            path={"/"}
           />
 
           <Typography className={classes.signLink}>

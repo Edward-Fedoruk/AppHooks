@@ -45,7 +45,7 @@ const styles = ({ breakpoints }) => ({
 
 })
 
-const EmailActivation = ({ classes, location, reSendEmail }) => {
+ const EmailActivation = ({ classes, location, reSendEmail }) => {
 
   const resend = () => reSendEmail({ email: location.state.userData.userEmail })
 

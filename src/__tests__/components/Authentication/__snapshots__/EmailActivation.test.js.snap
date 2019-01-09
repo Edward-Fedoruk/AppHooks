@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button should render correctly 1`] = `
+<WithStyles(Paper)>
+  <WithStyles(Typography)
+    align="center"
+    variant="h3"
+  >
+    Thank you for registration!
+  </WithStyles(Typography)>
+  <WithStyles(Typography)>
+    We’ve sent a verification email to 
+    email
+    . Please use the link provided in the email to activate and start using your AppHooks account.
+  </WithStyles(Typography)>
+  <WithStyles(Typography)>
+    You can 
+    <span
+      onClick={[Function]}
+    >
+      re-send a verification mail.
+    </span>
+  </WithStyles(Typography)>
+</WithStyles(Paper)>
+`;
