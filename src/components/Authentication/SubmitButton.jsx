@@ -1,15 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
 import Button from '@material-ui/core/Button'
 import { withStyles } from '@material-ui/core/styles'
 
 const styles = () => ({
   logIn: {
     marginTop: "34px",
-    background: "linear-gradient(180deg, #35C1CE 0%, #2AA4AF 100%)",
+    background: "#35C1CE",
     "&:hover": {
-      opacity: ".9"
+      opacity: ".9",
+      background: "#35C1CE",
     }
   },
 })
@@ -28,7 +28,8 @@ const SubmitButton = ({ classes, text }) => (
 
 
 SubmitButton.propTypes = {
-  text: PropTypes.string.isRequired
+  text: PropTypes.string.isRequired,
+  classes: PropTypes.object.isRequired
 }
 
 export default withStyles(styles)(SubmitButton)
