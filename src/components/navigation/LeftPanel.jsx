@@ -7,6 +7,7 @@ import { ReactComponent as LogoIcon} from "../../assets/LogoIcon.svg"
 import { ReactComponent as User} from '../../assets/User.svg'
 import { ReactComponent as QuestionMark} from '../../assets/QuestionMark.svg'
 import IconButton from '@material-ui/core/IconButton'
+import { Scrollbars } from 'react-custom-scrollbars'
 
 const iconsGroup = {
   alignSelf: "flex-start",
@@ -18,13 +19,16 @@ const iconsGroup = {
 const styles = () => ({
   paper: {
     background: "#192B81",
-    width: "88px",
+    width: "29%",
     height: "100%",
-    display: "flex",
-    justifyContent: "center",
-    flexWrap: "wrap",
     paddingTop: "13px",
-    overflow: "auto"
+  },
+
+  iconsWrap: {
+    display: "flex",
+    flexWrap: "wrap",
+    height: "100%",
+    justifyContent: "center"
   },
 
   topIcons: iconsGroup,
@@ -35,7 +39,7 @@ const styles = () => ({
 
   addCircleWrap: {
     marginTop: "45px",
-    color: "#d1d5e6"
+    color: "#d1d5e6",
   },
 
   addCircle: {
@@ -45,7 +49,7 @@ const styles = () => ({
   bottomIcons: {
     ...iconsGroup,
     alignSelf: "flex-end",
-    marginTop: "70px"
+    marginTop: "25px"
   },
 
   questionMarkWrap: {
@@ -74,22 +78,26 @@ export class LeftPanel extends Component {
     const { classes } = this.props
     return (
       <div className={classes.paper}>
-        <div className={classes.topIcons}>
-          <LogoIcon className={classes.logoIcon}/>
-          
-          <IconButton className={classes.addCircleWrap}>
-            <AddCircle className={classes.addCircle} />
-          </IconButton>
-        </div>
-        <div className={classes.bottomIcons}>
-          <IconButton className={classes.questionMarkWrap}>
-            <QuestionMark className={classes.questionMark} />
-          </IconButton>
+        <Scrollbars>
+          <div className={classes.iconsWrap}>
+            <div className={classes.topIcons}>
+              <LogoIcon className={classes.logoIcon}/>
+              
+              <IconButton className={classes.addCircleWrap}>
+                <AddCircle className={classes.addCircle} />
+              </IconButton>
+            </div>
+            <div className={classes.bottomIcons}>
+              <IconButton className={classes.questionMarkWrap}>
+                <QuestionMark className={classes.questionMark} />
+              </IconButton>
 
-          <IconButton className={classes.userWrap}>
-            <User className={classes.user} />
-          </IconButton>
-        </div>
+              <IconButton className={classes.userWrap}>
+                <User className={classes.user} />
+              </IconButton>
+            </div>
+          </div>
+        </Scrollbars>
       </div>
     )
   }

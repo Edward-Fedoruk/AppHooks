@@ -11,7 +11,9 @@ const styles = () => ({
     background: "#192B81",
     display: "flex",
     flexWrap: "wrap",
-    width: "306px",
+    width: "23vw",
+    maxWidth: "306px",
+    minWidth: "250px",
     overflow: "hidden",
   },
 
@@ -25,28 +27,27 @@ const styles = () => ({
 
 class AppNavigation extends Component {
   static propTypes = {
-    prop: PropTypes
+    classes: PropTypes.object.isRequired,
+    theme: PropTypes.object.isRequired
   }
 
   render() {
-    const { classes } = this.props
+    const { classes, theme } = this.props
     return (
-      <div>
-        <Drawer
-          className={classes.drawer}
-          variant="permanent"
-          classes={{
-            paper: classes.drawerPaper,
-          }}
-          anchor="left" 
-        >
+      <Drawer
+        className={classes.drawer}
+        variant="permanent"
+        classes={{
+          paper: classes.drawerPaper,
+        }}
+        anchor="left" 
+      >
 
-          <LeftPanel />
+        <LeftPanel />
 
-          <RightPanel />
+        <RightPanel />
 
-        </Drawer>
-    </div>
+      </Drawer>
     )
   }
 }
@@ -59,4 +60,4 @@ const mapDispatchToProps = {
   
 }
 
-export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(AppNavigation))
+export default withStyles(styles, { withTheme: true })(connect(mapStateToProps, mapDispatchToProps)(AppNavigation))

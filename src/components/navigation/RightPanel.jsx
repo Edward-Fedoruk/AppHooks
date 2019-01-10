@@ -10,18 +10,20 @@ import Typography from '@material-ui/core/Typography'
 import Dashboard from '@material-ui/icons/Dashboard'
 import ExitToApp from '@material-ui/icons/ExitToApp'
 import { Link }from "react-router-dom"
+import { Scrollbars } from 'react-custom-scrollbars'
 
 
 const itemTextStyles = {
   color: "rgba(255, 255, 255, 0.7)",
-  paddingLeft: "5px"
+  paddingLeft: "5px",
+  fontFamily: "Lato",
 }
 
 const styles = () => ({
   navigation: {
-    width: "217px",
+    width: "100%",
     background: "linear-gradient(180deg, #192B81 0%, #344DBC 100%)",
-    padding: "10% 0 50% 0",
+    padding: "10% 0 20% 0",
     overflow: "auto",
     height: "100%"
   },
@@ -29,6 +31,7 @@ const styles = () => ({
   navWrap: {
     height: "100%",
     paddingTop: "20px",
+    width: "71%"
   },
 
   appName: {
@@ -84,12 +87,13 @@ export class RightPanel extends Component {
           Apphooks
         </Typography>  
         <div className={classes.navigation}>
+        <Scrollbars >
 
           <List className={classes.listItems}>
             <ListItem 
               className={classes.item}
               component={Link} 
-              to={"/dashboard"}
+              to={"/"}
               onClick={this.changeTab("0")}
               selected={activeTab === "0"}
               button 
@@ -137,6 +141,7 @@ export class RightPanel extends Component {
             </ListItem>
           </List>
           
+        </Scrollbars>
         </div>
       </div>
     )
