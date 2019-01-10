@@ -9,11 +9,13 @@ import { loadReCaptcha } from 'react-recaptcha-v3'
 import ProtectedRout from './ProtectedRout'
 import App from './App'
 import AppNavigation from "./components/navigation/AppNavigation"
+import Channels from "./components/channels/Channels"
 
 const WithNavigation = () => (
   <div>
     <Route component={AppNavigation} />
     <Route path='/' exact component={App} />
+    <Route path='/channels' exact component={Channels} />
   </div>
 )
 
