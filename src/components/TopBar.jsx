@@ -21,7 +21,6 @@ const styles = () => ({
     background: "#35C1CE",
     "&:hover": {
       opacity: ".9",
-      background: "#35C1CE",
     },
     textTransform: "capitalize",
     color: "#fff",

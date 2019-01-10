@@ -9,18 +9,19 @@ const styles = () => ({
     background: "#35C1CE",
     "&:hover": {
       opacity: ".9",
-      background: "#35C1CE",
+      // background: "#35C1CE",
     }
   },
 })
 
-const SubmitButton = ({ classes, text }) => (
+const SubmitButton = ({ classes, text, styles }) => (
   <Button 
     fullWidth 
     variant="contained" 
     color="primary" 
     type="submit"
     className={classes.logIn}
+    style={styles}
   >
     { text }
   </Button>
@@ -29,7 +30,8 @@ const SubmitButton = ({ classes, text }) => (
 
 SubmitButton.propTypes = {
   text: PropTypes.string.isRequired,
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  styles: PropTypes.object
 }
 
 export default withStyles(styles)(SubmitButton)
