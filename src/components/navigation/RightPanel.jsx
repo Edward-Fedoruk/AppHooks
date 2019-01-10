@@ -9,8 +9,9 @@ import ListItemText from '@material-ui/core/ListItemText'
 import Typography from '@material-ui/core/Typography'
 import Dashboard from '@material-ui/icons/Dashboard'
 import ExitToApp from '@material-ui/icons/ExitToApp'
-import { Link }from "react-router-dom"
+import { Link, withRouter }from 'react-router-dom'
 import { Scrollbars } from 'react-custom-scrollbars'
+import { compose } from 'redux'
 
 
 const itemTextStyles = {
@@ -156,4 +157,8 @@ const mapDispatchToProps = {
   
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(RightPanel))
+export default compose(
+  withStyles(styles),
+  withRouter,
+  connect(mapStateToProps, mapDispatchToProps)
+)(RightPanel)
