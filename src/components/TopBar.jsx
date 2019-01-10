@@ -42,12 +42,12 @@ export class TopBar extends Component {
     history: PropTypes.object.isRequired,
     title: PropTypes.string.isRequired,
     button: PropTypes.bool.isRequired,
-    buttonText: PropTypes.bool,
-    onClick: PropTypes.func
+    buttonText: PropTypes.string,
+    onButtonClick: PropTypes.func
   }
 
   render() {
-    const { classes, title, buttonText, button, onClick } = this.props
+    const { classes, title, buttonText, button, onButtonClick } = this.props
     return (
       <AppBar 
         position="static" 
@@ -67,7 +67,7 @@ export class TopBar extends Component {
             <Button 
               size={"large"}
               className={classes.channel}
-              onClick={onClick}
+              onClick={onButtonClick}
             >
               {buttonText}
             </Button>}
