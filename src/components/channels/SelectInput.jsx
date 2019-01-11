@@ -7,6 +7,7 @@ import InputLabel from '@material-ui/core/InputLabel'
 import MenuItem from '@material-ui/core/MenuItem'
 import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
+import FormHelperText from '@material-ui/core/FormHelperText'
 
 const styles = theme => ({
   formControl: {
@@ -26,16 +27,19 @@ class SelectInput extends React.Component {
     })
   }
 
-
-
   render() {
-    const { classes, options, name, styles, handleChange, region } = this.props
+    const { 
+      classes, options, name,
+      styles, handleChange, option,       
+      error, errText
+    } = this.props
 
     return (
       <FormControl 
         variant="outlined" 
         className={classes.formControl}
         style={styles}
+        error={error}
       >
         <InputLabel
           ref={ref => {
@@ -46,7 +50,7 @@ class SelectInput extends React.Component {
           {name}
         </InputLabel>
         <Select
-          value={region}
+          value={option}
           onChange={handleChange}
           input={
             <OutlinedInput
@@ -65,6 +69,8 @@ class SelectInput extends React.Component {
             </MenuItem>
           ))}
         </Select>
+        {error &&
+          <FormHelperText>{ errText }</FormHelperText>}
       </FormControl>
     )
   }
@@ -73,8 +79,8 @@ class SelectInput extends React.Component {
 SelectInput.propTypes = {
   classes: PropTypes.object.isRequired,
   name: PropTypes.string.isRequired,
+  styles: PropTypes.object.isRequired,
   options: PropTypes.array,
-  styles: PropTypes.object.isRequired
 }
 
 export default withStyles(styles)(SelectInput)
