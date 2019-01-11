@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
@@ -65,19 +64,16 @@ const styles = () => ({
 })
 
 export class RightPanel extends Component {
-  state = {
-    activeTab: "0"
-  }
-
-  changeTab = tab => () => this.setState({activeTab: tab})
 
   static propTypes = {
-    classes: PropTypes.object.isRequired
+    classes: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired
   }
 
   render() {
-    const { classes } = this.props
-    const { activeTab } = this.state
+    const { classes, location } = this.props
+    const active = location.pathname
+
     return (
       <div className={classes.navWrap}>
         <Typography 
@@ -95,13 +91,12 @@ export class RightPanel extends Component {
               className={classes.item}
               component={Link} 
               to={"/"}
-              onClick={this.changeTab("0")}
-              selected={activeTab === "0"}
+              selected={active === "/"}
               button 
             >
               <ListItemIcon 
                 className={classes.itemIcon}
-                style={{color: activeTab === "0" && "#fff" }}
+                style={{color: active === "/" && "#fff" }}
               >
                 <Dashboard />
               </ListItemIcon>
@@ -109,7 +104,7 @@ export class RightPanel extends Component {
               <ListItemText 
                 classes={{root: classes.itemText}}
                 primaryTypographyProps={{
-                  className: activeTab === "0" 
+                  className: active === "/" 
                     ? classes.activeTab : classes.itemText 
                 }} 
                 primary={"Dashboard"} 
@@ -120,13 +115,13 @@ export class RightPanel extends Component {
               className={classes.item} 
               component={Link} 
               to={"/channels"}
-              onClick={this.changeTab("1")}
-              selected={activeTab === "1"}
+              // onClick={this.changeTab("1")}
+              selected={active === "/channels"}
               button
             >
               <ListItemIcon 
                 className={classes.itemIcon}
-                style={{color: activeTab === "1" && "#fff" }}
+                style={{color: active === "/channels" && "#fff" }}
               >
                 <ExitToApp />
               </ListItemIcon>
@@ -134,7 +129,7 @@ export class RightPanel extends Component {
               <ListItemText 
                 classes={{root: classes.itemText}}
                 primaryTypographyProps={{
-                  className: activeTab === "1" 
+                  className: active === "/channels" 
                     ? classes.activeTab : classes.itemText 
                 }} 
                 primary={"Channels Apps"} 
@@ -149,16 +144,8 @@ export class RightPanel extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  
-})
-
-const mapDispatchToProps = {
-  
-}
 
 export default compose(
   withStyles(styles),
   withRouter,
-  connect(mapStateToProps, mapDispatchToProps)
 )(RightPanel)
