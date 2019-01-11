@@ -42,7 +42,7 @@ const styles = () => ({
   }
 })
 
-const ChannelCard = ({ classes }) => {
+const ChannelCard = ({ classes, appName, requests, connections }) => {
   return (
     <Card className={classes.card}>
       <CardActionArea>
@@ -53,21 +53,21 @@ const ChannelCard = ({ classes }) => {
             component="h5"
             className={classes.CardName}
           >
-            My App #1
+            { appName }
           </Typography>
           <Grid container>
 
             <Grid xs item>
               <Typography className={classes.stats} component="p">
                 Total requests: <br />
-                12312
+                { requests }
               </Typography>
             </Grid>
 
             <Grid xs item>
               <Typography className={classes.stats} component="p">
                 Peak connections: <br />
-                3123321
+                { connections }
               </Typography>
             </Grid>
 
@@ -88,7 +88,10 @@ const ChannelCard = ({ classes }) => {
 }
 
 ChannelCard.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  requests: PropTypes.number.isRequired,
+  appName: PropTypes.string.isRequired,
+  connections: PropTypes.number.isRequired
 }
 
 export default withStyles(styles)(ChannelCard)
