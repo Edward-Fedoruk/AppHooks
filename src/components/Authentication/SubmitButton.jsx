@@ -9,7 +9,7 @@ const styles = () => ({
     background: "#35C1CE",
     "&:hover": {
       opacity: ".9",
-      // background: "#35C1CE",
+      background: "#192B81",
     }
   },
 })
@@ -17,7 +17,7 @@ const styles = () => ({
 const SubmitButton = ({ classes, text, styles }) => (
   <Button 
     fullWidth 
-    variant="contained" 
+    variant="text" 
     color="primary" 
     type="submit"
     className={classes.logIn}

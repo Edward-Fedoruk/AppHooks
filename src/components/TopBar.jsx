@@ -18,13 +18,14 @@ const styles = () => ({
   },  
   
   channel: {
+    textTransform: "capitalize",
+    color: "#fff",
+    fontSize: "16px",
     background: "#35C1CE",
     "&:hover": {
       opacity: ".9",
+      background: "#192B81",
     },
-    textTransform: "capitalize",
-    color: "#fff",
-    fontSize: "16px"
   },
 
   appBar: {
@@ -65,6 +66,8 @@ export class TopBar extends Component {
           {button &&
             <Button 
               size={"large"}
+              color="primary" 
+              variant="text" 
               className={classes.channel}
               onClick={onButtonClick}
             >
