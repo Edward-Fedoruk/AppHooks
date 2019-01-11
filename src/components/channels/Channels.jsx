@@ -1,45 +1,56 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { withStyles } from '@material-ui/core/styles'
 import withNavigation from '../withNavigation'
 import { compose } from "redux"
 import CreateChannel from './CreateChannel'
-import AllChannels from './AllChannels'
+import ChannelsList from './ChannelsList'
+import { fetchChannels } from '../../actions/channel'
+import { withRouter } from 'react-router'
 
-const styles = () => ({
-
-})
+const fakeData = [
+  {
+    id: 5,
+    name: "aedf",
+    region: "Albania",
+    stages: [],
+    created_at: "2019-01-11 14:39:46",
+    updated_at: "2019-01-11 14:39:46"
+  }
+]
 
 export class Channels extends Component {
   static propTypes = {
-    classes: PropTypes.object.isRequired
+    fetchChannels: PropTypes.func.isRequired
+  }
+  
+  componentDidMount() {
+    this.props.fetchChannels(this.props.history)
   }
 
-  createChannel = () => {}
-
   render() {
-    const { classes } = this.props
+    const { channels } = this.props
     return (
       <Fragment>
-        {true 
-          ? <AllChannels />
+        {/* channels.length !== 0  */}
+        {true
+          ? <ChannelsList channels={fakeData} />
           : <CreateChannel />}
       </Fragment>
     )
   }
 }
 
-const mapStateToProps = (state) => ({
-  
+const mapStateToProps = ({ channels }) => ({
+  channels: channels.channels
 })
 
 const mapDispatchToProps = {
-  
+  fetchChannels
 }
 
 export default compose(
   withNavigation,
-  withStyles(styles),
+  withRouter,
   connect(mapStateToProps, mapDispatchToProps)
 )(Channels) 
