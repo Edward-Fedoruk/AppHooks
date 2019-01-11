@@ -8,7 +8,7 @@ import { paperStyles, titleStyles } from './formStyles'
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator'
 import SubmitButton from './SubmitButton'
 import { connect } from 'react-redux'
-import { reSendEmail } from '../../actions/index'
+import { reSendEmail } from '../../actions/auth'
 
 const styles = ({ breakpoints }) => ({
   paper: {

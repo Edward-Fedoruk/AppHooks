@@ -8,7 +8,7 @@ import FromTitle from "./FormTitle"
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator'
 import { Link } from "react-router-dom"
 import SubmitButton from "./SubmitButton"
-import { createUser } from '../../actions/index'
+import { createUser } from '../../actions/auth'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import PropTypes from "prop-types"

@@ -8,7 +8,7 @@ import { paperStyles, titleStyles } from './formStyles'
 import { withRouter } from "react-router"
 import { connect } from 'react-redux'
 import { compose } from 'redux'
-import { reSendEmail } from '../../actions/index'
+import { reSendEmail } from '../../actions/auth'
 
 
 const styles = ({ breakpoints }) => ({

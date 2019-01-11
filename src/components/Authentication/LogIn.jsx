@@ -10,8 +10,8 @@ import SocialAuthentication from './SocialAuthentication'
 import FormTitle from './FormTitle'
 import SubmitButton from './SubmitButton'
 import { connect } from 'react-redux'
-import { logIn } from '../../actions/index'
-import { withRouter } from "react-router"
+import { logIn } from '../../actions/auth'
+import { withRouter } from 'react-router'
 
 const flexCenter = {
   display: "flex",
