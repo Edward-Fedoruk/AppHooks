@@ -8,6 +8,8 @@ import SubmitButton from '../Authentication/SubmitButton'
 import SelectInput from "./SelectInput"
 import { CountryRegionData } from "react-country-region-selector"
 import FormTitle from '../FormTitle'
+import { createChannel } from '../../actions/channel'
+import { withRouter } from 'react-router'
 
 const styles = () => ({
   formWrap: {
@@ -42,11 +44,17 @@ export class CreateChannel extends Component {
   }
 
   static propTypes = {
-    classes: PropTypes.object.isRequired
+    classes: PropTypes.object.isRequired,
+    errorMessage: PropTypes.string.isRequired,
+    error: PropTypes.bool.isRequired
   }
 
   onSubmit = e => {
     e.preventDefault()
+    if(!this.state.region) this.setState({ error: true })
+    console.log({name: this.state.name, region: this.state.region[0]})
+
+    this.props.createChannel({name: this.state.name, region: this.state.region[0]})
   }
   
   handleChange = event => {
@@ -56,7 +64,7 @@ export class CreateChannel extends Component {
   onChange = input => e => this.setState({ [input]: e.target.value })
 
   render() {
-    const { classes } = this.props
+    const { classes, errorMessage, error } = this.props
     const { name, region } = this.state
     return (
       <div className={classes.formWrap} >
@@ -67,6 +75,7 @@ export class CreateChannel extends Component {
         
         <ValidatorForm onSubmit={this.onSubmit}>
           <TextValidator
+            error={error}
             label="Name your app (required)"
             name="name"
             autoFocus
@@ -83,27 +92,35 @@ export class CreateChannel extends Component {
           <SelectInput 
             options={CountryRegionData}
             name="region"
-            region={region}
+            option={region}
             handleChange={this.handleChange}
             styles={{width: "100%", marginTop: "35px"}}
+            error={this.state.error || error}
+            errText={error ? "" : "required field"}
           />
 
           <SubmitButton 
             text={"Log in"}
             styles={{width: "250px", display: "block", margin: "84px auto 20px auto"}}
           />
-
         </ValidatorForm>
       </div>
     )
   }
 }
 
-const mapDispatchToProps = {
-  
-}
+const mapStateToProps = ({ channels }) => ({
+  error: channels.error,
+  errorMessage: channels.errorMessage
+})
+
+const mapDispatchToProps = dispatch => ({
+  createChannel: (channelData, routeHistory) => 
+    dispatch(createChannel(channelData, routeHistory))
+})
 
 export default compose(
   withStyles(styles),
-  connect(null, mapDispatchToProps)
+  withRouter,
+  connect(mapStateToProps, mapDispatchToProps)
 )(CreateChannel)
