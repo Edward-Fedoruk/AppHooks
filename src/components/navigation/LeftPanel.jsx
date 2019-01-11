@@ -53,7 +53,7 @@ const styles = () => ({
   },
 
   questionMarkWrap: {
-    marginBottom: "24px"
+    marginBottom: "20px"
   },
 
   questionMark: {
