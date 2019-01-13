@@ -172,7 +172,7 @@ class SignUp extends Component {
           <Typography className={classes.signLink}>
             Already have an account?             
             <span> </span>
-            <Link to="/">
+            <Link to="/login">
               Login
             </Link>
           </Typography>
