@@ -3,9 +3,15 @@ import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
-import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import { withRouter } from 'react-router-dom'
+import Title from './Title'
+import { withWidth } from '@material-ui/core'
+import IconButton from '@material-ui/core/IconButton'
+import MenuIcon from '@material-ui/icons/Menu'
+import { connect } from 'react-redux'
+import { compose }  from "redux"
+import { toggleNavBar } from '../actions/ui'
 
 const styles = () => ({
   title: {
@@ -33,12 +39,18 @@ const styles = () => ({
     height: "80px",
     display: "flex",
     justifyContent: "center"
-  }
+  },
+
+  menuButton: {
+    marginLeft: -12,
+    marginRight: 20,
+    color: "#192B81"
+  },
 })
 
 export class TopBar extends Component {
   static propTypes = {
-    classes: PropTypes.object.isRequired,
+    classes: PropTypes.object,
     history: PropTypes.object.isRequired,
     title: PropTypes.string.isRequired,
     button: PropTypes.bool.isRequired,
@@ -47,7 +59,8 @@ export class TopBar extends Component {
   }
 
   render() {
-    const { classes, title, buttonText, button, onButtonClick } = this.props
+    const { classes, title, buttonText, button, onButtonClick, width, toggleMenu } = this.props
+    const downMd = width === "sm" || width === "xs"
     return (
       <AppBar 
         position="static" 
@@ -55,13 +68,21 @@ export class TopBar extends Component {
         elevation={0}
       >
         <Toolbar>
-          <Typography 
+          {downMd && 
+            <IconButton 
+              onClick={toggleMenu} 
+              className={classes.menuButton} 
+              color="inherit" 
+              aria-label="Menu"
+            >
+              <MenuIcon />
+            </IconButton>}
+
+          <Title 
             variant="h2" 
             color="primary" 
-            className={classes.title}
-          >
-            {title}
-          </Typography>
+            title={title}
+          />
           
           {button &&
             <Button 
@@ -80,4 +101,14 @@ export class TopBar extends Component {
   }
 }
 
-export default  withStyles(styles)(withRouter(TopBar))
+
+const mapDispatchToProps = dispatch => ({
+  toggleMenu: () => dispatch(toggleNavBar())
+})
+
+export default compose(
+  withWidth(),
+  withStyles(styles),
+  withRouter,
+  connect(null, mapDispatchToProps)
+)(TopBar)

@@ -16,12 +16,23 @@ const iconsGroup = {
   flexWrap: "wrap"
 }
 
-const styles = () => ({
+const styles = ({ breakpoints }) => ({
   paper: {
     background: "#192B81",
-    width: "29%",
-    height: "100%",
+    minWidth: "73px",
+    maxWidth: "88px",
+    width: "7%",
+    height: "100vh",
     paddingTop: "13px",
+    zIndex: "2000000",
+    position: "fixed",
+
+    [breakpoints.down(960)]: {
+      // position: "absolute",
+      // width: "100%",
+      // height: "100%",
+      // background: "rgba(0, 0, 0, 0.25)"
+    },
   },
 
   iconsWrap: {

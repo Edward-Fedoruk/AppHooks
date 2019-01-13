@@ -8,10 +8,13 @@ import ListItemText from '@material-ui/core/ListItemText'
 import Typography from '@material-ui/core/Typography'
 import Dashboard from '@material-ui/icons/Dashboard'
 import ExitToApp from '@material-ui/icons/ExitToApp'
-import { Link, withRouter }from 'react-router-dom'
+import { Link }from 'react-router-dom'
 import { Scrollbars } from 'react-custom-scrollbars'
 import { compose } from 'redux'
-
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
+import { matchPath } from 'react-router'
+import NavListItem from './NavListItem'
 
 const itemTextStyles = {
   color: "rgba(255, 255, 255, 0.7)",
@@ -19,7 +22,7 @@ const itemTextStyles = {
   fontFamily: "Lato",
 }
 
-const styles = () => ({
+const styles = ({ transitions, breakpoints }) => ({
   navigation: {
     width: "100%",
     background: "linear-gradient(180deg, #192B81 0%, #344DBC 100%)",
@@ -30,8 +33,17 @@ const styles = () => ({
 
   navWrap: {
     height: "100%",
-    paddingTop: "20px",
-    width: "71%"
+    width: "71%",
+    position: "absolute",
+    right: "0",
+    transition: transitions.create('right', {
+      easing: transitions.easing.easeOut,
+      duration: transitions.duration.enteringScreen,
+    }),
+
+    [breakpoints.down(600)]: {
+      width: "100%",
+    },
   },
 
   appName: {
@@ -41,7 +53,8 @@ const styles = () => ({
     fontFamily: "Lato",
     paddingBottom: "10px",
     background: "#192B81",
-    paddingLeft: "21px"
+    paddingLeft: "21px",
+    paddingTop: "20px"
   },
 
   itemText: itemTextStyles,
@@ -71,9 +84,8 @@ export class RightPanel extends Component {
   }
 
   render() {
-    const { classes, location } = this.props
-    const active = location.pathname
-
+    const { classes, location} = this.props
+    
     return (
       <div className={classes.navWrap}>
         <Typography 
@@ -81,60 +93,27 @@ export class RightPanel extends Component {
           component={"h1"}
           className={classes.appName}
         >
-          Apphooks
+          Apphooks 
         </Typography>  
         <div className={classes.navigation}>
         <Scrollbars >
 
           <List className={classes.listItems}>
-            <ListItem 
-              className={classes.item}
-              component={Link} 
-              to={"/"}
-              selected={active === "/"}
-              button 
-            >
-              <ListItemIcon 
-                className={classes.itemIcon}
-                style={{color: active === "/" && "#fff" }}
-              >
-                <Dashboard />
-              </ListItemIcon>
+            <NavListItem 
+              path="/"
+              currentPath={location.pathname}
+              Icon={Dashboard}
+              itemText="Dashboard"
+              exact={true}
+            />
 
-              <ListItemText 
-                classes={{root: classes.itemText}}
-                primaryTypographyProps={{
-                  className: active === "/" 
-                    ? classes.activeTab : classes.itemText 
-                }} 
-                primary={"Dashboard"} 
-              />
-            </ListItem>
-
-            <ListItem 
-              className={classes.item} 
-              component={Link} 
-              to={"/channels"}
-              // onClick={this.changeTab("1")}
-              selected={active === "/channels"}
-              button
-            >
-              <ListItemIcon 
-                className={classes.itemIcon}
-                style={{color: active === "/channels" && "#fff" }}
-              >
-                <ExitToApp />
-              </ListItemIcon>
-              
-              <ListItemText 
-                classes={{root: classes.itemText}}
-                primaryTypographyProps={{
-                  className: active === "/channels" 
-                    ? classes.activeTab : classes.itemText 
-                }} 
-                primary={"Channels Apps"} 
-              />
-            </ListItem>
+            <NavListItem 
+              path="/channels"
+              currentPath={location.pathname}
+              Icon={ExitToApp}
+              itemText="Channels"
+              exact={false}
+            />
           </List>
           
         </Scrollbars>
@@ -145,7 +124,12 @@ export class RightPanel extends Component {
 }
 
 
+const mapStateToProps = ({ view }) => ({
+  open: view.open, 
+})
+
 export default compose(
   withStyles(styles),
   withRouter,
+  connect(mapStateToProps)
 )(RightPanel)
