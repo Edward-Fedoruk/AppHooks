@@ -89,4 +89,41 @@ export const fetchChannels = routeHistory => dispatch => {
     //   pathname: "/login"
     // })
   })
-} 
+}
+
+export const setCurrentChannel = (channel) => ({
+  type: types.SET_CURRENT_CHANNEL,
+  channel
+})
+
+export const fetchChannel = (id, routeHistory) => dispatch => {
+  const accessToken = localStorage.getItem("JWT")
+
+  fetch(`http://app.develop.apphooks.io/apps/${id}`, {
+    method: "GET",
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': "Bearer " + accessToken
+    },
+  })
+  .then((response) => {
+    return response.json()
+    .then((json) => {
+      if (response.ok) {
+        return Promise.resolve(json)
+      }
+      return Promise.reject(json)
+    })
+  })
+  .then(data => {
+    console.log(data)
+    dispatch(setCurrentChannel(data))
+  })
+  .catch(er =>{
+    console.log(er)
+    // routeHistory.push({
+    //   pathname: "/login"
+    // })
+  })
+}

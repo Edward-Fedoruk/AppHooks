@@ -3,13 +3,13 @@ import  * as types from '../actions/types'
 const initialState = {
   channels: [],
   error: false,
-  errorMessage: ""
+  errorMessage: "",
+  currentChannel: {},
 }
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case types.SET_CHANNELS: 
-      console.log(action.channels)
       return {
         ...state,
         channels: state.channels.concat(action.channels).sort((a, b) => {
@@ -27,6 +27,12 @@ export default (state = initialState, action) => {
         ...state,
         errorMessage: action.errorMessage,
         error: true
+      }
+    case types.SET_CURRENT_CHANNEL: 
+      console.log(action.channel)
+      return {
+        ...state,
+        currentChannel: action.channel.data,
       }
     default:
       return state
