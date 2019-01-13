@@ -7,6 +7,7 @@ const styles = () => ({
   logIn: {
     marginTop: "34px",
     background: "#35C1CE",
+    color: "#fff",
     "&:hover": {
       opacity: ".9",
       background: "#192B81",

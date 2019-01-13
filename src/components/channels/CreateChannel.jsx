@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles'
@@ -10,6 +10,7 @@ import { CountryRegionData } from "react-country-region-selector"
 import FormTitle from '../FormTitle'
 import { createChannel } from '../../actions/channel'
 import { withRouter } from 'react-router'
+import TopBar from '../TopBar'
 
 const styles = () => ({
   formWrap: {
@@ -67,44 +68,50 @@ export class CreateChannel extends Component {
     const { classes, errorMessage, error } = this.props
     const { name, region } = this.state
     return (
-      <div className={classes.formWrap} >
-        <FormTitle 
-          paragraph={"Create a Channels app to generate your unique credentials. You can create as many apps as you need."}
-          title={"Create your Channels App"}
+      <Fragment>
+        <TopBar 
+          buttonText="Create New App"
+          title="Your Channels Apps"
         />
-        
-        <ValidatorForm onSubmit={this.onSubmit}>
-          <TextValidator
-            error={error}
-            label="Name your app (required)"
-            name="name"
-            autoFocus
-            variant="outlined"
-            placeholder="MyApp"
-            onChange={this.onChange('name')}
-            className={classes.textField}
-            value={name}
-            margin="normal"
-            validators={['required']}
-            errorMessages={['this field is required']}
+        <div className={classes.formWrap} >
+          <FormTitle 
+            paragraph={"Create a Channels app to generate your unique credentials. You can create as many apps as you need."}
+            title={"Create your Channels App"}
           />
+          
+          <ValidatorForm onSubmit={this.onSubmit}>
+            <TextValidator
+              error={error}
+              label="Name your app (required)"
+              name="name"
+              autoFocus
+              variant="outlined"
+              placeholder="MyApp"
+              onChange={this.onChange('name')}
+              className={classes.textField}
+              value={name}
+              margin="normal"
+              validators={['required']}
+              errorMessages={['this field is required']}
+            />
 
-          <SelectInput 
-            options={CountryRegionData}
-            name="region"
-            option={region}
-            handleChange={this.handleChange}
-            styles={{width: "100%", marginTop: "35px"}}
-            error={this.state.error || error}
-            errText={error ? "" : "required field"}
-          />
+            <SelectInput 
+              options={CountryRegionData}
+              name="region"
+              option={region}
+              handleChange={this.handleChange}
+              styles={{width: "100%", marginTop: "35px"}}
+              error={this.state.error || error}
+              errText={error ? "" : "required field"}
+            />
 
-          <SubmitButton 
-            text={"Log in"}
-            styles={{width: "250px", display: "block", margin: "84px auto 20px auto"}}
-          />
-        </ValidatorForm>
-      </div>
+            <SubmitButton 
+              text={"Log in"}
+              styles={{width: "250px", display: "block", margin: "84px auto 20px auto"}}
+            />
+          </ValidatorForm>
+        </div>
+      </Fragment>
     )
   }
 }

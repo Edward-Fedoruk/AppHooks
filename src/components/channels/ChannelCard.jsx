@@ -9,11 +9,15 @@ import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
 import Divider from '@material-ui/core/Divider'
 import SettingsOutlined from '@material-ui/icons/SettingsOutlined'
+import { Link } from 'react-router-dom'
 
 const styles = () => ({
   card: {
     width: "270px",
     minHeight: "197px",
+    display: "inline-block",
+    marginRight: "3%",
+    marginBottom: "3%",
   },
 
   CardName: {
@@ -39,40 +43,52 @@ const styles = () => ({
 
   collaborators: {
     color: "rgba(25, 43, 127, 0.2)",
+  },
+
+  linkWrap: {
+    textDecoration: "none"
   }
 })
 
-const ChannelCard = ({ classes, appName, requests, connections }) => {
+const ChannelCard = ({ classes, appName, requests, connections, channelId }) => {
+
   return (
     <Card className={classes.card}>
-      <CardActionArea>
-        <CardContent>
-          <Typography 
-            gutterBottom 
-            variant="h5" 
-            component="h5"
-            className={classes.CardName}
-          >
-            { appName }
-          </Typography>
-          <Grid container>
+      <CardActionArea >
+        <Link
+          to={{
+            pathname: `channels/${channelId}`,
+          }}
+          className={classes.linkWrap}
+        >
+          <CardContent>
+            <Typography 
+              gutterBottom 
+              variant="h5" 
+              component="h5"
+              className={classes.CardName}
+            >
+              { appName }
+            </Typography>
+            <Grid container>
 
-            <Grid xs item>
-              <Typography className={classes.stats} component="p">
-                Total requests: <br />
-                { requests }
-              </Typography>
+              <Grid xs item>
+                <Typography className={classes.stats} component="p">
+                  Total requests: <br />
+                  { requests }
+                </Typography>
+              </Grid>
+
+              <Grid xs item>
+                <Typography className={classes.stats} component="p">
+                  Peak connections: <br />
+                  { connections }
+                </Typography>
+              </Grid>
+
             </Grid>
-
-            <Grid xs item>
-              <Typography className={classes.stats} component="p">
-                Peak connections: <br />
-                { connections }
-              </Typography>
-            </Grid>
-
-          </Grid>
-        </CardContent>
+          </CardContent>
+        </Link>
       </CardActionArea>
       
       <Divider variant="middle" />
