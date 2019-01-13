@@ -24,7 +24,7 @@ const styles = ({ breakpoints }) => ({
     width: "7%",
     height: "100vh",
     paddingTop: "13px",
-    zIndex: "2000000",
+    zIndex: "1300",
     position: "fixed",
 
     [breakpoints.down(960)]: {
