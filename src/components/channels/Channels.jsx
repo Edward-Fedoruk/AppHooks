@@ -8,17 +8,6 @@ import ChannelsList from './ChannelsList'
 import { fetchChannels } from '../../actions/channel'
 import { withRouter } from 'react-router'
 
-const fakeData = [
-  {
-    id: 5,
-    name: "aedf",
-    region: "Albania",
-    stages: [],
-    created_at: "2019-01-11 14:39:46",
-    updated_at: "2019-01-11 14:39:46"
-  }
-]
-
 export class Channels extends Component {
   static propTypes = {
     fetchChannels: PropTypes.func.isRequired
@@ -28,13 +17,13 @@ export class Channels extends Component {
     this.props.fetchChannels(this.props.history)
   }
 
+
   render() {
     const { channels } = this.props
     return (
       <Fragment>
-        {/* channels.length !== 0  */}
-        {true
-          ? <ChannelsList channels={fakeData} />
+        {channels.length !== 0 
+          ? <ChannelsList channels={channels} />
           : <CreateChannel />}
       </Fragment>
     )
