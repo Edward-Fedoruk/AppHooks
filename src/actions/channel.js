@@ -81,13 +81,13 @@ export const fetchChannels = routeHistory => dispatch => {
   })
   .then(data => {
     
-    dispatch(setChannelsData(JSON.parse(data)))
+    dispatch(setChannelsData(data))
   })
   .catch(er =>{
     console.log(er)
-    // routeHistory.push({
-    //   pathname: "/login"
-    // })
+    routeHistory.push({
+      pathname: "/login"
+    })
   })
 }
 
@@ -122,8 +122,43 @@ export const fetchChannel = (id, routeHistory) => dispatch => {
   })
   .catch(er =>{
     console.log(er)
-    // routeHistory.push({
-    //   pathname: "/login"
-    // })
+    routeHistory.push({
+      pathname: "/login"
+    })
+  })
+}
+
+export const removeChannelFromStore = (channelId) => ({
+  type: types.REMOVE_CHANNEL,
+  channelId
+}) 
+
+export const deleteChannel = (id, routeHistory) => dispatch => {
+  const accessToken = localStorage.getItem("JWT")
+
+  fetch(`http://app.develop.apphooks.io/apps/${id}`, {
+    method: "DELETE",
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': "Bearer " + accessToken
+    },
+  })
+  .then((response) => {
+    if (response.ok) {
+      return Promise.resolve(response)
+    }
+    return Promise.reject(response)
+  })
+  .then(data => {
+    console.log(data)
+    dispatch(removeChannelFromStore(id))
+    routeHistory.push("/channels")
+  })
+  .catch(er =>{
+    console.log(er)
+    routeHistory.push({
+      pathname: "/login"
+    })
   })
 }

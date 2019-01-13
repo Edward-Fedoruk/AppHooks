@@ -12,7 +12,7 @@ export default (state = initialState, action) => {
     case types.SET_CHANNELS: 
       return {
         ...state,
-        channels: state.channels.concat(action.channels).sort((a, b) => {
+        channels: state.channels.concat(action.channels.data).sort((a, b) => {
           const currRegion = a.region.toUpperCase()
           const nextRegion = b.region.toUpperCase() 
           if (currRegion < nextRegion) return -1
@@ -29,10 +29,15 @@ export default (state = initialState, action) => {
         error: true
       }
     case types.SET_CURRENT_CHANNEL: 
-      console.log(action.channel)
       return {
         ...state,
         currentChannel: action.channel.data,
+      }
+    case types.REMOVE_CHANNEL:
+      return {
+        ...state,
+        channels: state.channels.filter(({ id }) => id === action.channelId),
+        currentChannel: {}
       }
     default:
       return state

@@ -10,12 +10,14 @@ import ProtectedRout from './ProtectedRout'
 import App from './App'
 import AppNavigation from "./components/navigation/AppNavigation"
 import Channels from "./components/channels/Channels"
+import Channel from "./components/channels/Channel"
 
 const WithNavigation = () => (
-  <div>
+  <div style={{ display: "flex" }}>
     <Route component={AppNavigation} />
     <Route path='/' exact component={App} />
     <Route path='/channels' exact component={Channels} />
+    <Route path='/channels/:id' exact component={Channel} />
   </div>
 )
 
