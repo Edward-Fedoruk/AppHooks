@@ -53,24 +53,25 @@ export class ChannelsList extends Component {
             button
           />
           <div className={classes.contentWrap}>  
-            {channels.map((channel, i, arr) => {
+            {Object.keys(channels).map((key, i, arr) => {
               let setRegion = true
+              console.log(channels, Object.keys(channels), arr[i - 1], arr[i])
               if(arr[i - 1]) {
-                setRegion = arr[i - 1].region !== channel.region
+                setRegion = channels[arr[i - 1]].region !== channels[key].region
               }
 
               return (
-                <Fragment key={channel.id}>
+                <Fragment key={i}>
                   {setRegion && 
                     <Typography className={classes.region} variant="h3">
-                      {channel.region}
+                      {channels[key].region}
                     </Typography>}
 
                   <ChannelCard 
-                    channelId={channel.id}
-                    appName={channel.name}
-                    requests={channel.requests || 0}
-                    connections={channel.connections || 0}
+                    channelId={channels[key].id}
+                    appName={channels[key].name}
+                    requests={channels[key].requests || 0}
+                    connections={channels[key].connections || 0}
                   />
                 </Fragment>
               )

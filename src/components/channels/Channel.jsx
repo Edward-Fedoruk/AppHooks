@@ -9,7 +9,7 @@ import Title from '../Title'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import Divider from '@material-ui/core/Divider'
-import Stage from "./Stage"
+import Stage from "../stages/Stage"
 import AddCircle from '@material-ui/icons/AddCircle'
 import { fetchChannel, deleteChannel } from '../../actions/channel'
 import { withRouter } from "react-router"

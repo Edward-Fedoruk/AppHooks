@@ -1,5 +1,18 @@
 import * as types from "./types"
 import { compose } from 'redux'
+import { createStage } from './stage'
+import { normalize } from 'normalizr'
+import { channelSchema, channelsSchema } from './schemas'
+
+const setFetchSettings = (method, accessToken, body) => ({
+  method,
+  headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+    'Authorization': "Bearer " + accessToken
+  },
+  body
+})
 
 export const setChannelsData = channels => ({
   type: types.SET_CHANNELS,
@@ -9,6 +22,11 @@ export const setChannelsData = channels => ({
 export const throwChannelCreationError = errorMessage => ({
   type: types.CREATE_CHANNEL_ERROR,
   errorMessage
+})
+
+export const addChannel = (payload) => ({
+  type: types.ADD_CHANNEL,
+  payload
 })
 
 export const createChannel = (channelData, routeHistory) => dispatch => { 
@@ -23,33 +41,26 @@ export const createChannel = (channelData, routeHistory) => dispatch => {
   }
 
   const stringifiedData = JSON.stringify(channelData)
+  const settings = setFetchSettings("POST", accessToken, stringifiedData)
 
-  fetch("http://app.develop.apphooks.io/apps", {
-    method: "POST",
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'Authorization': "Bearer " + accessToken
-    },
-    body: stringifiedData
-  })
-  .then((response) => {
-    return response.json()
-    .then((json) => {
-      if (response.ok) {
-        return Promise.resolve(json)
-      }
-      return Promise.reject(json)
+  fetch("http://app.develop.apphooks.io/apps", settings)
+    .then((response) => {
+      return response.json()
+      .then((json) => {
+        if (response.ok) {
+          return Promise.resolve(json)
+        }
+        return Promise.reject(json)
+      })
     })
-  })
-  .then(data => {
-    console.log(data)
-    dispatch(setChannelsData(data))
-  })
-  .catch(er =>{
-    console.log(er)
-    dispatch(throwChannelCreationError(er.message))
-  })
+    .then(({ data }) => {
+      console.log(data)
+      dispatch(addChannel(normalize(data, channelSchema)))
+    })
+    .catch(er =>{
+      console.log(er)
+      dispatch(throwChannelCreationError(er.message))
+    })
 } 
 
 export const fetchChannels = routeHistory => dispatch => {
@@ -62,33 +73,27 @@ export const fetchChannels = routeHistory => dispatch => {
     return
   }
 
-  fetch("http://app.develop.apphooks.io/apps", {
-    method: "GET",
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'Authorization': "Bearer " + accessToken
-    },
-  })
-  .then((response) => {
-    return response.json()
-    .then((json) => {
-      if (response.ok) {
-        return Promise.resolve(json)
-      }
-      return Promise.reject(json)
+  const settings = setFetchSettings("GET", accessToken, null)
+
+  fetch("http://app.develop.apphooks.io/apps", settings)
+    .then((response) => {
+      return response.json()
+      .then((json) => {
+        if (response.ok) {
+          return Promise.resolve(json)
+        }
+        return Promise.reject(json)
+      })
     })
-  })
-  .then(data => {
-    
-    dispatch(setChannelsData(data))
-  })
-  .catch(er =>{
-    console.log(er)
-    routeHistory.push({
-      pathname: "/login"
+    .then(data => {
+      dispatch(setChannelsData(normalize(data.data, channelsSchema)))
     })
-  })
+    .catch(er =>{
+      console.log(er)
+      routeHistory.push({
+        pathname: "/login"
+      })
+    })
 }
 
 export const setCurrentChannel = (channel) => ({
@@ -99,33 +104,28 @@ export const setCurrentChannel = (channel) => ({
 export const fetchChannel = (id, routeHistory) => dispatch => {
   const accessToken = localStorage.getItem("JWT")
 
-  fetch(`http://app.develop.apphooks.io/apps/${id}`, {
-    method: "GET",
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'Authorization': "Bearer " + accessToken
-    },
-  })
-  .then((response) => {
-    return response.json()
-    .then((json) => {
-      if (response.ok) {
-        return Promise.resolve(json)
-      }
-      return Promise.reject(json)
+  const settings = setFetchSettings("GET", accessToken, null)
+
+  fetch(`http://app.develop.apphooks.io/apps/${id}`, settings)
+    .then((response) => {
+      return response.json()
+      .then((json) => {
+        if (response.ok) {
+          return Promise.resolve(json)
+        }
+        return Promise.reject(json)
+      })
     })
-  })
-  .then(data => {
-    console.log(data)
-    dispatch(setCurrentChannel(data))
-  })
-  .catch(er =>{
-    console.log(er)
-    routeHistory.push({
-      pathname: "/login"
+    .then(data => {
+      console.log(data)
+      dispatch(setCurrentChannel(data))
     })
-  })
+    .catch(er =>{
+      console.log(er)
+      routeHistory.push({
+        pathname: "/login"
+      })
+    })
 }
 
 export const removeChannelFromStore = (channelId) => ({
@@ -136,29 +136,24 @@ export const removeChannelFromStore = (channelId) => ({
 export const deleteChannel = (id, routeHistory) => dispatch => {
   const accessToken = localStorage.getItem("JWT")
 
-  fetch(`http://app.develop.apphooks.io/apps/${id}`, {
-    method: "DELETE",
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'Authorization': "Bearer " + accessToken
-    },
-  })
-  .then((response) => {
-    if (response.ok) {
-      return Promise.resolve(response)
-    }
-    return Promise.reject(response)
-  })
-  .then(data => {
-    console.log(data)
-    dispatch(removeChannelFromStore(id))
-    routeHistory.push("/channels")
-  })
-  .catch(er =>{
-    console.log(er)
-    routeHistory.push({
-      pathname: "/login"
+  const settings = setFetchSettings("DELETE", accessToken, null)
+  
+  fetch(`http://app.develop.apphooks.io/apps/${id}`, settings)
+    .then((response) => {
+      if (response.ok) {
+        return Promise.resolve(response)
+      }
+      return Promise.reject(response)
     })
-  })
+    .then(data => {
+      console.log(data)
+      dispatch(removeChannelFromStore(id))
+      routeHistory.push("/channels")
+    })
+    .catch(er =>{
+      console.log(er)
+      routeHistory.push({
+        pathname: "/login"
+      })
+    })
 }
