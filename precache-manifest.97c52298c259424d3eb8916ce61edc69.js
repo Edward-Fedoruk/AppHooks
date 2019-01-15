@@ -40,7 +40,7 @@ self.__precacheManifest = [
     "url": "/AppHooks/static/media/QuestionMark.f2bb3e32.svg"
   },
   {
-    "revision": "96fd3caaeee0cf806d248dfd252c6b81",
+    "revision": "67b081a7d7950db39ef7b0c5cf64e7ad",
     "url": "/AppHooks/index.html"
   }
 ];
