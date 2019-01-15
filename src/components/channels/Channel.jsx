@@ -61,7 +61,8 @@ const styles = () => ({
     textDecoration: "underline",
     display: "flex",
     alignItems: "flex-start",
-    cursor: "pointer"
+    cursor: "pointer",
+    width: "fit-content"
   }
 })
 

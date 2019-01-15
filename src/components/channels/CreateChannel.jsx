@@ -106,7 +106,7 @@ export class CreateChannel extends Component {
             />
 
             <SubmitButton 
-              text={"Log in"}
+              text={"Create Application"}
               styles={{width: "250px", display: "block", margin: "84px auto 20px auto"}}
             />
           </ValidatorForm>
