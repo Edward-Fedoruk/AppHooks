@@ -14,10 +14,10 @@ import Channel from "./components/channels/Channel"
 
 const WithNavigation = () => (
   <div style={{ display: "flex" }}>
-    <Route component={AppNavigation} />
-    <Route path='/' exact component={App} />
-    <Route path='/channels' exact component={Channels} />
-    <Route path='/channels/:id' exact component={Channel} />
+    <ProtectedRout component={AppNavigation} />
+    <ProtectedRout path='/' exact component={App} />
+    <ProtectedRout path='/channels' exact component={Channels} />
+    <ProtectedRout path='/channels/:id' exact component={Channel} />
   </div>
 )
 

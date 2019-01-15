@@ -150,7 +150,7 @@ export const deleteChannel = (id, routeHistory) => dispatch => {
     .then(data => {
       console.log(data)
       dispatch(removeChannelFromStore(id))
-      
+
       routeHistory.push("/channels")
     })
     .catch(er =>{

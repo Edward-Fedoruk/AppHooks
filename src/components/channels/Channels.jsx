@@ -15,6 +15,7 @@ export class Channels extends Component {
   }
   
   componentDidMount() {
+    console.log("test")
     this.props.fetchChannels(this.props.history)
   }
 
@@ -28,7 +29,7 @@ export class Channels extends Component {
         {showChannels 
           ? <ChannelsList channels={channels} />
           : <CreateChannel />}
-      </Fragment>
+      </Fragment> 
     )
   }
 }

@@ -85,7 +85,7 @@ export const logIn = (userData, routeHistory) => dispatch => {
 
     compose(dispatch, authenticate)(user)
 
-    routeHistory.push("/app")
+    routeHistory.push("/channels")
 
   })
   .catch(er => {
