@@ -23,7 +23,7 @@ const styles = () => ({
 const Stage = ({ stageName, classes }) => {
   return (
     <Paper className={classes.paper} elevation={1} >
-      <Typography className={classes.stageName}>test</Typography> 
+      <Typography className={classes.stageName}>{stageName}</Typography> 
     </Paper>
   )
 }
