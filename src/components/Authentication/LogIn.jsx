@@ -89,6 +89,7 @@ class LogIn extends Component {
         <ValidatorForm onSubmit={this.onSubmit}>
           {error ? "errorrrr" : "not errrorr"}
           <TextValidator
+            variant="outlined"
             label="Enter your email"
             name="email"
             autoFocus
@@ -102,6 +103,7 @@ class LogIn extends Component {
           />
 
           <TextValidator
+            variant="outlined"
             label="Your password"
             type="password"
             placeholder="e.g., *******"

@@ -107,6 +107,7 @@ class SignUp extends Component {
         <ValidatorForm onSubmit={this.onSubmit}>
 
           <TextValidator
+            variant="outlined"
             error={"email" in errors}
             helperText={"email" in errors && <span>{errors.email[0]}</span>}    
             FormHelperTextProps={{error: true}}        
@@ -123,6 +124,7 @@ class SignUp extends Component {
           />
 
           <TextValidator
+            variant="outlined"
             error={"phone" in errors}
             helperText={"phone" in errors && <span>{errors.phone[0]}</span>} 
             FormHelperTextProps={{error: true}}           
@@ -138,6 +140,7 @@ class SignUp extends Component {
           /> 
 
           <TextValidator 
+            variant="outlined"
             error={"password" in errors}
             helperText={"password" in errors && <span>{errors.password[0]}</span>} 
             FormHelperTextProps={{error: true}}     

@@ -10,7 +10,8 @@ import { withRouter } from 'react-router'
 
 export class Channels extends Component {
   static propTypes = {
-    fetchChannels: PropTypes.func.isRequired
+    fetchChannels: PropTypes.func.isRequired,
+    channels: PropTypes.object
   }
   
   componentDidMount() {
@@ -20,9 +21,11 @@ export class Channels extends Component {
 
   render() {
     const { channels } = this.props
+    console.log(channels)
+    const showChannels = channels !== undefined && channels.length !== 0 
     return (
       <Fragment>
-        {channels.length !== 0 
+        {showChannels 
           ? <ChannelsList channels={channels} />
           : <CreateChannel />}
       </Fragment>
@@ -30,8 +33,8 @@ export class Channels extends Component {
   }
 }
 
-const mapStateToProps = ({ channels }) => ({
-  channels: channels.channels
+const mapStateToProps = ({ channelsEntities }) => ({
+    channels: channelsEntities.entities.channels
 })
 
 const mapDispatchToProps = {
