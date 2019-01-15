@@ -1,0 +1,19 @@
+{
+  "main.css": "/AppHooks/static/css/main.cfd971f8.chunk.css",
+  "main.js": "/AppHooks/static/js/main.2a51c447.chunk.js",
+  "main.js.map": "/AppHooks/static/js/main.2a51c447.chunk.js.map",
+  "static/js/1.a11bda68.chunk.js": "/AppHooks/static/js/1.a11bda68.chunk.js",
+  "static/js/1.a11bda68.chunk.js.map": "/AppHooks/static/js/1.a11bda68.chunk.js.map",
+  "runtime~main.js": "/AppHooks/static/js/runtime~main.000bc896.js",
+  "runtime~main.js.map": "/AppHooks/static/js/runtime~main.000bc896.js.map",
+  "static/media/Logo.1e1f712c.svg": "/AppHooks/static/media/Logo.1e1f712c.svg",
+  "static/media/GitHub.6c352158.svg": "/AppHooks/static/media/GitHub.6c352158.svg",
+  "static/media/Google.83f606bc.svg": "/AppHooks/static/media/Google.83f606bc.svg",
+  "static/media/User.60ae5230.svg": "/AppHooks/static/media/User.60ae5230.svg",
+  "static/media/QuestionMark.f2bb3e32.svg": "/AppHooks/static/media/QuestionMark.f2bb3e32.svg",
+  "static/media/LogoIcon.0e1b91a7.svg": "/AppHooks/static/media/LogoIcon.0e1b91a7.svg",
+  "static/css/main.cfd971f8.chunk.css.map": "/AppHooks/static/css/main.cfd971f8.chunk.css.map",
+  "index.html": "/AppHooks/index.html",
+  "precache-manifest.97c52298c259424d3eb8916ce61edc69.js": "/AppHooks/precache-manifest.97c52298c259424d3eb8916ce61edc69.js",
+  "service-worker.js": "/AppHooks/service-worker.js"
+}
