@@ -2,7 +2,7 @@ import * as types from "./types"
 import { compose } from 'redux'
 import { createStage } from './stage'
 import { normalize } from 'normalizr'
-import { channelSchema, channelsSchema } from './schemas'
+import { channelSchema } from './schemas'
 
 const setFetchSettings = (method, accessToken, body) => ({
   method,
@@ -28,6 +28,16 @@ export const addChannel = (payload) => ({
   type: types.ADD_CHANNEL,
   payload
 })
+
+export const setCurrentChannel = (channel) => ({
+  type: types.SET_CURRENT_CHANNEL,
+  channel
+})
+
+export const removeChannelFromStore = (channelId) => ({
+  type: types.REMOVE_CHANNEL,
+  channelId
+}) 
 
 export const createChannel = (channelData, routeHistory) => dispatch => { 
   const accessToken = localStorage.getItem("JWT")
@@ -56,6 +66,8 @@ export const createChannel = (channelData, routeHistory) => dispatch => {
     .then(({ data }) => {
       console.log(data)
       dispatch(addChannel(normalize(data, channelSchema)))
+      const stageData = { name: `${data.name.trim()}-default` }
+      dispatch(createStage(data.id, stageData, routeHistory))
     })
     .catch(er =>{
       console.log(er)
@@ -86,7 +98,7 @@ export const fetchChannels = routeHistory => dispatch => {
       })
     })
     .then(data => {
-      dispatch(setChannelsData(normalize(data.data, channelsSchema)))
+      dispatch(setChannelsData(normalize(data.data, [channelSchema])))
     })
     .catch(er =>{
       console.log(er)
@@ -95,11 +107,6 @@ export const fetchChannels = routeHistory => dispatch => {
       })
     })
 }
-
-export const setCurrentChannel = (channel) => ({
-  type: types.SET_CURRENT_CHANNEL,
-  channel
-})
 
 export const fetchChannel = (id, routeHistory) => dispatch => {
   const accessToken = localStorage.getItem("JWT")
@@ -128,11 +135,6 @@ export const fetchChannel = (id, routeHistory) => dispatch => {
     })
 }
 
-export const removeChannelFromStore = (channelId) => ({
-  type: types.REMOVE_CHANNEL,
-  channelId
-}) 
-
 export const deleteChannel = (id, routeHistory) => dispatch => {
   const accessToken = localStorage.getItem("JWT")
 
@@ -148,6 +150,7 @@ export const deleteChannel = (id, routeHistory) => dispatch => {
     .then(data => {
       console.log(data)
       dispatch(removeChannelFromStore(id))
+      
       routeHistory.push("/channels")
     })
     .catch(er =>{
