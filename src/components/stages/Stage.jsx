@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 import { withStyles } from '@material-ui/core'
+import { Link } from 'react-router-dom'
 
 const styles = () => ({
   paper: {
@@ -20,10 +21,14 @@ const styles = () => ({
   }
 })
 
-const Stage = ({ stageName, classes }) => {
+const Stage = ({ stageName, classes, stageId }) => {
   return (
     <Paper className={classes.paper} elevation={1} >
-      <Typography className={classes.stageName}>{stageName}</Typography> 
+      <Typography 
+        className={classes.stageName}
+      >
+        {stageName}
+      </Typography> 
     </Paper>
   )
 }

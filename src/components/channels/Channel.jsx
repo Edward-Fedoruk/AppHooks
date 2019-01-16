@@ -122,7 +122,7 @@ export class Channel extends Component {
             </div>
 
             {currentChannel.stages.map((stage) => {
-              return <Stage key={stage.id} stageName={stage.name}/>
+              return <Stage  key={stage.id} stageName={stage.name}/>
             })}
             
             <ConfirmDialog 
