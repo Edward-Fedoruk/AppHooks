@@ -1,9 +1,11 @@
 import * as types from "./types"
 import { stageSchema } from './schemas'
+import { normalize } from 'normalizr'
 
-export const setStagesData = (payload) => ({
+export const setStagesData = (payload, id) => ({
   type: types.SET_STAGES,
-  payload
+  payload,
+  id
 })
 
 export const throwStageCreationError = (error) => ({
@@ -13,7 +15,7 @@ export const throwStageCreationError = (error) => ({
 
 export const createStage = (id, stageData, routeHistory) => dispatch => { 
   const accessToken = localStorage.getItem("JWT")
-  
+
   const stringifiedData = JSON.stringify(stageData)
 
   fetch(`http://app.develop.apphooks.io/apps/${id}/stages`, {
@@ -34,9 +36,9 @@ export const createStage = (id, stageData, routeHistory) => dispatch => {
       return Promise.reject(json)
     })
   })
-  .then(data => {
-    console.log(data)
-    dispatch(setStagesData(data))
+  .then(({ data }) => {
+    dispatch(setStagesData(normalize(data, stageSchema), id, data.id))
+    routeHistory.push(`/channels/${id}`)
   })
   .catch(er =>{
     console.log(er)

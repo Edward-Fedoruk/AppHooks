@@ -14,9 +14,9 @@ const setFetchSettings = (method, accessToken, body) => ({
   body
 })
 
-export const setChannelsData = channels => ({
+export const setChannelsData = payload => ({
   type: types.SET_CHANNELS,
-  channels
+  payload
 })
 
 export const throwChannelCreationError = errorMessage => ({
@@ -34,9 +34,9 @@ export const setCurrentChannel = (channel) => ({
   channel
 })
 
-export const removeChannelFromStore = (channelId) => ({
+export const removeChannelFromStore = (id) => ({
   type: types.REMOVE_CHANNEL,
-  channelId
+  id
 }) 
 
 export const createChannel = (channelData, routeHistory) => dispatch => { 

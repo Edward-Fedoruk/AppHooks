@@ -17,3 +17,4 @@ export const ADD_CHANNEL = 'ADD_CHANNEL'
 // stages
 export const SET_STAGES = 'SET_STAGES'
 export const CREATE_STAGE_ERROR = 'CREATE_STAGE_ERROR'
+export const REMOVE_STAGES = 'REMOVE_STAGES'
