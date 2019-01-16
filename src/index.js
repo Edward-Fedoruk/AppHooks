@@ -8,8 +8,10 @@ import theme from './muiTheme'
 import { Provider } from 'react-redux'
 import configureStore from './store'
 import Routes from './routes'
+import './i18n'
 
 const store = configureStore()
+
 
 ReactDOM.render(
   <MuiThemeProvider theme={theme} >

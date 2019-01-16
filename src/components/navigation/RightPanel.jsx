@@ -2,18 +2,13 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemIcon from '@material-ui/core/ListItemIcon'
-import ListItemText from '@material-ui/core/ListItemText'
 import Typography from '@material-ui/core/Typography'
 import Dashboard from '@material-ui/icons/Dashboard'
 import ExitToApp from '@material-ui/icons/ExitToApp'
-import { Link }from 'react-router-dom'
 import { Scrollbars } from 'react-custom-scrollbars'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import { matchPath } from 'react-router'
 import NavListItem from './NavListItem'
 
 const itemTextStyles = {
@@ -84,7 +79,7 @@ export class RightPanel extends Component {
   }
 
   render() {
-    const { classes, location} = this.props
+    const { classes, location } = this.props
     
     return (
       <div className={classes.navWrap}>
