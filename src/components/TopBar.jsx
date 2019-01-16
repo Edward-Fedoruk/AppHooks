@@ -53,7 +53,7 @@ export class TopBar extends Component {
     classes: PropTypes.object,
     history: PropTypes.object.isRequired,
     title: PropTypes.string.isRequired,
-    button: PropTypes.bool.isRequired,
+    button: PropTypes.bool,
     buttonText: PropTypes.string,
     onButtonClick: PropTypes.func
   }

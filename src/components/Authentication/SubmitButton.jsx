@@ -5,7 +5,7 @@ import { withStyles } from '@material-ui/core/styles'
 
 const styles = () => ({
   logIn: {
-    marginTop: "34px",
+    marginTop: "16px",
     background: "#35C1CE",
     color: "#fff",
     "&:hover": {

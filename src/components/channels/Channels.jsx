@@ -22,8 +22,8 @@ export class Channels extends Component {
 
   render() {
     const { channels } = this.props
-    console.log(channels)
     const showChannels = channels !== undefined && channels.length !== 0 
+    console.log(showChannels, channels)
     return (
       <Fragment>
         {showChannels 

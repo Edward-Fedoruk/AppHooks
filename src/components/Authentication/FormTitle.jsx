@@ -6,6 +6,7 @@ import PropTypes from 'prop-types'
 const styles = () => ({
   formTitleWrap: {
     position: "relative",
+    marginBottom: "15px"
   },
 
   line: {

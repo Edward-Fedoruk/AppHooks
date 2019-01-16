@@ -55,7 +55,7 @@ export class CreateChannel extends Component {
     if(!this.state.region) this.setState({ error: true })
     console.log({name: this.state.name, region: this.state.region[0]})
 
-    this.props.createChannel({name: this.state.name, region: this.state.region[0]})
+    this.props.createChannel({name: this.state.name, region: this.state.region[0]}, this.props.history)
   }
   
   handleChange = event => {
