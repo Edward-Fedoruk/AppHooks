@@ -55,7 +55,6 @@ export class ChannelsList extends Component {
           <div className={classes.contentWrap}>  
             {Object.keys(channels).map((key, i, arr) => {
               let setRegion = true
-              console.log(channels, Object.keys(channels), arr[i - 1], arr[i])
               if(arr[i - 1]) {
                 setRegion = channels[arr[i - 1]].region !== channels[key].region
               }

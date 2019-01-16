@@ -7,7 +7,7 @@ import { MuiThemeProvider } from '@material-ui/core/styles'
 import theme from './muiTheme'
 import { Provider } from 'react-redux'
 import configureStore from './store'
-import Routes from './Routes'
+import Routes from './routes'
 
 const store = configureStore()
 
