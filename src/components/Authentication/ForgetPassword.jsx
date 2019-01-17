@@ -9,6 +9,9 @@ import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator'
 import SubmitButton from './SubmitButton'
 import { connect } from 'react-redux'
 import { reSendEmail } from '../../actions/auth'
+import ErrorSnackbar from './ErrorSnackbar'
+import { compose } from 'redux'
+import { withRouter } from 'react-router'
 
 const styles = ({ breakpoints }) => ({
   paper: {
@@ -25,7 +28,7 @@ const styles = ({ breakpoints }) => ({
   },
 
   title: {
-    ...titleStyles
+    ...titleStyles,
   },
 
   p: {
@@ -53,13 +56,20 @@ class ForgetPassword extends React.Component {
 
   onSubmit = e => {
     e.preventDefault()
-    this.props.reSendEmail(this.state.email)
+    console.log(this.props, this.props.history)
+    this.props.reSendEmail(this.state, this.props.history)
   }
 
   render() {
-    const { classes } = this.props
+    const { classes, resendError, resendErrorMessage } = this.props
     return (
       <Paper className={classes.paper}>
+        <ErrorSnackbar
+          open={resendError}
+          variant="error"
+          message={resendErrorMessage}
+        />
+
         <Typography className={classes.title} variant="h3" align="center">
           Forgot your password?
         </Typography>
@@ -69,6 +79,8 @@ class ForgetPassword extends React.Component {
 
         <ValidatorForm onSubmit={this.onSubmit}>
           <TextValidator
+            error={resendError}
+            variant="outlined"
             label="Enter your email"
             name="email"
             autoFocus
@@ -83,7 +95,6 @@ class ForgetPassword extends React.Component {
 
           <SubmitButton
             text={"Send reset instructions"}
-            path={"/password"}
           />
         </ValidatorForm>
       </Paper>
@@ -91,10 +102,18 @@ class ForgetPassword extends React.Component {
   }
 }
 
-
 const mapDispatchToProps = dispatch => ({
-  reSendEmail: email => dispatch(reSendEmail(email))
+  reSendEmail: (email, routeHistory) => dispatch(reSendEmail(email, routeHistory))
 })
 
+const mapStateToProps = ({ authentication }) => ({
+  resendError: authentication.resendError,
+  resendErrorMessage: authentication.resendErrorMessage,
+})
 
-export default withBackground(withStyles(styles)(connect(null, mapDispatchToProps)(ForgetPassword)))
+export default compose( 
+  withBackground,
+  withStyles(styles),
+  withRouter,
+  connect(mapStateToProps, mapDispatchToProps)
+)(ForgetPassword)

@@ -5,7 +5,6 @@ import SignUp from './components/Authentication/SignUp'
 import EmailActivation from './components/Authentication/EmailActivation'
 import ForgetPassword from './components/Authentication/ForgetPassword'
 import ResetPassword from './components/Authentication/ResetPassword'
-import { loadReCaptcha } from 'react-recaptcha-v3'
 import ProtectedRout from './ProtectedRout'
 import App from './App'
 import AppNavigation from "./components/navigation/AppNavigation"
@@ -36,7 +35,7 @@ class Routes extends React.Component {
           <Route path='/signup' exact component={SignUp} />
           <Route path='/password' exact component={ForgetPassword} />
           <ProtectedRout path='/resetPassword' exact component={ResetPassword} />
-          <ProtectedRout path='/signup/success' exact component={EmailActivation} />
+          <Route path='/signup/success' exact component={EmailActivation} />
           <Route component={WithNavigation}/>
         </Switch>   
       </BrowserRouter>

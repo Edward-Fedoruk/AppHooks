@@ -9,5 +9,6 @@ export const titleStyles = {
   fontWeight: "500",
   fontSize: "20px",
   color: "#5A5B5F",
-  marginBottom: "25px"
+  marginBottom: "25px",
+  textAlign: "left"
 }

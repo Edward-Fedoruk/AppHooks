@@ -12,7 +12,7 @@ import SubmitButton from './SubmitButton'
 import { connect } from 'react-redux'
 import { logIn } from '../../actions/auth'
 import { withRouter } from 'react-router'
-import MySnackbarContent from '../MySnackbarContent'
+import ErrorSnackbar from './ErrorSnackbar'
 
 const flexCenter = {
   display: "flex",
@@ -20,14 +20,14 @@ const flexCenter = {
   alignItems: "center",
 }
 
-const styles = ({ breakpoints }) => ({
+const styles = ({ breakpoints, spacing }) => ({
   paper: {
     width: "30%",
     height: "min-content",
     minWidth: "405px",
     maxWidth: "450px",
     padding: "34px 34px 27px 34px",
-    marginTop: "6%",
+    marginTop: "4%",
     boxShadow: "2px 4px 50px rgba(0, 0, 0, 0.25)",
     
     [breakpoints.down(500)]: {
@@ -61,11 +61,13 @@ const styles = ({ breakpoints }) => ({
 class LogIn extends Component {
   state = {
     email: "",
-    password: ""
+    password: "",
+    open: false
   }
 
   onSuccess = response => console.log(response)
   onFailure = response => console.error(response)
+  handleClose = () => {}
 
   onSubmit = e => {
     e.preventDefault()
@@ -75,21 +77,29 @@ class LogIn extends Component {
   onChange = input => e => this.setState({ [input]: e.target.value })
 
   render() {
-    const { classes, error } = this.props
+    const { classes, logInError, logInErrorMessage } = this.props
     return (
       <Paper className={classes.paper}>
+
+        <ErrorSnackbar
+          open={logInError}
+          variant="error"
+          message={logInErrorMessage}
+        />
+
         <SocialAuthentication 
           onSuccess={this.onSuccess}
           onFailure={this.onFailure}
           text={"Log in"}
         />
+
         <FormTitle 
           text={"or login with email"}
         />
 
         <ValidatorForm onSubmit={this.onSubmit}>
-          {error ? "errorrrr" : "not errrorr"}
           <TextValidator
+            error={logInError}
             variant="outlined"
             label="Enter your email"
             name="email"
@@ -104,6 +114,7 @@ class LogIn extends Component {
           />
 
           <TextValidator
+            error={logInError}
             variant="outlined"
             label="Your password"
             type="password"
@@ -142,7 +153,8 @@ class LogIn extends Component {
 
 
 const mapStateToProps = ({ authentication }) => ({
-  error: authentication.error
+  logInError: authentication.logInError,
+  logInErrorMessage: authentication.logInErrorMessage
 })
 
 const mapDispatchToProps = dispatch => ({

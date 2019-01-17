@@ -65,7 +65,7 @@ export class CreateChannel extends Component {
   onChange = input => e => this.setState({ [input]: e.target.value })
 
   render() {
-    const { classes, errorMessage, error } = this.props
+    const { classes, error } = this.props
     const { name, region } = this.state
     return (
       <Fragment>

@@ -3,7 +3,13 @@ import  * as types from '../actions/types'
 const initialState = {
   errors: {},
   isAuthenticated: false,
-  error: false
+  error: false,
+  
+  resendError: false,
+  resendErrorMessage: "",
+
+  logInError: false,
+  logInErrorMessage: ""
 }
 
 export default (state = initialState, action) => {

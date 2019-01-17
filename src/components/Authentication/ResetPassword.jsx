@@ -100,13 +100,5 @@ class ResetPassword extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  
-})
-
-const mapDispatchToProps = {
-  
-}
-
 
 export default withBackground(withStyles(styles)(connect()(ResetPassword)))

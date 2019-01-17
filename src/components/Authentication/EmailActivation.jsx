@@ -51,6 +51,7 @@ const styles = ({ breakpoints }) => ({
 
   return (
     <Paper className={classes.paper}>
+      {console.log(location.state)}
       <Typography className={classes.title} variant="h3" align="center">
         Thank you for registration!
       </Typography>
