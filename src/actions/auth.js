@@ -91,14 +91,14 @@ export const logIn = (userData, routeHistory) => dispatch => {
   .catch(er => {
     const user = {
       isAuthenticated: false,
-      error: true,
+      logInError: true,
+      logInErrorMessage: er.message
     }
-
     dispatch(throwAuthError(user))
   })
 }
 
-export const reSendEmail = email => dispatch => {
+export const reSendEmail = (email, routeHistory) => dispatch => {
   const stringifiedData = JSON.stringify(email)
 
   fetch("http://app.develop.apphooks.io/auth/password/email", {
@@ -119,9 +119,18 @@ export const reSendEmail = email => dispatch => {
     })
   })
   .then(jsonData => {
-    console.log(jsonData)
+    console.log(jsonData, routeHistory)
+  
+    routeHistory.push({
+      pathname: "/signup/success",
+      state: { userData: { userEmail: email.email } }
+    })
   })
   .catch(er => {
+    dispatch(throwAuthError({
+      resendErrorMessage: er.message,
+      resendError: true
+    }))
     console.log(er)
   }) 
 }  

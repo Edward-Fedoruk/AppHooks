@@ -93,7 +93,6 @@ class SignUp extends Component {
 
   render() {
     const { classes, errors } = this.props
-    // console.log(errors)
     
     return (
       <Paper className={classes.paper}>

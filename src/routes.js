@@ -36,7 +36,7 @@ class Routes extends React.Component {
           <Route path='/signup' exact component={SignUp} />
           <Route path='/password' exact component={ForgetPassword} />
           <ProtectedRout path='/resetPassword' exact component={ResetPassword} />
-          <ProtectedRout path='/signup/success' exact component={EmailActivation} />
+          <Route path='/signup/success' exact component={EmailActivation} />
           <Route component={WithNavigation}/>
         </Switch>   
       </BrowserRouter>

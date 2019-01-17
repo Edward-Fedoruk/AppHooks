@@ -16,6 +16,9 @@ const styles = ({ breakpoints }) => ({
     [breakpoints.down(500)]: {
       alignItems: "flex-end"
     },
+    [breakpoints.down(800)]: {
+      paddingTop: "30px"
+    },
   },
 
   pageLogo: {
@@ -29,7 +32,7 @@ const styles = ({ breakpoints }) => ({
       left: "10px"
     },
     [breakpoints.down(800)]: {
-      display: "none"
+      display: "none",
     },
     [breakpoints.down(500)]: {
       display: "block",
