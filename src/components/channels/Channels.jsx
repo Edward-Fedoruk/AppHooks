@@ -21,8 +21,8 @@ export class Channels extends Component {
 
 
   render() {
-    const { channels } = this.props
-    const showChannels = channels !== undefined && channels.length !== 0 
+    const { channels, result } = this.props
+    const showChannels = result !== undefined && result.length !== 0 
     console.log(showChannels, channels)
     return (
       <Fragment>
@@ -35,7 +35,8 @@ export class Channels extends Component {
 }
 
 const mapStateToProps = ({ channelsEntities }) => ({
-    channels: channelsEntities.entities.channels
+    channels: channelsEntities.entities.channels,
+    result: channelsEntities.result
 })
 
 const mapDispatchToProps = {

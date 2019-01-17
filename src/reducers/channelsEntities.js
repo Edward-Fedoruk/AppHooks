@@ -41,9 +41,8 @@ export default (state = initialState, action) => {
     case types.REMOVE_STAGES: {
       const { entities, channels } = state
       const { id } = action
-      const stagesIds = entities.channels[id].stages
       const stagesKeys = Object.keys(entities.stages)
-        .filter(key => !stagesIds.includes(parseInt(key)))
+        .filter(key => !channels[id].stages.includes(parseInt(key)))
       return {
         ...state,
         entities: {
