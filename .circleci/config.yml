@@ -35,8 +35,7 @@ jobs:
       - run: sudo pip install awscli --upgrade
       - run: aws --version
       - run: aws s3 ls
-      - run: echo "*.js" > .eslintignore
-      - run: npm run build
+      - run: CI=false npm run build
 
       - deploy:
           name: deploy to AWS
