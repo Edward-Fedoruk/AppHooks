@@ -37,7 +37,7 @@ jobs:
       - run: aws s3 ls
       - run: CI=false REACT_APP_ASSETS= npm run build
       - run: aws s3 sync build/ s3://apphooks-frontend --delete
-      - run: aws cloudfront create-invalidation --distribution-id E1K5SM215FMFYB --paths *
+      - run: aws cloudfront create-invalidation --distribution-id E1K5SM215FMFYB --paths /*
 
 workflows:
   version: 2
