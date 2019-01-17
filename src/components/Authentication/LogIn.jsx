@@ -12,6 +12,7 @@ import SubmitButton from './SubmitButton'
 import { connect } from 'react-redux'
 import { logIn } from '../../actions/auth'
 import { withRouter } from 'react-router'
+import MySnackbarContent from '../MySnackbarContent'
 
 const flexCenter = {
   display: "flex",
@@ -24,6 +25,7 @@ const styles = ({ breakpoints }) => ({
     width: "30%",
     height: "min-content",
     minWidth: "405px",
+    maxWidth: "450px",
     padding: "34px 34px 27px 34px",
     marginTop: "6%",
     boxShadow: "2px 4px 50px rgba(0, 0, 0, 0.25)",
@@ -81,7 +83,6 @@ class LogIn extends Component {
           onFailure={this.onFailure}
           text={"Log in"}
         />
-        
         <FormTitle 
           text={"or login with email"}
         />

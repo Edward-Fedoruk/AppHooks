@@ -21,6 +21,7 @@ const styles = ({ breakpoints }) => ({
     width: "30%",
     height: "min-content",
     minWidth: "405px",
+    maxWidth: "450px",
     padding: "34px 34px 27px 34px",
     marginTop: "6%",
     boxShadow: "2px 4px 50px rgba(0, 0, 0, 0.25)",
