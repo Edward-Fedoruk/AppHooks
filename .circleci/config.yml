@@ -21,7 +21,7 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
-      - run: yarn install
+      - run: npm i --production
 
       - save_cache:
           paths:
@@ -35,7 +35,8 @@ jobs:
       - run: sudo pip install awscli --upgrade
       - run: aws --version
       - run: aws s3 ls
-      - run: yarn build
+      - run: echo "*.js" > .eslintignore
+      - run: npm run build
 
       - deploy:
           name: deploy to AWS
@@ -45,3 +46,5 @@ jobs:
             else
               echo "Not master branch, dry run only"
             fi
+
+      - run: aws cloudfront create-invalidation --distribution-id E1K5SM215FMFYB --paths /*
