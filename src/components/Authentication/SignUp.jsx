@@ -13,7 +13,6 @@ import { connect } from 'react-redux'
 import { compose } from 'redux'
 import PropTypes from "prop-types"
 import { withRouter } from "react-router"
-import { ReCaptcha } from 'react-recaptcha-v3'
 
 
 const styles = ({ breakpoints }) => ({

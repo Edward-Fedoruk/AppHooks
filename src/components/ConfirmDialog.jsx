@@ -10,7 +10,9 @@ import Button from '@material-ui/core/Button'
 export class ConfirmDialog extends Component {
 
   static propTypes = {
-
+    open: PropTypes.bool,
+    handleClose: PropTypes.func,
+    handleCloseWithAction: PropTypes.func
   }
 
 

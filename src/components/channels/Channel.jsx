@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { compose } from 'redux'
 import { withStyles } from '@material-ui/core'
 import withNavigation from '../withNavigation'
 import TopBar from '../TopBar'
@@ -14,6 +13,7 @@ import AddCircle from '@material-ui/icons/AddCircle'
 import { fetchChannel, deleteChannel } from '../../actions/channel'
 import { withRouter } from "react-router"
 import ConfirmDialog from '../ConfirmDialog'
+import {compose} from 'redux'
 
 const styles = () => ({
   contentWrap: {
@@ -96,7 +96,7 @@ export class Channel extends Component {
   addStage = () => {}
 
   render() {
-    const { history, match, classes, currentChannel, deleteChannel } = this.props
+    const { classes, currentChannel, } = this.props
     if(currentChannel.name) 
       return (
         <Fragment>

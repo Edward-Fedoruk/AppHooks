@@ -1,10 +1,7 @@
 import React from 'react'
 import classNames from 'classnames'
-import CheckCircleIcon from '@material-ui/icons/CheckCircle'
 import ErrorIcon from '@material-ui/icons/Error'
-import InfoIcon from '@material-ui/icons/Info'
 import SnackbarContent from '@material-ui/core/SnackbarContent'
-import WarningIcon from '@material-ui/icons/Warning'
 import { withStyles } from '@material-ui/core/styles'
 import Snackbar from '@material-ui/core/Snackbar'
 

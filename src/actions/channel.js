@@ -1,5 +1,4 @@
 import * as types from "./types"
-import { compose } from 'redux'
 import { createStage } from './stage'
 import { normalize } from 'normalizr'
 import { channelSchema } from './schemas'
