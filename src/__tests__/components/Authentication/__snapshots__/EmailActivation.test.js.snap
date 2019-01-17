@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Button should render correctly 1`] = `
+exports[`EmailActivation should render correctly 1`] = `
 <WithStyles(Paper)>
   <WithStyles(Typography)
     align="center"
