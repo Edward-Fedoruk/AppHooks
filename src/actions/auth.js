@@ -1,6 +1,7 @@
 import * as types from "./types"
 import { compose } from 'redux'
 import { domain } from './types'
+import { toggleSnackbar } from './ui'
 
 export const authenticate = (payload) => ({
   type: types.CREATE_USER,
@@ -96,6 +97,7 @@ export const logIn = (userData, routeHistory) => dispatch => {
       logInErrorMessage: er.message
     }
     dispatch(throwAuthError(user))
+    dispatch(toggleSnackbar(false))
   })
 }
 
@@ -133,6 +135,7 @@ export const reSendEmail = (email, routeHistory) => dispatch => {
       resendError: true
     }))
     console.log(er)
+    dispatch(toggleSnackbar(false))
   }) 
 }  
 

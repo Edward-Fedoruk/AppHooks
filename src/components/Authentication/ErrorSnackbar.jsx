@@ -4,6 +4,9 @@ import ErrorIcon from '@material-ui/icons/Error'
 import SnackbarContent from '@material-ui/core/SnackbarContent'
 import { withStyles } from '@material-ui/core/styles'
 import Snackbar from '@material-ui/core/Snackbar'
+import { connect } from 'react-redux'
+import { compose } from 'redux'
+import { toggleSnackbar } from '../../actions/ui'
 
 const styles = ({ breakpoints, spacing }) => ({
   snackbar: {
@@ -22,12 +25,8 @@ const styles = ({ breakpoints, spacing }) => ({
       width: "95%",
     },
   },
-  error: {
-    backgroundColor: "#F25252"
-  },
-  icon: {
-    fontSize: 20,
-  },
+  error: { backgroundColor: "#F25252" },
+  icon: { fontSize: 20 },
   iconVariant: {
     opacity: 0.9,
     marginRight: spacing.unit,
@@ -40,8 +39,9 @@ const styles = ({ breakpoints, spacing }) => ({
 
 const ErrorSnackbar = ({ 
   classes, className, message,
-  variant, open
+  variant, toggleSnackbar, snackbar,
 }) => {
+
   return (
     <Snackbar
       className={classes.snackbar}
@@ -49,10 +49,12 @@ const ErrorSnackbar = ({
         vertical: 'top',
         horizontal: 'center',
       }}
-      open={open}
+      autoHideDuration={7000}
+      open={snackbar}
+      onClose={toggleSnackbar}
     >
       <SnackbarContent
-        className={classNames(classes[variant], className)}
+        className={classNames(classes.error, className)}
         aria-describedby="client-snackbar"
         message={
           <span id="client-snackbar" className={classes.message}>
@@ -65,4 +67,15 @@ const ErrorSnackbar = ({
   )
 }
 
-export default withStyles(styles)(ErrorSnackbar)
+const mapStateToProps = ({ view }) => ({
+  snackbar: view.snackbar,
+})
+
+const mapDispatchToProps = dispatch => ({ 
+  toggleSnackbar: () => dispatch(toggleSnackbar(false))
+})
+
+export default compose(
+  withStyles(styles),
+  connect(mapStateToProps, mapDispatchToProps)
+)(ErrorSnackbar)
