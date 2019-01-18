@@ -2,7 +2,7 @@ export const paperStyles = {
   padding: "36px 50px",
   width: "500px",
   height: "fit-content",
-  marginTop: "8%",
+  marginTop: "10%",
 }
 
 export const titleStyles = {
