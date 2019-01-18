@@ -1,5 +1,6 @@
 import * as types from "./types"
 import { compose } from 'redux'
+import { domain } from './types'
 
 export const authenticate = (payload) => ({
   type: types.CREATE_USER,
@@ -14,7 +15,7 @@ export const throwAuthError = (error) => ({
 export const createUser = (userData, routeHistory) => dispatch => {
   const stringifiedData = JSON.stringify(userData)
 
-  fetch("http://app.develop.apphooks.io/auth/register", {
+  fetch(`${domain}/auth/register`, {
     method: "POST",
     headers: {
       'Accept': 'application/json',
@@ -58,7 +59,7 @@ export const createUser = (userData, routeHistory) => dispatch => {
 export const logIn = (userData, routeHistory) => dispatch => {
   const stringifiedData = JSON.stringify(userData)
 
-  fetch("http://app.develop.apphooks.io/auth/login", {
+  fetch(`${domain}/auth/login`, {
     method: "POST",
     headers: {
       'Accept': 'application/json',
@@ -101,7 +102,7 @@ export const logIn = (userData, routeHistory) => dispatch => {
 export const reSendEmail = (email, routeHistory) => dispatch => {
   const stringifiedData = JSON.stringify(email)
 
-  fetch("http://app.develop.apphooks.io/auth/password/email", {
+  fetch(`${domain}/auth/password/email`, {
     method: "POST",
     headers: {
       'Accept': 'application/json',
@@ -139,7 +140,7 @@ export const reSendEmail = (email, routeHistory) => dispatch => {
 export const resetPassword = (userData, routeHistory) => dispatch => {
   const stringifiedData = JSON.stringify(userData)
   
-  fetch("http://app.develop.apphooks.io/auth/password/reset", {
+  fetch(`${domain}/auth/password/reset`, {
     method: "POST",
     headers: {
       'Accept': 'application/json',

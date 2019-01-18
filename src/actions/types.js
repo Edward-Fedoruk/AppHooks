@@ -1,5 +1,8 @@
+export const domain = "https://app.develop.apphooks.io"
+
 // user interface
 export const NAV_BAR = "NAV_BAR"
+export const TOGGLE_SNACKBAR = 'TOGGLE_SNACKBAR'
 
 // user authentication
 export const AUTH_ERROR = "AUTH_ERROR" 

@@ -1,6 +1,7 @@
 import * as types from "./types"
 import { stageSchema } from './schemas'
 import { normalize } from 'normalizr'
+import { domain } from './types'
 
 export const setStagesData = (payload, id) => ({
   type: types.SET_STAGES,
@@ -18,7 +19,7 @@ export const createStage = (id, stageData, routeHistory) => dispatch => {
 
   const stringifiedData = JSON.stringify(stageData)
 
-  fetch(`http://app.develop.apphooks.io/apps/${id}/stages`, {
+  fetch(`${domain}/apps/${id}/stages`, {
     method: "POST",
     headers: {
       'Accept': 'application/json',

@@ -2,6 +2,7 @@ import * as types from "./types"
 import { createStage } from './stage'
 import { normalize } from 'normalizr'
 import { channelSchema } from './schemas'
+import { domain } from './types'
 
 const setFetchSettings = (method, accessToken, body) => ({
   method,
@@ -52,7 +53,7 @@ export const createChannel = (channelData, routeHistory) => dispatch => {
   const stringifiedData = JSON.stringify(channelData)
   const settings = setFetchSettings("POST", accessToken, stringifiedData)
 
-  fetch("http://app.develop.apphooks.io/apps", settings)
+  fetch(`${domain}/apps`, settings)
     .then((response) => {
       return response.json()
       .then((json) => {
@@ -86,7 +87,7 @@ export const fetchChannels = routeHistory => dispatch => {
 
   const settings = setFetchSettings("GET", accessToken, null)
 
-  fetch("http://app.develop.apphooks.io/apps", settings)
+  fetch(`${domain}/apps`, settings)
     .then((response) => {
       return response.json()
       .then((json) => {
@@ -112,7 +113,7 @@ export const fetchChannel = (id, routeHistory) => dispatch => {
 
   const settings = setFetchSettings("GET", accessToken, null)
 
-  fetch(`http://app.develop.apphooks.io/apps/${id}`, settings)
+  fetch(`${domain}/apps/${id}`, settings)
     .then((response) => {
       return response.json()
       .then((json) => {
@@ -139,7 +140,7 @@ export const deleteChannel = (id, routeHistory) => dispatch => {
 
   const settings = setFetchSettings("DELETE", accessToken, null)
   
-  fetch(`http://app.develop.apphooks.io/apps/${id}`, settings)
+  fetch(`${domain}/apps/${id}`, settings)
     .then((response) => {
       if (response.ok) {
         return Promise.resolve(response)
