@@ -12,7 +12,7 @@ import { connect } from 'react-redux'
 const styles = ({ breakpoints }) => ({
   paper: {
     ...paperStyles, 
-    paddingRigth: "70px",
+    paddingRight: "70px",
     paddingLeft: "70px",
     paddingBottom: "80px",
 
@@ -50,6 +50,8 @@ class ResetPassword extends Component {
   }
 
   onChange = input => e => this.setState({ [input]: e.target.value })
+  handleBlur = event => 
+    this.refs[event.target.name].validate(event.target.value)
 
   render() {
     const { classes } = this.props
@@ -63,16 +65,18 @@ class ResetPassword extends Component {
           We’ve got you covered
         </Typography>
 
-        <ValidatorForm onSubmit={this.onSubmit}>
+        <ValidatorForm onSubmit={this.onSubmit} instantValidate={false}> 
           <TextValidator
             label="New Password"
             type="password"
             placeholder="e.g., *******"
             onChange={this.onChange('password')}
+            onBlur={this.handleBlur}
             className={classes.textField}
             value={this.state.password}
             margin="normal"
             name="password"
+            ref="password"
             validators={['required', 'minStringLength:6', 'maxStringLength:16']}
             errorMessages={['this field is required', 'password must contain at least 6 characters', 'password must contain no more then 16 characters']}
           />
@@ -82,17 +86,18 @@ class ResetPassword extends Component {
             type="password"
             placeholder="e.g., *******"
             onChange={this.onChange('password')}
+            onBlur={this.handleBlur}
             className={classes.textField}
             value={this.state.password}
             margin="normal"
-            name="password"
+            name="newPassword"
+            ref="newPassword"
             validators={['required', 'minStringLength:6', 'maxStringLength:16']}
             errorMessages={['this field is required', 'password must contain at least 6 characters', 'password must contain no more then 16 characters']}
           />
 
           <SubmitButton
             text={"Change Password"}
-            path={"/password"}
           />
         </ValidatorForm>
       </Paper>

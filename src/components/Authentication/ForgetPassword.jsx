@@ -53,7 +53,9 @@ class ForgetPassword extends React.Component {
   }
 
   onChange = input => e => this.setState({ [input]: e.target.value })
-
+  handleBlur = event => 
+    this.refs[event.target.name].validate(event.target.value)
+  
   onSubmit = e => {
     e.preventDefault()
     console.log(this.props, this.props.history)
@@ -65,7 +67,6 @@ class ForgetPassword extends React.Component {
     return (
       <Paper className={classes.paper}>
         <ErrorSnackbar
-          open={resendError}
           variant="error"
           message={resendErrorMessage}
         />
@@ -77,15 +78,17 @@ class ForgetPassword extends React.Component {
           We’ve got you covered
         </Typography>
 
-        <ValidatorForm onSubmit={this.onSubmit}>
+        <ValidatorForm onSubmit={this.onSubmit} instantValidate={false}>
           <TextValidator
             error={resendError}
             variant="outlined"
             label="Enter your email"
             name="email"
+            ref="email"
             autoFocus
             placeholder="e.g., carl@cloud.ci"
             onChange={this.onChange('email')}
+            onBlur={this.handleBlur}
             className={classes.textField}
             value={this.state.email}
             margin="normal"

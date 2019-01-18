@@ -62,7 +62,6 @@ class LogIn extends Component {
   state = {
     email: "",
     password: "",
-    open: false
   }
 
   onSuccess = response => console.log(response)
@@ -75,6 +74,8 @@ class LogIn extends Component {
   }
 
   onChange = input => e => this.setState({ [input]: e.target.value })
+  handleBlur = event => 
+    this.refs[event.target.name].validate(event.target.value)
 
   render() {
     const { classes, logInError, logInErrorMessage } = this.props
@@ -82,7 +83,6 @@ class LogIn extends Component {
       <Paper className={classes.paper}>
 
         <ErrorSnackbar
-          open={logInError}
           variant="error"
           message={logInErrorMessage}
         />
@@ -97,15 +97,17 @@ class LogIn extends Component {
           text={"or login with email"}
         />
 
-        <ValidatorForm onSubmit={this.onSubmit}>
+        <ValidatorForm onSubmit={this.onSubmit} instantValidate={false}>
           <TextValidator
             error={logInError}
             variant="outlined"
             label="Enter your email"
             name="email"
+            ref="email"
             autoFocus
             placeholder="e.g., carl@cloud.ci"
             onChange={this.onChange('email')}
+            onBlur={this.handleBlur}
             className={classes.textField}
             value={this.state.email}
             margin="normal"
@@ -113,35 +115,35 @@ class LogIn extends Component {
             errorMessages={['this field is required', 'email is not valid']}
           />
 
-          <TextValidator
-            error={logInError}
+          <TextValidator 
             variant="outlined"
+            error={logInError}
             label="Your password"
             type="password"
             placeholder="e.g., *******"
             onChange={this.onChange('password')}
+            onBlur={this.handleBlur}
             className={classes.textField}
             value={this.state.password}
             margin="normal"
             name="password"
+            ref="password"
             validators={['required', 'minStringLength:6', 'maxStringLength:16']}
             errorMessages={['this field is required', 'password must contain at least 6 characters', 'password must contain no more then 16 characters']}
           />
 
           <Typography className={classes.remindLink}>
-            <Link to="/password">
+            <Link style={{color: "blue"}} to="/password">
               Forgot password?
             </Link>
           </Typography>
 
-          <SubmitButton 
-            text={"Log in"}
-          />
+          <SubmitButton text={"Log in"} />
 
           <Typography className={classes.signLink}>
             Don't have an account? 
             <span> </span>
-            <Link to="/signup">
+            <Link style={{color: "blue"}} to="/signup">
               Sign Up
             </Link>
           </Typography>
@@ -152,9 +154,9 @@ class LogIn extends Component {
 }
 
 
-const mapStateToProps = ({ authentication }) => ({
+const mapStateToProps = ({ authentication, view }) => ({
   logInError: authentication.logInError,
-  logInErrorMessage: authentication.logInErrorMessage
+  logInErrorMessage: authentication.logInErrorMessage,
 })
 
 const mapDispatchToProps = dispatch => ({

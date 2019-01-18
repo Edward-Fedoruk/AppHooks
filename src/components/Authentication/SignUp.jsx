@@ -80,6 +80,10 @@ class SignUp extends Component {
     console.log(recaptchaToken)
   }
 
+  handleBlur = event => 
+    this.refs[event.target.name].validate(event.target.value)
+  
+
   onChange = input => e => this.setState({ [input]: e.target.value })
 
   componentDidMount() {
@@ -103,7 +107,7 @@ class SignUp extends Component {
         <FromTitle 
           text={"or sign up with email"}
         />
-        <ValidatorForm onSubmit={this.onSubmit}>
+        <ValidatorForm instantValidate={false} onSubmit={this.onSubmit}>
 
           <TextValidator
             variant="outlined"
@@ -112,9 +116,11 @@ class SignUp extends Component {
             FormHelperTextProps={{error: true}}        
             label="Enter your email"
             name="email"
+            ref="email"
             autoFocus
             placeholder="e.g., carl@cloud.ci"
             onChange={this.onChange('email')}
+            onBlur={this.handleBlur}
             className={classes.textField}
             value={this.state.email}
             margin="normal"
@@ -129,8 +135,10 @@ class SignUp extends Component {
             FormHelperTextProps={{error: true}}           
             label="+(41 20)-123-4567"
             name="phone"
+            ref="phone"
             placeholder="phone number"
             onChange={this.onChange('phone')}
+            onBlur={this.handleBlur}
             className={classes.textField}
             value={this.state.phone}
             margin="normal"
@@ -147,10 +155,12 @@ class SignUp extends Component {
             type="password"
             placeholder="e.g., *******"
             onChange={this.onChange('password')}
+            onBlur={this.handleBlur}
             className={classes.textField}
             value={this.state.password}
             margin="normal"
             name="password"
+            ref="password"
             validators={['required', 'minStringLength:6', 'maxStringLength:16']}
             errorMessages={['this field is required', 'password must contain at least 6 characters', 'password must contain no more then 16 characters']}
           />
@@ -174,7 +184,7 @@ class SignUp extends Component {
           <Typography className={classes.signLink}>
             Already have an account?             
             <span> </span>
-            <Link to="/login">
+            <Link style={{color: "blue"}} to="/login">
               Login
             </Link>
           </Typography>
