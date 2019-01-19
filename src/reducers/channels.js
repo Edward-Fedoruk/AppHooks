@@ -3,7 +3,9 @@ import  * as types from '../actions/types'
 const initialState = {
   error: false,
   errorMessage: "",
-  currentChannel: {},
+  currentChannel: {
+    stageIds: [],
+  },
 }
 
 export default (state = initialState, action) => {
@@ -23,7 +25,7 @@ export default (state = initialState, action) => {
     case types.SET_CURRENT_CHANNEL: 
       return {
         ...state,
-        currentChannel: action.channel.data,
+        currentChannel: action.channel,
       }
     case types.REMOVE_CHANNEL:
       return {

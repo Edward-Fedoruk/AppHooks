@@ -3,6 +3,7 @@ import { createStage } from './stage'
 import { normalize } from 'normalizr'
 import { channelSchema } from './schemas'
 import { domain } from './types'
+import { compose } from "redux"
 
 const setFetchSettings = (method, accessToken, body) => ({
   method,
@@ -64,9 +65,13 @@ export const createChannel = (channelData, routeHistory) => dispatch => {
       })
     })
     .then(({ data }) => {
-      console.log(data)
-      dispatch(addChannel(normalize(data, channelSchema)))
       const stageData = { name: `${data.name.trim()}-default` }
+
+      compose(
+        dispatch,
+        addChannel        
+      )(normalize(data, channelSchema))
+      
       dispatch(createStage(data.id, stageData, routeHistory))
     })
     .catch(er =>{
@@ -97,9 +102,12 @@ export const fetchChannels = routeHistory => dispatch => {
         return Promise.reject(json)
       })
     })
-    .then(data => {
-      dispatch(setChannelsData(normalize(data.data, [channelSchema])))
-    })
+    .then(data => 
+      compose(
+        dispatch,
+        setChannelsData,
+      )(normalize(data.data, [channelSchema]))
+    )
     .catch(er =>{
       console.log(er)
       routeHistory.push({
@@ -123,9 +131,20 @@ export const fetchChannel = (id, routeHistory) => dispatch => {
         return Promise.reject(json)
       })
     })
-    .then(data => {
+    .then(({ data }) => {
       console.log(data)
-      dispatch(setCurrentChannel(data))
+      const normalizedData = normalize(data, channelSchema)
+
+      compose(
+        dispatch,
+        addChannel,
+      )(normalizedData)
+
+      compose(dispatch, setCurrentChannel)({
+        channelId: id,
+        stageIds: normalizedData.entities.channels[id].stages
+      })
+
     })
     .catch(er =>{
       console.log(er)
