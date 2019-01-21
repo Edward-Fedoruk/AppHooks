@@ -5,6 +5,7 @@ const initialState = {
   errorMessage: "",
   currentChannel: {
     stageIds: [],
+    channelId: "",
   },
 }
 
@@ -14,7 +15,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         error: false,
-        errorMessage: ""
+        errorMessage: 0
       }
     case types.CREATE_CHANNEL_ERROR: 
       return {
@@ -30,7 +31,10 @@ export default (state = initialState, action) => {
     case types.REMOVE_CHANNEL:
       return {
         ...state,
-        currentChannel: {}
+        currentChannel: {
+          stageIds: [],
+          channelId: "",
+        }
       }
     default:
       return state

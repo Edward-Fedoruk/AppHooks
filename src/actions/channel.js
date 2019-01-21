@@ -71,7 +71,7 @@ export const createChannel = (channelData, routeHistory) => dispatch => {
         dispatch,
         addChannel        
       )(normalize(data, channelSchema))
-      
+
       dispatch(createStage(data.id, stageData, routeHistory))
     })
     .catch(er =>{
@@ -142,7 +142,7 @@ export const fetchChannel = (id, routeHistory) => dispatch => {
 
       compose(dispatch, setCurrentChannel)({
         channelId: id,
-        stageIds: normalizedData.entities.channels[id].stages
+        stageIds: normalizedData.entities.channels[id].stages,
       })
 
     })
@@ -169,7 +169,6 @@ export const deleteChannel = (id, routeHistory) => dispatch => {
     .then(data => {
       console.log(data)
       dispatch(removeChannelFromStore(id))
-
       routeHistory.push("/channels")
     })
     .catch(er =>{

@@ -2,7 +2,8 @@ import  * as types from '../actions/types'
 
 const initialState = {
   open: false,
-  snackbar: false
+  snackbar: false,
+  currentStage: 0
 }
 
 export default (state = initialState, action) => {
@@ -11,6 +12,11 @@ export default (state = initialState, action) => {
       return { ...state, open: !state.open}
     case types.TOGGLE_SNACKBAR: 
       return { ...state, snackbar: !state.snackbar }
+    case types.CHANGE_STAGE:
+      return {
+        ...state,
+        currentStage: action.stage
+      }
     default:
       return state
   }
