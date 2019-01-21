@@ -14,6 +14,11 @@ export const throwStageCreationError = (error) => ({
   error
 })
 
+export const setCurrentStage = (stage) => ({
+  type: types.SET_CURRENT_STAGE,
+  stage
+})
+
 export const createStage = (id, stageData, routeHistory) => dispatch => { 
   const accessToken = localStorage.getItem("JWT")
 
