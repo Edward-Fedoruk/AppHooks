@@ -14,20 +14,19 @@ const styles = () => ({
   },  
 })
 
-const Title = ({ classes, title, styles }) => (
+const Title = ({ classes, styles, children }) => (
   <Typography 
     variant="h2" 
     color="primary" 
     className={classes.title}
     style={styles}
   >
-    { title }
+    { children }
   </Typography>
 )
 
 Title.propTypes = {
   classes: PropTypes.object.isRequired,
-  title: PropTypes.string.isRequired,
   styles: PropTypes.object,
 }
 

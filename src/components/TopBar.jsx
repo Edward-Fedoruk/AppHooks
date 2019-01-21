@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
-import Button from '@material-ui/core/Button'
 import { withRouter } from 'react-router-dom'
 import Title from './Title'
 import { withWidth } from '@material-ui/core'
@@ -53,13 +52,11 @@ export class TopBar extends Component {
     classes: PropTypes.object,
     history: PropTypes.object.isRequired,
     title: PropTypes.string.isRequired,
-    button: PropTypes.bool,
-    buttonText: PropTypes.string,
-    onButtonClick: PropTypes.func
+    toggleMenu: PropTypes.func
   }
 
   render() {
-    const { classes, title, buttonText, button, onButtonClick, width, toggleMenu } = this.props
+    const { classes, title, width, toggleMenu } = this.props
     const downMd = width === "sm" || width === "xs"
     return (
       <AppBar 
@@ -78,22 +75,9 @@ export class TopBar extends Component {
               <MenuIcon />
             </IconButton>}
 
-          <Title 
-            variant="h2" 
-            color="primary" 
-            title={title}
-          />
-          
-          {button &&
-            <Button 
-              size={"large"}
-              color="primary" 
-              variant="text" 
-              className={classes.channel}
-              onClick={onButtonClick}
-            >
-              {buttonText}
-            </Button>}
+          <Title>{title}</Title>
+
+          {this.props.children}
 
         </Toolbar>
       </AppBar>
