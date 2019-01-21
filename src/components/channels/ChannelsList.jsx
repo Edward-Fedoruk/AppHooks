@@ -7,6 +7,7 @@ import ChannelCard from './ChannelCard'
 import TopBar from '../TopBar'
 import Typography from '@material-ui/core/Typography'
 import CreateChannel from './CreateChannel'
+import Button from '@material-ui/core/Button'
 
 const styles = () => ({
   contentWrap: {
@@ -19,6 +20,17 @@ const styles = () => ({
     color: "#192B7F",
     fontSize: "16px",
     paddingLeft: "10px"
+  },
+
+  createChannel: {
+    textTransform: "capitalize",
+    color: "#fff",
+    fontSize: "16px",
+    background: "#35C1CE",
+    "&:hover": {
+      opacity: ".9",
+      background: "#192B81",
+    },
   },
 })
 
@@ -46,12 +58,18 @@ export class ChannelsList extends Component {
     else {
       return (
         <Fragment>
-          <TopBar 
-            buttonText="Create New App"
-            title="Your Channels Apps"
-            onButtonClick={this.createChannel}
-            button
-          />
+          <TopBar title="Your Channels Apps">
+            <Button 
+              size="large"
+              color="primary" 
+              variant="text" 
+              className={classes.createChannel}
+              onClick={this.createChannel}
+            >
+              Create New App
+            </Button>
+          </TopBar>
+
           <div className={classes.contentWrap}>  
             {Object.keys(channels).map((key, i, arr) => {
               let setRegion = true
@@ -75,8 +93,8 @@ export class ChannelsList extends Component {
                 </Fragment>
               )
             })}       
-
           </div>
+
         </Fragment>
       )
     }
