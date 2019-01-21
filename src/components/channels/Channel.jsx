@@ -3,66 +3,25 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core'
 import withNavigation from '../withNavigation'
-import TopBar from '../TopBar'
 import Title from '../Title'
-import Button from '@material-ui/core/Button'
-import Typography from '@material-ui/core/Typography'
-import Divider from '@material-ui/core/Divider'
-import Stage from "../stages/Stage"
-import AddCircle from '@material-ui/icons/AddCircle'
-import { fetchChannel, deleteChannel } from '../../actions/channel'
+import { fetchChannel } from '../../actions/channel'
 import { withRouter } from "react-router"
 import ConfirmDialog from '../ConfirmDialog'
-import {compose} from 'redux'
+import { compose } from 'redux'
+import StageTopBar from '../stages/StageTopBar'
+import Endpoints from '../endpoints/Endpoints'
+import Placeholder from '../Placeholder'
+import stageImg from '../../assets/stages.png'
+import endpointImg from '../../assets/endpoints.png'
 
 const styles = () => ({
   contentWrap: {
     padding: "25px 35px"
   },
- 
-  channel: {
-    textTransform: "capitalize",
-    color: "#fff",
-    fontSize: "16px",
-    background: "#35C1CE",
-    "&:hover": {
-      opacity: ".9",
-      background: "#192B81",
-    },
-  },
 
-  headerWrap: {
-    display: "flex",
-    justifyContent: "center",
-    marginBottom: "30px"
-  },
-
-  danger: {
-    fontSize: "18px",
-    fontWeight: "bold",
-    fontFamily: "Lato",
-    marginTop: "28px"
-  },
-
-  description: {
-    color: "rgba(25, 43, 127, 0.7)",
-    fontSize: "14px",
-    fontFamily: "Lato"
-  },
-
-  deleteIcon: {
-    transform: "rotate(45deg)",
-    marginRight: "5px",
-    fontSize: "19px"
-  },
-
-  delete: {
-    color: "#F96565",
-    textDecoration: "underline",
-    display: "flex",
-    alignItems: "flex-start",
-    cursor: "pointer",
-    width: "fit-content"
+  placeholder: {
+    margin: "100px auto 0 auto",
+    width: "550px"
   }
 })
 
@@ -73,11 +32,9 @@ export class Channel extends Component {
 
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    currentChannel: PropTypes.object.isRequired
-  }
-
-  handleClickOpen = () => {
-    this.setState({ open: true })
+    currentStage: PropTypes.object, 
+    endpoints: PropTypes.array,
+    stages: PropTypes.array
   }
 
   handleCloseWithAction = () => {
@@ -89,71 +46,67 @@ export class Channel extends Component {
     this.setState({ open: false })
   }
 
-  componentDidMount() {
-    this.props.fetchChannel(this.props.match.params.id, this.props.history)
-  }
-
   addStage = () => {}
 
+  componentDidMount() {
+    const { history, match } = this.props
+    this.props.fetchChannel(match.params.id, history)
+  }
+
   render() {
-    const { classes, currentChannel, } = this.props
-    if(currentChannel.name) 
-      return (
-        <Fragment>
-          <TopBar 
-            title={currentChannel.name}
-            onButtonClick={this.addStage}
-            button={false}
+    const { classes, currentStage, endpoints, stages } = this.props
+    return (
+      <Fragment>
+        <StageTopBar />
+        <div className={classes.contentWrap}>
+          
+          {stages.length 
+            ? <Title styles={{fontWeight: "normal"}}>
+                {currentStage !== undefined && currentStage.name}
+              </Title>
+            : <Placeholder
+                title="There is no Endpoint here yet."
+                subtitle="To create new Endpoint"
+                button="click here"
+                imgSrc={stageImg}
+                className={classes.placeholder}
+              />}
+
+          {endpoints.length 
+            ? <Endpoints endpoints={endpoints} /> 
+            : stages.length ? <Placeholder
+                title="There is no Endpoint here yet."
+                subtitle="To create new Endpoint"
+                button="click here"
+                imgSrc={endpointImg}
+                className={classes.placeholder}
+              /> : null}
+          
+
+          <ConfirmDialog 
+            handleCloseWithAction={this.handleCloseWithAction}
+            handleClose={this.handleClose}
+            open={this.state.open}
           />
-          <div className={classes.contentWrap}>
-            <div className={classes.headerWrap}>
-              <Title
-                title={"Stages"}
-              />
-              <Button 
-                size={"large"}
-                color="primary" 
-                variant="text" 
-                className={classes.channel}
-                onClick={this.addStage}
-              >
-                Add stage
-              </Button>
-            </div>
 
-            {currentChannel.stages.map((stage) => {
-              return <Stage  key={stage.id} stageName={stage.name}/>
-            })}
-            
-            <ConfirmDialog 
-              handleCloseWithAction={this.handleCloseWithAction}
-              handleClose={this.handleClose}
-              open={this.state.open}
-            />
-
-            <Divider variant="middle" />
-
-            <Typography color="primary" className={classes.danger} >Danger zone</Typography>
-            <Typography gutterBottom className={classes.description} >This is a permanent action and cant’t be undone</Typography>
-            <Typography onClick={this.handleClickOpen} className={classes.delete}>
-              <AddCircle className={classes.deleteIcon} />
-              Delete this app
-            </Typography>
-
-          </div>
-        </Fragment>
-      )
-    else return <div>loading</div>
+        </div>
+      </Fragment>
+    )
   }
 }
 
-const mapStateToProps = ({ channels }) => ({
-    currentChannel: channels.currentChannel,
-})
+const mapStateToProps = ({ channels, channelsEntities: { entities }, view }) => {
+  const stages = channels.currentChannel.stageIds.map(id => entities.stages[id])
+  const currentStage = stages[view.currentStage]
+  let endpoints = []
+  if(currentStage !== undefined) 
+    endpoints = currentStage.endpoints.map(id => entities.endpoints[id])
+  
+  return { currentStage, endpoints, stages }
+}
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchChannel: (id, routeHistory) => dispatch(fetchChannel(id, routeHistory)),
-  deleteChannel: (id, routeHistory) => dispatch(deleteChannel(id, routeHistory)),
+  fetchChannel: (id, routeHistory) => dispatch(fetchChannel(id, routeHistory))
 })
 
 export default compose( 
