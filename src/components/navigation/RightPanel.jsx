@@ -115,7 +115,7 @@ export class RightPanel extends Component {
               path="/logs"
               currentPath={location.pathname}
               Icon={DateRange}
-              itemText="Channels"
+              itemText="Access Logs"
               exact={false}
             />
           </List>
