@@ -55,7 +55,7 @@ export class AccessLogs extends Component {
       <Fragment>
         <TopBar title="Request Log Viewer" />
         <div className={classes.contentWrap}>
-          {!data.length  
+          {data.length  
             ? <Fragment>
                 <LogsTable data={data} />
                 <ExportButton />
