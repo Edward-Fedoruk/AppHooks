@@ -60,8 +60,7 @@ class AppNavigation extends Component {
     const downMd = width === "sm" || width === "xs"
     return (
       <div>
-        {width !== "xs" &&  
-          <LeftPanel />}
+        {width !== "xs" && <LeftPanel />}
         <Drawer
           variant={ downMd ? "temporary" : "permanent" }
           className={classes.drawer}

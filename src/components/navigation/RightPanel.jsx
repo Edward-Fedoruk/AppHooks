@@ -5,6 +5,7 @@ import List from '@material-ui/core/List'
 import Typography from '@material-ui/core/Typography'
 import Dashboard from '@material-ui/icons/Dashboard'
 import ExitToApp from '@material-ui/icons/ExitToApp'
+import DateRange from '@material-ui/icons/DateRangeOutlined'
 import { Scrollbars } from 'react-custom-scrollbars'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
@@ -106,6 +107,14 @@ export class RightPanel extends Component {
               path="/channels"
               currentPath={location.pathname}
               Icon={ExitToApp}
+              itemText="Channels"
+              exact={false}
+            />
+
+            <NavListItem 
+              path="/logs"
+              currentPath={location.pathname}
+              Icon={DateRange}
               itemText="Channels"
               exact={false}
             />
