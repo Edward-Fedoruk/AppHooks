@@ -21,13 +21,12 @@ const styles = (theme) => ({
 
   button: {
     height: "20px"
-  },
- 
+  }, 
 
   actions: {
     display: "flex",
     justifyContent: "flex-end",
-    marginTop: "50px"
+    marginTop: "50px",
   }
 })
 
