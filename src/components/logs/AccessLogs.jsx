@@ -9,6 +9,7 @@ import EnhancedTableHead from "./EnhancedTableHead"
 import AccessTableBody from "./AccessTableBody"
 import withNavigation from "../withNavigation"
 import TopBar from "../TopBar"
+import ExportButton from './ExportButton'
 
 let counter = 0
 function createData(name, calories, fat, carbs, protein) {
@@ -159,6 +160,7 @@ class AccessLogs extends React.Component {
               onChangeRowsPerPage={this.handleChangeRowsPerPage}
             />
           </Paper>
+          <ExportButton />
         </div>
       </Fragment>
     )
