@@ -60,7 +60,7 @@ Placeholder.propTypes = {
   title: PropTypes.string,
   subtitle: PropTypes.string,
   button: PropTypes.string,
-  className: PropTypes.object,
+  className: PropTypes.string,
   imgSrc: PropTypes.string
 }
 
