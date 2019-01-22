@@ -23,6 +23,9 @@ const styles = theme => ({
 
   root: {
     width: "100%",
+    maxWidth: "1050px",
+    marginRight: "auto",
+    marginLeft: "auto",
     marginTop: theme.spacing.unit * 3,
   },
   table: {
