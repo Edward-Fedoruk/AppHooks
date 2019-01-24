@@ -1,15 +1,15 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import Menu from '@material-ui/core/Menu'
-import MoreVertIcon from '@material-ui/icons/MoreVert'
-import IconButton from '@material-ui/core/IconButton'
-import ListItemIcon from '@material-ui/core/ListItemIcon'
-import Typography from '@material-ui/core/Typography'
-import AddCircle from '@material-ui/icons/AddCircle'
-import Edit from '@material-ui/icons/Edit'
-import Add from '@material-ui/icons/Add'
-import { withStyles } from '@material-ui/core'
-import MenuItem from '@material-ui/core/MenuItem'
+import React from "react"
+import PropTypes from "prop-types"
+import Menu from "@material-ui/core/Menu"
+import MoreVertIcon from "@material-ui/icons/MoreVert"
+import IconButton from "@material-ui/core/IconButton"
+import ListItemIcon from "@material-ui/core/ListItemIcon"
+import Typography from "@material-ui/core/Typography"
+import AddCircle from "@material-ui/icons/AddCircle"
+import Edit from "@material-ui/icons/Edit"
+import Add from "@material-ui/icons/Add"
+import { withStyles } from "@material-ui/core"
+import MenuItem from "@material-ui/core/MenuItem"
 
 const styles = () => ({
   menu: {
@@ -42,7 +42,7 @@ const ChannelMenu = ({
   return (
     <div>
       <IconButton
-        aria-owns={anchorEl ? 'simple-menu' : undefined}
+        aria-owns={anchorEl ? "simple-menu" : undefined}
         aria-haspopup="true"
         onClick={handleClick}
       >
