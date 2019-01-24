@@ -35,7 +35,7 @@ export default () => WrappedComponent => {
       const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage)
       
       return (
-        <Paper className={classes.root}>
+        <Paper elevation={0} className={classes.root}>
           <WrappedComponent 
             emptyRows={emptyRows}
             rowsPerPage={rowsPerPage}

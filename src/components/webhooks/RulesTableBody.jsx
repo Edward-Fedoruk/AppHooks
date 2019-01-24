@@ -19,7 +19,7 @@ const RulesTableBody = ({ page, data, rowsPerPage, classes, emptyRows }) => {
   return (
     <TableBody>
       {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(rule => (
-        <TableRow>
+        <TableRow hover key={rule.id}>
           <TableCell className={classes.rulName} >
             {rule.name}
           </TableCell>
