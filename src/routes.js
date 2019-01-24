@@ -11,7 +11,7 @@ import Channel from "./components/channels/Channel"
 import AccessLogs from "./components/logs/AccessLogs"
 import ProtectedRout from "./ProtectedRout"
 import App from "./App"
-import RulesTable from './components/webhooks/RulesTable'
+import WebhooksRules from "./components/webhooks/WebhooksRules"
 
 const WithNavigation = () => (
   <div style={{ display: "flex" }}>
@@ -20,7 +20,7 @@ const WithNavigation = () => (
     <ProtectedRout path="/channels" exact component={Channels} />
     <ProtectedRout path="/channels/:id" exact component={Channel} />
     <ProtectedRout path="/logs" exact component={AccessLogs} />
-    <ProtectedRout path="/webhooks" exact component={RulesTable} />
+    <ProtectedRout path="/webhooks" exact component={WebhooksRules} />
   </div>
 )
 

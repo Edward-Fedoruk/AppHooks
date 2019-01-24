@@ -1,16 +1,17 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
-import List from '@material-ui/core/List'
-import Typography from '@material-ui/core/Typography'
-import Dashboard from '@material-ui/icons/Dashboard'
-import ExitToApp from '@material-ui/icons/ExitToApp'
-import DateRange from '@material-ui/icons/DateRangeOutlined'
-import { Scrollbars } from 'react-custom-scrollbars'
-import { compose } from 'redux'
-import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
-import NavListItem from './NavListItem'
+import React, { Component } from "react"
+import PropTypes from "prop-types"
+import { withStyles } from "@material-ui/core/styles"
+import List from "@material-ui/core/List"
+import Typography from "@material-ui/core/Typography"
+import Dashboard from "@material-ui/icons/Dashboard"
+import ExitToApp from "@material-ui/icons/ExitToApp"
+import DateRange from "@material-ui/icons/DateRangeOutlined"
+import NewReleases from "@material-ui/icons/NewReleasesOutlined"
+import { Scrollbars } from "react-custom-scrollbars"
+import { compose } from "redux"
+import { connect } from "react-redux"
+import { withRouter } from "react-router-dom"
+import NavListItem from "./NavListItem"
 
 const itemTextStyles = {
   color: "rgba(255, 255, 255, 0.7)",
@@ -32,7 +33,7 @@ const styles = ({ transitions, breakpoints }) => ({
     width: "71%",
     position: "absolute",
     right: "0",
-    transition: transitions.create('right', {
+    transition: transitions.create("right", {
       easing: transitions.easing.easeOut,
       duration: transitions.duration.enteringScreen,
     }),
@@ -116,6 +117,14 @@ export class RightPanel extends Component {
               currentPath={location.pathname}
               Icon={DateRange}
               itemText="Access Logs"
+              exact={false}
+            />
+
+            <NavListItem 
+              path="/webhooks"
+              currentPath={location.pathname}
+              Icon={NewReleases}
+              itemText="Webhooks Rules"
               exact={false}
             />
           </List>
