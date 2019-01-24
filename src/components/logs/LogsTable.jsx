@@ -1,12 +1,12 @@
-import React, { Component } from "react"
+import React, { Component, Fragment } from "react"
 import PropTypes from "prop-types"
 import { withStyles } from "@material-ui/core/styles"
 import Table from "@material-ui/core/Table"
-import TablePagination from "@material-ui/core/TablePagination"
 import EnhancedTableToolbar from "./EnhancedTableToolbar"
-import Paper from "@material-ui/core/Paper"
 import EnhancedTableHead from "./EnhancedTableHead"
 import AccessTableBody from "./AccessTableBody"
+import withPaginationTable from "../withPaginationTable"
+import { compose } from "redux"
 
 const styles = theme => ({
   root: {
@@ -29,8 +29,14 @@ class LogsTable extends Component {
     order: "asc",
     orderBy: "calories",
     selected: [],
-    page: 0,
-    rowsPerPage: 5,
+  }
+
+  static propTypes = { 
+    classes: PropTypes.object,
+    data: PropTypes.array,
+    rowsPerPage: PropTypes.number,
+    page: PropTypes.number,
+    emptyRows: PropTypes.number  
   }
 
   handleRequestSort = (event, property) => {
@@ -46,7 +52,7 @@ class LogsTable extends Component {
 
   handleSelectAllClick = event => {
     if (event.target.checked) {
-      this.setState(state => ({ selected: state.data.map(n => n.id) }))
+      this.setState(state => ({ selected: this.props.data.map(n => n.id) }))
       return
     }
     this.setState({ selected: [] })
@@ -73,23 +79,14 @@ class LogsTable extends Component {
     this.setState({ selected: newSelected })
   }
 
-  handleChangePage = (event, page) => {
-    this.setState({ page })
-  }
-
-  handleChangeRowsPerPage = event => {
-    this.setState({ rowsPerPage: event.target.value })
-  }
-
   isSelected = id => this.state.selected.indexOf(id) !== -1
 
   render() {
-    const { classes, data } = this.props
-    const { order, orderBy, selected, rowsPerPage, page } = this.state
-    const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage)
+    const { classes, data, rowsPerPage, page, emptyRows  } = this.props
+    const { order, orderBy, selected} = this.state
 
     return (
-      <Paper elevation={0} className={classes.root}>
+      <Fragment>
         <EnhancedTableToolbar numSelected={selected.length} />
         <div className={classes.tableWrapper}>
           <Table className={classes.table} aria-labelledby="tableTitle">
@@ -113,28 +110,12 @@ class LogsTable extends Component {
             />
           </Table>
         </div>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          count={data.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          backIconButtonProps={{
-            "aria-label": "Previous Page",
-          }}
-          nextIconButtonProps={{
-            "aria-label": "Next Page",
-          }}
-          onChangePage={this.handleChangePage}
-          onChangeRowsPerPage={this.handleChangeRowsPerPage}
-        />
-      </Paper>
+      </Fragment>
     )
   }
 }
 
-LogsTable.propTypes = { 
-  classes: PropTypes.object.isRequired,
-}
-
-export default withStyles(styles)(LogsTable)
+export default compose(
+  withPaginationTable(),
+  withStyles(styles)
+)(LogsTable)
