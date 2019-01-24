@@ -33,7 +33,7 @@ const data = [
 
 const styles = () => ({
   contentWrap: {
-    padding: "25px 35px"
+    padding: "20px 26px 20px 13px"
   },
 
   placeholder: {

@@ -9,7 +9,6 @@ const styles = ({ spacing }) => ({
     maxWidth: "1050px",
     marginRight: "auto",
     marginLeft: "auto",
-    marginTop: spacing.unit * 3,
   }
 })
 
