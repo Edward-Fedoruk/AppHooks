@@ -15,7 +15,7 @@ const styles = () => ({
   },
 
   region: {
-    fontFamily: "Lato",
+    
     marginBottom: "20px",
     color: "#192B7F",
     fontSize: "16px",

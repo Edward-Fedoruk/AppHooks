@@ -21,7 +21,7 @@ const styles = () => ({
   },
 
   CardName: {
-    fontFamily: "Lato",
+    
     marginBottom: "40px",
     color: "#192B7F",
     fontWeight: "bold",
@@ -29,7 +29,7 @@ const styles = () => ({
   },
 
   stats: {
-    fontFamily: "Lato",
+    
     color: "#192B7F",
     marginBottom: "27px"
   },

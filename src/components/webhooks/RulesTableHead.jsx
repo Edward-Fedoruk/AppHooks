@@ -8,7 +8,7 @@ import PropTypes from "prop-types"
 
 const styles = () => ({
   colName: {
-    fontFamily: "Lato",
+    
     fontWeight: "bold",
     fontSize: "14px"
   }

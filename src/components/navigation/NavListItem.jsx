@@ -10,7 +10,7 @@ import { withStyles } from '@material-ui/core'
 const itemTextStyles = {
   color: "rgba(255, 255, 255, 0.7)",
   paddingLeft: "5px",
-  fontFamily: "Lato",
+  
 }
 
 const styles = () => ({

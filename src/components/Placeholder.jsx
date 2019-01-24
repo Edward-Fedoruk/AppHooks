@@ -15,13 +15,13 @@ const styles = () => ({
 
   subtitle: {
     color: "#3049B5",
-    fontFamily: "Lato",
+    
     fontSize: "15px", 
   },
 
   title: {
     color: "#5D6AA8",
-    fontFamily: "Lato",
+    
     fontSize: "25px",
     fontWeight: "300"
   },
@@ -29,7 +29,7 @@ const styles = () => ({
   textButton: {
     textDecoration: "underline",
     color: "#35C1CE",
-    fontFamily: "Lato",
+    
     cursor: "pointer",
     "&:hover": {
       opacity: ".5"

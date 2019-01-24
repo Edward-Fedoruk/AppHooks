@@ -16,7 +16,7 @@ const styles = () => ({
   title: {
     flexGrow: 1,
     fontSize: "25px",
-    fontFamily: "Lato",
+    
     textTransform: "capitalize",
     color: "#192B7F",
     fontWeight: "bold"

@@ -16,7 +16,7 @@ import NavListItem from "./NavListItem"
 const itemTextStyles = {
   color: "rgba(255, 255, 255, 0.7)",
   paddingLeft: "5px",
-  fontFamily: "Lato",
+  
 }
 
 const styles = ({ transitions, breakpoints }) => ({
@@ -47,7 +47,7 @@ const styles = ({ transitions, breakpoints }) => ({
     color: "#fff",
     fontSize: "28px",
     fontWeight: "300",
-    fontFamily: "Lato",
+    
     paddingBottom: "10px",
     background: "#192B81",
     paddingLeft: "21px",
@@ -113,6 +113,14 @@ export class RightPanel extends Component {
             />
 
             <NavListItem 
+              path="/webhooks"
+              currentPath={location.pathname}
+              Icon={NewReleases}
+              itemText="Webhooks Rules"
+              exact={false}
+            />
+
+            <NavListItem 
               path="/logs"
               currentPath={location.pathname}
               Icon={DateRange}
@@ -120,13 +128,6 @@ export class RightPanel extends Component {
               exact={false}
             />
 
-            <NavListItem 
-              path="/webhooks"
-              currentPath={location.pathname}
-              Icon={NewReleases}
-              itemText="Webhooks Rules"
-              exact={false}
-            />
           </List>
           
         </Scrollbars>
