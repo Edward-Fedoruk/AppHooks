@@ -1,13 +1,25 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import TablePagination from "@material-ui/core/TablePagination"
 import Paper from "@material-ui/core/Paper"
+import { withStyles } from "@material-ui/core"
 
-export default (data, WrappedComponent) => {
+const styles = ({ spacing }) => ({
+  root: {
+    width: "100%",
+    maxWidth: "1050px",
+    marginRight: "auto",
+    marginLeft: "auto",
+    marginTop: spacing.unit * 3,
+  }
+})
+
+export default () => WrappedComponent => {
   class hocComponent extends Component {
     state = {
       page: 0,
       rowsPerPage: 5,
     }
+
 
     handleChangePage = (event, page) => {
       this.setState({ page })
@@ -19,15 +31,16 @@ export default (data, WrappedComponent) => {
 
     render() {
       const { rowsPerPage, page } = this.state
+      const { classes, data } = this.props
       const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage)
-
+      
       return (
-        <Paper>
+        <Paper className={classes.root}>
           <WrappedComponent 
             emptyRows={emptyRows}
             rowsPerPage={rowsPerPage}
             page={page}
-            {...this.props}
+            data={data}
           />
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
@@ -49,5 +62,5 @@ export default (data, WrappedComponent) => {
     }
   }
 
-  return hocComponent
+  return withStyles(styles)(hocComponent)
 }
