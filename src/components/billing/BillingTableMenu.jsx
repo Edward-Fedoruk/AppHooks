@@ -9,9 +9,14 @@ import Typography from "@material-ui/core/Typography"
 import { ReactComponent as BillingChart} from "../../assets/BillingChart.svg"
 import PropTypes from "prop-types"
 
-const styles = () => ({
+const styles = ({ breakpoints }) => ({
   tableRoot: {
-    width: "100%",
+    minWidth: "240px",
+    maxWidth: "250px",
+
+    [breakpoints.down(600)]: {
+      minWidth: "155px",
+    },
   },
 
   plan: {
@@ -26,12 +31,20 @@ const styles = () => ({
   },
 
   privilege: {
-    fontSize: "16px"
+    fontSize: "16px",
+    paddingLeft: "24px",
+
+    [breakpoints.down(600)]: {
+      fontSize: "14px",
+    },
   },
+
+  cellRoot: {
+  }
 })
 
 const privileges = [
-  "Max Concurent", 
+  "Max Concurrent", 
   "Number of Channels", 
   "Messages / Day", 
   "Support", 
@@ -48,13 +61,13 @@ const BillingTableMenu = ({ classes }) => (
             Account Plan
           </Typography>
           <BillingChart className={classes.chartIcon} />
-        </TableCell>            
+        </TableCell>
       </TableRow>
     </TableHead>
     <TableBody>
       {privileges.map((privilege, i) => (
         <TableRow key={i}>
-          <TableCell>
+          <TableCell padding="none">
             <Typography className={classes.privilege} color="primary">{privilege}</Typography>
           </TableCell>
         </TableRow>

@@ -11,12 +11,13 @@ import Check from "@material-ui/icons/Check"
 import Typography from "@material-ui/core/Typography"
 import Button from "@material-ui/core/Button"
 
-const styles = () => ({
+const styles = ({ breakpoints }) => ({
   planName: {
     textTransform: "uppercase",
     fontSize: "16px",
     marginBottom: "18px",
-    fontWeight: "900"
+    fontWeight: "900",
+
   },
 
   price: {
@@ -45,7 +46,13 @@ const styles = () => ({
     flexDirection: "column",
     alignItems: "center"
   },
-  privilege: { fontSize: "16px" }, 
+  privilege: { 
+    fontSize: "16px",
+
+    [breakpoints.down(600)]: {
+      fontSize: "14px",
+    },
+  }, 
   infinity: { color: "#35C1CE" },
   check: { color: "#ABE829" },
   iconWrap: { textAlign: "center" },

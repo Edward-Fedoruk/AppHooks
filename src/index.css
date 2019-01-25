@@ -3,5 +3,34 @@ html, body {
 }
 
 .slick-initialized {
-  width: 172px
+  width: 100%;
+  max-width: 676px
+}
+
+@media only screen and (max-width: 1280px) {
+  .slick-initialized {
+    width: 100%;
+    max-width: 53vw
+  }
+}
+
+@media only screen and (max-width: 960px) {
+  .slick-initialized {
+    width: 100%;
+    max-width: 61vw
+  }
+}
+
+@media only screen and (max-width: 690px) {
+  .slick-initialized {
+    width: 100%;  
+    max-width: 46vw
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .slick-initialized {
+    width: 100%;  
+    max-width: 58vw
+  }
 }
