@@ -1,3 +1,7 @@
 html, body {
   background-color: #fff
 }
+
+.slick-initialized {
+  width: 172px
+}
