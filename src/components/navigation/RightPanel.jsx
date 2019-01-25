@@ -6,6 +6,7 @@ import Typography from "@material-ui/core/Typography"
 import Dashboard from "@material-ui/icons/Dashboard"
 import ExitToApp from "@material-ui/icons/ExitToApp"
 import DateRange from "@material-ui/icons/DateRangeOutlined"
+import AccountBalanceWallet from "@material-ui/icons/AccountBalanceWalletOutlined"
 import NewReleases from "@material-ui/icons/NewReleasesOutlined"
 import { Scrollbars } from "react-custom-scrollbars"
 import { compose } from "redux"
@@ -125,6 +126,14 @@ export class RightPanel extends Component {
               currentPath={location.pathname}
               Icon={DateRange}
               itemText="Access Logs"
+              exact={false}
+            />
+
+            <NavListItem 
+              path="/billing"
+              currentPath={location.pathname}
+              Icon={AccountBalanceWallet}
+              itemText="Billing"
               exact={false}
             />
 
