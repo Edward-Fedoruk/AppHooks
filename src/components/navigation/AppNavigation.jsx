@@ -18,6 +18,7 @@ const styles = ({ transitions, breakpoints }) => ({
     minWidth: "250px",
     overflow: "hidden",
 
+
     [breakpoints.down(600)]: {
       minWidth: "200px",
     },
@@ -28,17 +29,10 @@ const styles = ({ transitions, breakpoints }) => ({
     width: "23vw",
     maxWidth: "306px",
     minWidth: "250px",
+    
     [breakpoints.down(960)]: {
-      // position: "absolute",
-      // width: "100%",
-      // height: "100%",
-      // background: "rgba(0, 0, 0, 0.25)"
+      zIndex: "0"
     },
-    // width: "23vw",
-    // transition: transitions.create('margin', {
-    //   easing: transitions.easing.easeOut,
-    //   duration: transitions.duration.enteringScreen,
-    // })
   },
 
 
