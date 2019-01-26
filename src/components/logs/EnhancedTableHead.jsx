@@ -6,14 +6,24 @@ import TableRow from "@material-ui/core/TableRow"
 import Tooltip from "@material-ui/core/Tooltip"
 import Checkbox from "@material-ui/core/Checkbox"
 import PropTypes from "prop-types"
+import { withStyles } from "@material-ui/core"
 
 const rows = [
-  { id: "name", numeric: false, disablePadding: true, label: "Dessert (100g serving)" },
-  { id: "calories", numeric: true, disablePadding: false, label: "Calories" },
-  { id: "fat", numeric: true, disablePadding: false, label: "Fat (g)" },
-  { id: "carbs", numeric: true, disablePadding: false, label: "Carbs (g)" },
-  { id: "protein", numeric: true, disablePadding: false, label: "Protein (g)" },
+  { id: "attempt", numeric: false, disablePadding: true, label: "Sent/Last Attempt" },
+  { id: "application", numeric: false, disablePadding: false, label: "Application" },
+  { id: "endpoint", numeric: false, disablePadding: false, label: "Endpoint" },
+  { id: "destination", numeric: false, disablePadding: false, label: "Destination" },
+  { id: "status", numeric: false, disablePadding: false, label: "Status/Attempts" },
+  { id: "code", numeric: false, disablePadding: false, label: "Response Code" },
 ]
+
+const styles = ({ palette }) => ({
+  headerCell: {
+    color: "#192B7F",
+    fontWeight: "bold",
+    fontSize: "16px"
+  }
+})
 
 class EnhancedTableHead extends React.Component {
   createSortHandler = property => event => {
@@ -21,7 +31,7 @@ class EnhancedTableHead extends React.Component {
   }
 
   render() {
-    const { onSelectAllClick, order, orderBy, numSelected, rowCount } = this.props
+    const { onSelectAllClick, order, orderBy, numSelected, rowCount, classes } = this.props
 
     return (
       <TableHead>
@@ -34,12 +44,13 @@ class EnhancedTableHead extends React.Component {
             />
           </TableCell>
           {rows.map(
-            row => (
+            (row, i) => (
               <TableCell
                 key={row.id}
-                align={row.numeric ? "right" : "left"}
                 padding={row.disablePadding ? "none" : "default"}
                 sortDirection={orderBy === row.id ? order : false}
+                className={classes.headerCell}
+                style={{ paddingRight: i === 0 && "150px" }}
               >
                 <Tooltip
                   title="Sort"
@@ -73,4 +84,4 @@ EnhancedTableHead.propTypes = {
   rowCount: PropTypes.number.isRequired,
 }
 
-export default EnhancedTableHead
+export default withStyles(styles)(EnhancedTableHead)

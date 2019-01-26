@@ -4,6 +4,14 @@ import TableBody from "@material-ui/core/TableBody"
 import TableCell from "@material-ui/core/TableCell"
 import TableRow from "@material-ui/core/TableRow"
 import Checkbox from "@material-ui/core/Checkbox"
+import { withStyles } from "@material-ui/core"
+
+const styles = ({ palette }) => ({
+  cell: {
+    color: palette.primary.main,
+    fontSize: "16px",
+  }
+})
 
 function desc(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -33,7 +41,7 @@ function getSorting(order, orderBy) {
 const AccessTableBody = ({ 
   data, order, orderBy, 
   page, rowsPerPage, emptyRows, 
-  isSelected, handleClick 
+  isSelected, handleClick, classes
 }) => (
   <TableBody>
     {stableSort(data, getSorting(order, orderBy))
@@ -50,16 +58,17 @@ const AccessTableBody = ({
             key={n.id}
             selected={selected}
           >
-            <TableCell padding="checkbox">
+            <TableCell className={classes.cell} padding="checkbox">
               <Checkbox checked={selected} />
             </TableCell>
-            <TableCell component="th" scope="row" padding="none">
-              {n.name}
+            <TableCell className={classes.cell} padding="none">
+              {n.date}
             </TableCell>
-            <TableCell align="right">{n.calories}</TableCell>
-            <TableCell align="right">{n.fat}</TableCell>
-            <TableCell align="right">{n.carbs}</TableCell>
-            <TableCell align="right">{n.protein}</TableCell>
+            <TableCell className={classes.cell}>{n.app}</TableCell>
+            <TableCell className={classes.cell}>{n.endpoint}</TableCell>
+            <TableCell className={classes.cell}>{n.destination}</TableCell>
+            <TableCell className={classes.cell}>{n.status}</TableCell>
+            <TableCell className={classes.cell}>{n.code}</TableCell>
           </TableRow>
         )
       })}
@@ -83,4 +92,4 @@ AccessTableBody.propTypes = {
   handleClick: PropTypes.func 
 }
 
-export default AccessTableBody
+export default withStyles(styles)(AccessTableBody)
