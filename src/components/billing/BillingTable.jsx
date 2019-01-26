@@ -27,7 +27,7 @@ export class BillingTable extends Component {
     const { classes } = this.props
 
     return (
-      <Paper className={classes.tableWrap}>
+      <Paper elevation={0} className={classes.tableWrap}>
         <BillingTableMenu />
         <Slider {...slickSettings}>
           <BillingTablePlan 
