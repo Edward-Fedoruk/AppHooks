@@ -2,7 +2,6 @@ import React, { Component, Fragment } from "react"
 import PropTypes from "prop-types"
 import { connect } from "react-redux"
 import LogsTable from "./LogsTable"
-import ExportButton from "./ExportButton"
 import Placeholder from "../Placeholder"
 import logs from "../../assets/logs.png"
 import withNavigation from "../withNavigation"
@@ -58,7 +57,6 @@ export class AccessLogs extends Component {
           {data.length  
             ? <Fragment>
                 <LogsTable data={data} />
-                <ExportButton />
               </Fragment>
             : <Placeholder 
                 title="Log Viewer is empty"
