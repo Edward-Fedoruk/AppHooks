@@ -5,6 +5,7 @@ import List from "@material-ui/core/List"
 import Typography from "@material-ui/core/Typography"
 import Dashboard from "@material-ui/icons/Dashboard"
 import ExitToApp from "@material-ui/icons/ExitToApp"
+import GroupAdd from "@material-ui/icons/GroupAdd"
 import DateRange from "@material-ui/icons/DateRangeOutlined"
 import AccountBalanceWallet from "@material-ui/icons/AccountBalanceWalletOutlined"
 import NewReleases from "@material-ui/icons/NewReleasesOutlined"
@@ -118,6 +119,14 @@ export class RightPanel extends Component {
               currentPath={location.pathname}
               Icon={NewReleases}
               itemText="Webhooks Rules"
+              exact={false}
+            />
+      
+            <NavListItem 
+              path="/subusers"
+              currentPath={location.pathname}
+              Icon={GroupAdd}
+              itemText="Billing"
               exact={false}
             />
 
