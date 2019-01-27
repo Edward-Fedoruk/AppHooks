@@ -5,9 +5,10 @@ import { compose } from "redux"
 import withNavigation from "../withNavigation"
 import { withStyles } from "@material-ui/core"
 import TopBar from "../TopBar"
-import Typography from "@material-ui/core/Typography"
-import TextField from "@material-ui/core/TextField"
 import GeneralSettings from "./GeneralSettings"
+import ChangePassword from "./ChangePassword"
+import ConnectedAccounts from "./ConnectedAccounts"
+import DeleteAccount from "./DeleteAccount"
 
 const styles = ({ breakpoints }) => ({
   contentWrap: {
@@ -26,7 +27,10 @@ export class Settings extends Component {
       <Fragment>
         <TopBar title="Account Settings" />
         <div className={classes.contentWrap}>
-          <GeneralSettings/>
+          <GeneralSettings />
+          <ChangePassword />
+          <ConnectedAccounts />
+          <DeleteAccount />
         </div>
       </Fragment>
     )

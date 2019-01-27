@@ -27,7 +27,14 @@ const styles = () => ({
 
   fieldWrap: {
     marginRight: "80px"
-  }
+  },
+
+  aboveField: {
+    color: "rgba(25, 43, 127, 0.7)",
+    fontSize: "14px"
+  },
+
+  contentWrap: { marginBottom: "80px" }
 })
 
 const GeneralSettings = ({ classes }) => {
@@ -37,7 +44,7 @@ const GeneralSettings = ({ classes }) => {
     ["Phone number", "+380992378587"]
   ]
   return (
-    <div>
+    <div className={classes.contentWrap}>
       <div className={classes.headerWrap}>
         <Typography className={classes.header} variant="h2" color="primary">
           General settings
@@ -49,7 +56,7 @@ const GeneralSettings = ({ classes }) => {
       <div className={classes.settingsWrap}>
         {fileds.map(field => (
           <div className={classes.fieldWrap}>
-            <Typography className={classes.field} gutterBottom variant="caption">
+            <Typography className={classes.aboveField} gutterBottom variant="caption">
               {field[0]}
             </Typography>          
             <Typography className={classes.field} variant="subtitle2" color="primary">
