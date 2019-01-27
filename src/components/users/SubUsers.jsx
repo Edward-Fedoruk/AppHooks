@@ -1,8 +1,11 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import UsersTable from "./UsersTable"
-
+import withNavigation from "../withNavigation"
+import TopBar from "../TopBar"
+import { compose } from "redux"
+import { withStyles } from "@material-ui/core"
 
 let counter = 0
 function createData(email, name, role, privileges, active) {
@@ -25,16 +28,26 @@ const data = [
   createData("Oreo", "test1", "test2", "test3", "test4"),
 ]
 
+const styles = ({ breakpoints }) => ({
+  contentWrap: {
+    padding: "20px 26px 20px 13px",
+  },
+})
+
 export class SubUsers extends Component {
   static propTypes = {
-    prop: PropTypes
+    classes: PropTypes.object.isRequired
   }
 
   render() {
+    const { classes } = this.props
     return (
-      <div>
-        <UsersTable data={data} />
-      </div>
+      <Fragment>
+        <TopBar title="Sub-Users" />
+        <div className={classes.contentWrap}>
+          <UsersTable data={data} />
+        </div>
+      </Fragment>
     )
   }
 }
@@ -47,4 +60,8 @@ const mapDispatchToProps = {
   
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SubUsers)
+export default compose(
+  withNavigation,
+  withStyles(styles),
+  connect(mapStateToProps, mapDispatchToProps)
+)(SubUsers)
