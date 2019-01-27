@@ -1,14 +1,17 @@
 import IconButton from "@material-ui/core/IconButton"
 import Tooltip from "@material-ui/core/Tooltip"
 import DeleteIcon from "@material-ui/icons/Delete"
-import FilterListIcon from "@material-ui/icons/FilterList"
+import Search from "@material-ui/icons/Search"
 import { lighten } from "@material-ui/core/styles/colorManipulator"
 import Toolbar from "@material-ui/core/Toolbar"
 import Typography from "@material-ui/core/Typography"
 import classNames from "classnames"
-import React from "react"
+import React, { Fragment } from "react"
 import PropTypes from "prop-types"
 import { withStyles } from "@material-ui/core/styles"
+import Grid from "@material-ui/core/Grid"
+import Input from "@material-ui/core/Input"
+import Reply from "@material-ui/icons/Reply"
 
 const toolbarStyles = theme => ({
   root: {
@@ -29,43 +32,53 @@ const toolbarStyles = theme => ({
   },
   actions: {
     color: theme.palette.text.secondary,
+    minWidth: "max-content"
   },
   title: {
     flex: "0 0 auto",
   },
 })
 
-let EnhancedTableToolbar = ({ numSelected, classes }) => (
+const EnhancedTableToolbar = ({ numSelected, classes }) => (
 <Toolbar
   className={classNames(classes.root, {
     [classes.highlight]: numSelected > 0,
   })}
 >
   <div className={classes.title}>
-    {numSelected > 0 ? (
+    {numSelected > 0 &&
       <Typography color="inherit" variant="subtitle1">
         {numSelected} selected
-      </Typography>
-    ) : (
-      <Typography variant="h6" id="tableTitle">
-        Nutrition
-      </Typography>
-    )}
+      </Typography>}
   </div>
   <div className={classes.spacer} />
   <div className={classes.actions}>
     {numSelected > 0 ? (
-      <Tooltip title="Delete">
-        <IconButton aria-label="Delete">
-          <DeleteIcon />
-        </IconButton>
-      </Tooltip>
+      <Fragment>  
+        <Tooltip title="Export to CVS">
+          <IconButton aria-label="Export to CVS">
+            <Reply />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="Delete">
+          <IconButton aria-label="Delete">
+            <DeleteIcon />
+          </IconButton>
+        </Tooltip>
+      </Fragment>
     ) : (
-      <Tooltip title="Filter list">
-        <IconButton aria-label="Filter list">
-          <FilterListIcon />
-        </IconButton>
-      </Tooltip>
+      <div>
+        <Grid container spacing={8} alignItems="flex-end">
+          <Grid item><Search /></Grid>
+          <Grid item>
+            <Input
+              defaultValue="endpoint #1"
+              className={classes.input}
+              inputProps={{"aria-label": "Description"}}
+            />
+          </Grid>
+        </Grid>
+      </div>
     )}
   </div>
 </Toolbar>
