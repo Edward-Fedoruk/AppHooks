@@ -6,12 +6,12 @@ import { lighten } from "@material-ui/core/styles/colorManipulator"
 import Toolbar from "@material-ui/core/Toolbar"
 import Typography from "@material-ui/core/Typography"
 import classNames from "classnames"
-import React from "react"
+import React, { Fragment } from "react"
 import PropTypes from "prop-types"
 import { withStyles } from "@material-ui/core/styles"
 import Grid from "@material-ui/core/Grid"
 import Input from "@material-ui/core/Input"
-import PresentToAll from "@material-ui/icons/PresentToAll"
+import Reply from "@material-ui/icons/Reply"
 
 const toolbarStyles = theme => ({
   root: {
@@ -39,7 +39,7 @@ const toolbarStyles = theme => ({
   },
 })
 
-let EnhancedTableToolbar = ({ numSelected, classes }) => (
+const EnhancedTableToolbar = ({ numSelected, classes }) => (
 <Toolbar
   className={classNames(classes.root, {
     [classes.highlight]: numSelected > 0,
@@ -54,12 +54,18 @@ let EnhancedTableToolbar = ({ numSelected, classes }) => (
   <div className={classes.spacer} />
   <div className={classes.actions}>
     {numSelected > 0 ? (
-      <Tooltip title="Delete">
-        {/* <PresentToAll /> */}
-        <IconButton aria-label="Delete">
-          <DeleteIcon />
-        </IconButton>
-      </Tooltip>
+      <Fragment>  
+        <Tooltip title="Export to CVS">
+          <IconButton aria-label="Export to CVS">
+            <Reply />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="Delete">
+          <IconButton aria-label="Delete">
+            <DeleteIcon />
+          </IconButton>
+        </Tooltip>
+      </Fragment>
     ) : (
       <div>
         <Grid container spacing={8} alignItems="flex-end">
