@@ -10,6 +10,7 @@ import Channels from "./components/channels/Channels"
 import Channel from "./components/channels/Channel"
 import AccessLogs from "./components/logs/AccessLogs"
 import SubUsers from "./components/users/SubUsers"
+import Settings from "./components/settings/Settings"
 import ProtectedRout from "./ProtectedRout"
 import App from "./App"
 import WebhooksRules from "./components/webhooks/WebhooksRules"
@@ -25,6 +26,7 @@ const WithNavigation = () => (
     <ProtectedRout path="/webhooks" exact component={WebhooksRules} />
     <ProtectedRout path="/billing" exact component={Billing} />
     <ProtectedRout path="/subusers" exact component={SubUsers} />
+    <ProtectedRout path="/settings" exact component={Settings} />
   </div>
 )
 
