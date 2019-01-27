@@ -11,7 +11,6 @@ import withPaginationTable from "../withPaginationTable"
 
 const styles = () => ({
   colName: {
-    
     fontWeight: "bold",
     fontSize: "14px"
   }
@@ -23,51 +22,38 @@ export class UsersTable extends Component {
   }
 
   render() {
-    const { classes } = this.props
+    const { classes, data, page, rowsPerPage, emptyRows } = this.props
+    const collNames = ["Email", "Name", "Role", "Privileges", "Active", ""]
     return (
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>
-              <Typography className={classes.colName} color="primary">
-                Email
-              </Typography>
-            </TableCell>
-            <TableCell>
-              <Typography className={classes.colName} color="primary">
-                Email
-              </Typography>
-            </TableCell>
-            <TableCell>
-              <Typography className={classes.colName} color="primary">
-                Email
-              </Typography>
-            </TableCell>
-            <TableCell>
-              <Typography className={classes.colName} color="primary">
-                Email
-              </Typography>
-            </TableCell>
-            <TableCell>
-              <Typography className={classes.colName} color="primary">
-                Email
-              </Typography>
-            </TableCell>
-            <TableCell>
-              <Typography className={classes.colName} color="primary">
-                Email
-              </Typography>
-            </TableCell>
-            <TableCell></TableCell>
+            {collNames.map(name => (
+              <TableCell>
+                <Typography className={classes.colName} color="primary">
+                  {name}
+                </Typography>
+              </TableCell>
+            ))}
           </TableRow>
         </TableHead>
         <TableBody>
-          <TableRow>
-            <TableCell>test</TableCell>
-            <TableCell>test</TableCell>
-            <TableCell>test</TableCell>
-            <TableCell>test</TableCell>
+          {data
+            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+            .map(row => (
+            <TableRow key={row.id}>
+              <TableCell>{row.email}</TableCell>
+              <TableCell>{row.name}</TableCell>
+              <TableCell>{row.role}</TableCell>
+              <TableCell>{row.privileges}</TableCell>
+              <TableCell>{row.active}</TableCell>
+            </TableRow>
+          ))}
+        {emptyRows > 0 && (
+          <TableRow style={{ height: 49 * emptyRows }}>
+            <TableCell colSpan={6} />
           </TableRow>
+        )}
         </TableBody>
       </Table>
     )
