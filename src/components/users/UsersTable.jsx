@@ -8,20 +8,64 @@ import TableHead from "@material-ui/core/TableHead"
 import TableRow from "@material-ui/core/TableRow"
 import Typography from "@material-ui/core/Typography"
 import withPaginationTable from "../withPaginationTable"
+import UserMenu from "./UserMenu"
+import Select from "@material-ui/core/Select"
+import MenuItem from "@material-ui/core/MenuItem"
+import Checkbox from "@material-ui/core/Checkbox"
 
-const styles = () => ({
+const styles = ({ palette }) => ({
   colName: {
     fontWeight: "bold",
     fontSize: "14px"
+  },
+
+  cell: {
+    color: palette.primary.main,
+    fontSize: "16px",
   }
 })
 
 export class UsersTable extends Component {
+  state = {
+    open: -1,
+    anchorEl: null,
+    selected: 1,
+  }
+
   static propTypes = {
     classes: PropTypes.object.isRequired
   }
 
+  handleClick = event => {
+    this.setState({ 
+      open: event.currentTarget.id,
+      anchorEl: event.currentTarget
+    })
+  }
+
+  handleClose = () => {
+    this.setState({ open: -1, anchorEl: null, selected: -1 })
+  }
+
+  confirmChange = () => {
+    this.setState({ selected: -1 })
+  }
+
+  declineChange = () => {
+    this.setState({ selected: -1 })
+  }
+
+  handleEdit = () => {
+    this.setState(({ open }) => ({ 
+      selected: open, 
+      anchorEl: null,
+      open: -1, 
+      editMode: true
+    }))
+  }
+
   render() {
+    const { anchorEl, open, selected } = this.state
     const { classes, data, page, rowsPerPage, emptyRows } = this.props
     const collNames = ["Email", "Name", "Role", "Privileges", "Active", ""]
     return (
@@ -40,20 +84,75 @@ export class UsersTable extends Component {
         <TableBody>
           {data
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            .map(row => (
-            <TableRow key={row.id}>
-              <TableCell>{row.email}</TableCell>
-              <TableCell>{row.name}</TableCell>
-              <TableCell>{row.role}</TableCell>
-              <TableCell>{row.privileges}</TableCell>
-              <TableCell>{row.active}</TableCell>
-            </TableRow>
-          ))}
-        {emptyRows > 0 && (
-          <TableRow style={{ height: 49 * emptyRows }}>
-            <TableCell colSpan={6} />
-          </TableRow>
-        )}
+            .map((row, i) => (
+              <TableRow selected={selected === `${i}`} key={row.id}>
+                <TableCell className={classes.cell}>{row.email}</TableCell>
+                <TableCell className={classes.cell}>{row.name}</TableCell>
+                <TableCell className={classes.cell}>
+                  {selected === `${i}` 
+                    ? <Select
+                        className={classes.cell}
+                        multiple
+                        value={[row.role]}
+                        renderValue={selected => selected.join(', ')}
+                      >
+                        <MenuItem value={row.role}>
+                          {row.role}
+                        </MenuItem>
+                        <MenuItem value="sub-user">
+                          <Checkbox />sub-user
+                        </MenuItem>
+                      </Select>
+                    : row.role}   
+                </TableCell>
+                <TableCell className={classes.cell}>
+                  {selected === `${i}` 
+                    ? <Select
+                        className={classes.cell}
+                        value={row.privileges}
+                      >
+                        <MenuItem value={row.privileges}>
+                          {row.privileges}
+                        </MenuItem>
+                        <MenuItem value="sub-user">
+                          sub-user
+                        </MenuItem>
+                      </Select>
+                    : row.privileges}
+                </TableCell>
+                <TableCell className={classes.cell}>
+                  {selected === `${i}` 
+                    ? <Select
+                        className={classes.cell}
+                        value={row.active}
+                      >
+                        <MenuItem value={row.active}>
+                          {row.active}
+                        </MenuItem>
+                        <MenuItem value={row.active === "yes" ? "no" : "yes"}>
+                          {row.active === "yes" ? "no" : "yes"}
+                        </MenuItem>
+                      </Select>
+                    : row.active}                  
+                </TableCell>
+                <TableCell className={classes.cell}>
+                  <UserMenu
+                    handleClick={this.handleClick}
+                    handleClose={this.handleClose}
+                    handleEdit={this.handleEdit}
+                    confirmChange={this.confirmChange}
+                    open={open}
+                    selected={selected}
+                    anchorEl={anchorEl}
+                    id={i}
+                  />
+                </TableCell>
+              </TableRow>
+            ))}
+          {emptyRows > 0 && (
+            <TableRow style={{ height: 49 * emptyRows }}>
+              <TableCell colSpan={5} />
+            </TableRow>)}
         </TableBody>
       </Table>
     )

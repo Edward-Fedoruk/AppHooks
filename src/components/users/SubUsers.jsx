@@ -11,7 +11,7 @@ function createData(email, name, role, privileges, active) {
 }
 
 const data = [
-  createData("Cupcake", "test1", "test2", "test3", "test4"),
+  createData("Cupcake", "test1", "test2", "test3", "yes"),
   createData("Donut", "test1", "test2", "test3", "test4"),
   createData("Frozen yoghurt", "test1", "test2", "test3", "test4"),
   createData("Gingerbread", "test1", "test2", "test3", "test4"),
