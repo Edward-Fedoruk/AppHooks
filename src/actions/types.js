@@ -1,5 +1,3 @@
-export const domain = "https://app.develop.apphooks.io"
-
 // user interface
 export const NAV_BAR = "NAV_BAR"
 export const TOGGLE_SNACKBAR = "TOGGLE_SNACKBAR"
@@ -23,3 +21,7 @@ export const SET_STAGES = "SET_STAGES"
 export const CREATE_STAGE_ERROR = "CREATE_STAGE_ERROR"
 export const REMOVE_STAGES = "REMOVE_STAGES"
 export const SET_CURRENT_STAGE = "SET_CURRENT_STAGE"
+
+// access logs
+export const SET_LOGS = "SET_LOGS"
+export const DELETE_LOGS = "DELETE_LOGS"
