@@ -1,7 +1,7 @@
 import * as types from "./types"
 import { compose } from 'redux'
-import { domain } from './types'
 import { toggleSnackbar } from './ui'
+import { domain } from "./utils"
 
 export const authenticate = (payload) => ({
   type: types.CREATE_USER,

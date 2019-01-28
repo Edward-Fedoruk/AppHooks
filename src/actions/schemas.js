@@ -1,4 +1,4 @@
-import { schema } from 'normalizr'
+import { schema } from "normalizr"
 
 export const destinationSchema = new schema.Entity("destination")
 export const endpointSchema = new schema.Entity("endpoints", {stages: [destinationSchema]})
