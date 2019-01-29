@@ -10,7 +10,6 @@ import { withStyles } from "@material-ui/core"
 import TopBar from "../TopBar"
 import { fetchRequests } from "../../actions/requestLogs"
 
-
 const styles = () => ({
   placeholder: {
     margin: "auto",
@@ -56,7 +55,7 @@ export class AccessLogs extends Component {
 }
 
 const mapStateToProps = ({ requestLogs }) => ({
-  data: requestLogs.requests 
+  data: requestLogs.requests,
 })
 
 const mapDispatchToProps = {
