@@ -12,6 +12,8 @@ import DeleteIcon from "@material-ui/icons/Delete"
 import ConfirmDialog from "../ConfirmDialog"
 import { deleteLogs } from "../../actions/requestLogs"
 import { connect } from "react-redux"
+import { compose } from "redux"
+import { withRouter } from "react-router-dom"
 
 const styles = () => ({
   menu: {
@@ -51,12 +53,13 @@ class LogMenu extends Component {
     this.toggleDialog()
     this.props.deleteLogs([this.props.id])
   }
+
+  openDetails = () => this.props.history.push(`/logs/${this.props.id}`)
   
   render() {
     const { 
       classes, id, handleClick, 
       handleClose, open, anchorEl,
-      openDetails
     } = this.props
     const { openDialog } = this.state
 
@@ -85,7 +88,7 @@ class LogMenu extends Component {
           className={classes.menu}
           elevation={1}
         >
-          <MenuItem onClick={openDetails}>
+          <MenuItem onClick={this.openDetails}>
             <ListItemIcon>
               <ListAlt />
             </ListItemIcon>
@@ -116,7 +119,11 @@ LogMenu.propTypes = {
 }
 
 const mapDispatchToProps = dispatch => ({
-  deleteLogs: id => dispatch(deleteLogs(id)) 
+  deleteLogs: id => dispatch(deleteLogs(id)),
 })
 
-export default connect(null, mapDispatchToProps)(withStyles(styles)(LogMenu))
+export default compose(
+  withRouter,
+  withStyles(styles),
+  connect(null, mapDispatchToProps)
+)(LogMenu)
