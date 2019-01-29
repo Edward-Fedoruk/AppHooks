@@ -1,7 +1,8 @@
 import * as types from "../actions/types"
 
 const initialState = {
-  requests: []
+  requests: [],
+  openedLog: {}
 }
 
 export default (state = initialState, action) => {
@@ -17,6 +18,11 @@ export default (state = initialState, action) => {
     return {
       ...state,
       requests: state.requests.filter(({ id }) => !action.ids.includes(id))
+    }
+  case types.SET_LOG: 
+    return {
+      ...state,
+      openedLog: action.log
     }
   default:
     return state

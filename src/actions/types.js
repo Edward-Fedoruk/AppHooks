@@ -24,4 +24,5 @@ export const SET_CURRENT_STAGE = "SET_CURRENT_STAGE"
 
 // access logs
 export const SET_LOGS = "SET_LOGS"
+export const SET_LOG = "SET_LOG"
 export const DELETE_LOGS = "DELETE_LOGS"
