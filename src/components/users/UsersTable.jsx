@@ -12,6 +12,7 @@ import UserMenu from "./UserMenu"
 import Select from "@material-ui/core/Select"
 import MenuItem from "@material-ui/core/MenuItem"
 import Checkbox from "@material-ui/core/Checkbox"
+import Gravatar from "react-gravatar"
 
 const styles = ({ palette }) => ({
   colName: {
@@ -22,6 +23,11 @@ const styles = ({ palette }) => ({
   cell: {
     color: palette.primary.main,
     fontSize: "16px",
+  },
+
+  gravatar: {
+    borderRadius: "50%",
+    verticalAlign: "middle"
   }
 })
 
@@ -72,6 +78,8 @@ export class UsersTable extends Component {
       <Table>
         <TableHead>
           <TableRow>
+            <TableCell padding="checkbox">
+            </TableCell>
             {collNames.map(name => (
               <TableCell>
                 <Typography className={classes.colName} color="primary">
@@ -86,6 +94,14 @@ export class UsersTable extends Component {
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             .map((row, i) => (
               <TableRow selected={selected === `${i}`} key={row.id}>
+                <TableCell padding="checkbox" className={classes.cell}>
+                  <Gravatar 
+                    default="identicon" 
+                    email={row.email}
+                    className={classes.gravatar}
+                    size={35}
+                  />
+                </TableCell>
                 <TableCell className={classes.cell}>{row.email}</TableCell>
                 <TableCell className={classes.cell}>{row.name}</TableCell>
                 <TableCell className={classes.cell}>
