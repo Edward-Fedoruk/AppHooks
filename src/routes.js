@@ -26,7 +26,7 @@ const WithNavigation = () => (
     <ProtectedRout path="/logs/:id" exact component={LogInfo} />
     <ProtectedRout path="/webhooks" exact component={WebhooksRules} />
     <ProtectedRout path="/billing" exact component={Billing} />
-    <ProtectedRout path="/subusers" exact component={SubUsers} />
+    <ProtectedRout path="/users" exact component={SubUsers} />
   </div>
 )
 
