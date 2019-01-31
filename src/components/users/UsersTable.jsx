@@ -105,7 +105,7 @@ export class UsersTable extends Component {
           {data
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             .map((row, i) => (
-              <TableRow selected={selected === `${i}`} key={row.id}>
+              <TableRow selected={selected === `${row.id}`} key={row.id}>
                 <TableCell padding="checkbox" className={classNames(classes.cell, classes.avatar)}>
                   <Gravatar 
                     default="identicon" 
@@ -172,7 +172,7 @@ export class UsersTable extends Component {
                     open={open}
                     selected={selected}
                     anchorEl={anchorEl}
-                    id={i}
+                    id={row.id}
                   />
                 </TableCell>
               </TableRow>
