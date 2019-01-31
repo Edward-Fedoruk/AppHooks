@@ -35,6 +35,7 @@ export class AddUser extends Component {
     e.preventDefault()
     console.log(this.state)
     this.props.inviteUser(this.state)
+    this.setState({ email: "" })
   }
 
   onChange = input => e => this.setState({ [input]: e.target.value })
