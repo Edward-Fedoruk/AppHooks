@@ -8,24 +8,7 @@ import withNavigation from "../withNavigation"
 import { compose } from "redux"
 import { withStyles } from "@material-ui/core"
 import TopBar from "../TopBar"
-
-let counter = 0
-function createData(date, app, endpoint, destination, status, code) {
-  counter += 1
-  return { id: counter, date, app, endpoint, destination, status, code }
-}
-
-const data = [
-  createData("2 days ago [ 01/13/19  18:43", "My App #1", "Endpoint #1", "Destination #1", "Success", 200),
-  createData("2 days ago [ 01/13/19  18:43", "My App #1", "Endpoint #1", "Destination #1", "Success", 200),
-  createData("2 days ago [ 01/13/19  18:43", "My App #1", "Endpoint #1", "Destination #1", "Success", 200),
-  createData("2 days ago [ 01/13/19  18:43", "My App #1", "Endpoint #1", "Destination #1", "Success", 200),
-  createData("2 days ago [ 01/13/19  18:43", "My App #1", "Endpoint #1", "Destination #1", "Success", 200),
-  createData("2 days ago [ 01/13/19  18:43", "My App #1", "Endpoint #1", "Destination #1", "Success", 200),
-  createData("2 days ago [ 01/13/19  18:43", "My App #1", "Endpoint #1", "Destination #1", "Success", 200),
-  createData("2 days ago [ 01/13/19  18:43", "My App #1", "Endpoint #1", "Destination #1", "Success", 200),
-  createData("2 days ago [ 01/13/19  18:43", "My App #1", "Endpoint #1", "Destination #1", "Success", 200),
-]
+import { fetchRequests } from "../../actions/requestLogs"
 
 const styles = () => ({
   placeholder: {
@@ -44,8 +27,12 @@ export class AccessLogs extends Component {
     classes: PropTypes.object.isRequired
   }
 
+  componentDidMount() {
+    this.props.fetchRequests()
+  }
+
   render() {
-    const { classes } = this.props
+    const { classes, data } = this.props
     return (
       <Fragment>
         <TopBar title="Request Log Viewer" />
@@ -67,12 +54,12 @@ export class AccessLogs extends Component {
   
 }
 
-const mapStateToProps = (state) => ({
-  
+const mapStateToProps = ({ requestLogs }) => ({
+  data: requestLogs.requests,
 })
 
 const mapDispatchToProps = {
-  
+  fetchRequests
 }
 
 export default compose(

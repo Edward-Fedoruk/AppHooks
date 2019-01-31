@@ -66,9 +66,8 @@ class EnhancedTableHead extends React.Component {
                   </TableSortLabel>
                 </Tooltip>
               </TableCell>
-            ),
-            this,
-          )}
+            ))}
+          <TableCell></TableCell>
         </TableRow>
       </TableHead>
     )

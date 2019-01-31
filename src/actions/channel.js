@@ -1,19 +1,9 @@
 import * as types from "./types"
-import { createStage } from './stage'
-import { normalize } from 'normalizr'
-import { channelSchema } from './schemas'
-import { domain } from './types'
+import { createStage } from "./stage"
+import { normalize } from "normalizr"
+import { channelSchema } from "./schemas"
+import { domain, setFetchSettings } from "./utils"
 import { compose } from "redux"
-
-const setFetchSettings = (method, accessToken, body) => ({
-  method,
-  headers: {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json',
-    'Authorization': "Bearer " + accessToken
-  },
-  body
-})
 
 export const setChannelsData = payload => ({
   type: types.SET_CHANNELS,

@@ -1,7 +1,7 @@
 import * as types from "./types"
 import { stageSchema } from './schemas'
 import { normalize } from 'normalizr'
-import { domain } from './types'
+import { domain, setFetchSettings } from "./utils"
 
 export const setStagesData = (payload, id) => ({
   type: types.SET_STAGES,

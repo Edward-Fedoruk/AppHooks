@@ -7,6 +7,8 @@ import EnhancedTableHead from "./EnhancedTableHead"
 import AccessTableBody from "./AccessTableBody"
 import withPaginationTable from "../withPaginationTable"
 import { compose } from "redux"
+import { connect } from "react-redux"
+import { deleteLogs } from "../../actions/requestLogs"
 
 const styles = theme => ({
   root: {
@@ -29,6 +31,7 @@ class LogsTable extends Component {
     order: "asc",
     orderBy: "calories",
     selected: [],
+    openDialog: false
   }
 
   static propTypes = { 
@@ -37,6 +40,14 @@ class LogsTable extends Component {
     rowsPerPage: PropTypes.number,
     page: PropTypes.number,
     emptyRows: PropTypes.number  
+  }
+
+  toggleDialog = () => 
+    this.setState(state => ({ openDialog: !state.openDialog }))
+
+  handleCloseWithAction = (ids) => {
+    this.toggleDialog()
+    this.props.deleteLogs(ids)
   }
 
   handleRequestSort = (event, property) => {
@@ -83,39 +94,50 @@ class LogsTable extends Component {
 
   render() {
     const { classes, data, rowsPerPage, page, emptyRows  } = this.props
-    const { order, orderBy, selected} = this.state
+    const { order, orderBy, selected, openDialog } = this.state
 
     return (
-      <Fragment>
-        <EnhancedTableToolbar numSelected={selected.length} />
-        <div className={classes.tableWrapper}>
-          <Table className={classes.table} aria-labelledby="tableTitle">
-            <EnhancedTableHead
-              numSelected={selected.length}
-              order={order}
-              orderBy={orderBy}
-              onSelectAllClick={this.handleSelectAllClick}
-              onRequestSort={this.handleRequestSort}
-              rowCount={data.length}
+          <Fragment>
+            <EnhancedTableToolbar 
+              selected={selected} 
+              toggleDialog={this.toggleDialog}
+              handleCloseWithAction={this.handleCloseWithAction}
+              openDialog={openDialog}
             />
-            <AccessTableBody 
-              emptyRows={emptyRows}
-              data={data}
-              order={order}
-              orderBy={orderBy}
-              handleClick={this.handleClick}
-              page={page}
-              rowsPerPage={rowsPerPage}
-              isSelected={this.isSelected}
-            />
-          </Table>
-        </div>
-      </Fragment>
+            <div className={classes.tableWrapper}>
+              <Table className={classes.table} aria-labelledby="tableTitle">
+                <EnhancedTableHead
+                  numSelected={selected.length}
+                  order={order}
+                  orderBy={orderBy}
+                  onSelectAllClick={this.handleSelectAllClick}
+                  onRequestSort={this.handleRequestSort}
+                  rowCount={data.length}
+                />
+                <AccessTableBody 
+                  emptyRows={emptyRows}
+                  data={data}
+                  order={order}
+                  orderBy={orderBy}
+                  handleClick={this.handleClick}
+                  page={page}
+                  rowsPerPage={rowsPerPage}
+                  isSelected={this.isSelected}
+                />
+              </Table>
+            </div>
+          </Fragment>
     )
   }
 }
 
+const mapDispatchToProps = dispatch => ({
+  deleteLogs: ids => dispatch(deleteLogs(ids))
+})
+
+
 export default compose(
   withPaginationTable(),
-  withStyles(styles)
+  withStyles(styles),
+  connect(null, mapDispatchToProps)
 )(LogsTable)

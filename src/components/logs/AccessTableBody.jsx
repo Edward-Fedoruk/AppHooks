@@ -1,10 +1,11 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React, { Component } from "react"
+import PropTypes from "prop-types"
 import TableBody from "@material-ui/core/TableBody"
 import TableCell from "@material-ui/core/TableCell"
 import TableRow from "@material-ui/core/TableRow"
 import Checkbox from "@material-ui/core/Checkbox"
 import { withStyles } from "@material-ui/core"
+import LogMenu from "./LogMenu"
 
 const styles = ({ palette }) => ({
   cell: {
@@ -13,72 +14,111 @@ const styles = ({ palette }) => ({
   }
 })
 
-function desc(a, b, orderBy) {
-  if (b[orderBy] < a[orderBy]) {
-    return -1
+
+class AccessTableBody extends Component { 
+  state = {
+    open: -1,
+    anchorEl: null,
   }
-  if (b[orderBy] > a[orderBy]) {
-    return 1
+
+  desc = (a, b, orderBy) => {
+    if (b[orderBy] < a[orderBy]) {
+      return -1
+    }
+    if (b[orderBy] > a[orderBy]) {
+      return 1
+    }
+    return 0
   }
-  return 0
-}
+  
+  stableSort = (array, cmp) => {
+    const stabilizedThis = array.map((el, index) => [el, index])
+    stabilizedThis.sort((a, b) => {
+      const order = cmp(a[0], b[0])
+      if (order !== 0) return order
+      return a[1] - b[1]
+    })
+    return stabilizedThis.map(el => el[0])
+  }
+  
+  getSorting = (order, orderBy) => order === "desc" 
+      ? (a, b) => this.desc(a, b, orderBy) 
+      : (a, b) => -(this.desc(a, b, orderBy))
+  
 
-function stableSort(array, cmp) {
-  const stabilizedThis = array.map((el, index) => [el, index])
-  stabilizedThis.sort((a, b) => {
-    const order = cmp(a[0], b[0])
-    if (order !== 0) return order
-    return a[1] - b[1]
-  })
-  return stabilizedThis.map(el => el[0])
-}
+  handleMenuClick = event => {
+    this.setState({ 
+      open: event.currentTarget.id,
+      anchorEl: event.currentTarget
+    })
+  }
 
-function getSorting(order, orderBy) {
-  return order === "desc" ? (a, b) => desc(a, b, orderBy) : (a, b) => -desc(a, b, orderBy)
-}
+  handleClose = () => {
+    this.setState({ open: -1, anchorEl: null })
+  }
 
+  handleRowClick = (e, id) => {
+    if(e.target.tagName === "TD" || e.target.tagName === "INPUT") 
+      this.props.handleClick(e, id)
+    return
+  }
 
-const AccessTableBody = ({ 
-  data, order, orderBy, 
-  page, rowsPerPage, emptyRows, 
-  isSelected, handleClick, classes
-}) => (
-  <TableBody>
-    {stableSort(data, getSorting(order, orderBy))
-      .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-      .map(n => {
-        const selected = isSelected(n.id)
-        return (
-          <TableRow
-            hover
-            onClick={event => handleClick(event, n.id)}
-            role="checkbox"
-            aria-checked={selected}
-            tabIndex={-1}
-            key={n.id}
-            selected={selected}
-          >
-            <TableCell className={classes.cell} padding="checkbox">
-              <Checkbox checked={selected} />
-            </TableCell>
-            <TableCell className={classes.cell} padding="none">
-              {n.date}
-            </TableCell>
-            <TableCell className={classes.cell}>{n.app}</TableCell>
-            <TableCell className={classes.cell}>{n.endpoint}</TableCell>
-            <TableCell className={classes.cell}>{n.destination}</TableCell>
-            <TableCell className={classes.cell}>{n.status}</TableCell>
-            <TableCell className={classes.cell}>{n.code}</TableCell>
+  render() {
+    const { 
+      data, order, orderBy, 
+      page, rowsPerPage, emptyRows, 
+      isSelected, classes
+    } = this.props
+    const { open, anchorEl } = this.state
+
+    return (
+      <TableBody>
+        {this.stableSort(data, this.getSorting(order, orderBy))
+          .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+          .map(n => {
+            const selected = isSelected(n.id)
+            return (
+              <TableRow
+                hover
+                onClick={event => this.handleRowClick(event, n.id)}
+                role="checkbox"
+                aria-checked={selected}
+                tabIndex={-1}
+                key={n.id}
+                selected={selected}
+              >
+                <TableCell className={classes.cell} padding="checkbox">
+                  <Checkbox checked={selected} />
+                </TableCell>
+                <TableCell className={classes.cell} padding="none">
+                  {n.attempted_at}
+                </TableCell>
+                <TableCell className={classes.cell}>{n.application.name}</TableCell>
+                <TableCell className={classes.cell}>{n.endpoint.name}</TableCell>
+                <TableCell className={classes.cell}>{n.destination.name}</TableCell>
+                <TableCell className={classes.cell}>{n.response_text}</TableCell>
+                <TableCell className={classes.cell}>{n.response_code}</TableCell>
+                <TableCell>
+                  <LogMenu 
+                    handleClick={this.handleMenuClick}
+                    handleClose={this.handleClose}
+                    open={open}
+                    anchorEl={anchorEl}
+                    id={n.id}
+                  />    
+                </TableCell>
+              </TableRow>
+            )
+          })}
+        {emptyRows > 0 && (
+          <TableRow style={{ height: 49 * emptyRows }}>
+            <TableCell colSpan={6} />
           </TableRow>
-        )
-      })}
-    {emptyRows > 0 && (
-      <TableRow style={{ height: 49 * emptyRows }}>
-        <TableCell colSpan={6} />
-      </TableRow>
-    )}
-  </TableBody>
-)
+        )}
+      </TableBody>
+    )
+  }
+}
 
 
 AccessTableBody.propTypes = {

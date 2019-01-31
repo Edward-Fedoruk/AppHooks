@@ -1,18 +1,18 @@
-import React, { Component } from 'react'
-import withBackground from './withBackground' 
-import { withStyles } from '@material-ui/core/styles'
-import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator'
-import Paper from '@material-ui/core/Paper'
-import Typography from '@material-ui/core/Typography'
+import React, { Component } from "react"
+import withBackground from "./withBackground" 
+import { withStyles } from "@material-ui/core/styles"
+import { ValidatorForm, TextValidator } from "react-material-ui-form-validator"
+import Paper from "@material-ui/core/Paper"
+import Typography from "@material-ui/core/Typography"
 import { Link } from "react-router-dom"
-import { compose } from 'redux'
-import SocialAuthentication from './SocialAuthentication'
-import FormTitle from './FormTitle'
-import SubmitButton from './SubmitButton'
-import { connect } from 'react-redux'
-import { logIn } from '../../actions/auth'
-import { withRouter } from 'react-router'
-import ErrorSnackbar from './ErrorSnackbar'
+import { compose } from "redux"
+import SocialAuthentication from "./SocialAuthentication"
+import FormTitle from "./FormTitle"
+import SubmitButton from "./SubmitButton"
+import { connect } from "react-redux"
+import { logIn } from "../../actions/auth"
+import { withRouter } from "react-router"
+import ErrorSnackbar from "./ErrorSnackbar"
 
 const flexCenter = {
   display: "flex",
@@ -42,7 +42,7 @@ const styles = ({ breakpoints, spacing }) => ({
   flexCenter,
 
   textField: {
-    width: '100%',
+    width: "100%",
     marginTop: "20px"
   },
 
@@ -106,13 +106,13 @@ class LogIn extends Component {
             ref="email"
             autoFocus
             placeholder="e.g., carl@cloud.ci"
-            onChange={this.onChange('email')}
+            onChange={this.onChange("email")}
             onBlur={this.handleBlur}
             className={classes.textField}
             value={this.state.email}
             margin="normal"
-            validators={['required', 'isEmail']}
-            errorMessages={['this field is required', 'email is not valid']}
+            validators={["required", "isEmail"]}
+            errorMessages={["this field is required", "email is not valid"]}
           />
 
           <TextValidator 
@@ -121,15 +121,15 @@ class LogIn extends Component {
             label="Your password"
             type="password"
             placeholder="e.g., *******"
-            onChange={this.onChange('password')}
+            onChange={this.onChange("password")}
             onBlur={this.handleBlur}
             className={classes.textField}
             value={this.state.password}
             margin="normal"
             name="password"
             ref="password"
-            validators={['required', 'minStringLength:6', 'maxStringLength:16']}
-            errorMessages={['this field is required', 'password must contain at least 6 characters', 'password must contain no more then 16 characters']}
+            validators={["required", "minStringLength:6", "maxStringLength:16"]}
+            errorMessages={["this field is required", "password must contain at least 6 characters", "password must contain no more then 16 characters"]}
           />
 
           <Typography className={classes.remindLink}>
@@ -141,7 +141,7 @@ class LogIn extends Component {
           <SubmitButton text={"Log in"} />
 
           <Typography className={classes.signLink}>
-            Don't have an account? 
+            Don"t have an account? 
             <span> </span>
             <Link style={{color: "blue"}} to="/signup">
               Sign Up

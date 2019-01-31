@@ -12,6 +12,9 @@ import { withStyles } from "@material-ui/core/styles"
 import Grid from "@material-ui/core/Grid"
 import Input from "@material-ui/core/Input"
 import Reply from "@material-ui/icons/Reply"
+import { deleteLogs } from "../../actions/requestLogs"
+import { connect } from "react-redux"
+import ConfirmDialog from "../ConfirmDialog"
 
 const toolbarStyles = theme => ({
   root: {
@@ -39,55 +42,64 @@ const toolbarStyles = theme => ({
   },
 })
 
-const EnhancedTableToolbar = ({ numSelected, classes }) => (
-<Toolbar
-  className={classNames(classes.root, {
-    [classes.highlight]: numSelected > 0,
-  })}
->
-  <div className={classes.title}>
-    {numSelected > 0 &&
-      <Typography color="inherit" variant="subtitle1">
-        {numSelected} selected
-      </Typography>}
-  </div>
-  <div className={classes.spacer} />
-  <div className={classes.actions}>
-    {numSelected > 0 ? (
-      <Fragment>  
-        <Tooltip title="Export to CVS">
-          <IconButton aria-label="Export to CVS">
-            <Reply />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title="Delete">
-          <IconButton aria-label="Delete">
-            <DeleteIcon />
-          </IconButton>
-        </Tooltip>
-      </Fragment>
-    ) : (
-      <div>
-        <Grid container spacing={8} alignItems="flex-end">
-          <Grid item><Search /></Grid>
-          <Grid item>
-            <Input
-              defaultValue="endpoint #1"
-              className={classes.input}
-              inputProps={{"aria-label": "Description"}}
-            />
+const EnhancedTableToolbar = ({ selected, classes, deleteLogs, openDialog, toggleDialog, handleCloseWithAction }) => (
+  <Toolbar
+    className={classNames(classes.root, {
+      [classes.highlight]: selected.length > 0,
+    })}
+  >
+    <ConfirmDialog 
+      open={openDialog}
+      handleClose={toggleDialog}
+      handleCloseWithAction={() => handleCloseWithAction(selected)}
+    />
+    <div className={classes.title}>
+      {selected.length > 0 &&
+        <Typography color="inherit" variant="subtitle1">
+          {selected.length} selected
+        </Typography>}
+    </div>
+    <div className={classes.spacer} />
+    <div className={classes.actions}>
+      {selected.length > 0 ? (
+        <Fragment>  
+          <Tooltip title="Export to CVS">
+            <IconButton aria-label="Export to CVS">
+              <Reply />
+            </IconButton>
+          </Tooltip>
+          <Tooltip onClick={toggleDialog} title="Delete">
+            <IconButton aria-label="Delete">
+              <DeleteIcon />
+            </IconButton>
+          </Tooltip>
+        </Fragment>
+      ) : (
+        <div>
+          <Grid container spacing={8} alignItems="flex-end">
+            <Grid item><Search /></Grid>
+            <Grid item>
+              <Input
+                defaultValue="endpoint #1"
+                className={classes.input}
+                inputProps={{"aria-label": "Description"}}
+              />
+            </Grid>
           </Grid>
-        </Grid>
-      </div>
-    )}
-  </div>
-</Toolbar>
+        </div>
+      )}
+    </div>
+  </Toolbar>
 )
 
 
 EnhancedTableToolbar.propTypes = {
   classes: PropTypes.object.isRequired,
-  numSelected: PropTypes.number.isRequired,
+  selected: PropTypes.array.isRequired,
 }
 
-export default withStyles(toolbarStyles)(EnhancedTableToolbar)
+const mapDispatchToProps = dispatch => ({
+  deleteLogs: ids => dispatch(deleteLogs(ids))
+})
+
+export default connect(null, mapDispatchToProps)(withStyles(toolbarStyles)(EnhancedTableToolbar))

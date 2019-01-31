@@ -39,7 +39,7 @@ const styles = ({ breakpoints, spacing }) => ({
 
 const ErrorSnackbar = ({ 
   classes, className, message,
-  variant, toggleSnackbar, snackbar,
+  toggleSnackbar, snackbar,
 }) => {
 
   return (
@@ -72,7 +72,7 @@ const mapStateToProps = ({ view }) => ({
 })
 
 const mapDispatchToProps = dispatch => ({ 
-  toggleSnackbar: () => dispatch(toggleSnackbar(false))
+  toggleSnackbar: () => dispatch(toggleSnackbar())
 })
 
 export default compose(

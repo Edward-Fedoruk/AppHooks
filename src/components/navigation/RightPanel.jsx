@@ -123,10 +123,10 @@ export class RightPanel extends Component {
             />
       
             <NavListItem 
-              path="/subusers"
+              path="/users"
               currentPath={location.pathname}
               Icon={GroupAdd}
-              itemText="Billing"
+              itemText="Sub-Users"
               exact={false}
             />
 
