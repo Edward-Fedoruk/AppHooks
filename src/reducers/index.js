@@ -5,6 +5,7 @@ import view from "./view"
 import channelsEntities from "./channelsEntities"
 import stages from "./stages"
 import requestLogs from "./requestLogs"
+import users from "./users"
 
 export default combineReducers({
   view,
@@ -12,5 +13,6 @@ export default combineReducers({
   channels,
   stages,
   channelsEntities,
-  requestLogs
+  requestLogs,
+  users
 })
