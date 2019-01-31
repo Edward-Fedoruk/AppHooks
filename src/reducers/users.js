@@ -28,6 +28,11 @@ export default (state = initialState, action) => {
         ...state,
         inviteError: action.err
       }
+    case types.DELETE_USER: 
+      return {
+        ...state,
+        users: state.users.filter(({ id }) => id !== action.id)
+      }
     default:
       return state
   }

@@ -30,5 +30,6 @@ export const DELETE_LOGS = "DELETE_LOGS"
 // sub-users
 export const SET_USERS = "SET_USERS"
 export const SET_USER = "SET_USER"
-export const ADD_USER = " ADD_USER"
+export const ADD_USER = "ADD_USER"
 export const INVITE_ERROR = "INVITE_ERROR"
+export const DELETE_USER = "DELETE_USER"

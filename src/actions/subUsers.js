@@ -22,6 +22,11 @@ export const throwInviteError = err => ({
   err
 })
 
+export const removeUserFromStore = id => ({
+  type: types.DELETE_USER,
+  id
+}) 
+
 export const fetchUsers = () => dispatch => {
   const accessToken = localStorage.getItem("JWT")
   const settings = setFetchSettings("GET", accessToken, null)
@@ -72,5 +77,22 @@ export const inviteUser = data => dispatch => {
     console.log(errors)
     dispatch(throwInviteError(errors.email[0]))
     dispatch(toggleSnackbar())
+  })
+} 
+
+export const deleteUser = id => dispatch => {
+  const accessToken = localStorage.getItem("JWT")
+  const settings = setFetchSettings("DELETE", accessToken, null)
+  
+  fetch(`${domain}/users/${id}`, settings)
+  .then(response => response.json().then(json => 
+    response.ok ? Promise.resolve(json) : Promise.reject(json)
+  ))
+  .then(response => {
+    console.log(response.data)
+    dispatch(removeUserFromStore(id))
+  })
+  .catch(error => {
+    console.log(error)
   })
 } 
