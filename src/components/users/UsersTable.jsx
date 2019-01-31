@@ -13,21 +13,31 @@ import Select from "@material-ui/core/Select"
 import MenuItem from "@material-ui/core/MenuItem"
 import Checkbox from "@material-ui/core/Checkbox"
 import Gravatar from "react-gravatar"
+import classNames from "classnames"
 
 const styles = ({ palette }) => ({
   colName: {
     fontWeight: "bold",
-    fontSize: "14px"
+    fontSize: "16px",
+    transition: "all 3s"
   },
+
+  avatar: {padding: "0 0 0 10px"},
+  menu: {padding: "0"},
 
   cell: {
     color: palette.primary.main,
     fontSize: "16px",
+    transition: "all 3s",
   },
 
   gravatar: {
     borderRadius: "50%",
     verticalAlign: "middle"
+  },
+
+  tableWrapper: {
+    overflowX: "auto",
   }
 })
 
@@ -74,14 +84,16 @@ export class UsersTable extends Component {
     const { anchorEl, open, selected } = this.state
     const { classes, data, page, rowsPerPage, emptyRows } = this.props
     const collNames = ["Email", "Name", "Role", "Privileges", "Active", ""]
+    console.log(data)
     return (
-      <Table>
+      <div className={classes.tableWrapper}>
+        <Table>
         <TableHead>
           <TableRow>
             <TableCell padding="checkbox">
             </TableCell>
-            {collNames.map(name => (
-              <TableCell>
+            {collNames.map((name, i) => (
+              <TableCell key={i}> 
                 <Typography className={classes.colName} color="primary">
                   {name}
                 </Typography>
@@ -94,7 +106,7 @@ export class UsersTable extends Component {
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             .map((row, i) => (
               <TableRow selected={selected === `${i}`} key={row.id}>
-                <TableCell padding="checkbox" className={classes.cell}>
+                <TableCell padding="checkbox" className={classNames(classes.cell, classes.avatar)}>
                   <Gravatar 
                     default="identicon" 
                     email={row.email}
@@ -102,7 +114,7 @@ export class UsersTable extends Component {
                     size={35}
                   />
                 </TableCell>
-                <TableCell className={classes.cell}>{row.email}</TableCell>
+                <TableCell className={classes.cell}>{row.email === null ? "-" : row.email}</TableCell>
                 <TableCell className={classes.cell}>{row.name}</TableCell>
                 <TableCell className={classes.cell}>
                   {selected === `${i}` 
@@ -125,7 +137,7 @@ export class UsersTable extends Component {
                   {selected === `${i}` 
                     ? <Select
                         className={classes.cell}
-                        value={row.privileges}
+                        value={row.package}
                       >
                         <MenuItem value={row.privileges}>
                           {row.privileges}
@@ -142,16 +154,16 @@ export class UsersTable extends Component {
                         className={classes.cell}
                         value={row.active}
                       >
-                        <MenuItem value={row.active}>
-                          {row.active}
+                        <MenuItem value={1}>
+                          yes
                         </MenuItem>
-                        <MenuItem value={row.active === "yes" ? "no" : "yes"}>
-                          {row.active === "yes" ? "no" : "yes"}
+                        <MenuItem value={0}>
+                          no
                         </MenuItem>
                       </Select>
-                    : row.active}                  
+                    : row.active ? "Yes" : "No"}                  
                 </TableCell>
-                <TableCell className={classes.cell}>
+                <TableCell className={classNames(classes.cell, classes.menu)}>
                   <UserMenu
                     handleClick={this.handleClick}
                     handleClose={this.handleClose}
@@ -167,10 +179,11 @@ export class UsersTable extends Component {
             ))}
           {emptyRows > 0 && (
             <TableRow style={{ height: 49 * emptyRows }}>
-              <TableCell colSpan={5} />
+              <TableCell colSpan={6} />
             </TableRow>)}
         </TableBody>
       </Table>
+      </div>
     )
   }
 }
