@@ -11,6 +11,9 @@ import Edit from "@material-ui/icons/Edit"
 import { withStyles } from "@material-ui/core"
 import MenuItem from "@material-ui/core/MenuItem"
 import DeleteIcon from "@material-ui/icons/Delete"
+import { deleteUser } from "../../actions/subUsers"
+import { connect } from "react-redux"
+import { compose } from "redux"
 
 const styles = () => ({
   menu: {
@@ -46,7 +49,8 @@ const styles = () => ({
 const ChannelMenu = ({ 
   classes, id, handleClick, 
   handleClose, open, anchorEl,
-  handleEdit, selected, confirmChange
+  handleEdit, selected, confirmChange,
+  deleteUser
 }) => {
   return (
     <div className={classes.root}>
@@ -100,7 +104,7 @@ const ChannelMenu = ({
           </Typography>
         </MenuItem>
 
-        <MenuItem>
+        <MenuItem onClick={deleteUser(id)}>
           <ListItemIcon>
             <DeleteIcon className={classes.deleteIcon} />
           </ListItemIcon>
@@ -121,6 +125,14 @@ ChannelMenu.propTypes = {
   classes: PropTypes.object.isRequired,
   handleClick: PropTypes.func,
   handleClose: PropTypes.func,
+  deleteUser: PropTypes.func.isRequired
 }
 
-export default withStyles(styles)(ChannelMenu)
+const mapDispatchToProps = dispatch => ({
+  deleteUser: id => () => dispatch(deleteUser(id))
+})
+
+export default compose(
+  withStyles(styles),
+  connect(null, mapDispatchToProps)
+)(ChannelMenu)

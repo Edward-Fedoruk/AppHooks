@@ -83,11 +83,8 @@ export const inviteUser = data => dispatch => {
 export const deleteUser = id => dispatch => {
   const accessToken = localStorage.getItem("JWT")
   const settings = setFetchSettings("DELETE", accessToken, null)
-  
+  console.log(id)
   fetch(`${domain}/users/${id}`, settings)
-  .then(response => response.json().then(json => 
-    response.ok ? Promise.resolve(json) : Promise.reject(json)
-  ))
   .then(response => {
     console.log(response.data)
     dispatch(removeUserFromStore(id))
