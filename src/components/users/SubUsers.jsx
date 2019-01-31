@@ -6,6 +6,8 @@ import withNavigation from "../withNavigation"
 import TopBar from "../TopBar"
 import { compose } from "redux"
 import { withStyles } from "@material-ui/core"
+import { fetchUsers } from "../../actions/subUsers"
+import AddUser from "./AddUser"
 
 let counter = 0
 function createData(email, name, role, privileges, active) {
@@ -39,25 +41,31 @@ export class SubUsers extends Component {
     classes: PropTypes.object.isRequired
   }
 
+  componentDidMount() {
+    this.props.fetchUsers()
+  }
+
   render() {
-    const { classes } = this.props
+    const { classes, users } = this.props
+    console.log(users)
     return (
       <Fragment>
         <TopBar title="Sub-Users" />
         <div className={classes.contentWrap}>
-          <UsersTable data={data} />
+          <UsersTable data={users} />
+          <AddUser />
         </div>
       </Fragment>
     )
   }
 }
 
-const mapStateToProps = (state) => ({
-  
+const mapStateToProps = ({ users }) => ({
+  users: users.users
 })
 
 const mapDispatchToProps = {
-  
+  fetchUsers
 }
 
 export default compose(

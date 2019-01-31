@@ -17,6 +17,12 @@ const styles = () => ({
     width: "300px",
   },
 
+  root: {
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "nowrap"
+  },
+
   select: {
     marginRight: "20px"
   },
@@ -43,7 +49,7 @@ const ChannelMenu = ({
   handleEdit, selected, confirmChange
 }) => {
   return (
-    <div>
+    <div className={classes.root}>
       {selected !== `${id}` 
         ? <IconButton
             aria-owns="simple-menu"
