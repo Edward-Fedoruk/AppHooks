@@ -5,10 +5,15 @@ import { withStyles } from "@material-ui/core"
 import IconButton from "@material-ui/core/IconButton"
 import Cancel from "@material-ui/icons/Cancel"
 
-const styles = () => ({
+const styles = ({ breakpoints }) => ({
   settingsWrap: {
     display: "flex",
-    flexDirection: "column"
+    flexDirection: "column",
+
+    [breakpoints.down(425)]: {
+      backgroundColor: "#fff",
+      padding: "20px 0 20px 20px",
+    },
   },
 
   delete: {
@@ -24,7 +29,11 @@ const styles = () => ({
 
   headerWrap: {
     display: "flex",
-    alignItems: "center"
+    alignItems: "center",
+
+    [breakpoints.down(425)]: {
+      padding: "15px 25px",
+    },
   },
 
   field: {

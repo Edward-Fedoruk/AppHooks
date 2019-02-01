@@ -13,7 +13,12 @@ import DeleteAccount from "./DeleteAccount"
 const styles = ({ breakpoints }) => ({
   contentWrap: {
     padding: "27px 26px 20px 48px",
+  
+    [breakpoints.down(425)]: {
+      padding: "27px 0 0 0",
+    },
   },
+
 })
 
 export class Settings extends Component {

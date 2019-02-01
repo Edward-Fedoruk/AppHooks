@@ -3,21 +3,34 @@ import PropTypes from 'prop-types'
 import Typography from "@material-ui/core/Typography"
 import { withStyles } from "@material-ui/core"
 
-const styles = () => ({
+const styles = ({ breakpoints }) => ({
   settingsWrap: {
     display: "flex",
-    flexDirection: "column"
+    flexDirection: "column",
+
+    [breakpoints.down(425)]: {
+      backgroundColor: "#fff",
+      padding: "20px 0 20px 20px",
+    },
   },
 
   header: {
     fontSize: "18px",
     fontWeight: "900",
-    marginRight: "5px"
+    marginRight: "5px",
+
+    [breakpoints.down(425)]: {
+      paddingLeft: "24px"
+    },
   },
 
   headerWrap: {
     display: "flex",
-    alignItems: "center"
+    alignItems: "center",
+
+    [breakpoints.down(425)]: {
+      padding: "12px 0"
+    },
   },
 
   field: {

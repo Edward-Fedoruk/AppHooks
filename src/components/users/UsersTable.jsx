@@ -22,8 +22,8 @@ const styles = ({ palette }) => ({
     transition: "all 3s"
   },
 
-  avatar: {padding: "0 0 0 10px"},
-  menu: {padding: "0"},
+  avatar: { padding: "0 0 0 10px" },
+  menu: { padding: "0" },
 
   cell: {
     color: palette.primary.main,

@@ -66,7 +66,6 @@ class LogIn extends Component {
 
   onSuccess = response => console.log(response)
   onFailure = response => console.error(response)
-  handleClose = () => {}
 
   onSubmit = e => {
     e.preventDefault()

@@ -1,7 +1,8 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import Button from '@material-ui/core/Button'
-import { withStyles } from '@material-ui/core/styles'
+import React from "react"
+import PropTypes from "prop-types"
+import Button from "@material-ui/core/Button"
+import { withStyles } from "@material-ui/core/styles"
+import classNames from "classnames"
 
 const styles = () => ({
   logIn: {
@@ -15,13 +16,13 @@ const styles = () => ({
   },
 })
 
-const SubmitButton = ({ classes, text, styles }) => (
+const SubmitButton = ({ classes, text, styles, className={} }) => (
   <Button 
     fullWidth 
     variant="text" 
     color="primary" 
     type="submit"
-    className={classes.logIn}
+    className={classNames(classes.logIn, className)}
     style={styles}
   >
     { text }
@@ -32,7 +33,8 @@ const SubmitButton = ({ classes, text, styles }) => (
 SubmitButton.propTypes = {
   text: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired,
-  styles: PropTypes.object
+  styles: PropTypes.object,
+  className: PropTypes.object
 }
 
 export default withStyles(styles)(SubmitButton)
