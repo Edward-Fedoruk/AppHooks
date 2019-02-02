@@ -114,8 +114,8 @@ export class UsersTable extends Component {
                     size={35}
                   />
                 </TableCell>
-                <TableCell className={classes.cell}>{row.email === null ? "-" : row.email}</TableCell>
-                <TableCell className={classes.cell}>{row.name}</TableCell>
+                <TableCell className={classes.cell}>{row.email}</TableCell>
+                <TableCell className={classes.cell}>{row.name === null ? "-" : row.name}</TableCell>
                 <TableCell className={classes.cell}>
                   {selected === `${i}` 
                     ? <Select
