@@ -33,3 +33,8 @@ export const SET_USER = "SET_USER"
 export const ADD_USER = "ADD_USER"
 export const INVITE_ERROR = "INVITE_ERROR"
 export const DELETE_USER = "DELETE_USER"
+
+// webhooks rules
+export const SET_RULES = "SET_RULES"
+export const ADD_RULE = "ADD_RULE"
+export const SET_RULE = "SET_RULE"

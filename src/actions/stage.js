@@ -21,18 +21,10 @@ export const setCurrentStage = (stage) => ({
 
 export const createStage = (id, stageData, routeHistory) => dispatch => { 
   const accessToken = localStorage.getItem("JWT")
-
   const stringifiedData = JSON.stringify(stageData)
+  const settings = setFetchSettings("POST", accessToken, stringifiedData)
 
-  fetch(`${domain}/apps/${id}/stages`, {
-    method: "POST",
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'Authorization': "Bearer " + accessToken
-    },
-    body: stringifiedData
-  })
+  fetch(`${domain}/apps/${id}/stages`, settings)
   .then((response) => {
     return response.json()
     .then((json) => {
