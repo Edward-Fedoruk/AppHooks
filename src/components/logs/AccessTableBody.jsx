@@ -16,10 +16,6 @@ const styles = ({ palette }) => ({
 
 
 class AccessTableBody extends Component { 
-  state = {
-    open: -1,
-    anchorEl: null,
-  }
 
   desc = (a, b, orderBy) => {
     if (b[orderBy] < a[orderBy]) {
@@ -44,18 +40,6 @@ class AccessTableBody extends Component {
   getSorting = (order, orderBy) => order === "desc" 
       ? (a, b) => this.desc(a, b, orderBy) 
       : (a, b) => -(this.desc(a, b, orderBy))
-  
-
-  handleMenuClick = event => {
-    this.setState({ 
-      open: event.currentTarget.id,
-      anchorEl: event.currentTarget
-    })
-  }
-
-  handleClose = () => {
-    this.setState({ open: -1, anchorEl: null })
-  }
 
   handleRowClick = (e, id) => {
     if(e.target.tagName === "TD" || e.target.tagName === "INPUT") 
@@ -69,7 +53,6 @@ class AccessTableBody extends Component {
       page, rowsPerPage, emptyRows, 
       isSelected, classes
     } = this.props
-    const { open, anchorEl } = this.state
 
     return (
       <TableBody>
@@ -99,13 +82,7 @@ class AccessTableBody extends Component {
                 <TableCell className={classes.cell}>{n.response_text}</TableCell>
                 <TableCell className={classes.cell}>{n.response_code}</TableCell>
                 <TableCell>
-                  <LogMenu 
-                    handleClick={this.handleMenuClick}
-                    handleClose={this.handleClose}
-                    open={open}
-                    anchorEl={anchorEl}
-                    id={n.id}
-                  />    
+                  <LogMenu id={n.id} />    
                 </TableCell>
               </TableRow>
             )

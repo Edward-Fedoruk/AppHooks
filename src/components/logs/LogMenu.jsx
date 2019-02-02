@@ -1,4 +1,9 @@
 import React, { Component } from "react"
+import { withStyles } from "@material-ui/core"
+import { deleteLogs } from "../../actions/requestLogs"
+import { connect } from "react-redux"
+import { compose } from "redux"
+import { withRouter } from "react-router-dom"
 import PropTypes from "prop-types"
 import Menu from "@material-ui/core/Menu"
 import MoreVertIcon from "@material-ui/icons/MoreVert"
@@ -6,14 +11,9 @@ import IconButton from "@material-ui/core/IconButton"
 import ListItemIcon from "@material-ui/core/ListItemIcon"
 import Typography from "@material-ui/core/Typography"
 import ListAlt from "@material-ui/icons/ListAlt"
-import { withStyles } from "@material-ui/core"
 import MenuItem from "@material-ui/core/MenuItem"
 import DeleteIcon from "@material-ui/icons/Delete"
 import ConfirmDialog from "../ConfirmDialog"
-import { deleteLogs } from "../../actions/requestLogs"
-import { connect } from "react-redux"
-import { compose } from "redux"
-import { withRouter } from "react-router-dom"
 
 const styles = () => ({
   menu: {
@@ -42,7 +42,14 @@ const styles = () => ({
 
 class LogMenu extends Component { 
   state = {
-    openDialog: false
+    openDialog: false,
+    open: -1,
+    anchorEl: null,
+  }
+
+  static propTypes = {
+    classes: PropTypes.object.isRequired,
+    deleteLogs: PropTypes.object.isRequired
   }
 
   toggleDialog = () => 
@@ -54,21 +61,29 @@ class LogMenu extends Component {
     this.props.deleteLogs([this.props.id])
   }
 
+  handleMenuClick = event => {
+    this.setState({ 
+      open: event.currentTarget.id,
+      anchorEl: event.currentTarget
+    })
+  }
+  
+  handleClose = () => {
+    this.setState({ open: -1, anchorEl: null })
+  }
+
   openDetails = () => this.props.history.push(`/logs/${this.props.id}`)
   
   render() {
-    const { 
-      classes, id, handleClick, 
-      handleClose, open, anchorEl,
-    } = this.props
-    const { openDialog } = this.state
+    const { classes, id } = this.props
+    const { openDialog, open, anchorEl } = this.state
 
     return (
       <div>
         <IconButton
           aria-owns="simple-menu"
           aria-haspopup="true"
-          onClick={handleClick}
+          onClick={this.handleMenuClick}
           id={id}
         >
           <MoreVertIcon />
@@ -84,7 +99,7 @@ class LogMenu extends Component {
           id="simple-menu"
           anchorEl={anchorEl}
           open={`${id}` === open}
-          onClose={handleClose}
+          onClose={this.handleClose}
           className={classes.menu}
           elevation={1}
         >
@@ -110,12 +125,6 @@ class LogMenu extends Component {
       </div>
     )
   }
-}
-
-LogMenu.propTypes = {
-  classes: PropTypes.object.isRequired,
-  handleClick: PropTypes.func,
-  handleClose: PropTypes.func,
 }
 
 const mapDispatchToProps = dispatch => ({
