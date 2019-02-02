@@ -38,7 +38,6 @@ export class FormDrawer extends Component {
         fullScreen
         open={this.props.open}
         onClose={this.props.toggleDialog}
-        onOpen={this.props.toggleDialog}
         TransitionComponent={Transition}
         className={this.props.classes.dialog}
       >

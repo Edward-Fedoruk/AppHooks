@@ -11,6 +11,7 @@ import webhooks from "../../assets/webhooks.png"
 import Button from "@material-ui/core/Button"
 import FormDrawer from "../FormDrawer"
 import { fetchRules } from "../../actions/rules"
+import RuleForm from "./RuleForm"
 
 const styles = ({ breakpoints }) => ({
   contentWrap: {
@@ -78,7 +79,7 @@ export class WebhooksRules extends Component {
           open={this.state.open}
           toggleDialog={this.toggleDialog}
         >
-          
+          <RuleForm />
         </FormDrawer>
 
         <div className={classes.contentWrap}>
