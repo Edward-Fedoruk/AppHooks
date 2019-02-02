@@ -8,9 +8,8 @@ import PropTypes from "prop-types"
 
 const styles = () => ({
   colName: {
-    
     fontWeight: "bold",
-    fontSize: "14px"
+    fontSize: "16px"
   }
 })
 

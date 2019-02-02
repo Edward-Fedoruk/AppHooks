@@ -11,7 +11,7 @@ const styles = () => ({
   rulName: {
     width: "100%",
     color: "#192B7F",
-    fontSize: "14px"
+    fontSize: "16px"
   },
 })
 
