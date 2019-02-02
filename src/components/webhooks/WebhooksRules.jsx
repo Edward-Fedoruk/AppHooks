@@ -1,37 +1,16 @@
 import React, { Component, Fragment } from "react"
-import PropTypes from "prop-types"
 import { connect } from "react-redux"
-import RulesTable from "./RulesTable"
 import { withStyles } from "@material-ui/core"
 import { compose } from "redux"
+import PropTypes from "prop-types"
+import RulesTable from "./RulesTable"
 import withNavigation from "../withNavigation"
 import TopBar from "../TopBar"
 import Placeholder from "../Placeholder"
 import webhooks from "../../assets/webhooks.png"
 import Button from "@material-ui/core/Button"
 import FormDrawer from "../FormDrawer"
-
-let counter = 0
-function createData(name) {
-  counter += 1
-  return { id: counter, name }
-}
-
-const data = [
-  createData("Cupcake"),
-  createData("Donut"),
-  createData("Eclair"),
-  createData("Frozen yoghurt"),
-  createData("Gingerbread"),
-  createData("Honeycomb"),
-  createData("Ice cream sandwich"),
-  createData("Jelly Bean"),
-  createData("KitKat"),
-  createData("Lollipop"),
-  createData("Marshmallow"),
-  createData("Nougat"),
-  createData("Oreo"),
-]
+import { fetchRules } from "../../actions/rules"
 
 const styles = ({ breakpoints }) => ({
   contentWrap: {
@@ -67,14 +46,20 @@ export class WebhooksRules extends Component {
   }
 
   static propTypes = {
-    classes: PropTypes.object.isRequired
+    classes: PropTypes.object.isRequired,
+    fetchRules: PropTypes.func.isRequired,
+    recipes: PropTypes.array.isRequired
   }
 
   toggleDialog = () => this.setState({ open: !this.state.open })
   
+  componentDidMount() {
+    this.props.fetchRules()
+  }
 
   render() {
-    const { classes } = this.props
+    const { classes, recipes } = this.props
+    console.log(recipes)
     return (
       <Fragment>
         <TopBar title="WebHooks Rules">
@@ -97,8 +82,8 @@ export class WebhooksRules extends Component {
         </FormDrawer>
 
         <div className={classes.contentWrap}>
-          {data.length
-            ? <RulesTable data={data} />
+          {recipes.length
+            ? <RulesTable data={recipes} />
             : <Placeholder 
                 imgSrc={webhooks}
                 title="Here should be WebHooks rules."
@@ -111,12 +96,12 @@ export class WebhooksRules extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  
+const mapStateToProps = ({ rules }) => ({
+  recipes: rules.recipes
 })
 
 const mapDispatchToProps = {
-  
+  fetchRules
 }
 
 export default compose(
