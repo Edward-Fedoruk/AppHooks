@@ -1,8 +1,10 @@
-import React, { Component } from 'react'
+import React, { Component } from "react"
 import PropTypes from "prop-types"
 import Slide from "@material-ui/core/Slide"
 import Dialog from "@material-ui/core/Dialog"
 import { withStyles } from "@material-ui/core"
+import Close from "@material-ui/icons/Close"
+import IconButton from "@material-ui/core/IconButton"
 
 const styles = ({ breakpoints }) => ({
   dialog: {
@@ -20,6 +22,17 @@ const styles = ({ breakpoints }) => ({
     [breakpoints.down(600)]: {
       width: "100%",
     },
+  },
+
+  close: {
+    position: "absolute",
+    top: "5px",
+    right: "5px",
+    display: "none",
+
+    [breakpoints.down(960)]: {
+      display: "block"
+    },
   }
 })
 
@@ -33,14 +46,21 @@ export class FormDrawer extends Component {
   }
 
   render() {
+    const { classes } = this.props
     return (
       <Dialog
         fullScreen
         open={this.props.open}
         onClose={this.props.toggleDialog}
         TransitionComponent={Transition}
-        className={this.props.classes.dialog}
+        className={classes.dialog}
       >
+        <IconButton 
+          onClick={this.props.toggleDialog} 
+          className={classes.close}
+        >
+          <Close/>
+        </IconButton>
         {this.props.children}
       </Dialog>
     )
