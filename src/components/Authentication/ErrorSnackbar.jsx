@@ -13,7 +13,7 @@ const styles = ({ breakpoints, spacing }) => ({
     width: "30%",
     maxWidth: "450px",
     minWidth: "305px",
-    position: "absolute",
+    position: "fixed",
     left: "50%",
     transform: "translateX(-50%)",
     marginTop: "10px",
