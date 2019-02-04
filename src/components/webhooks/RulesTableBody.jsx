@@ -3,8 +3,7 @@ import PropTypes from "prop-types"
 import TableBody from "@material-ui/core/TableBody"
 import TableCell from "@material-ui/core/TableCell"
 import TableRow from "@material-ui/core/TableRow"
-import MoreVertIcon from "@material-ui/icons/MoreVert"
-import IconButton from "@material-ui/core/IconButton"
+import RuleMenu from "../webhooks/RuleMenu"
 import { withStyles } from "@material-ui/core"
 
 const styles = () => ({
@@ -24,9 +23,7 @@ const RulesTableBody = ({ page, data, rowsPerPage, classes, emptyRows }) => {
             {rule.name}
           </TableCell>
           <TableCell align="right" padding="none">
-            <IconButton aria-haspopup="true">
-              <MoreVertIcon />
-            </IconButton>
+            <RuleMenu id={rule.id} />
           </TableCell>
         </TableRow>
       ))}
