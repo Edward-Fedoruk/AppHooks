@@ -4,6 +4,7 @@ const initialState = {
   open: false,
   snackbar: false,
   currentStage: 0,
+  editRuleForm: false
 }
 
 export default (state = initialState, action) => {
@@ -14,6 +15,8 @@ export default (state = initialState, action) => {
       return { ...state, snackbar: !state.snackbar }
     case types.CHANGE_STAGE:
       return { ...state, currentStage: action.stage }
+    case types.TOGGLE_EDIT_RULE_FORM: 
+      return { ...state, editRuleForm: !state.editRuleForm}
     default:
       return state
   }
