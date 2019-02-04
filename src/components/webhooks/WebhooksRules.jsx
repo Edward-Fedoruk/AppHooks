@@ -11,7 +11,10 @@ import webhooks from "../../assets/webhooks.png"
 import Button from "@material-ui/core/Button"
 import FormDrawer from "../FormDrawer"
 import { fetchRules } from "../../actions/rules"
-import RuleForm from "./RuleForm"
+import { toggleEditForm } from "../../actions/ui"
+import CreateRuleForm from "./CreateRuleForm"
+import EditRuleForm from "./EditRuleForm"
+import FormHeader from "./FormHeader"
 
 const styles = ({ breakpoints }) => ({
   contentWrap: {
@@ -38,12 +41,20 @@ const styles = ({ breakpoints }) => ({
       background: "#192B81",
     },
   },
+
+  formWrap: {
+    padding: "20px 13vw",
+
+    [breakpoints.down(768)]: {
+      padding: "20px 10vw",
+    },
+  },
 })
 
 
 export class WebhooksRules extends Component {
   state = {
-    open: false
+    open: false,
   }
 
   static propTypes = {
@@ -59,13 +70,13 @@ export class WebhooksRules extends Component {
   }
 
   render() {
-    const { classes, recipes } = this.props
+    const { classes, recipes, toggleEditForm, editRuleForm } = this.props
     console.log(recipes)
     return (
       <Fragment>
         <TopBar title="WebHooks Rules">
           <Button 
-            size={"large"}
+            size="large"
             color="primary" 
             variant="text" 
             className={classes.newRule}
@@ -79,16 +90,34 @@ export class WebhooksRules extends Component {
           open={this.state.open}
           toggleDialog={this.toggleDialog}
         >
-          <RuleForm />
+          <div className={classes.formWrap}>
+            <FormHeader 
+              header="Create WebHook Rule"
+              subHeader="Create a WebHook Rule. You can create as many rules as you need."
+            />
+            <CreateRuleForm />
+          </div>
         </FormDrawer>
 
+        <FormDrawer 
+          open={editRuleForm}
+          toggleDialog={toggleEditForm}
+        >
+          <div className={classes.formWrap}>
+            <FormHeader 
+              header="Edit WebHook Rule"
+              subHeader="You can create as many rules as you need."
+            />
+            <EditRuleForm />
+          </div>
+        </FormDrawer>
+        {console.log(this.toggleEditDialog)}
         <div className={classes.contentWrap}>
           {recipes.length
             ? <RulesTable data={recipes} />
             : <Placeholder 
                 imgSrc={webhooks}
                 title="Here should be WebHooks rules."
-                button="Create the first one."
                 className={classes.placeholder}
               />}
         </div>
@@ -97,12 +126,14 @@ export class WebhooksRules extends Component {
   }
 }
 
-const mapStateToProps = ({ rules }) => ({
-  recipes: rules.recipes
+const mapStateToProps = ({ rules, view }) => ({
+  recipes: rules.recipes,
+  editRuleForm: view.editRuleForm
 })
 
 const mapDispatchToProps = {
-  fetchRules
+  fetchRules,
+  toggleEditForm
 }
 
 export default compose(
