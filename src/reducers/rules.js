@@ -22,6 +22,19 @@ export default (state = initialState, action) => {
         ...state,
         recipes: [...state.recipes, action.recipe]
       }
+    case types.EDIT_RULE: 
+      return {
+        ...state,
+        recipes: [
+          action.newRule, 
+          ...state.recipes.filter(recipe => recipe.id !== action.id)
+        ]
+      }
+    case types.DELETE_RULE: 
+      return {
+        ...state,
+        recipes: state.recipes.filter(recipe => recipe.id !== action.id)
+      }
     default:
       return state
   }

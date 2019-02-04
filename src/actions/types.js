@@ -2,6 +2,7 @@
 export const NAV_BAR = "NAV_BAR"
 export const TOGGLE_SNACKBAR = "TOGGLE_SNACKBAR"
 export const CHANGE_STAGE = "CHANGE_STAGE"
+export const TOGGLE_EDIT_RULE_FORM = "TOGGLE_EDIT_RULE_FORM"
 
 // user authentication
 export const AUTH_ERROR = "AUTH_ERROR" 
@@ -38,3 +39,5 @@ export const DELETE_USER = "DELETE_USER"
 export const SET_RULES = "SET_RULES"
 export const ADD_RULE = "ADD_RULE"
 export const SET_RULE = "SET_RULE"
+export const EDIT_RULE = "EDIT_RULE"
+export const DELETE_RULE = "DELETE_RULE"
