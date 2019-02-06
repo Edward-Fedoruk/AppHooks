@@ -7,6 +7,7 @@ import stages from "./stages"
 import requestLogs from "./requestLogs"
 import users from "./users"
 import rules from "./rules"
+import userSettings from "./userSettings"
 
 export default combineReducers({
   view,
@@ -16,5 +17,6 @@ export default combineReducers({
   channelsEntities,
   requestLogs,
   users,
-  rules
+  rules,
+  userSettings
 })

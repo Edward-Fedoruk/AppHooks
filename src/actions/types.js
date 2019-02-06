@@ -41,3 +41,8 @@ export const ADD_RULE = "ADD_RULE"
 export const SET_RULE = "SET_RULE"
 export const EDIT_RULE = "EDIT_RULE"
 export const DELETE_RULE = "DELETE_RULE"
+export const SET_TEST_RESPONSE = "SET_TEST_RESPONSE"
+
+// user settings
+export const SET_USER_SETTINGS = "SET_USER_SETTINGS"
+export const GENERAL_INFO_ERROR = "GENERAL_INFO_ERROR"

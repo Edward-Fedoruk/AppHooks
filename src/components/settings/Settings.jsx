@@ -9,6 +9,7 @@ import GeneralSettings from "./GeneralSettings"
 import ChangePassword from "./ChangePassword"
 import ConnectedAccounts from "./ConnectedAccounts"
 import DeleteAccount from "./DeleteAccount"
+import { fetchUserSettings } from "../../actions/user"
 
 const styles = ({ breakpoints }) => ({
   contentWrap: {
@@ -23,16 +24,25 @@ const styles = ({ breakpoints }) => ({
 
 export class Settings extends Component {
   static propTypes = {
-    prop: PropTypes
+    classes: PropTypes.object.isRequired,
+    settings: PropTypes.object.isRequired
+  }
+
+  componentDidMount() {
+    this.props.fetchUserSettings()
   }
 
   render() {
-    const { classes } = this.props
+    const { classes, settings } = this.props
     return (
       <Fragment>
         <TopBar title="Account Settings" />
         <div className={classes.contentWrap}>
-          <GeneralSettings />
+          <GeneralSettings 
+            name={settings.name}
+            company={settings.company}
+            phone={settings.phone}
+          />
           <ChangePassword />
           <ConnectedAccounts />
           <DeleteAccount />
@@ -42,13 +52,14 @@ export class Settings extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  
+const mapStateToProps = ({ userSettings }) => ({
+  settings: userSettings.settings
 })
 
 const mapDispatchToProps = {
-  
+  fetchUserSettings
 }
+
 
 export default compose(
   withNavigation,

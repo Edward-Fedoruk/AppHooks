@@ -7,7 +7,9 @@ import Button from "@material-ui/core/Button"
 import Create from "@material-ui/icons/CreateOutlined"
 import Grow from "@material-ui/core/Grow"
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator"
-
+import { changeUserSettings } from "../../actions/user"
+import { connect } from "react-redux"
+import { compose } from "redux"
 
 const styles = ({ palette, breakpoints }) => ({
   settingsWrap: {
@@ -90,17 +92,44 @@ const styles = ({ palette, breakpoints }) => ({
 class GeneralSettings extends Component {
   state = {
     show: false,
-    name: "Jonathan Smith",
-    email: "ed.fedorukk@gmail.com",
-    phone: "+380992378587"
+    name: "-",
+    company: "-",
+    phone: "-"
+  }
+ 
+  static propTypes = {
+    classes: PropTypes.object.isRequired,
+    name: PropTypes.string.isRequired,
+    company: PropTypes.string.isRequired,
+    phone: PropTypes.string.isRequired,
+  }
+  
+
+  componentDidUpdate(prevProps) {
+    if(prevProps.name !== this.props.name)
+      this.setState(this.setToProps())
   }
 
-  toggleFrom = () => this.setState(({ show }) => ({ show: !show }))
+  toggleFrom = () => this.setState(({ show }) => ({ 
+    show: !show,
+    ...this.setToProps()
+  }))
+
 
   onSubmit = e => {
     e.preventDefault()
+    const { name, company, phone } = this.state
+    this.props.changeUserSettings({
+      name, company, phone
+    })
   }
 
+  setToProps = () => ({
+    name : this.props.name === null ? "-" : this.props.name,
+    phone: this.props.phone === null ? "-" : this.props.phone,
+    company: this.props.company === null ? "-" : this.props.company
+  })
+  
   onChange = input => e => this.setState({ [input]: e.target.value })
   handleBlur = event => 
     this.refs[event.target.name].validate(event.target.value)
@@ -108,6 +137,7 @@ class GeneralSettings extends Component {
   render() {
     const { classes } = this.props 
     const { show } = this.state
+
     const showInput = !show && {
       classes: {
         underline: classes.underline,
@@ -142,16 +172,14 @@ class GeneralSettings extends Component {
 
             <div className={classes.fieldWrap}>
               <TextValidator 
-                label="Email"
-                name="email"
-                ref="email"
+                label="Company"
+                name="company"
+                ref="company"
                 placeholder="e.g., carl@cloud.ci"
                 disabled={!show}
                 InputProps={showInput}
-                value={this.state.email} 
-                onChange={this.onChange("email")}
-                validators={["required", "isEmail"]}
-                errorMessages={["this field is required", "email is not valid"]}
+                value={this.state.company} 
+                onChange={this.onChange("company")}
               />
             </div>
 
@@ -207,8 +235,16 @@ class GeneralSettings extends Component {
   }
 }
 
-GeneralSettings.propTypes = {
-  classes: PropTypes.object.isRequired
-}
+const mapStateToProps = (state) => ({
+  
+})
 
-export default withStyles(styles)(GeneralSettings)
+const mapDispatchToProps = dispatch => ({
+  changeUserSettings: data => dispatch(changeUserSettings(data))
+})
+
+
+export default compose(
+  withStyles(styles),
+  connect(mapStateToProps, mapDispatchToProps)
+)(GeneralSettings)
