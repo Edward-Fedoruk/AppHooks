@@ -1,14 +1,12 @@
 import React, { Component } from "react"
 import PropTypes from "prop-types"
-import Typography from "@material-ui/core/Typography"
 import { withStyles } from "@material-ui/core"
-import IconButton from "@material-ui/core/IconButton"
-import Create from "@material-ui/icons/CreateOutlined"
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator"
 import { changeUserSettings } from "../../actions/user"
 import { connect } from "react-redux"
 import { compose } from "redux"
 import PopUpButtons from "./PopUpButtons"
+import FormTitle from "./FormTitle"
 
 const styles = ({ palette, breakpoints }) => ({
   settingsWrap: {
@@ -22,21 +20,6 @@ const styles = ({ palette, breakpoints }) => ({
     },
   },
 
-  header: {
-    fontSize: "18px",
-    fontWeight: "900",
-    marginRight: "5px",
-    
-    [breakpoints.down(425)]: {
-      paddingLeft: "24px"
-    },
-  },
-
-  headerWrap: {
-    display: "flex",
-    alignItems: "center"
-  },
-
   field: { fontSize: "14px" },
 
   fieldWrap: { 
@@ -47,16 +30,8 @@ const styles = ({ palette, breakpoints }) => ({
     },
   },
 
-  aboveField: {
-    color: "rgba(25, 43, 127, 0.7)",
-    fontSize: "14px"
-  },
-
-  transform: { textTransform: "capitalize" },
   underline: { "&::before, &::after": {display: "none"} },
   disabled: { color: palette.primary.main },
-  disabledLabel: { display: "none" },
-
   contentWrap: { 
     marginBottom: "20px", 
     transition: ".25s margin linear",
@@ -113,22 +88,15 @@ class GeneralSettings extends Component {
     const { classes } = this.props 
     const { show } = this.state
 
-    const showInput = !show && {
+    const showInput = !show ? {
       classes: {
         underline: classes.underline,
         disabled: classes.disabled
       }
-    }
+    } : {}
     return (
       <div style={{ marginBottom: show && "70px" }} className={classes.contentWrap}>
-        <div className={classes.headerWrap}>
-          <Typography className={classes.header} variant="h2" color="primary">
-            General settings
-          </Typography>
-          <IconButton onClick={this.toggleFrom}>
-            <Create/>
-          </IconButton>
-        </div>
+        <FormTitle toggleFrom={this.toggleFrom}>General settings</FormTitle>
         <ValidatorForm onSubmit={this.onSubmit} instantValidate={false}>
           <div className={classes.settingsWrap}>
             <div className={classes.fieldWrap}>
