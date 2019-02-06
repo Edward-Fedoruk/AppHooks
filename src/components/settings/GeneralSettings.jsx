@@ -3,13 +3,12 @@ import PropTypes from "prop-types"
 import Typography from "@material-ui/core/Typography"
 import { withStyles } from "@material-ui/core"
 import IconButton from "@material-ui/core/IconButton"
-import Button from "@material-ui/core/Button"
 import Create from "@material-ui/icons/CreateOutlined"
-import Grow from "@material-ui/core/Grow"
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator"
 import { changeUserSettings } from "../../actions/user"
 import { connect } from "react-redux"
 import { compose } from "redux"
+import PopUpButtons from "./PopUpButtons"
 
 const styles = ({ palette, breakpoints }) => ({
   settingsWrap: {
@@ -51,30 +50,6 @@ const styles = ({ palette, breakpoints }) => ({
   aboveField: {
     color: "rgba(25, 43, 127, 0.7)",
     fontSize: "14px"
-  },
-
-  submitBtn: {
-    textTransform: "capitalize",
-    backgroundColor: palette.secondary.main,
-    color: "#fff",
-    marginLeft: "15px",
-
-    "&:hover": {
-      opacity: ".9",
-      background: palette.primary.main
-    }
-  },
-
-  btnGroup: { 
-    position: "absolute",
-    bottom: "-60px",
-
-    [breakpoints.down(425)]: {
-      paddingLeft: "15px",
-      height: "60px",
-      width: "100%",
-      backgroundColor: "#fff"
-    },
   },
 
   transform: { textTransform: "capitalize" },
@@ -199,36 +174,10 @@ class GeneralSettings extends Component {
               />
             </div>
           </div>
-          <div style={{ display: !show && "none" }} className={classes.btnGroup}>
-            <Grow
-              in={show}
-              style={{ transformOrigin: '0 0 0' }}
-            >
-              <Button
-                variant="outlined"
-                color="secondary"
-                size="medium"
-                className={classes.transform}
-                onClick={this.toggleFrom}
-              >
-                cancel
-              </Button>
-            </Grow>
-            <Grow
-              in={show}
-              style={{ transformOrigin: '0 0 0' }}
-              {...(show ? { timeout: 1000 } : {})}
-            >
-              <Button 
-                color="secondary"
-                size="medium"
-                type="submit"
-                className={classes.submitBtn}
-              >
-                Update General Settings
-              </Button>
-            </Grow>
-          </div>
+          <PopUpButtons 
+            show={show}
+            toggleFrom={this.toggleFrom}
+          />
         </ValidatorForm>
       </div>
     )
