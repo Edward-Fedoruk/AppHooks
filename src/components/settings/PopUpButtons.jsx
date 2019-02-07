@@ -24,7 +24,7 @@ const styles = ({ breakpoints }) => ({
   },
 })
 
-const PopUpButtons = ({ classes, show, toggleFrom }) => {
+const PopUpButtons = ({ classes, show, toggleForm }) => {
   return (
     <div style={{ display: !show && "none" }} className={classes.btnGroup}>
       <Grow
@@ -36,7 +36,7 @@ const PopUpButtons = ({ classes, show, toggleFrom }) => {
           color="secondary"
           size="medium"
           className={classes.cancel}
-          onClick={toggleFrom}
+          onClick={toggleForm}
         >
           cancel
         </Button>
@@ -55,7 +55,7 @@ const PopUpButtons = ({ classes, show, toggleFrom }) => {
 PopUpButtons.propTypes = {
   classes: PropTypes.object.isRequired,
   show: PropTypes.bool.isRequired,
-  toggleFrom: PropTypes.func.isRequired,
+  toggleForm: PropTypes.func.isRequired,
 }
 
 export default withStyles(styles)(PopUpButtons)
