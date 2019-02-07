@@ -45,4 +45,4 @@ export const SET_TEST_RESPONSE = "SET_TEST_RESPONSE"
 
 // user settings
 export const SET_USER_SETTINGS = "SET_USER_SETTINGS"
-export const GENERAL_INFO_ERROR = "GENERAL_INFO_ERROR"
+export const SETTINGS_ERROR = "SETTINGS_ERROR"
