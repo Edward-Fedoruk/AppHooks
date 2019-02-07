@@ -1,7 +1,8 @@
 import * as types from "./types"
-import { compose } from 'redux'
-import { toggleSnackbar } from './ui'
+import { compose } from "redux"
+import { toggleSnackbar } from "./ui"
 import { domain } from "./utils"
+import { fetchUserSettings } from "./user"
 
 export const authenticate = (payload) => ({
   type: types.CREATE_USER,
@@ -19,8 +20,8 @@ export const createUser = (userData, routeHistory) => dispatch => {
   fetch(`${domain}/auth/register`, {
     method: "POST",
     headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
+      "Accept": "application/json",
+      "Content-Type": "application/json",
     },
     body: stringifiedData
   })
@@ -63,8 +64,8 @@ export const logIn = (userData, routeHistory) => dispatch => {
   fetch(`${domain}/auth/login`, {
     method: "POST",
     headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
+      "Accept": "application/json",
+      "Content-Type": "application/json",
     },
     body: stringifiedData
   })
@@ -79,6 +80,7 @@ export const logIn = (userData, routeHistory) => dispatch => {
   })
   .then(jsonData => {
     console.log(jsonData)
+    fetchUserSettings()
 
     localStorage.setItem("JWT", jsonData.access_token)
     const user = {
@@ -107,8 +109,8 @@ export const reSendEmail = (email, routeHistory) => dispatch => {
   fetch(`${domain}/auth/password/email`, {
     method: "POST",
     headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
+      "Accept": "application/json",
+      "Content-Type": "application/json",
     },
     body: stringifiedData
   })
@@ -146,8 +148,8 @@ export const resetPassword = (userData, routeHistory) => dispatch => {
   fetch(`${domain}/auth/password/reset`, {
     method: "POST",
     headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
+      "Accept": "application/json",
+      "Content-Type": "application/json",
     },
     body: stringifiedData
   })
