@@ -2,8 +2,10 @@ import React from "react"
 import PropTypes from "prop-types"
 import Typography from "@material-ui/core/Typography"
 import { withStyles } from "@material-ui/core"
-import IconButton from "@material-ui/core/IconButton"
 import Cancel from "@material-ui/icons/Cancel"
+import { compose } from "redux"
+import { connect } from "react-redux"
+import { changeUserPassword } from "../../actions/user"
 
 const styles = ({ breakpoints }) => ({
   settingsWrap: {
@@ -12,7 +14,7 @@ const styles = ({ breakpoints }) => ({
 
     [breakpoints.down(425)]: {
       backgroundColor: "#fff",
-      padding: "20px 0 20px 20px",
+      padding: "5%",
     },
   },
 
@@ -36,6 +38,17 @@ const styles = ({ breakpoints }) => ({
     },
   },
 
+  delWrap: {
+    display: "flex",
+    alignItems: "center",
+    marginTop: "10px",
+    cursor: "pointer",
+
+    [breakpoints.down(600)]: {
+      paddingBottom: "20px",
+    },
+  },
+
   field: {
     color: "rgba(25, 43, 127, 0.7)",
     fontSize: "14px"
@@ -46,11 +59,12 @@ const styles = ({ breakpoints }) => ({
   },
 
   deleteIcon: {
-    color: "#F96565"
+    color: "#F96565",
+    fontSize: "16px",
   }
 })
 
-const DeleteAccount = ({ classes }) => {
+const DeleteAccount = ({ classes, openDialog }) => {
   return (
     <div>
       <div className={classes.headerWrap}>
@@ -58,10 +72,10 @@ const DeleteAccount = ({ classes }) => {
           Danger Zone
         </Typography>
       </div>
-      <div className={classes.settingsWrap}>
-        <Typography className={classes.field} variant="body2">Connected accounts to your AppHooks account if you want to log in to your AppHooks dashboard using them.</Typography> 
-        <div className={classes.headerWrap}>
-          <IconButton><Cancel className={classes.deleteIcon} /></IconButton>
+      <div onClick={openDialog} className={classes.settingsWrap}>
+        <Typography className={classes.field} variant="body2">This is a permanent action and cant’t be undone.</Typography> 
+        <div className={classes.delWrap}>
+          <Cancel className={classes.deleteIcon} />
           <Typography className={classes.delete} variant="h2" color="primary">
             Delete account
           </Typography>
@@ -72,7 +86,9 @@ const DeleteAccount = ({ classes }) => {
 }
 
 DeleteAccount.propTypes = {
-
+  classes: PropTypes.object.isRequired
 }
 
-export default withStyles(styles)(DeleteAccount)
+export default compose(
+  withStyles(styles)
+)(DeleteAccount)
