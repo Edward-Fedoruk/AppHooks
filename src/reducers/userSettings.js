@@ -5,7 +5,8 @@ const initialState = {
     name: "",
     company: "",
     phone: ""
-  }
+  },
+  error: {}
 }
 
 export default (state = initialState, action) => {
@@ -16,7 +17,7 @@ export default (state = initialState, action) => {
         ...state,
         settings: action.data  
       }
-    case types.GENERAL_INFO_ERROR:
+    case types.SETTINGS_ERROR:
       return {
         ...state,
         error: action.error
