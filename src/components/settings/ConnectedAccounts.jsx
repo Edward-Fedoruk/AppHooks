@@ -10,7 +10,7 @@ const styles = ({ breakpoints }) => ({
 
     [breakpoints.down(425)]: {
       backgroundColor: "#fff",
-      padding: "20px 0 20px 20px",
+      padding: "5%",
     },
   },
 

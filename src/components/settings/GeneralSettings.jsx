@@ -49,18 +49,24 @@ class GeneralSettings extends Component {
  
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    name: PropTypes.string.isRequired,
-    company: PropTypes.string.isRequired,
-    phone: PropTypes.string.isRequired,
+    name: PropTypes.string,
+    company: PropTypes.string,
+    phone: PropTypes.string,
   }
   
 
   componentDidUpdate(prevProps) {
-    if(prevProps.name !== this.props.name)
+    if(prevProps.name !== this.props.name 
+      || prevProps.company !== this.props.company 
+      || prevProps.phone !== this.props.phone)
       this.setState(this.setToProps())
   }
 
-  toggleFrom = () => this.setState(({ show }) => ({ 
+  componentDidMount() {
+    this.setState(this.setToProps())
+  }
+
+  toggleForm = () => this.setState(({ show }) => ({ 
     show: !show,
     ...this.setToProps()
   }))
@@ -72,6 +78,7 @@ class GeneralSettings extends Component {
     this.props.changeUserSettings({
       name, company, phone
     })
+    this.setState(({ show }) => ({ show: !show, }))
   }
 
   setToProps = () => ({
@@ -96,7 +103,7 @@ class GeneralSettings extends Component {
     } : {}
     return (
       <div style={{ marginBottom: show && "70px" }} className={classes.contentWrap}>
-        <FormTitle toggleFrom={this.toggleFrom}>General settings</FormTitle>
+        <FormTitle toggleForm={this.toggleForm}>General settings</FormTitle>
         <ValidatorForm onSubmit={this.onSubmit} instantValidate={false}>
           <div className={classes.settingsWrap}>
             <div className={classes.fieldWrap}>
@@ -136,7 +143,6 @@ class GeneralSettings extends Component {
                 InputProps={showInput}
                 value={this.state.phone}
                 onChange={this.onChange("phone")}
-                InputLabelProps
                 validators={["required"]}
                 errorMessages={["this field is required"]}
               />
@@ -144,7 +150,7 @@ class GeneralSettings extends Component {
           </div>
           <PopUpButtons 
             show={show}
-            toggleFrom={this.toggleFrom}
+            toggleForm={this.toggleForm}
           />
         </ValidatorForm>
       </div>
@@ -152,16 +158,11 @@ class GeneralSettings extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  
-})
-
 const mapDispatchToProps = dispatch => ({
   changeUserSettings: data => dispatch(changeUserSettings(data))
 })
 
-
 export default compose(
   withStyles(styles),
-  connect(mapStateToProps, mapDispatchToProps)
+  connect(null, mapDispatchToProps)
 )(GeneralSettings)

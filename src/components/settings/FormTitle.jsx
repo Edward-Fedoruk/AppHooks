@@ -22,12 +22,12 @@ const styles = ({ breakpoints }) => ({
   },
 })
 
-const FormTitle = ({ classes, children, toggleFrom }) => (
+const FormTitle = ({ classes, children, toggleForm }) => (
   <div className={classes.headerWrap}>
     <Typography className={classes.header} variant="h2" color="primary">
       { children }
     </Typography>
-    <IconButton onClick={toggleFrom}>
+    <IconButton onClick={toggleForm}>
       <Create/>
     </IconButton>
   </div>
@@ -37,7 +37,7 @@ const FormTitle = ({ classes, children, toggleFrom }) => (
 FormTitle.propTypes = {
   classes: PropTypes.object.isRequired,
   children: PropTypes.string.isRequired,
-  toggleFrom: PropTypes.func.isRequired
+  toggleForm: PropTypes.func.isRequired
 }
 
 export default withStyles(styles)(FormTitle)
