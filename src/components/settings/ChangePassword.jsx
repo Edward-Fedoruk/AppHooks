@@ -4,6 +4,9 @@ import { withStyles } from "@material-ui/core"
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator"
 import PopUpButtons from "./PopUpButtons"
 import FormTitle from "./FormTitle"
+import { changeUserPassword } from "../../actions/user"
+import { compose } from "redux"
+import { connect } from "react-redux"
 
 const styles = ({ palette, breakpoints }) => ({
   settingsWrap: {
@@ -14,6 +17,7 @@ const styles = ({ palette, breakpoints }) => ({
     [breakpoints.down(425)]: {
       backgroundColor: "#fff",
       padding: "20px 0 20px 20px",
+      flexDirection: "column"
     },
   },
 
@@ -49,32 +53,31 @@ class ChangePassword extends Component {
     classes: PropTypes.object.isRequired
   }
 
-  toggleFrom = () => this.setState(
+  toggleForm = () => this.setState(
     ({ show }) => ({ 
         show: !show,
         currentPassword: "******",
         newPassword: "******"
     }), 
-    () => this.refs["newPassword"].validate("******")
+    () => {
+      this.refs["newPassword"].validate("******")
+      this.refs["currentPassword"].validate("******")
+    }
   )
 
 
   onSubmit = e => {
     e.preventDefault()
+    this.props.changeUserPassword({
+      current_password: this.state.currentPassword,
+      password: this.state.newPassword,
+    })
+    this.toggleForm()
   }
 
   onChange = input => e => this.setState({ [input]: e.target.value })
   handleBlur = event => 
     this.refs[event.target.name].validate(event.target.value)
-
-  componentDidMount() {
-    ValidatorForm.addValidationRule("isPasswordMatch", (value) => {
-      if (value !== this.state.currentPassword) {
-          return false
-      }
-      return true
-    })
-  }
 
   render() {
     const { classes } = this.props
@@ -87,7 +90,7 @@ class ChangePassword extends Component {
     } : {}
     return (
       <div style={{ marginBottom: show && "70px" }} className={classes.contentWrap}>
-        <FormTitle toggleFrom={this.toggleFrom}>Change password</FormTitle>
+        <FormTitle toggleForm={this.toggleForm}>Change password</FormTitle>
         <ValidatorForm onSubmit={this.onSubmit} instantValidate={false}>
           <div className={classes.settingsWrap}>
             <div className={classes.fieldWrap}>
@@ -116,14 +119,14 @@ class ChangePassword extends Component {
                 InputProps={showInput}
                 value={this.state.newPassword} 
                 onChange={this.onChange("newPassword")}
-                validators={["required", "minStringLength:6", "maxStringLength:16", "isPasswordMatch"]}
-                errorMessages={["this field is required", "password must contain at least 6 characters", "password must contain no more then 16 characters", "password mismatch"]}
+                validators={["required", "minStringLength:6", "maxStringLength:16"]}
+                errorMessages={["this field is required", "password must contain at least 6 characters", "password must contain no more then 16 characters"]}
               />
             </div>
           </div>
           <PopUpButtons 
             show={show}
-            toggleFrom={this.toggleFrom}
+            toggleForm={this.toggleForm}
           />
         </ValidatorForm>
       </div>
@@ -131,4 +134,11 @@ class ChangePassword extends Component {
   }
 }
 
-export default withStyles(styles)(ChangePassword)
+const mapDispatchToProps = dispatch => ({
+  changeUserPassword: data => dispatch(changeUserPassword(data))
+})
+
+export default compose(
+  withStyles(styles),
+  connect(null, mapDispatchToProps)
+)(ChangePassword)
