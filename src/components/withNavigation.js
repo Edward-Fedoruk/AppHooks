@@ -1,12 +1,13 @@
-import React from 'react'
-import { withStyles } from '@material-ui/core/styles'
-import { withWidth } from '@material-ui/core/'
-import { Scrollbars } from 'react-custom-scrollbars'
-import Toolbar from '@material-ui/core/Toolbar'
-import AddCircle from '@material-ui/icons/AddCircle'
-import { ReactComponent as User} from '../assets/User.svg'
-import { ReactComponent as QuestionMark} from '../assets/QuestionMark.svg'
-import IconButton from '@material-ui/core/IconButton'
+import React from "react"
+import { withStyles } from "@material-ui/core/styles"
+import { withWidth } from "@material-ui/core/"
+import { Scrollbars } from "react-custom-scrollbars"
+import Toolbar from "@material-ui/core/Toolbar"
+import AddCircle from "@material-ui/icons/AddCircle"
+import { ReactComponent as User} from "../assets/User.svg"
+import { ReactComponent as QuestionMark} from "../assets/QuestionMark.svg"
+import IconButton from "@material-ui/core/IconButton"
+import UserIcon from "./navigation/UserIcon"
 
 const styles = ({ breakpoints }) => ({
   background: {
@@ -63,9 +64,7 @@ export default (WrappedComponent) => {
             <IconButton>
               <AddCircle className={classes.icon} />
             </IconButton>
-            <IconButton >
-              <User className={classes.icon}/>
-            </IconButton>
+            <UserIcon />
           </Toolbar>}
       </div>
     )

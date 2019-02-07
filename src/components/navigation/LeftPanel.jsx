@@ -1,13 +1,16 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { withStyles } from '@material-ui/core/styles'
-import AddCircle from '@material-ui/icons/AddCircle'
+import React, { Component } from "react"
+import PropTypes from "prop-types"
+import { connect } from "react-redux"
+import { withStyles } from "@material-ui/core/styles"
+import AddCircle from "@material-ui/icons/AddCircle"
 import { ReactComponent as LogoIcon} from "../../assets/LogoIcon.svg"
-import { ReactComponent as User} from '../../assets/User.svg'
-import { ReactComponent as QuestionMark} from '../../assets/QuestionMark.svg'
-import IconButton from '@material-ui/core/IconButton'
-import { Scrollbars } from 'react-custom-scrollbars'
+import { ReactComponent as QuestionMark} from "../../assets/QuestionMark.svg"
+import IconButton from "@material-ui/core/IconButton"
+import { Scrollbars } from "react-custom-scrollbars"
+import { compose } from "redux"
+import { withRouter } from "react-router-dom"
+import Gravatar  from "react-gravatar"
+import UserIcon from "./UserIcon"
 
 const iconsGroup = {
   alignSelf: "flex-start",
@@ -27,12 +30,6 @@ const styles = ({ breakpoints }) => ({
     zIndex: "1300",
     position: "fixed",
 
-    [breakpoints.down(960)]: {
-      // position: "absolute",
-      // width: "100%",
-      // height: "100%",
-      // background: "rgba(0, 0, 0, 0.25)"
-    },
   },
 
   iconsWrap: {
@@ -71,10 +68,6 @@ const styles = ({ breakpoints }) => ({
     height: "35px",
   },
 
-  user: {
-    height: "45px",
-  },
-
   userWrap: { 
     marginBottom: "33px"
   }
@@ -84,6 +77,8 @@ export class LeftPanel extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired
   }
+
+  openSettings = () => this.props.history.push("/settings")
 
   render() {
     const { classes } = this.props
@@ -103,9 +98,7 @@ export class LeftPanel extends Component {
                 <QuestionMark className={classes.questionMark} />
               </IconButton>
 
-              <IconButton className={classes.userWrap}>
-                <User className={classes.user} />
-              </IconButton>
+              <UserIcon className={classes.userWrap}/>
             </div>
           </div>
         </Scrollbars>
@@ -122,4 +115,8 @@ const mapDispatchToProps = {
   
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)( withStyles(styles)(LeftPanel))
+export default compose(
+  withStyles(styles),
+  withRouter,
+  connect(mapStateToProps, mapDispatchToProps)
+)(LeftPanel)
