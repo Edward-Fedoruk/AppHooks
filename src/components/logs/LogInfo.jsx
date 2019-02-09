@@ -13,9 +13,9 @@ import withNavigation from "../withNavigation"
 import TopBar from "../TopBar"
 import { fetchRequest } from "../../actions/requestLogs"
 
-const styles = theme => ({
+const styles = ({ palette, breakpoints }) => ({
   root: {
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: palette.background.paper,
     width: "100%",
   },
 
@@ -30,10 +30,14 @@ const styles = theme => ({
 
   res: {
     transform: "rotate(270deg)"
-  },
+  }, 
 
   contentWrap: {
-    padding: "20px 26px 20px 13px"
+    padding: "20px 26px 20px 13px",
+
+    [breakpoints.down(375)]: {
+      padding: "20px 5px 20px 5px",
+    },
   },
 })
 

@@ -17,7 +17,8 @@ const styles = () => ({
   },
 
   contentWrap: {
-    padding: "20px 26px 20px 13px"
+    padding: "20px 26px 20px 13px",
+    overflowX: "hidden"
   },
 })
 

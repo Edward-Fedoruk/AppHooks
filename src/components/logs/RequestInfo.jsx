@@ -10,7 +10,11 @@ export const styles = ({ breakpoints }) => ({
   root: {
     padding: "14px 5px 16px 0px",
     height: "calc(100vh - 95px)",
-    overflow: "auto"
+    overflow: "auto",
+
+    [breakpoints.down(375)]: {
+      padding: "14px 5px 16px 20px",
+    },
   },
 
   wrap: {
@@ -44,6 +48,10 @@ export const styles = ({ breakpoints }) => ({
     fontSize: "16px",
     marginBottom: "17px",
     fontWeight: "bold",
+
+    [breakpoints.down(375)]: {
+      fontSize: "14px",
+    },
   },
 
   key: {
@@ -54,7 +62,13 @@ export const styles = ({ breakpoints }) => ({
 
   input: {
     height: "42px",
-    width: "76%"
+    width: "76%",
+
+    [breakpoints.down(375)]: {
+      fontSize: "14px",
+      height: "32px",
+      width: "96%", 
+    },
   },
 
   paper: {

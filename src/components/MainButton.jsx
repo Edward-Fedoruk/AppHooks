@@ -4,7 +4,7 @@ import Button from "@material-ui/core/Button"
 import { withStyles } from "@material-ui/core"
 import classNames from "classnames"
 
-const styles = () => ({
+const styles = ({ breakpoints }) => ({
   btn: {
     textTransform: "capitalize",
     color: "#fff",
@@ -14,6 +14,11 @@ const styles = () => ({
     "&:hover": {
       opacity: ".9",
       background: "#192B81",
+    },
+
+    [breakpoints.down(425)]: {
+      fontSize: "12px",
+      padding: "8px 7px"
     },
   },
 })

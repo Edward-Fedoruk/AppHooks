@@ -15,13 +15,15 @@ import { toggleEditForm } from "../../actions/ui"
 import CreateRuleForm from "./CreateRuleForm"
 import EditRuleForm from "./EditRuleForm"
 import FormHeader from "./FormHeader"
+import MainButton from "../MainButton"
 
 const styles = ({ breakpoints }) => ({
   contentWrap: {
     padding: "20px 26px 20px 13px",
+    overflowX: "hidden",
 
     [breakpoints.down(768)]: {
-      padding: "20px 5px 5px 5px",
+      padding: "20px 15px 5px 15px",
     },
   },
 
@@ -75,15 +77,7 @@ export class WebhooksRules extends Component {
     return (
       <Fragment>
         <TopBar title="WebHooks Rules">
-          <Button 
-            size="large"
-            color="primary" 
-            variant="text" 
-            className={classes.newRule}
-            onClick={this.toggleDialog}
-          >
-            Create New Rule
-          </Button>
+          <MainButton onClick={this.toggleDialog}>Create New Rule</MainButton>            
         </TopBar>
 
         <FormDrawer 
