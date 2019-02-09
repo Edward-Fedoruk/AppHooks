@@ -2,9 +2,9 @@ import React, { Component } from "react"
 import PropTypes from "prop-types"
 import { withStyles } from "@material-ui/core"
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator"
-import { changeUserSettings } from "../../actions/user"
 import { connect } from "react-redux"
 import { compose } from "redux"
+import { changeUserSettings } from "../../actions/user"
 import PopUpButtons from "./PopUpButtons"
 import FormTitle from "./FormTitle"
 
@@ -12,7 +12,7 @@ const styles = ({ palette, breakpoints }) => ({
   settingsWrap: {
     display: "flex",
     flexWrap: "wrap",
- 
+
     [breakpoints.down(425)]: {
       backgroundColor: "#fff",
       display: "block",
@@ -22,7 +22,7 @@ const styles = ({ palette, breakpoints }) => ({
 
   field: { fontSize: "14px" },
 
-  fieldWrap: { 
+  fieldWrap: {
     marginRight: "80px",
 
     [breakpoints.down(600)]: {
@@ -30,13 +30,13 @@ const styles = ({ palette, breakpoints }) => ({
     },
   },
 
-  underline: { "&::before, &::after": {display: "none"} },
+  underline: { "&::before, &::after": { display: "none" } },
   disabled: { color: palette.primary.main },
-  contentWrap: { 
-    marginBottom: "20px", 
+  contentWrap: {
+    marginBottom: "20px",
     transition: ".25s margin linear",
     position: "relative",
-  }
+  },
 })
 
 class GeneralSettings extends Component {
@@ -44,62 +44,61 @@ class GeneralSettings extends Component {
     show: false,
     name: "-",
     company: "-",
-    phone: "-"
+    phone: "-",
   }
- 
+
   static propTypes = {
     classes: PropTypes.object.isRequired,
     name: PropTypes.string,
     company: PropTypes.string,
     phone: PropTypes.string,
   }
-  
+
 
   componentDidUpdate(prevProps) {
-    if(prevProps.name !== this.props.name 
-      || prevProps.company !== this.props.company 
-      || prevProps.phone !== this.props.phone)
-      this.setState(this.setToProps())
+    if (prevProps.name !== this.props.name
+      || prevProps.company !== this.props.company
+      || prevProps.phone !== this.props.phone) { this.setState(this.setToProps()) }
   }
 
   componentDidMount() {
     this.setState(this.setToProps())
   }
 
-  toggleForm = () => this.setState(({ show }) => ({ 
+  toggleForm = () => this.setState(({ show }) => ({
     show: !show,
-    ...this.setToProps()
+    ...this.setToProps(),
   }))
 
 
-  onSubmit = e => {
+  onSubmit = (e) => {
     e.preventDefault()
     const { name, company, phone } = this.state
     this.props.changeUserSettings({
-      name, company, phone
+      name, company, phone,
     })
-    this.setState(({ show }) => ({ show: !show, }))
+    this.setState(({ show }) => ({ show: !show }))
   }
 
   setToProps = () => ({
-    name : this.props.name === null ? "-" : this.props.name,
+    name: this.props.name === null ? "-" : this.props.name,
     phone: this.props.phone === null ? "-" : this.props.phone,
-    company: this.props.company === null ? "-" : this.props.company
+    company: this.props.company === null ? "-" : this.props.company,
   })
-  
+
   onChange = input => e => this.setState({ [input]: e.target.value })
-  handleBlur = event => 
-    this.refs[event.target.name].validate(event.target.value)
+
+  handleBlur = event => this.refs[event.target.name].validate(event.target.value)
 
   render() {
-    const { classes } = this.props 
+    const { classes } = this.props
     const { show } = this.state
 
     const showInput = !show ? {
       classes: {
         underline: classes.underline,
-        disabled: classes.disabled
-      }
+        disabled: classes.disabled,
+      },
     } : {}
     return (
       <div style={{ marginBottom: show && "70px" }} className={classes.contentWrap}>
@@ -107,7 +106,7 @@ class GeneralSettings extends Component {
         <ValidatorForm onSubmit={this.onSubmit} instantValidate={false}>
           <div className={classes.settingsWrap}>
             <div className={classes.fieldWrap}>
-              <TextValidator 
+              <TextValidator
                 label="Name"
                 name="name"
                 ref="name"
@@ -115,26 +114,26 @@ class GeneralSettings extends Component {
                 disabled={!show}
                 onBlur={this.handleBlur}
                 onChange={this.onChange("name")}
-                value={this.state.name}  
+                value={this.state.name}
                 InputProps={showInput}
               />
             </div>
 
             <div className={classes.fieldWrap}>
-              <TextValidator 
+              <TextValidator
                 label="Company"
                 name="company"
                 ref="company"
                 placeholder="e.g., carl@cloud.ci"
                 disabled={!show}
                 InputProps={showInput}
-                value={this.state.company} 
+                value={this.state.company}
                 onChange={this.onChange("company")}
               />
             </div>
 
             <div className={classes.fieldWrap}>
-              <TextValidator 
+              <TextValidator
                 label="Phone number"
                 name="phone"
                 ref="phone"
@@ -148,7 +147,7 @@ class GeneralSettings extends Component {
               />
             </div>
           </div>
-          <PopUpButtons 
+          <PopUpButtons
             show={show}
             toggleForm={this.toggleForm}
           />
@@ -159,7 +158,7 @@ class GeneralSettings extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  changeUserSettings: data => dispatch(changeUserSettings(data))
+  changeUserSettings: data => dispatch(changeUserSettings(data)),
 })
 
 export default compose(

@@ -1,20 +1,20 @@
-import React from 'react'
-import SubmitButton from '../../../components/Authentication/SubmitButton'
+import React from "react"
 import { shallow } from "enzyme"
+import SubmitButton from "../../../components/Authentication/SubmitButton"
 
-describe('SubmitButton', () => {
-  it('should be defined', () => {
+describe("SubmitButton", () => {
+  it("should be defined", () => {
     expect(SubmitButton).toBeDefined()
   })
-  it('should render correctly', () => {
+  it("should render correctly", () => {
     const tree = shallow(
-      <SubmitButton text={"test"} />
+      <SubmitButton text="test" />
     )
     expect(tree).toMatchSnapshot()
   })
-  it('should have text props', () => {
+  it("should have text props", () => {
     const tree = shallow(
-      <SubmitButton text={"test"} />
+      <SubmitButton text="test" />
     )
     expect(tree.props().text).toEqual("test")
   })

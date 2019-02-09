@@ -9,28 +9,22 @@ import PropTypes from "prop-types"
 const styles = () => ({
   colName: {
     fontWeight: "bold",
-    fontSize: "16px"
-  }
+    fontSize: "16px",
+  },
 })
 
 const RulesTableHead = ({ classes }) => (
   <TableHead>
     <TableRow>
       <TableCell>
-        <Typography 
-          className={classes.colName} 
-          color="primary"
-        >
-          Name
-        </Typography>
+        <Typography className={classes.colName} color="primary">Name</Typography>
       </TableCell>
-      <TableCell></TableCell>
     </TableRow>
   </TableHead>
 )
 
 RulesTableHead.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
 }
 
 

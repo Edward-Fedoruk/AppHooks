@@ -1,9 +1,9 @@
-import React from 'react'
-import { withStyles } from '@material-ui/core/styles'
-import Typography from '@material-ui/core/Typography'
-import PropTypes from 'prop-types'
+import React from "react"
+import { withStyles } from "@material-ui/core/styles"
+import Typography from "@material-ui/core/Typography"
+import PropTypes from "prop-types"
 
-const styles = ({ breakpoints }) => ({
+const titleStyles = ({ breakpoints }) => ({
   title: {
     flexGrow: 1,
     fontSize: "25px",
@@ -12,15 +12,15 @@ const styles = ({ breakpoints }) => ({
     fontWeight: "bold",
 
     [breakpoints.down(425)]: {
-      fontSize: "18px"
+      fontSize: "18px",
     },
-  },  
+  },
 })
 
 const Title = ({ classes, styles, children }) => (
-  <Typography 
-    variant="h2" 
-    color="primary" 
+  <Typography
+    variant="h2"
+    color="primary"
     className={classes.title}
     style={styles}
   >
@@ -28,9 +28,14 @@ const Title = ({ classes, styles, children }) => (
   </Typography>
 )
 
+Title.defaultProps = {
+  styles: {},
+}
+
 Title.propTypes = {
   classes: PropTypes.object.isRequired,
   styles: PropTypes.object,
+  children: PropTypes.string.isRequired,
 }
 
-export default withStyles(styles)(Title)
+export default withStyles(titleStyles)(Title)

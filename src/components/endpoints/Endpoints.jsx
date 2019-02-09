@@ -1,10 +1,10 @@
-import React, { Fragment } from 'react'
-import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core'
-import Title from '../Title'
-import AddCircle from '@material-ui/icons/AddCircle'
-import { compose } from 'redux'
-import EndpointCard from '../endpoints/EndpointCard'
+import React, { Fragment } from "react"
+import PropTypes from "prop-types"
+import { withStyles } from "@material-ui/core"
+import AddCircle from "@material-ui/icons/AddCircle"
+import { compose } from "redux"
+import Title from "../Title"
+import EndpointCard from "./EndpointCard"
 
 const styles = () => ({
   endpointsTitle: {
@@ -14,7 +14,7 @@ const styles = () => ({
     alignItems: "center",
     marginTop: "55px",
     marginLeft: "13px",
-    marginBottom: "20px"
+    marginBottom: "20px",
   },
 
   addIcon: {
@@ -24,22 +24,22 @@ const styles = () => ({
     cursor: "pointer",
 
     "&:hover": {
-      opacity: ".8"
-    }
-  }
+      opacity: ".8",
+    },
+  },
 })
 
 const Endpoints = ({ classes, endpoints }) => (
   <Fragment>
     <div className={classes.endpointsTitle}>
-      <Title styles={{fontSize: "20px"}}>
+      <Title styles={{ fontSize: "20px" }}>
         Endpoints
       </Title>
       <AddCircle className={classes.addIcon} />
     </div>
 
-    {endpoints.map(({url, name}, i) => (
-      <EndpointCard 
+    {endpoints.map(({ url, name }, i) => (
+      <EndpointCard
         key={i}
         link={url}
         endpointName={name}
@@ -50,7 +50,7 @@ const Endpoints = ({ classes, endpoints }) => (
 
 
 Endpoints.propTypes = {
-  endpoints: PropTypes.array.isRequired
+  endpoints: PropTypes.array.isRequired,
 }
 
 

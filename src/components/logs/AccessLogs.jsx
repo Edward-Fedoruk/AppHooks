@@ -1,31 +1,31 @@
 import React, { Component, Fragment } from "react"
 import PropTypes from "prop-types"
 import { connect } from "react-redux"
+import { compose } from "redux"
+import { withStyles } from "@material-ui/core"
 import LogsTable from "./LogsTable"
 import Placeholder from "../Placeholder"
 import logs from "../../assets/logs.png"
 import withNavigation from "../withNavigation"
-import { compose } from "redux"
-import { withStyles } from "@material-ui/core"
 import TopBar from "../TopBar"
 import { fetchRequests } from "../../actions/requestLogs"
 
 const styles = () => ({
   placeholder: {
     margin: "auto",
-    marginTop: "170px"
+    marginTop: "170px",
   },
 
   contentWrap: {
     padding: "20px 26px 20px 13px",
-    overflowX: "hidden"
+    overflowX: "hidden",
   },
 })
 
 export class AccessLogs extends Component {
   static propTypes = {
     data: PropTypes.array,
-    classes: PropTypes.object.isRequired
+    classes: PropTypes.object.isRequired,
   }
 
   componentDidMount() {
@@ -38,21 +38,23 @@ export class AccessLogs extends Component {
       <Fragment>
         <TopBar title="Request Log Viewer" />
         <div className={classes.contentWrap}>
-          {data.length  
-            ? <Fragment>
+          {data.length
+            ? (
+              <Fragment>
                 <LogsTable data={data} />
               </Fragment>
-            : <Placeholder 
+            )
+            : (
+              <Placeholder
                 title="Log Viewer is empty"
                 imgSrc={logs}
                 className={classes.placeholder}
-              />}
+              />
+            )}
         </div>
       </Fragment>
     )
   }
-
-  
 }
 
 const mapStateToProps = ({ requestLogs }) => ({
@@ -60,7 +62,7 @@ const mapStateToProps = ({ requestLogs }) => ({
 })
 
 const mapDispatchToProps = {
-  fetchRequests
+  fetchRequests,
 }
 
 export default compose(

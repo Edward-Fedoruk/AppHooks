@@ -1,27 +1,27 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
-import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
-import { withRouter } from 'react-router-dom'
-import Title from './Title'
-import { withWidth } from '@material-ui/core'
-import IconButton from '@material-ui/core/IconButton'
-import MenuIcon from '@material-ui/icons/Menu'
-import { connect } from 'react-redux'
-import { compose }  from "redux"
-import { toggleNavBar } from '../actions/ui'
+import React from "react"
+import PropTypes from "prop-types"
+import { withStyles } from "@material-ui/core/styles"
+import AppBar from "@material-ui/core/AppBar"
+import Toolbar from "@material-ui/core/Toolbar"
+import { withRouter } from "react-router-dom"
+import { withWidth } from "@material-ui/core"
+import IconButton from "@material-ui/core/IconButton"
+import MenuIcon from "@material-ui/icons/Menu"
+import { connect } from "react-redux"
+import { compose } from "redux"
+import Title from "./Title"
+import { toggleNavBar } from "../actions/ui"
 
 const styles = ({ breakpoints }) => ({
   title: {
     flexGrow: 1,
     fontSize: "25px",
-    
+
     textTransform: "capitalize",
     color: "#192B7F",
-    fontWeight: "bold"
-  },  
-  
+    fontWeight: "bold",
+  },
+
   channel: {
     textTransform: "capitalize",
     color: "#fff",
@@ -37,7 +37,7 @@ const styles = ({ breakpoints }) => ({
     background: "#fff",
     height: "80px",
     display: "flex",
-    justifyContent: "center"
+    justifyContent: "center",
   },
 
   menuButton: {
@@ -52,47 +52,48 @@ const styles = ({ breakpoints }) => ({
   },
 })
 
-export class TopBar extends Component {
-  static propTypes = {
-    classes: PropTypes.object,
-    history: PropTypes.object.isRequired,
-    title: PropTypes.string.isRequired,
-    toggleMenu: PropTypes.func
-  }
+export const TopBar = ({
+  classes, title, width, toggleMenu, children,
+}) => {
+  const downMd = width === "sm" || width === "xs"
+  return (
+    <AppBar
+      position="static"
+      className={classes.appBar}
+      elevation={0}
+    >
+      <Toolbar>
+        {downMd
+          && (
+          <IconButton
+            onClick={toggleMenu}
+            className={classes.menuButton}
+            color="inherit"
+            aria-label="Menu"
+          >
+            <MenuIcon />
+          </IconButton>
+          )}
 
-  render() {
-    const { classes, title, width, toggleMenu } = this.props
-    const downMd = width === "sm" || width === "xs"
-    return (
-      <AppBar 
-        position="static" 
-        className={classes.appBar} 
-        elevation={0}
-      >
-        <Toolbar>
-          {downMd && 
-            <IconButton 
-              onClick={toggleMenu} 
-              className={classes.menuButton} 
-              color="inherit" 
-              aria-label="Menu"
-            >
-              <MenuIcon />
-            </IconButton>}
+        <Title>{title}</Title>
 
-          <Title>{title}</Title>
+        {children}
 
-          {this.props.children}
-
-        </Toolbar>
-      </AppBar>
-    )
-  }
+      </Toolbar>
+    </AppBar>
+  )
 }
 
+TopBar.propTypes = {
+  classes: PropTypes.object.isRequired,
+  title: PropTypes.string.isRequired,
+  toggleMenu: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
+  width: PropTypes.string.isRequired,
+}
 
 const mapDispatchToProps = dispatch => ({
-  toggleMenu: () => dispatch(toggleNavBar())
+  toggleMenu: () => dispatch(toggleNavBar()),
 })
 
 export default compose(

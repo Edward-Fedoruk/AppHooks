@@ -1,5 +1,3 @@
-describe('fake', () => {
-  it('test', () => {
-    return undefined
-  })
+describe("fake", () => {
+  it("test", () => undefined)
 })

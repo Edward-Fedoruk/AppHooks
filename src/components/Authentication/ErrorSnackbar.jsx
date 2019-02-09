@@ -1,12 +1,13 @@
-import React from 'react'
-import classNames from 'classnames'
-import ErrorIcon from '@material-ui/icons/Error'
-import SnackbarContent from '@material-ui/core/SnackbarContent'
-import { withStyles } from '@material-ui/core/styles'
-import Snackbar from '@material-ui/core/Snackbar'
-import { connect } from 'react-redux'
-import { compose } from 'redux'
-import { toggleSnackbar } from '../../actions/ui'
+import React from "react"
+import classNames from "classnames"
+import ErrorIcon from "@material-ui/icons/Error"
+import SnackbarContent from "@material-ui/core/SnackbarContent"
+import { withStyles } from "@material-ui/core/styles"
+import Snackbar from "@material-ui/core/Snackbar"
+import { connect } from "react-redux"
+import { compose } from "redux"
+import PropTypes from "prop-types"
+import { toggleSnackbar } from "../../actions/ui"
 
 const styles = ({ breakpoints, spacing }) => ({
   snackbar: {
@@ -32,47 +33,51 @@ const styles = ({ breakpoints, spacing }) => ({
     marginRight: spacing.unit,
   },
   message: {
-    display: 'flex',
-    alignItems: 'center',
+    display: "flex",
+    alignItems: "center",
   },
 })
 
-const ErrorSnackbar = ({ 
-  classes, className, message,
-  toggleSnackbar, snackbar,
-}) => {
+const ErrorSnackbar = ({
+  classes, className, message, toggleSnackbar, snackbar,
+}) => (
+  <Snackbar
+    className={classes.snackbar}
+    anchorOrigin={{
+      vertical: "top",
+      horizontal: "center",
+    }}
+    autoHideDuration={7000}
+    open={snackbar}
+    onClose={toggleSnackbar}
+  >
+    <SnackbarContent
+      className={classNames(classes.error, className)}
+      aria-describedby="client-snackbar"
+      message={(
+        <span id="client-snackbar" className={classes.message}>
+          <ErrorIcon className={classNames(classes.icon, classes.iconVariant)} />
+          {message}
+        </span>
+      )}
+    />
+  </Snackbar>
+)
 
-  return (
-    <Snackbar
-      className={classes.snackbar}
-      anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'center',
-      }}
-      autoHideDuration={7000}
-      open={snackbar}
-      onClose={toggleSnackbar}
-    >
-      <SnackbarContent
-        className={classNames(classes.error, className)}
-        aria-describedby="client-snackbar"
-        message={
-          <span id="client-snackbar" className={classes.message}>
-            <ErrorIcon className={classNames(classes.icon, classes.iconVariant)} />
-            {message}
-          </span>
-        }
-      />
-    </Snackbar>
-  )
+ErrorSnackbar.propTypes = {
+  classes: PropTypes.object.isRequired,
+  className: PropTypes.string.isRequired,
+  message: PropTypes.string.isRequired,
+  toggleSnackbar: PropTypes.func.isRequired,
+  snackbar: PropTypes.bool.isRequired,
 }
 
 const mapStateToProps = ({ view }) => ({
   snackbar: view.snackbar,
 })
 
-const mapDispatchToProps = dispatch => ({ 
-  toggleSnackbar: () => dispatch(toggleSnackbar())
+const mapDispatchToProps = dispatch => ({
+  toggleSnackbar: () => dispatch(toggleSnackbar()),
 })
 
 export default compose(

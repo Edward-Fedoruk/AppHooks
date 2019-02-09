@@ -17,7 +17,7 @@ const styles = () => ({
   },
 
   select: {
-    marginRight: "20px"
+    marginRight: "20px",
   },
 
   deleteIcon: {
@@ -30,89 +30,95 @@ const styles = () => ({
     color: "#F96565",
     alignItems: "flex-start",
     cursor: "pointer",
-  }
-}) 
+  },
+})
 
 
-const ChannelMenu = ({ 
-  classes, anchorEl, handleClick, 
+const ChannelMenu = ({
+  classes, anchorEl, handleClick,
   handleClose, currentStageName, currentChannel,
-  deleteChannel
-}) => {
-  return (
-    <div>
-      <IconButton
-        aria-owns={anchorEl ? "simple-menu" : undefined}
-        aria-haspopup="true"
-        onClick={handleClick}
-      >
-        <MoreVertIcon />
-      </IconButton>
+  deleteChannel,
+}) => (
+  <div>
+    <IconButton
+      aria-owns={anchorEl ? "simple-menu" : undefined}
+      aria-haspopup="true"
+      onClick={handleClick}
+    >
+      <MoreVertIcon />
+    </IconButton>
 
-      <Menu
-        id="simple-menu"
-        anchorEl={anchorEl}
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-        className={classes.menu}
-        elevation={4}
-      >
-        <MenuItem onClick={handleClose}>
-          <ListItemIcon>
-            <Edit />
-          </ListItemIcon>
-          <Typography 
-            noWrap 
-            variant="inherit"
-            color="primary"
-          >
+    <Menu
+      id="simple-menu"
+      anchorEl={anchorEl}
+      open={Boolean(anchorEl)}
+      onClose={handleClose}
+      className={classes.menu}
+      elevation={4}
+    >
+      <MenuItem onClick={handleClose}>
+        <ListItemIcon>
+          <Edit />
+        </ListItemIcon>
+        <Typography
+          noWrap
+          variant="inherit"
+          color="primary"
+        >
             Edit stage name
-          </Typography>
-        </MenuItem>
-        
-        <MenuItem onClick={handleClose}>
-          <ListItemIcon>
-            <Add />
-          </ListItemIcon>
-          <Typography 
-            noWrap 
-            variant="inherit"
-            color="primary"
-          >
+        </Typography>
+      </MenuItem>
+
+      <MenuItem onClick={handleClose}>
+        <ListItemIcon>
+          <Add />
+        </ListItemIcon>
+        <Typography
+          noWrap
+          variant="inherit"
+          color="primary"
+        >
             Add new stage
-          </Typography>
-        </MenuItem>
-        
-        <MenuItem onClick={handleClose}>
-          <ListItemIcon>
-            <AddCircle className={classes.deleteIcon} />
-          </ListItemIcon>
-          <Typography 
-            className={classes.delete} 
-            noWrap 
-            variant="inherit"
-          >
-            Delete {currentStageName} stage
-          </Typography>
-        </MenuItem>
+        </Typography>
+      </MenuItem>
 
-        <MenuItem onClick={deleteChannel}>
-          <ListItemIcon>
-            <AddCircle className={classes.deleteIcon} />
-          </ListItemIcon>
-          <Typography 
-            className={classes.delete} 
-            noWrap 
-            variant="inherit"
-          >
-            Delete {currentChannel} Channel App
-          </Typography>
-        </MenuItem>
+      <MenuItem onClick={handleClose}>
+        <ListItemIcon>
+          <AddCircle className={classes.deleteIcon} />
+        </ListItemIcon>
+        <Typography
+          className={classes.delete}
+          noWrap
+          variant="inherit"
+        >
+            Delete
+          {" "}
+          {currentStageName}
+          {" "}
+stage
+        </Typography>
+      </MenuItem>
 
-      </Menu>
-    </div>
-  )
-}
+      <MenuItem onClick={deleteChannel}>
+        <ListItemIcon>
+          <AddCircle className={classes.deleteIcon} />
+        </ListItemIcon>
+        <Typography
+          className={classes.delete}
+          noWrap
+          variant="inherit"
+        >
+            Delete
+          {" "}
+          {currentChannel}
+          {" "}
+Channel App
+        </Typography>
+      </MenuItem>
+
+    </Menu>
+  </div>
+)
 
 ChannelMenu.propTypes = {
   classes: PropTypes.object.isRequired,
@@ -121,7 +127,7 @@ ChannelMenu.propTypes = {
   handleClose: PropTypes.func,
   currentStageName: PropTypes.string,
   currentChannel: PropTypes.string,
-  deleteChannel: PropTypes.func
+  deleteChannel: PropTypes.func,
 }
 
 export default withStyles(styles)(ChannelMenu)

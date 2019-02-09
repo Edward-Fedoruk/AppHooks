@@ -1,43 +1,43 @@
+import { normalize } from "normalizr"
+import { compose } from "redux"
 import * as types from "./types"
 import { createStage } from "./stage"
-import { normalize } from "normalizr"
 import { channelSchema } from "./schemas"
 import { domain, setFetchSettings } from "./utils"
-import { compose } from "redux"
 
 export const setChannelsData = payload => ({
   type: types.SET_CHANNELS,
-  payload
+  payload,
 })
 
 export const throwChannelCreationError = errorMessage => ({
   type: types.CREATE_CHANNEL_ERROR,
-  errorMessage
+  errorMessage,
 })
 
-export const addChannel = (payload) => ({
+export const addChannel = payload => ({
   type: types.ADD_CHANNEL,
-  payload
+  payload,
 })
 
-export const setCurrentChannel = (channel) => ({
+export const setCurrentChannel = channel => ({
   type: types.SET_CURRENT_CHANNEL,
-  channel
+  channel,
 })
 
-export const removeChannelFromStore = (id) => ({
+export const removeChannelFromStore = id => ({
   type: types.REMOVE_CHANNEL,
-  id
-}) 
+  id,
+})
 
-export const createChannel = (channelData, routeHistory) => dispatch => { 
+export const createChannel = (channelData, routeHistory) => (dispatch) => {
   const accessToken = localStorage.getItem("JWT")
 
-  if(accessToken === null) {
+  if (accessToken === null) {
     routeHistory.push({
-      pathname: "/login"
+      pathname: "/login",
     })
-    
+
     return
   }
 
@@ -45,37 +45,35 @@ export const createChannel = (channelData, routeHistory) => dispatch => {
   const settings = setFetchSettings("POST", accessToken, stringifiedData)
 
   fetch(`${domain}/apps`, settings)
-    .then((response) => {
-      return response.json()
+    .then(response => response.json()
       .then((json) => {
         if (response.ok) {
           return Promise.resolve(json)
         }
         return Promise.reject(json)
-      })
-    })
+      }))
     .then(({ data }) => {
       const stageData = { name: `${data.name.trim()}-default` }
 
       compose(
         dispatch,
-        addChannel        
+        addChannel
       )(normalize(data, channelSchema))
 
       dispatch(createStage(data.id, stageData, routeHistory))
     })
-    .catch(er =>{
+    .catch((er) => {
       console.log(er)
       dispatch(throwChannelCreationError(er.message))
     })
-} 
+}
 
-export const fetchChannels = routeHistory => dispatch => {
+export const fetchChannels = routeHistory => (dispatch) => {
   const accessToken = localStorage.getItem("JWT")
 
-  if(accessToken === null) {
+  if (accessToken === null) {
     routeHistory.push({
-      pathname: "/login"
+      pathname: "/login",
     })
     return
   }
@@ -83,44 +81,38 @@ export const fetchChannels = routeHistory => dispatch => {
   const settings = setFetchSettings("GET", accessToken, null)
 
   fetch(`${domain}/apps`, settings)
-    .then((response) => {
-      return response.json()
+    .then(response => response.json()
       .then((json) => {
         if (response.ok) {
           return Promise.resolve(json)
         }
         return Promise.reject(json)
-      })
-    })
-    .then(data => 
-      compose(
-        dispatch,
-        setChannelsData,
-      )(normalize(data.data, [channelSchema]))
-    )
-    .catch(er =>{
+      }))
+    .then(data => compose(
+      dispatch,
+      setChannelsData,
+    )(normalize(data.data, [channelSchema])))
+    .catch((er) => {
       console.log(er)
       routeHistory.push({
-        pathname: "/login"
+        pathname: "/login",
       })
     })
 }
 
-export const fetchChannel = (id, routeHistory) => dispatch => {
+export const fetchChannel = (id, routeHistory) => (dispatch) => {
   const accessToken = localStorage.getItem("JWT")
 
   const settings = setFetchSettings("GET", accessToken, null)
 
   fetch(`${domain}/apps/${id}`, settings)
-    .then((response) => {
-      return response.json()
+    .then(response => response.json()
       .then((json) => {
         if (response.ok) {
           return Promise.resolve(json)
         }
         return Promise.reject(json)
-      })
-    })
+      }))
     .then(({ data }) => {
       console.log(data)
       const normalizedData = normalize(data, channelSchema)
@@ -134,21 +126,20 @@ export const fetchChannel = (id, routeHistory) => dispatch => {
         channelId: id,
         stageIds: normalizedData.entities.channels[id].stages,
       })
-
     })
-    .catch(er =>{
+    .catch((er) => {
       console.log(er)
       routeHistory.push({
-        pathname: "/login"
+        pathname: "/login",
       })
     })
 }
 
-export const deleteChannel = (id, routeHistory) => dispatch => {
+export const deleteChannel = (id, routeHistory) => (dispatch) => {
   const accessToken = localStorage.getItem("JWT")
 
   const settings = setFetchSettings("DELETE", accessToken, null)
-  
+
   fetch(`${domain}/apps/${id}`, settings)
     .then((response) => {
       if (response.ok) {
@@ -156,15 +147,15 @@ export const deleteChannel = (id, routeHistory) => dispatch => {
       }
       return Promise.reject(response)
     })
-    .then(data => {
+    .then((data) => {
       console.log(data)
       dispatch(removeChannelFromStore(id))
       routeHistory.push("/channels")
     })
-    .catch(er =>{
+    .catch((er) => {
       console.log(er)
       routeHistory.push({
-        pathname: "/login"
+        pathname: "/login",
       })
     })
 }

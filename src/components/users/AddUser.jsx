@@ -15,7 +15,7 @@ const styles = ({ breakpoints }) => ({
     margin: "22px 0 0 62px",
 
     [breakpoints.down(375)]: {
-      margin: "22px 0 0 0"
+      margin: "22px 0 0 0",
     },
 
   },
@@ -23,20 +23,20 @@ const styles = ({ breakpoints }) => ({
   add: {
     marginLeft: "16px",
     width: "120px",
-    height: "56px"
-  }
+    height: "56px",
+  },
 })
 
 export class AddUser extends Component {
   state = {
-    email: ""
+    email: "",
   }
 
   static propTypes = {
-    classes: PropTypes.object.isRequired
+    classes: PropTypes.object.isRequired,
   }
-  
-  onSubmit = e => {
+
+  onSubmit = (e) => {
     e.preventDefault()
     console.log(this.state)
     this.props.inviteUser(this.state)
@@ -44,42 +44,42 @@ export class AddUser extends Component {
   }
 
   onChange = input => e => this.setState({ [input]: e.target.value })
-  handleBlur = event => 
-    this.refs[event.target.name].validate(event.target.value)
+
+  handleBlur = event => this.refs[event.target.name].validate(event.target.value)
 
 
   render() {
     const { classes, inviteError } = this.props
     return (
       <div>
-      <ErrorSnackbar 
-        message={inviteError}
-      />
-      <ValidatorForm onSubmit={this.onSubmit} className={classes.form}>
-        <TextValidator 
-          variant="outlined"
-          label="Add new sub-user"
-          name="email"
-          ref="email"
-          margin="none"
-          placeholder="e.g., carl@cloud.ci"
-          onChange={this.onChange("email")}
-          onBlur={this.handleBlur}
-          className={classes.textField}
-          value={this.state.email}
-          validators={["required", "isEmail"]}
-          errorMessages={["this field is required", "email is not valid"]}
-          on
+        <ErrorSnackbar
+          message={inviteError}
         />
-        <Button type="submit" className={classes.add} variant="outlined" color="primary" size="large">Add</Button>
-      </ValidatorForm>
-    </div>
+        <ValidatorForm onSubmit={this.onSubmit} className={classes.form}>
+          <TextValidator
+            variant="outlined"
+            label="Add new sub-user"
+            name="email"
+            ref="email"
+            margin="none"
+            placeholder="e.g., carl@cloud.ci"
+            onChange={this.onChange("email")}
+            onBlur={this.handleBlur}
+            className={classes.textField}
+            value={this.state.email}
+            validators={["required", "isEmail"]}
+            errorMessages={["this field is required", "email is not valid"]}
+            on
+          />
+          <Button type="submit" className={classes.add} variant="outlined" color="primary" size="large">Add</Button>
+        </ValidatorForm>
+      </div>
     )
   }
-} 
+}
 
 const mapStateToProps = ({ users }) => ({
-  inviteError: users.inviteError
+  inviteError: users.inviteError,
 })
 
 const mapDispatchToProps = dispatch => ({

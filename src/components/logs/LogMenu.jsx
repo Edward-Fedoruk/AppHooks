@@ -1,6 +1,5 @@
 import React, { Component } from "react"
 import { withStyles } from "@material-ui/core"
-import { deleteLogs } from "../../actions/requestLogs"
 import { connect } from "react-redux"
 import { compose } from "redux"
 import { withRouter } from "react-router-dom"
@@ -13,6 +12,7 @@ import Typography from "@material-ui/core/Typography"
 import ListAlt from "@material-ui/icons/ListAlt"
 import MenuItem from "@material-ui/core/MenuItem"
 import DeleteIcon from "@material-ui/icons/Delete"
+import { deleteLogs } from "../../actions/requestLogs"
 import ConfirmDialog from "../ConfirmDialog"
 
 const styles = () => ({
@@ -21,7 +21,7 @@ const styles = () => ({
   },
 
   select: {
-    marginRight: "20px"
+    marginRight: "20px",
   },
 
   deleteIcon: {
@@ -35,12 +35,12 @@ const styles = () => ({
     cursor: "pointer",
   },
 
-  cancel: {color: "#A6AFD5"},
-  check: {color: "#35C1CE"}
-}) 
+  cancel: { color: "#A6AFD5" },
+  check: { color: "#35C1CE" },
+})
 
 
-class LogMenu extends Component { 
+class LogMenu extends Component {
   state = {
     openDialog: false,
     open: -1,
@@ -49,31 +49,30 @@ class LogMenu extends Component {
 
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    deleteLogs: PropTypes.object.isRequired
+    deleteLogs: PropTypes.object.isRequired,
   }
 
-  toggleDialog = () => 
-    this.setState(state => ({ openDialog: !state.openDialog }))
-  
+  toggleDialog = () => this.setState(state => ({ openDialog: !state.openDialog }))
+
 
   handleCloseWithAction = () => {
     this.toggleDialog()
     this.props.deleteLogs([this.props.id])
   }
 
-  handleMenuClick = event => {
-    this.setState({ 
+  handleMenuClick = (event) => {
+    this.setState({
       open: event.currentTarget.id,
-      anchorEl: event.currentTarget
+      anchorEl: event.currentTarget,
     })
   }
-  
+
   handleClose = () => {
     this.setState({ open: -1, anchorEl: null })
   }
 
   openDetails = () => this.props.history.push(`/logs/${this.props.id}`)
-  
+
   render() {
     const { classes, id } = this.props
     const { openDialog, open, anchorEl } = this.state
@@ -89,7 +88,7 @@ class LogMenu extends Component {
           <MoreVertIcon />
         </IconButton>
 
-        <ConfirmDialog 
+        <ConfirmDialog
           open={openDialog}
           handleClose={this.toggleDialog}
           handleCloseWithAction={this.handleCloseWithAction}

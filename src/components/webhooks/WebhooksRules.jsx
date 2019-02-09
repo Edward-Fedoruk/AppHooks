@@ -8,10 +8,9 @@ import withNavigation from "../withNavigation"
 import TopBar from "../TopBar"
 import Placeholder from "../Placeholder"
 import webhooks from "../../assets/webhooks.png"
-import Button from "@material-ui/core/Button"
 import FormDrawer from "../FormDrawer"
 import { fetchRules } from "../../actions/rules"
-import { toggleEditForm } from "../../actions/ui"
+import { toggleEditForm as toggleEdit } from "../../actions/ui"
 import CreateRuleForm from "./CreateRuleForm"
 import EditRuleForm from "./EditRuleForm"
 import FormHeader from "./FormHeader"
@@ -30,7 +29,7 @@ const styles = ({ breakpoints }) => ({
   placeholder: {
     margin: "auto",
     marginTop: "170px",
-    width: "545px"
+    width: "545px",
   },
 
   newRule: {
@@ -62,30 +61,37 @@ export class WebhooksRules extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
     fetchRules: PropTypes.func.isRequired,
-    recipes: PropTypes.array.isRequired
+    recipes: PropTypes.array.isRequired,
+    toggleEdit: PropTypes.func.isRequired,
+    editRuleForm: PropTypes.func.isRequired,
   }
 
-  toggleDialog = () => this.setState({ open: !this.state.open })
-  
+
   componentDidMount() {
+    // eslint-disable-next-line react/destructuring-assignment
     this.props.fetchRules()
   }
 
+  toggleDialog = () => this.setState(({ open }) => ({ open: !open }))
+
   render() {
-    const { classes, recipes, toggleEditForm, editRuleForm } = this.props
+    const {
+      classes, recipes, toggleEdit, editRuleForm,
+    } = this.props
+    const { open } = this.state
     console.log(recipes)
     return (
       <Fragment>
         <TopBar title="WebHooks Rules">
-          <MainButton onClick={this.toggleDialog}>Create New Rule</MainButton>            
+          <MainButton onClick={this.toggleDialog}>Create New Rule</MainButton>
         </TopBar>
 
-        <FormDrawer 
-          open={this.state.open}
+        <FormDrawer
+          open={open}
           toggleDialog={this.toggleDialog}
         >
           <div className={classes.formWrap}>
-            <FormHeader 
+            <FormHeader
               header="Create WebHook Rule"
               subHeader="Create a WebHook Rule. You can create as many rules as you need."
             />
@@ -93,12 +99,12 @@ export class WebhooksRules extends Component {
           </div>
         </FormDrawer>
 
-        <FormDrawer 
+        <FormDrawer
           open={editRuleForm}
-          toggleDialog={toggleEditForm}
+          toggleDialog={toggleEdit}
         >
           <div className={classes.formWrap}>
-            <FormHeader 
+            <FormHeader
               header="Edit WebHook Rule"
               subHeader="You can create as many rules as you need."
             />
@@ -109,11 +115,13 @@ export class WebhooksRules extends Component {
         <div className={classes.contentWrap}>
           {recipes.length
             ? <RulesTable data={recipes} />
-            : <Placeholder 
+            : (
+              <Placeholder
                 imgSrc={webhooks}
                 title="Here should be WebHooks rules."
                 className={classes.placeholder}
-              />}
+              />
+            )}
         </div>
       </Fragment>
     )
@@ -122,16 +130,16 @@ export class WebhooksRules extends Component {
 
 const mapStateToProps = ({ rules, view }) => ({
   recipes: rules.recipes,
-  editRuleForm: view.editRuleForm
+  editRuleForm: view.editRuleForm,
 })
 
 const mapDispatchToProps = {
   fetchRules,
-  toggleEditForm
+  toggleEdit,
 }
 
 export default compose(
   withNavigation,
-  withStyles(styles), 
+  withStyles(styles),
   connect(mapStateToProps, mapDispatchToProps)
 )(WebhooksRules)

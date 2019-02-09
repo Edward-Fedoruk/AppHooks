@@ -1,5 +1,5 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from "react"
+import PropTypes from "prop-types"
 import Typography from "@material-ui/core/Typography"
 import { withStyles } from "@material-ui/core"
 
@@ -20,7 +20,7 @@ const styles = ({ breakpoints }) => ({
     marginRight: "5px",
 
     [breakpoints.down(425)]: {
-      paddingLeft: "24px"
+      paddingLeft: "24px",
     },
   },
 
@@ -29,40 +29,36 @@ const styles = ({ breakpoints }) => ({
     alignItems: "center",
 
     [breakpoints.down(425)]: {
-      padding: "12px 0"
+      padding: "12px 0",
     },
   },
 
   field: {
     color: "rgba(25, 43, 127, 0.7)",
-    fontSize: "14px"
+    fontSize: "14px",
   },
 
   fieldWrap: {
-    marginRight: "80px"
+    marginRight: "80px",
   },
 
-  contentWrap: { marginBottom: "40px" }
+  contentWrap: { marginBottom: "40px" },
 
 })
 
-const ConnectedAccounts = ({ classes }) => {
-  return (
-    <div className={classes.contentWrap}>
-      <div className={classes.headerWrap}>
-        <Typography className={classes.header} variant="h2" color="primary">
+const ConnectedAccounts = ({ classes }) => (
+  <div className={classes.contentWrap}>
+    <div className={classes.headerWrap}>
+      <Typography className={classes.header} variant="h2" color="primary">
           Connected accounts
-        </Typography>
-      </div>
-      <div className={classes.settingsWrap}>
-        <Typography className={classes.field} variant="body2">Connected accounts to your AppHooks account if you want to log in to your AppHooks dashboard using them.</Typography> 
-        <div>
-          
-        </div>
-      </div>
+      </Typography>
     </div>
-  )
-}
+    <div className={classes.settingsWrap}>
+      <Typography className={classes.field} variant="body2">Connected accounts to your AppHooks account if you want to log in to your AppHooks dashboard using them.</Typography>
+      <div />
+    </div>
+  </div>
+)
 
 ConnectedAccounts.propTypes = {
 

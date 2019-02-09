@@ -2,8 +2,8 @@ import React, { Component, Fragment } from "react"
 import PropTypes from "prop-types"
 import { connect } from "react-redux"
 import { compose } from "redux"
-import withNavigation from "../withNavigation"
 import { withStyles } from "@material-ui/core"
+import withNavigation from "../withNavigation"
 import TopBar from "../TopBar"
 import GeneralSettings from "./GeneralSettings"
 import ChangePassword from "./ChangePassword"
@@ -16,7 +16,7 @@ import ConfirmDialog from "../ConfirmDialog"
 const styles = ({ breakpoints }) => ({
   contentWrap: {
     padding: "27px 26px 20px 48px",
-  
+
     [breakpoints.down(425)]: {
       padding: "27px 0 0 0",
     },
@@ -26,15 +26,15 @@ const styles = ({ breakpoints }) => ({
 
 export class Settings extends Component {
   state = {
-    open: false
+    open: false,
   }
 
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    settings: PropTypes.object.isRequired
+    settings: PropTypes.object.isRequired,
   }
 
-  toggleDialog = () => this.setState(({open}) => ({open: !open}))
+  toggleDialog = () => this.setState(({ open }) => ({ open: !open }))
 
   handleCloseWithAction = () => {
     this.props.deleteAccount()
@@ -50,9 +50,9 @@ export class Settings extends Component {
     console.log(settings)
     return (
       <Fragment>
-        <ErrorSnackbar message={error.message}/>
+        <ErrorSnackbar message={error.message} />
 
-        <ConfirmDialog  
+        <ConfirmDialog
           open={this.state.open}
           handleCloseWithAction={this.handleCloseWithAction}
           handleClose={this.toggleDialog}
@@ -60,7 +60,7 @@ export class Settings extends Component {
 
         <TopBar title="Account Settings" />
         <div className={classes.contentWrap}>
-          <GeneralSettings 
+          <GeneralSettings
             company={settings.company}
             name={settings.name}
             phone={settings.phone}
@@ -76,12 +76,12 @@ export class Settings extends Component {
 
 const mapStateToProps = ({ userSettings }) => ({
   settings: userSettings.settings,
-  error: userSettings.error
+  error: userSettings.error,
 })
 
 const mapDispatchToProps = {
   fetchUserSettings,
-  deleteAccount
+  deleteAccount,
 }
 
 export default compose(

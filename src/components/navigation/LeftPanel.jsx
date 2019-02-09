@@ -3,20 +3,20 @@ import PropTypes from "prop-types"
 import { connect } from "react-redux"
 import { withStyles } from "@material-ui/core/styles"
 import AddCircle from "@material-ui/icons/AddCircle"
-import { ReactComponent as LogoIcon} from "../../assets/LogoIcon.svg"
-import { ReactComponent as QuestionMark} from "../../assets/QuestionMark.svg"
 import IconButton from "@material-ui/core/IconButton"
 import { Scrollbars } from "react-custom-scrollbars"
 import { compose } from "redux"
 import { withRouter } from "react-router-dom"
-import Gravatar  from "react-gravatar"
+import Gravatar from "react-gravatar"
+import { ReactComponent as QuestionMark } from "../../assets/QuestionMark.svg"
+import { ReactComponent as LogoIcon } from "../../assets/LogoIcon.svg"
 import UserIcon from "./UserIcon"
 
 const iconsGroup = {
   alignSelf: "flex-start",
   display: "flex",
   justifyContent: "center",
-  flexWrap: "wrap"
+  flexWrap: "wrap",
 }
 
 const styles = ({ breakpoints }) => ({
@@ -36,13 +36,13 @@ const styles = ({ breakpoints }) => ({
     display: "flex",
     flexWrap: "wrap",
     height: "100%",
-    justifyContent: "center"
+    justifyContent: "center",
   },
 
   topIcons: iconsGroup,
 
   logoIcon: {
-    width: "100%"
+    width: "100%",
   },
 
   addCircleWrap: {
@@ -53,29 +53,29 @@ const styles = ({ breakpoints }) => ({
   addCircle: {
     fontSize: "35px",
   },
-  
+
   bottomIcons: {
     ...iconsGroup,
     alignSelf: "flex-end",
-    marginTop: "25px"
+    marginTop: "25px",
   },
 
   questionMarkWrap: {
-    marginBottom: "20px"
+    marginBottom: "20px",
   },
 
   questionMark: {
     height: "35px",
   },
 
-  userWrap: { 
-    marginBottom: "33px"
-  }
+  userWrap: {
+    marginBottom: "33px",
+  },
 })
 
 export class LeftPanel extends Component {
   static propTypes = {
-    classes: PropTypes.object.isRequired
+    classes: PropTypes.object.isRequired,
   }
 
   openSettings = () => this.props.history.push("/settings")
@@ -87,8 +87,8 @@ export class LeftPanel extends Component {
         <Scrollbars>
           <div className={classes.iconsWrap}>
             <div className={classes.topIcons}>
-              <LogoIcon className={classes.logoIcon}/>
-              
+              <LogoIcon className={classes.logoIcon} />
+
               <IconButton className={classes.addCircleWrap}>
                 <AddCircle className={classes.addCircle} />
               </IconButton>
@@ -98,7 +98,7 @@ export class LeftPanel extends Component {
                 <QuestionMark className={classes.questionMark} />
               </IconButton>
 
-              <UserIcon className={classes.userWrap}/>
+              <UserIcon className={classes.userWrap} />
             </div>
           </div>
         </Scrollbars>
@@ -107,12 +107,12 @@ export class LeftPanel extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  
+const mapStateToProps = state => ({
+
 })
 
 const mapDispatchToProps = {
-  
+
 }
 
 export default compose(

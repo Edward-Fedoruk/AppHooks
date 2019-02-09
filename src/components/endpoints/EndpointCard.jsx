@@ -1,8 +1,8 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import Paper from '@material-ui/core/Paper'
-import Title from '../Title'
-import { withStyles } from '@material-ui/core'
+import React from "react"
+import PropTypes from "prop-types"
+import Paper from "@material-ui/core/Paper"
+import { withStyles } from "@material-ui/core"
+import Title from "../Title"
 
 const styles = () => ({
   paper: {
@@ -14,47 +14,45 @@ const styles = () => ({
 
   stats: {
     display: "flex",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
   },
 
   name: {
     display: "block",
-    fontSize: "14px"
+    fontSize: "14px",
   },
 
   link: {
     color: "#192B7F",
-    fontFamily:"Lato",
+    fontFamily: "Lato",
     fontSize: "14px",
     margin: "12px 0 27px 0",
-    display: "block"
-  }
+    display: "block",
+  },
 })
 
-const EndpointCard = ({ endpointName, link, classes }) => {
-  return (
-    <Paper className={classes.paper}>
-      <Title styles={{fontSize: "14px"}}>
-        {endpointName}
-      </Title>
+const EndpointCard = ({ endpointName, link, classes }) => (
+  <Paper className={classes.paper}>
+    <Title styles={{ fontSize: "14px" }}>
+      {endpointName}
+    </Title>
 
-      <a className={classes.link} href={link}>{link}</a>
+    <a className={classes.link} href={link}>{link}</a>
 
-      <div className={classes.stats}>
-        <span>0000</span>
-        <span>0000</span>
-        <span>0000</span>
-        <span>0000</span>
-      </div>
+    <div className={classes.stats}>
+      <span>0000</span>
+      <span>0000</span>
+      <span>0000</span>
+      <span>0000</span>
+    </div>
 
-    </Paper>
-  )
-}
+  </Paper>
+)
 
 EndpointCard.propTypes = {
   endpointName: PropTypes.string.isRequired,
   link: PropTypes.string.isRequired,
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
 }
 
 export default withStyles(styles)(EndpointCard)

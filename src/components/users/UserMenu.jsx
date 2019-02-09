@@ -11,9 +11,9 @@ import Edit from "@material-ui/icons/Edit"
 import { withStyles } from "@material-ui/core"
 import MenuItem from "@material-ui/core/MenuItem"
 import DeleteIcon from "@material-ui/icons/Delete"
-import { deleteUser } from "../../actions/subUsers"
 import { connect } from "react-redux"
 import { compose } from "redux"
+import { deleteUser } from "../../actions/subUsers"
 
 const styles = () => ({
   menu: {
@@ -23,11 +23,11 @@ const styles = () => ({
   root: {
     display: "flex",
     flexDirection: "row",
-    flexWrap: "nowrap"
+    flexWrap: "nowrap",
   },
 
   select: {
-    marginRight: "20px"
+    marginRight: "20px",
   },
 
   deleteIcon: {
@@ -41,95 +41,97 @@ const styles = () => ({
     cursor: "pointer",
   },
 
-  cancel: {color: "#A6AFD5"},
-  check: {color: "#35C1CE"}
-}) 
+  cancel: { color: "#A6AFD5" },
+  check: { color: "#35C1CE" },
+})
 
 
-const ChannelMenu = ({ 
-  classes, id, handleClick, 
+const ChannelMenu = ({
+  classes, id, handleClick,
   handleClose, open, anchorEl,
   handleEdit, selected, confirmChange,
-  deleteUser
-}) => {
-  return (
-    <div className={classes.root}>
-      {selected !== `${id}` 
-        ? <IconButton
+  deleteUser,
+}) => (
+  <div className={classes.root}>
+    {selected !== `${id}`
+      ? (
+        <IconButton
+          aria-owns="simple-menu"
+          aria-haspopup="true"
+          onClick={handleClick}
+          id={id}
+        >
+          <MoreVertIcon />
+        </IconButton>
+      )
+      : (
+        <Fragment>
+          <IconButton
+            className={classes.cancel}
             aria-owns="simple-menu"
             aria-haspopup="true"
-            onClick={handleClick}
+            onClick={handleClose}
             id={id}
           >
-            <MoreVertIcon />
+            <Cancel />
           </IconButton>
-        : <Fragment> 
-            <IconButton
-              className={classes.cancel}
-              aria-owns="simple-menu"
-              aria-haspopup="true"
-              onClick={handleClose}
-              id={id}
-            >
-              <Cancel />
-            </IconButton>
-            <IconButton
-              className={classes.check}
-              aria-owns="simple-menu"
-              aria-haspopup="true"
-              onClick={confirmChange}
-              id={id}
-            >
-              <CheckCircle />
-            </IconButton>
-          </Fragment>}
-      
-      <Menu
-        id="simple-menu"
-        anchorEl={anchorEl}
-        open={`${id}` === open}
-        onClose={handleClose}
-        className={classes.menu}
-        elevation={1}
-      >
-        <MenuItem onClick={handleEdit}>
-          <ListItemIcon>
-            <Edit />
-          </ListItemIcon>
-          <Typography 
-            noWrap 
-            color="primary"
+          <IconButton
+            className={classes.check}
+            aria-owns="simple-menu"
+            aria-haspopup="true"
+            onClick={confirmChange}
+            id={id}
           >
+            <CheckCircle />
+          </IconButton>
+        </Fragment>
+      )}
+
+    <Menu
+      id="simple-menu"
+      anchorEl={anchorEl}
+      open={`${id}` === open}
+      onClose={handleClose}
+      className={classes.menu}
+      elevation={1}
+    >
+      <MenuItem onClick={handleEdit}>
+        <ListItemIcon>
+          <Edit />
+        </ListItemIcon>
+        <Typography
+          noWrap
+          color="primary"
+        >
             Edit
-          </Typography>
-        </MenuItem>
+        </Typography>
+      </MenuItem>
 
-        <MenuItem onClick={deleteUser(id)}>
-          <ListItemIcon>
-            <DeleteIcon className={classes.deleteIcon} />
-          </ListItemIcon>
-          <Typography 
-            className={classes.delete} 
-            noWrap 
-          >
+      <MenuItem onClick={deleteUser(id)}>
+        <ListItemIcon>
+          <DeleteIcon className={classes.deleteIcon} />
+        </ListItemIcon>
+        <Typography
+          className={classes.delete}
+          noWrap
+        >
             Delete
-          </Typography>
-        </MenuItem>
+        </Typography>
+      </MenuItem>
 
-      </Menu>
-    </div>
-  )
-}
+    </Menu>
+  </div>
+)
 
 ChannelMenu.propTypes = {
   classes: PropTypes.object.isRequired,
   handleClick: PropTypes.func,
   handleClose: PropTypes.func,
-  deleteUser: PropTypes.func.isRequired
+  deleteUser: PropTypes.func.isRequired,
 }
 
 const mapDispatchToProps = dispatch => ({
-  deleteUser: id => () => dispatch(deleteUser(id))
+  deleteUser: id => () => dispatch(deleteUser(id)),
 })
 
 export default compose(

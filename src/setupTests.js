@@ -7,4 +7,3 @@ expect.addSnapshotSerializer(createSerializer({ mode: "deep" }))
 
 // React 16 Enzyme adapter
 Enzyme.configure({ adapter: new Adapter() })
-

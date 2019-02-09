@@ -33,7 +33,6 @@ const WithNavigation = () => (
 )
 
 class Routes extends React.Component {
-
   componentDidMount() {
     // @TO DO - uncoment in production
     // loadReCaptcha("6Ld8qYcUAAAAADWP8M3N4MD7J_hfIHLvfqoY8nIH")
@@ -48,10 +47,10 @@ class Routes extends React.Component {
           <Route path="/password" exact component={ForgetPassword} />
           <ProtectedRout path="/resetPassword" exact component={ResetPassword} />
           <Route path="/signup/success" exact component={EmailActivation} />
-          <Route component={WithNavigation}/>
-        </Switch>   
+          <Route component={WithNavigation} />
+        </Switch>
       </BrowserRouter>
-    ) 
+    )
   }
 }
 

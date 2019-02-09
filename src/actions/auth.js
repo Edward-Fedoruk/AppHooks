@@ -1,45 +1,42 @@
-import * as types from "./types"
 import { compose } from "redux"
+import * as types from "./types"
 import { toggleSnackbar } from "./ui"
 import { domain } from "./utils"
 import { fetchUserSettings } from "./user"
 
-export const authenticate = (payload) => ({
+export const authenticate = payload => ({
   type: types.CREATE_USER,
-  payload
+  payload,
 })
 
-export const throwAuthError = (error) => ({
+export const throwAuthError = error => ({
   type: types.AUTH_ERROR,
-  error
-}) 
+  error,
+})
 
-export const createUser = (userData, routeHistory) => dispatch => {
+export const createUser = (userData, routeHistory) => (dispatch) => {
   const stringifiedData = JSON.stringify(userData)
 
   fetch(`${domain}/auth/register`, {
     method: "POST",
     headers: {
-      "Accept": "application/json",
+      Accept: "application/json",
       "Content-Type": "application/json",
     },
-    body: stringifiedData
+    body: stringifiedData,
   })
-    .then((response) => {
-      return response.json()
+    .then(response => response.json()
       .then((json) => {
         if (response.ok) {
           return Promise.resolve(json)
         }
         return Promise.reject(json)
-      })
-    })
-    .then(jsonData => {
-
-      const user = { 
+      }))
+    .then((jsonData) => {
+      const user = {
         isAuthenticated: true,
-        errors: {}
-      }        
+        errors: {},
+      }
 
       compose(dispatch, authenticate)(user)
 
@@ -47,127 +44,119 @@ export const createUser = (userData, routeHistory) => dispatch => {
         pathname: "/signup/success",
         state: { userData },
       })
-    
     })
-    .catch(er => {
+    .catch((er) => {
       const user = {
         isAuthenticated: false,
         errors: er.errors,
-      }     
+      }
       dispatch(throwAuthError(user))
     })
 }
 
-export const logIn = (userData, routeHistory) => dispatch => {
+export const logIn = (userData, routeHistory) => (dispatch) => {
   const stringifiedData = JSON.stringify(userData)
 
   fetch(`${domain}/auth/login`, {
     method: "POST",
     headers: {
-      "Accept": "application/json",
+      Accept: "application/json",
       "Content-Type": "application/json",
     },
-    body: stringifiedData
+    body: stringifiedData,
   })
-  .then((response) => {
-    return response.json()
-    .then((json) => {
-      if (response.ok) {
-        return Promise.resolve(json)
+    .then(response => response.json()
+      .then((json) => {
+        if (response.ok) {
+          return Promise.resolve(json)
+        }
+        return Promise.reject(json)
+      }))
+    .then((jsonData) => {
+      console.log(jsonData)
+      fetchUserSettings()
+
+      localStorage.setItem("JWT", jsonData.access_token)
+      const user = {
+        isAuthenticated: true,
       }
-      return Promise.reject(json)
+
+      compose(dispatch, authenticate)(user)
+
+      routeHistory.push("/channels")
     })
-  })
-  .then(jsonData => {
-    console.log(jsonData)
-    fetchUserSettings()
-
-    localStorage.setItem("JWT", jsonData.access_token)
-    const user = {
-      isAuthenticated: true
-    }
-
-    compose(dispatch, authenticate)(user)
-
-    routeHistory.push("/channels")
-
-  })
-  .catch(er => {
-    const user = {
-      isAuthenticated: false,
-      logInError: true,
-      logInErrorMessage: er.message
-    }
-    dispatch(throwAuthError(user))
-    dispatch(toggleSnackbar(false))
-  })
+    .catch((er) => {
+      const user = {
+        isAuthenticated: false,
+        logInError: true,
+        logInErrorMessage: er.message,
+      }
+      dispatch(throwAuthError(user))
+      dispatch(toggleSnackbar(false))
+    })
 }
 
-export const reSendEmail = (email, routeHistory) => dispatch => {
+export const reSendEmail = (email, routeHistory) => (dispatch) => {
   const stringifiedData = JSON.stringify(email)
 
   fetch(`${domain}/auth/password/email`, {
     method: "POST",
     headers: {
-      "Accept": "application/json",
+      Accept: "application/json",
       "Content-Type": "application/json",
     },
-    body: stringifiedData
+    body: stringifiedData,
   })
-  .then((response) => {
-    return response.json()
-    .then((json) => {
-      if (response.ok) {
-        return Promise.resolve(json)
-      }
-      return Promise.reject(json)
+    .then(response => response.json()
+      .then((json) => {
+        if (response.ok) {
+          return Promise.resolve(json)
+        }
+        return Promise.reject(json)
+      }))
+    .then((jsonData) => {
+      console.log(jsonData, routeHistory)
+
+      routeHistory.push({
+        pathname: "/signup/success",
+        state: { userData: { userEmail: email.email } },
+      })
     })
-  })
-  .then(jsonData => {
-    console.log(jsonData, routeHistory)
-  
-    routeHistory.push({
-      pathname: "/signup/success",
-      state: { userData: { userEmail: email.email } }
+    .catch((er) => {
+      dispatch(throwAuthError({
+        resendErrorMessage: er.message,
+        resendError: true,
+      }))
+      console.log(er)
+      dispatch(toggleSnackbar(false))
     })
-  })
-  .catch(er => {
-    dispatch(throwAuthError({
-      resendErrorMessage: er.message,
-      resendError: true
-    }))
-    console.log(er)
-    dispatch(toggleSnackbar(false))
-  }) 
-}  
+}
 
 
-export const resetPassword = (userData, routeHistory) => dispatch => {
+export const resetPassword = (userData, routeHistory) => (dispatch) => {
   const stringifiedData = JSON.stringify(userData)
-  
+
   fetch(`${domain}/auth/password/reset`, {
     method: "POST",
     headers: {
-      "Accept": "application/json",
+      Accept: "application/json",
       "Content-Type": "application/json",
     },
-    body: stringifiedData
+    body: stringifiedData,
   })
-  .then((response) => {
-    return response.json()
-    .then((json) => {
-      if (response.ok) {
-        return Promise.resolve(json)
-      }
-      return Promise.reject(json)
+    .then(response => response.json()
+      .then((json) => {
+        if (response.ok) {
+          return Promise.resolve(json)
+        }
+        return Promise.reject(json)
+      }))
+    .then(() => {
+      routeHistory.push({
+        pathname: "/",
+      })
     })
-  })
-  .then(() => {
-    routeHistory.push({
-      pathname: "/"
+    .catch((er) => {
+      console.log("reset err", er)
     })
-  })
-  .catch(er =>{
-    console.log("reset err", er)
-  })
-} 
+}

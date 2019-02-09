@@ -21,7 +21,7 @@ const styles = ({ breakpoints }) => ({
   delete: {
     color: "#F96565",
     textDecoration: "underline",
-    fontSize: "14px"
+    fontSize: "14px",
   },
 
   header: {
@@ -51,42 +51,40 @@ const styles = ({ breakpoints }) => ({
 
   field: {
     color: "rgba(25, 43, 127, 0.7)",
-    fontSize: "14px"
+    fontSize: "14px",
   },
 
   fieldWrap: {
-    marginRight: "80px"
+    marginRight: "80px",
   },
 
   deleteIcon: {
     color: "#F96565",
     fontSize: "16px",
-  }
+  },
 })
 
-const DeleteAccount = ({ classes, openDialog }) => {
-  return (
-    <div>
-      <div className={classes.headerWrap}>
-        <Typography className={classes.header} variant="h2" color="primary">
+const DeleteAccount = ({ classes, openDialog }) => (
+  <div>
+    <div className={classes.headerWrap}>
+      <Typography className={classes.header} variant="h2" color="primary">
           Danger Zone
+      </Typography>
+    </div>
+    <div onClick={openDialog} className={classes.settingsWrap}>
+      <Typography className={classes.field} variant="body2">This is a permanent action and cant’t be undone.</Typography>
+      <div className={classes.delWrap}>
+        <Cancel className={classes.deleteIcon} />
+        <Typography className={classes.delete} variant="h2" color="primary">
+            Delete account
         </Typography>
       </div>
-      <div onClick={openDialog} className={classes.settingsWrap}>
-        <Typography className={classes.field} variant="body2">This is a permanent action and cant’t be undone.</Typography> 
-        <div className={classes.delWrap}>
-          <Cancel className={classes.deleteIcon} />
-          <Typography className={classes.delete} variant="h2" color="primary">
-            Delete account
-          </Typography>
-        </div>
-      </div>
     </div>
-  )
-}
+  </div>
+)
 
 DeleteAccount.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
 }
 
 export default compose(

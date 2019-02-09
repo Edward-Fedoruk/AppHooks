@@ -18,17 +18,19 @@ const styles = ({ breakpoints }) => ({
 
     [breakpoints.down(425)]: {
       fontSize: "12px",
-      padding: "8px 7px"
+      padding: "8px 7px",
     },
   },
 })
 
-const MainButton = props => {
-  const { classes, className, children, ...rest } = props
+const MainButton = (props) => {
+  const {
+    classes, className, children, ...rest
+  } = props
   return (
-    <Button 
+    <Button
       size="large"
-      color="primary" 
+      color="primary"
       variant="text"
       className={classNames(classes.btn, className)}
       {...rest}
@@ -38,10 +40,14 @@ const MainButton = props => {
   )
 }
 
+MainButton.defaultProps = {
+  className: "",
+}
+
 MainButton.propTypes = {
-  classes: PropTypes.object.isRequired, 
-  className: PropTypes.string, 
-  children: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
+  classes: PropTypes.object.isRequired,
+  className: PropTypes.string,
+  children: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
 }
 
 export default withStyles(styles)(MainButton)

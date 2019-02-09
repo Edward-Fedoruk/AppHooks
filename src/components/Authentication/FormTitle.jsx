@@ -1,18 +1,18 @@
-import React from 'react'
-import Typography from '@material-ui/core/Typography'
-import { withStyles } from '@material-ui/core/styles'
-import PropTypes from 'prop-types'
+import React from "react"
+import Typography from "@material-ui/core/Typography"
+import { withStyles } from "@material-ui/core/styles"
+import PropTypes from "prop-types"
 
 const styles = () => ({
   formTitleWrap: {
     position: "relative",
-    marginBottom: "15px"
+    marginBottom: "15px",
   },
 
   line: {
     width: "100%",
     height: "1px",
-    backgroundColor: "#DADADA"
+    backgroundColor: "#DADADA",
   },
 
   formTitle: {
@@ -27,19 +27,19 @@ const styles = () => ({
     right: "50%",
     transform: "translate(50%, -50%)",
     textAlign: "center",
-    width: "max-content"
+    width: "max-content",
   },
 })
 
 const FormTitle = ({ classes, text }) => (
   <div className={classes.formTitleWrap}>
-    <div className={classes.line}></div>
+    <div className={classes.line} />
     <Typography className={classes.formTitle}>{ text }</Typography>
   </div>
 )
 
 FormTitle.propTypes = {
-  text: PropTypes.string.isRequired
+  text: PropTypes.string.isRequired,
 }
 
 export default withStyles(styles)(FormTitle)

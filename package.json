@@ -6,6 +6,7 @@
   "dependencies": {
     "@material-ui/core": "^3.8.1",
     "@material-ui/icons": "^3.0.1",
+    "classnames": "^2.2.6",
     "i18next": "^13.1.2",
     "i18next-browser-languagedetector": "^2.2.4",
     "normalizr": "^3.3.0",
@@ -38,7 +39,7 @@
     "build": "react-scripts build",
     "fake": "react-scripts test",
     "test": "npm run fake -- FakeTest",
-    "lint": "node_modules/eslint/bin/eslint.js ./src --ext .js --ext .jsx",
+    "lint": "eslint ./src --ext .js --ext .jsx",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"

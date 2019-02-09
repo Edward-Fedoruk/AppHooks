@@ -1,13 +1,13 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
-import OutlinedInput from '@material-ui/core/OutlinedInput'
-import InputLabel from '@material-ui/core/InputLabel'
-import MenuItem from '@material-ui/core/MenuItem'
-import FormControl from '@material-ui/core/FormControl'
-import Select from '@material-ui/core/Select'
-import FormHelperText from '@material-ui/core/FormHelperText'
+import React from "react"
+import ReactDOM from "react-dom"
+import PropTypes from "prop-types"
+import { withStyles } from "@material-ui/core/styles"
+import OutlinedInput from "@material-ui/core/OutlinedInput"
+import InputLabel from "@material-ui/core/InputLabel"
+import MenuItem from "@material-ui/core/MenuItem"
+import FormControl from "@material-ui/core/FormControl"
+import Select from "@material-ui/core/Select"
+import FormHelperText from "@material-ui/core/FormHelperText"
 
 const styles = theme => ({
   formControl: {
@@ -28,21 +28,21 @@ class SelectInput extends React.Component {
   }
 
   render() {
-    const { 
+    const {
       classes, options, name,
-      styles, handleChange, option,       
-      error, errText
+      styles, handleChange, option,
+      error, errText,
     } = this.props
 
     return (
-      <FormControl 
-        variant="outlined" 
+      <FormControl
+        variant="outlined"
         className={classes.formControl}
         style={styles}
         error={error}
       >
         <InputLabel
-          ref={ref => {
+          ref={(ref) => {
             this.InputLabelRef = ref
           }}
           htmlFor={`outlined-${name}`}
@@ -52,13 +52,13 @@ class SelectInput extends React.Component {
         <Select
           value={option}
           onChange={handleChange}
-          input={
+          input={(
             <OutlinedInput
               labelWidth={this.state.labelWidth}
               name={name}
               id={`outlined-${name}`}
             />
-          }
+          )}
         >
           <MenuItem value="">
             <em>None</em>
@@ -69,8 +69,8 @@ class SelectInput extends React.Component {
             </MenuItem>
           ))}
         </Select>
-        {error &&
-          <FormHelperText>{ errText }</FormHelperText>}
+        {error
+          && <FormHelperText>{ errText }</FormHelperText>}
       </FormControl>
     )
   }

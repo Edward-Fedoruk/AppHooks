@@ -1,13 +1,13 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { withStyles } from '@material-ui/core/styles'
-import Drawer from '@material-ui/core/Drawer'
-import LeftPanel from './LeftPanel'
-import RightPanel from './RightPanel'
-import { toggleNavBar } from '../../actions/ui'
-import { fetchUserSettings } from '../../actions/user'
-import withWidth from '@material-ui/core/withWidth'
+import React, { Component } from "react"
+import PropTypes from "prop-types"
+import { connect } from "react-redux"
+import { withStyles } from "@material-ui/core/styles"
+import Drawer from "@material-ui/core/Drawer"
+import withWidth from "@material-ui/core/withWidth"
+import LeftPanel from "./LeftPanel"
+import RightPanel from "./RightPanel"
+import { toggleNavBar } from "../../actions/ui"
+import { fetchUserSettings } from "../../actions/user"
 
 const styles = ({ transitions, breakpoints }) => ({
   drawerPaper: {
@@ -30,9 +30,9 @@ const styles = ({ transitions, breakpoints }) => ({
     width: "23vw",
     maxWidth: "306px",
     minWidth: "250px",
-    
+
     [breakpoints.down(960)]: {
-      zIndex: "0"
+      zIndex: "0",
     },
   },
 
@@ -40,7 +40,6 @@ const styles = ({ transitions, breakpoints }) => ({
 })
 
 class AppNavigation extends Component {
-
   static propTypes = {
     classes: PropTypes.object.isRequired,
   }
@@ -54,21 +53,23 @@ class AppNavigation extends Component {
   }
 
   render() {
-    const { classes, open, toggleNavBar, width } = this.props
+    const {
+      classes, open, toggleNavBar, width,
+    } = this.props
     console.log(width)
     const downMd = width === "sm" || width === "xs"
     return (
       <div>
         {width !== "xs" && <LeftPanel />}
         <Drawer
-          variant={ downMd ? "temporary" : "permanent" }
+          variant={downMd ? "temporary" : "permanent"}
           className={classes.drawer}
           open={open}
           onClose={toggleNavBar}
           classes={{
             paper: classes.drawerPaper,
           }}
-          anchor="left" 
+          anchor="left"
         >
           <RightPanel />
         </Drawer>
@@ -78,12 +79,12 @@ class AppNavigation extends Component {
 }
 
 const mapStateToProps = ({ view }) => ({
-  open: view.open, 
+  open: view.open,
 })
 
 const mapDispatchToProps = {
   toggleNavBar,
-  fetchUserSettings
+  fetchUserSettings,
 }
 
 export default withWidth()(withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(AppNavigation)))

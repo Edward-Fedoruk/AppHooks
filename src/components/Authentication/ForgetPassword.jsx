@@ -1,17 +1,17 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import withBackground from './withBackground'
-import { withStyles } from '@material-ui/core/styles'
-import Paper from '@material-ui/core/Paper'
-import Typography from '@material-ui/core/Typography'
-import { paperStyles, titleStyles } from './formStyles'
-import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator'
-import SubmitButton from './SubmitButton'
-import { connect } from 'react-redux'
-import { reSendEmail } from '../../actions/auth'
-import ErrorSnackbar from './ErrorSnackbar'
-import { compose } from 'redux'
-import { withRouter } from 'react-router'
+import React from "react"
+import PropTypes from "prop-types"
+import { withStyles } from "@material-ui/core/styles"
+import Paper from "@material-ui/core/Paper"
+import Typography from "@material-ui/core/Typography"
+import { ValidatorForm, TextValidator } from "react-material-ui-form-validator"
+import { connect } from "react-redux"
+import { compose } from "redux"
+import { withRouter } from "react-router"
+import { paperStyles, titleStyles } from "./formStyles"
+import SubmitButton from "./SubmitButton"
+import { reSendEmail } from "../../actions/auth"
+import ErrorSnackbar from "./ErrorSnackbar"
+import withBackground from "./withBackground"
 
 const styles = ({ breakpoints }) => ({
   paper: {
@@ -23,8 +23,8 @@ const styles = ({ breakpoints }) => ({
     [breakpoints.down(500)]: {
       width: "90%",
       padding: "36px 15px",
-      alignSelf: "center",  
-    }
+      alignSelf: "center",
+    },
   },
 
   title: {
@@ -33,30 +33,30 @@ const styles = ({ breakpoints }) => ({
 
   p: {
     fontSize: "12px",
-    color: "#7C7D81"
+    color: "#7C7D81",
   },
 
   textField: {
     width: "100%",
-    marginTop: "40px"
-  }
+    marginTop: "40px",
+  },
 
 })
 
 class ForgetPassword extends React.Component {
   state = {
-    email: ""
+    email: "",
   }
 
   static propTypes = {
-    reSendEmail: PropTypes.func.isRequired
+    reSendEmail: PropTypes.func.isRequired,
   }
 
   onChange = input => e => this.setState({ [input]: e.target.value })
-  handleBlur = event => 
-    this.refs[event.target.name].validate(event.target.value)
-  
-  onSubmit = e => {
+
+  handleBlur = event => this.refs[event.target.name].validate(event.target.value)
+
+  onSubmit = (e) => {
     e.preventDefault()
     console.log(this.props, this.props.history)
     this.props.reSendEmail(this.state, this.props.history)
@@ -87,17 +87,17 @@ class ForgetPassword extends React.Component {
             ref="email"
             autoFocus
             placeholder="e.g., carl@cloud.ci"
-            onChange={this.onChange('email')}
+            onChange={this.onChange("email")}
             onBlur={this.handleBlur}
             className={classes.textField}
             value={this.state.email}
             margin="normal"
-            validators={['required', 'isEmail']}
-            errorMessages={['this field is required', 'email is not valid']}
+            validators={["required", "isEmail"]}
+            errorMessages={["this field is required", "email is not valid"]}
           />
 
           <SubmitButton
-            text={"Send reset instructions"}
+            text="Send reset instructions"
           />
         </ValidatorForm>
       </Paper>
@@ -106,7 +106,7 @@ class ForgetPassword extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  reSendEmail: (email, routeHistory) => dispatch(reSendEmail(email, routeHistory))
+  reSendEmail: (email, routeHistory) => dispatch(reSendEmail(email, routeHistory)),
 })
 
 const mapStateToProps = ({ authentication }) => ({
@@ -114,7 +114,7 @@ const mapStateToProps = ({ authentication }) => ({
   resendErrorMessage: authentication.resendErrorMessage,
 })
 
-export default compose( 
+export default compose(
   withBackground,
   withStyles(styles),
   withRouter,

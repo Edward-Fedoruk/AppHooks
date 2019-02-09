@@ -12,13 +12,13 @@ const styles = ({ breakpoints }) => ({
     marginRight: "5px",
 
     [breakpoints.down(425)]: {
-      paddingLeft: "24px"
+      paddingLeft: "24px",
     },
   },
 
   headerWrap: {
     display: "flex",
-    alignItems: "center"
+    alignItems: "center",
   },
 })
 
@@ -28,7 +28,7 @@ const FormTitle = ({ classes, children, toggleForm }) => (
       { children }
     </Typography>
     <IconButton onClick={toggleForm}>
-      <Create/>
+      <Create />
     </IconButton>
   </div>
 )
@@ -37,7 +37,7 @@ const FormTitle = ({ classes, children, toggleForm }) => (
 FormTitle.propTypes = {
   classes: PropTypes.object.isRequired,
   children: PropTypes.string.isRequired,
-  toggleForm: PropTypes.func.isRequired
+  toggleForm: PropTypes.func.isRequired,
 }
 
 export default withStyles(styles)(FormTitle)

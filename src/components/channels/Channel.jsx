@@ -1,28 +1,28 @@
-import React, { Component, Fragment } from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { withStyles } from '@material-ui/core'
-import withNavigation from '../withNavigation'
-import Title from '../Title'
-import { fetchChannel } from '../../actions/channel'
+import React, { Component, Fragment } from "react"
+import PropTypes from "prop-types"
+import { connect } from "react-redux"
+import { withStyles } from "@material-ui/core"
 import { withRouter } from "react-router"
-import ConfirmDialog from '../ConfirmDialog'
-import { compose } from 'redux'
-import StageTopBar from '../stages/StageTopBar'
-import Endpoints from '../endpoints/Endpoints'
-import Placeholder from '../Placeholder'
-import stageImg from '../../assets/stages.png'
-import endpointImg from '../../assets/endpoints.png'
+import { compose } from "redux"
+import withNavigation from "../withNavigation"
+import Title from "../Title"
+import { fetchChannel } from "../../actions/channel"
+import ConfirmDialog from "../ConfirmDialog"
+import StageTopBar from "../stages/StageTopBar"
+import Endpoints from "../endpoints/Endpoints"
+import Placeholder from "../Placeholder"
+import stageImg from "../../assets/stages.png"
+import endpointImg from "../../assets/endpoints.png"
 
 const styles = () => ({
   contentWrap: {
-    padding: "25px 35px"
+    padding: "25px 35px",
   },
 
   placeholder: {
     margin: "100px auto 0 auto",
-    width: "550px"
-  }
+    width: "550px",
+  },
 })
 
 export class Channel extends Component {
@@ -32,9 +32,9 @@ export class Channel extends Component {
 
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    currentStage: PropTypes.object, 
+    currentStage: PropTypes.object,
     endpoints: PropTypes.array,
-    stages: PropTypes.array
+    stages: PropTypes.array,
   }
 
   handleCloseWithAction = () => {
@@ -54,36 +54,44 @@ export class Channel extends Component {
   }
 
   render() {
-    const { classes, currentStage, endpoints, stages } = this.props
+    const {
+      classes, currentStage, endpoints, stages,
+    } = this.props
     return (
       <Fragment>
         <StageTopBar />
         <div className={classes.contentWrap}>
-          
-          {stages.length 
-            ? <Title styles={{fontWeight: "normal"}}>
+
+          {stages.length
+            ? (
+              <Title styles={{ fontWeight: "normal" }}>
                 {currentStage !== undefined && currentStage.name}
               </Title>
-            : <Placeholder
+            )
+            : (
+              <Placeholder
                 title="There is no Endpoint here yet."
                 subtitle="To create new Endpoint"
                 button="click here"
                 imgSrc={stageImg}
                 className={classes.placeholder}
-              />}
+              />
+            )}
 
-          {endpoints.length 
-            ? <Endpoints endpoints={endpoints} /> 
-            : stages.length ? <Placeholder
+          {endpoints.length
+            ? <Endpoints endpoints={endpoints} />
+            : stages.length ? (
+              <Placeholder
                 title="There is no Endpoint here yet."
                 subtitle="To create new Endpoint"
                 button="click here"
                 imgSrc={endpointImg}
                 className={classes.placeholder}
-              /> : null}
-          
+              />
+            ) : null}
 
-          <ConfirmDialog 
+
+          <ConfirmDialog
             handleCloseWithAction={this.handleCloseWithAction}
             handleClose={this.handleClose}
             open={this.state.open}
@@ -99,17 +107,16 @@ const mapStateToProps = ({ channels, channelsEntities: { entities }, view }) => 
   const stages = channels.currentChannel.stageIds.map(id => entities.stages[id])
   const currentStage = stages[view.currentStage]
   let endpoints = []
-  if(currentStage !== undefined) 
-    endpoints = currentStage.endpoints.map(id => entities.endpoints[id])
-  
+  if (currentStage !== undefined) { endpoints = currentStage.endpoints.map(id => entities.endpoints[id]) }
+
   return { currentStage, endpoints, stages }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  fetchChannel: (id, routeHistory) => dispatch(fetchChannel(id, routeHistory))
+const mapDispatchToProps = dispatch => ({
+  fetchChannel: (id, routeHistory) => dispatch(fetchChannel(id, routeHistory)),
 })
 
-export default compose( 
+export default compose(
   withNavigation,
   withStyles(styles),
   withRouter,

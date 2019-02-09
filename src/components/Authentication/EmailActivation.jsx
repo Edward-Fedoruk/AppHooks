@@ -1,14 +1,14 @@
-import React from 'react'
-import withBackground from './withBackground'
-import { withStyles } from '@material-ui/core/styles'
-import Paper from '@material-ui/core/Paper'
-import Typography from '@material-ui/core/Typography'
-import PropTypes from 'prop-types'
-import { paperStyles, titleStyles } from './formStyles'
-import { withRouter } from "react-router"
-import { connect } from 'react-redux'
-import { compose } from 'redux'
-import { reSendEmail } from '../../actions/auth'
+import React from "react"
+import { withStyles } from "@material-ui/core/styles"
+import Paper from "@material-ui/core/Paper"
+import Typography from "@material-ui/core/Typography"
+import PropTypes from "prop-types"
+import { withRouter } from "react-router-dom"
+import { connect } from "react-redux"
+import { compose } from "redux"
+import { paperStyles, titleStyles } from "./formStyles"
+import withBackground from "./withBackground"
+import { reSendEmail } from "../../actions/auth"
 
 
 const styles = ({ breakpoints }) => ({
@@ -18,12 +18,12 @@ const styles = ({ breakpoints }) => ({
     [breakpoints.down(500)]: {
       width: "90%",
       padding: "36px 15px",
-      alignSelf: "center",  
-    }
+      alignSelf: "center",
+    },
   },
 
   title: {
-    ...titleStyles
+    ...titleStyles,
   },
 
   p: {
@@ -31,7 +31,7 @@ const styles = ({ breakpoints }) => ({
     fontSize: "16px",
     color: "#5A5B5F",
     lineHeight: "23px",
-    marginTop: "15px"
+    marginTop: "15px",
   },
 
   link: {
@@ -39,14 +39,13 @@ const styles = ({ breakpoints }) => ({
     cursor: "pointer",
     textDecoration: "underline",
     "&:active": {
-      color: "rgb(255, 0, 0)"
+      color: "rgb(255, 0, 0)",
     },
   },
 
 })
 
- const EmailActivation = ({ classes, location, reSendEmail }) => {
-
+const EmailActivation = ({ classes, location, reSendEmail }) => {
   const resend = () => reSendEmail({ email: location.state.userData.userEmail })
 
   return (
@@ -56,24 +55,30 @@ const styles = ({ breakpoints }) => ({
         Thank you for registration!
       </Typography>
       <Typography className={classes.p}>
-        We’ve sent a verification email to { location.state.userData.userEmail }. 
+        We’ve sent a verification email to
+        {" "}
+        { location.state.userData.userEmail }
+.
          Please use the link provided in the email to activate
         and start using your AppHooks account.
       </Typography>
       <Typography className={classes.p}>
-        You can <span className={classes.link} onClick={resend}>re-send a verification mail.</span>
+        You can
+        {" "}
+        <span className={classes.link} onClick={resend}>re-send a verification mail.</span>
       </Typography>
     </Paper>
-  ) 
+  )
 }
 
 EmailActivation.propTypes = {
   reSendEmail: PropTypes.func.isRequired,
-  location: PropTypes.object.isRequired
+  location: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 }
 
 const mapDispatchToProps = dispatch => ({
-  reSendEmail: email => dispatch(reSendEmail(email))
+  reSendEmail: email => dispatch(reSendEmail(email)),
 })
 
 export default compose(

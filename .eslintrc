@@ -34,6 +34,9 @@
     "react/forbid-prop-types": [false],
     "react/jsx-closing-bracket-location": [false],
     "import/no-named-as-default": 0,
-    "jsx-a11y/no-autofocus": 0
+    "jsx-a11y/no-autofocus": 0,
+    "quotes": ["error", "double"],
+    "no-shadow": "off",
+    "react/destructuring-assignment": ["always", { "ignoreClassFields": true }]
   }
 }

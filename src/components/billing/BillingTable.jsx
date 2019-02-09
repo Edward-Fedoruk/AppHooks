@@ -2,12 +2,12 @@ import React, { Component } from "react"
 import { withStyles } from "@material-ui/core/styles"
 import Paper from "@material-ui/core/Paper"
 import Slider from "react-slick"
-import BillingTableMenu from "./BillingTableMenu"
-import BillingTablePlan from "./BillingTablePlan"
-import slickSettings from "./slickSettings"
 import PropTypes from "prop-types"
 import { connect } from "react-redux"
 import { compose } from "redux"
+import BillingTableMenu from "./BillingTableMenu"
+import BillingTablePlan from "./BillingTablePlan"
+import slickSettings from "./slickSettings"
 
 const styles = () => ({
   tableWrap: {
@@ -16,17 +16,17 @@ const styles = () => ({
     width: "100%",
     maxWidth: "924px",
     overflow: "hidden",
-    margin: "auto"
+    margin: "auto",
   },
 })
 
 export class BillingTable extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    package: PropTypes.string
+    package: PropTypes.string,
   }
 
-  checkActive = plan => plan.toLowerCase() === this.props.userPackage.toLowerCase() 
+  checkActive = plan => plan.toLowerCase() === this.props.userPackage.toLowerCase()
 
   render() {
     const { classes, userPackage } = this.props
@@ -36,7 +36,7 @@ export class BillingTable extends Component {
         <BillingTableMenu />
         <Slider {...slickSettings}>
 
-          <BillingTablePlan 
+          <BillingTablePlan
             planName="Sandbox"
             price={0}
             concurrent={100}
@@ -47,7 +47,7 @@ export class BillingTable extends Component {
             channels
             active={this.checkActive("sandbox")}
           />
-          <BillingTablePlan 
+          <BillingTablePlan
             planName="Startup"
             price={49}
             concurrent={200}
@@ -55,10 +55,10 @@ export class BillingTable extends Component {
             support="Limited"
             monitoring={false}
             ssl={false}
-            channels 
+            channels
             active={this.checkActive("Startup")}
           />
-          <BillingTablePlan 
+          <BillingTablePlan
             planName="Pro"
             price={100}
             concurrent={500}
@@ -69,7 +69,7 @@ export class BillingTable extends Component {
             channels
             active={this.checkActive("pro")}
           />
-          <BillingTablePlan 
+          <BillingTablePlan
             planName="Business"
             price={200}
             concurrent={800}
@@ -78,9 +78,9 @@ export class BillingTable extends Component {
             monitoring
             ssl
             channels
-            active={this.checkActive("Business")}            
+            active={this.checkActive("Business")}
           />
-          <BillingTablePlan 
+          <BillingTablePlan
             planName="Enterpirse"
             price={300}
             concurrent={1000}
@@ -89,7 +89,7 @@ export class BillingTable extends Component {
             monitoring
             ssl
             channels
-            active={this.checkActive("Enterpirse")}            
+            active={this.checkActive("Enterpirse")}
           />
         </Slider>
       </Paper>
@@ -98,7 +98,7 @@ export class BillingTable extends Component {
 }
 
 const mapStateToProps = ({ userSettings }) => ({
-  userPackage: userSettings.settings.package
+  userPackage: userSettings.settings.package,
 })
 
 export default compose(

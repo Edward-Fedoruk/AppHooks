@@ -1,17 +1,17 @@
 import React, { Component } from "react"
-import withBackground from "./withBackground" 
 import { withStyles } from "@material-ui/core/styles"
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator"
 import Paper from "@material-ui/core/Paper"
 import Typography from "@material-ui/core/Typography"
 import { Link } from "react-router-dom"
 import { compose } from "redux"
+import { connect } from "react-redux"
+import { withRouter } from "react-router"
 import SocialAuthentication from "./SocialAuthentication"
 import FormTitle from "./FormTitle"
 import SubmitButton from "./SubmitButton"
-import { connect } from "react-redux"
 import { logIn } from "../../actions/auth"
-import { withRouter } from "react-router"
+import withBackground from "./withBackground"
 import ErrorSnackbar from "./ErrorSnackbar"
 
 const flexCenter = {
@@ -29,7 +29,7 @@ const styles = ({ breakpoints, spacing }) => ({
     padding: "34px 34px 27px 34px",
     marginTop: "7%",
     boxShadow: "2px 4px 50px rgba(0, 0, 0, 0.25)",
-    
+
     [breakpoints.down(500)]: {
       width: "100%",
       minWidth: "100%",
@@ -43,18 +43,18 @@ const styles = ({ breakpoints, spacing }) => ({
 
   textField: {
     width: "100%",
-    marginTop: "20px"
+    marginTop: "20px",
   },
 
   remindLink: {
     textAlign: "right",
-    marginTop: "10px"
+    marginTop: "10px",
   },
 
   signLink: {
     textAlign: "center",
     marginTop: "34px",
-    color: "#7C7D81"
+    color: "#7C7D81",
   },
 })
 
@@ -65,16 +65,17 @@ class LogIn extends Component {
   }
 
   onSuccess = response => console.log(response)
+
   onFailure = response => console.error(response)
 
-  onSubmit = e => {
+  onSubmit = (e) => {
     e.preventDefault()
     this.props.logIn(this.state, this.props.history)
   }
 
   onChange = input => e => this.setState({ [input]: e.target.value })
-  handleBlur = event => 
-    this.refs[event.target.name].validate(event.target.value)
+
+  handleBlur = event => this.refs[event.target.name].validate(event.target.value)
 
   render() {
     const { classes, logInError, logInErrorMessage } = this.props
@@ -86,14 +87,14 @@ class LogIn extends Component {
           message={logInErrorMessage}
         />
 
-        <SocialAuthentication 
+        <SocialAuthentication
           onSuccess={this.onSuccess}
           onFailure={this.onFailure}
-          text={"Log in"}
+          text="Log in"
         />
 
-        <FormTitle 
-          text={"or login with email"}
+        <FormTitle
+          text="or login with email"
         />
 
         <ValidatorForm onSubmit={this.onSubmit} instantValidate={false}>
@@ -114,7 +115,7 @@ class LogIn extends Component {
             errorMessages={["this field is required", "email is not valid"]}
           />
 
-          <TextValidator 
+          <TextValidator
             variant="outlined"
             error={logInError}
             label="Your password"
@@ -132,17 +133,17 @@ class LogIn extends Component {
           />
 
           <Typography className={classes.remindLink}>
-            <Link style={{color: "blue"}} to="/password">
+            <Link style={{ color: "blue" }} to="/password">
               Forgot password?
             </Link>
           </Typography>
 
-          <SubmitButton text={"Log in"} />
+          <SubmitButton text="Log in" />
 
           <Typography className={classes.signLink}>
-            Don"t have an account? 
-            <span> </span>
-            <Link style={{color: "blue"}} to="/signup">
+            Don"t have an account?
+            <span />
+            <Link style={{ color: "blue" }} to="/signup">
               Sign Up
             </Link>
           </Typography>
@@ -159,7 +160,7 @@ const mapStateToProps = ({ authentication, view }) => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  logIn: (userData, routeHistory) => dispatch(logIn(userData, routeHistory))
+  logIn: (userData, routeHistory) => dispatch(logIn(userData, routeHistory)),
 })
 
 

@@ -1,31 +1,37 @@
-import React, { Component } from 'react'
+import React, { Component } from "react"
 import TablePagination from "@material-ui/core/TablePagination"
 import Paper from "@material-ui/core/Paper"
 import { withStyles } from "@material-ui/core"
 import withWidth from "@material-ui/core/withWidth"
+import PropTypes from "prop-types"
 
-const styles = ({ spacing }) => ({
+const styles = () => ({
   root: {
     width: "100%",
     maxWidth: "1050px",
     marginRight: "auto",
     marginLeft: "auto",
-  }
+  },
 })
 
-export default () => WrappedComponent => {
+export default () => (WrappedComponent) => {
   class hocComponent extends Component {
     state = {
       page: 0,
       rowsPerPage: 5,
     }
 
+    static propTypes = {
+      classes: PropTypes.object.isRequired,
+      data: PropTypes.object.isRequired,
+      width: PropTypes.string.isRequired,
+    }
 
     handleChangePage = (event, page) => {
       this.setState({ page })
     }
-  
-    handleChangeRowsPerPage = event => {
+
+    handleChangeRowsPerPage = (event) => {
       this.setState({ rowsPerPage: event.target.value })
     }
 
@@ -36,7 +42,7 @@ export default () => WrappedComponent => {
       const showSelect = width !== "xs" ? [5, 10, 25] : []
       return (
         <Paper elevation={0} className={classes.root}>
-          <WrappedComponent 
+          <WrappedComponent
             emptyRows={emptyRows}
             rowsPerPage={rowsPerPage}
             page={page}

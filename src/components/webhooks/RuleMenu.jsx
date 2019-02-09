@@ -8,12 +8,12 @@ import Typography from "@material-ui/core/Typography"
 import ListAlt from "@material-ui/icons/ListAlt"
 import MenuItem from "@material-ui/core/MenuItem"
 import DeleteIcon from "@material-ui/icons/Delete"
-import ConfirmDialog from "../ConfirmDialog"
 import { withStyles } from "@material-ui/core"
-import { fetchRule, deleteRule } from "../../actions/rules"
 import { connect } from "react-redux"
 import { compose } from "redux"
 import { withRouter } from "react-router-dom"
+import { fetchRule, deleteRule } from "../../actions/rules"
+import ConfirmDialog from "../ConfirmDialog"
 
 const styles = () => ({
   menu: {
@@ -21,7 +21,7 @@ const styles = () => ({
   },
 
   select: {
-    marginRight: "20px"
+    marginRight: "20px",
   },
 
   deleteIcon: {
@@ -35,13 +35,13 @@ const styles = () => ({
     cursor: "pointer",
   },
 
-  cancel: {color: "#A6AFD5"},
-  check: {color: "#35C1CE"},
-  
-}) 
+  cancel: { color: "#A6AFD5" },
+  check: { color: "#35C1CE" },
+
+})
 
 
-class RuleMenu extends Component { 
+class RuleMenu extends Component {
   state = {
     openDialog: false,
     open: -1,
@@ -50,33 +50,44 @@ class RuleMenu extends Component {
 
   static propTypes = {
     classes: PropTypes.object.isRequired,
-  }  
-
-  toggleDialog = () => 
-    this.setState(state => ({ openDialog: !state.openDialog }))
-  
-
-  handleCloseWithAction = () => {
-    this.toggleDialog()
-    this.props.deleteLogs([this.props.id])
+    id: PropTypes.number.isRequired,
+    deleteLogs: PropTypes.func.isRequired,
+    fetchRule: PropTypes.func.isRequired,
+    deleteRule: PropTypes.func.isRequired,
   }
 
-  handleMenuClick = event => {
-    this.setState({ 
+  toggleDialog = () => this.setState(state => ({ openDialog: !state.openDialog }))
+
+
+  handleCloseWithAction = () => {
+    const { id, deleteLogs } = this.props
+    this.toggleDialog()
+    deleteLogs([id])
+  }
+
+  handleMenuClick = (event) => {
+    this.setState({
       open: event.currentTarget.id,
-      anchorEl: event.currentTarget
+      anchorEl: event.currentTarget,
     })
   }
 
-  fetchRule = () => this.props.fetchRule(this.props.id)
-  deleteRule = () => this.props.deleteRule(this.props.id)
-  
+  fetchRule = () => {
+    const { id, fetchRule } = this.props
+    fetchRule(id)
+  }
+
+  deleteRule = () => {
+    const { id, deleteRule } = this.props
+    deleteRule(id)
+  }
+
   handleClose = () => {
     this.setState({ open: -1, anchorEl: null })
   }
-  
+
   render() {
-    const { classes, id, fetchRule } = this.props
+    const { classes, id } = this.props
     const { openDialog, open, anchorEl } = this.state
 
     return (
@@ -90,7 +101,7 @@ class RuleMenu extends Component {
           <MoreVertIcon />
         </IconButton>
 
-        <ConfirmDialog 
+        <ConfirmDialog
           open={openDialog}
           handleClose={this.toggleDialog}
           handleCloseWithAction={this.handleCloseWithAction}
@@ -108,18 +119,14 @@ class RuleMenu extends Component {
             <ListItemIcon>
               <ListAlt />
             </ListItemIcon>
-            <Typography noWrap color="primary">
-              edit
-            </Typography>
+            <Typography noWrap color="primary">edit</Typography>
           </MenuItem>
 
           <MenuItem onClick={this.deleteRule}>
             <ListItemIcon>
               <DeleteIcon className={classes.deleteIcon} />
             </ListItemIcon>
-            <Typography className={classes.delete} noWrap>
-              Delete
-            </Typography>
+            <Typography className={classes.delete} noWrap>Delete</Typography>
           </MenuItem>
         </Menu>
       </div>
@@ -129,7 +136,7 @@ class RuleMenu extends Component {
 
 const mapDispatchToProps = dispatch => ({
   fetchRule: id => dispatch(fetchRule(id)),
-  deleteRule: id => dispatch(deleteRule(id))
+  deleteRule: id => dispatch(deleteRule(id)),
 })
 
 export default compose(

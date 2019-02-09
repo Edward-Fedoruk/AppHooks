@@ -12,8 +12,8 @@ import { withStyles } from "@material-ui/core/styles"
 import Grid from "@material-ui/core/Grid"
 import Input from "@material-ui/core/Input"
 import Reply from "@material-ui/icons/Reply"
-import { deleteLogs } from "../../actions/requestLogs"
 import { connect } from "react-redux"
+import { deleteLogs } from "../../actions/requestLogs"
 import ConfirmDialog from "../ConfirmDialog"
 
 const toolbarStyles = theme => ({
@@ -23,46 +23,52 @@ const toolbarStyles = theme => ({
   highlight:
     theme.palette.type === "light"
       ? {
-          color: theme.palette.secondary.main,
-          backgroundColor: lighten(theme.palette.secondary.light, 0.85),
-        }
+        color: theme.palette.secondary.main,
+        backgroundColor: lighten(theme.palette.secondary.light, 0.85),
+      }
       : {
-          color: theme.palette.text.primary,
-          backgroundColor: theme.palette.secondary.dark,
-        },
+        color: theme.palette.text.primary,
+        backgroundColor: theme.palette.secondary.dark,
+      },
   spacer: {
     flex: "1 1 100%",
   },
   actions: {
     color: theme.palette.text.secondary,
-    minWidth: "max-content"
+    minWidth: "max-content",
   },
   title: {
     flex: "0 0 auto",
   },
 })
 
-const EnhancedTableToolbar = ({ selected, classes, deleteLogs, openDialog, toggleDialog, handleCloseWithAction }) => (
+const EnhancedTableToolbar = ({
+  selected, classes, deleteLogs, openDialog, toggleDialog, handleCloseWithAction,
+}) => (
   <Toolbar
     className={classNames(classes.root, {
       [classes.highlight]: selected.length > 0,
     })}
   >
-    <ConfirmDialog 
+    <ConfirmDialog
       open={openDialog}
       handleClose={toggleDialog}
       handleCloseWithAction={() => handleCloseWithAction(selected)}
     />
     <div className={classes.title}>
-      {selected.length > 0 &&
+      {selected.length > 0
+        && (
         <Typography color="inherit" variant="subtitle1">
-          {selected.length} selected
-        </Typography>}
+          {selected.length}
+          {" "}
+selected
+        </Typography>
+        )}
     </div>
     <div className={classes.spacer} />
     <div className={classes.actions}>
       {selected.length > 0 ? (
-        <Fragment>  
+        <Fragment>
           <Tooltip title="Export to CVS">
             <IconButton aria-label="Export to CVS">
               <Reply />
@@ -82,7 +88,7 @@ const EnhancedTableToolbar = ({ selected, classes, deleteLogs, openDialog, toggl
               <Input
                 defaultValue="endpoint #1"
                 className={classes.input}
-                inputProps={{"aria-label": "Description"}}
+                inputProps={{ "aria-label": "Description" }}
               />
             </Grid>
           </Grid>
@@ -99,7 +105,7 @@ EnhancedTableToolbar.propTypes = {
 }
 
 const mapDispatchToProps = dispatch => ({
-  deleteLogs: ids => dispatch(deleteLogs(ids))
+  deleteLogs: ids => dispatch(deleteLogs(ids)),
 })
 
 export default connect(null, mapDispatchToProps)(withStyles(toolbarStyles)(EnhancedTableToolbar))

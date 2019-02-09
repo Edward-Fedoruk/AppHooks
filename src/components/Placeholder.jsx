@@ -10,58 +10,72 @@ const styles = () => ({
     display: "flex",
     flexWrap: "wrap",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
 
   subtitle: {
     color: "#3049B5",
-    
-    fontSize: "15px", 
+
+    fontSize: "15px",
   },
 
   title: {
     color: "#5D6AA8",
-    
+
     fontSize: "25px",
-    fontWeight: "300"
+    fontWeight: "300",
   },
 
   textButton: {
     textDecoration: "underline",
     color: "#35C1CE",
-    
+
     cursor: "pointer",
     "&:hover": {
-      opacity: ".5"
-    }
+      opacity: ".5",
+    },
   },
 
   wrap: {
     display: "flex",
     flexWrap: "wrap",
     width: "65%",
-    marginLeft: "10px"
-  }
+    marginLeft: "10px",
+  },
 })
 
-const Placeholder = ({ classes, title, subtitle, button, className, imgSrc }) => (
+const Placeholder = ({
+  classes, title, subtitle, button, className, imgSrc,
+}) => (
   <div className={classNames(classes.placeholder, className)}>
-    <img src={imgSrc} alt="stages"/>
+    <img src={imgSrc} alt="stages" />
     <div className={classes.wrap}>
       <Typography variant="h5" className={classes.title}>{ title }</Typography>
-      <Typography variant="subtitle2" className={classes.subtitle}>{ subtitle }<span className={classes.textButton}> { button }</span></Typography>
+      <Typography variant="subtitle2" className={classes.subtitle}>
+        { subtitle }
+        <span className={classes.textButton}>
+          {" "}
+          { button }
+        </span>
+      </Typography>
     </div>
   </div>
 )
 
+Placeholder.defaultProps = {
+  title: "",
+  subtitle: "",
+  button: "",
+  className: "",
+}
 
 Placeholder.propTypes = {
-  classes: PropTypes.object,
+  classes: PropTypes.object.isRequired,
   title: PropTypes.string,
   subtitle: PropTypes.string,
   button: PropTypes.string,
   className: PropTypes.string,
-  imgSrc: PropTypes.string
+  imgSrc: PropTypes.string.isRequired,
 }
 
 export default withStyles(styles)(Placeholder)

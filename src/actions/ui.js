@@ -5,14 +5,14 @@ export const toggleNavBar = () => ({
 })
 
 export const toggleSnackbar = () => ({
-  type: types.TOGGLE_SNACKBAR
+  type: types.TOGGLE_SNACKBAR,
 })
 
 export const toggleEditForm = () => ({
-  type: types.TOGGLE_EDIT_RULE_FORM
+  type: types.TOGGLE_EDIT_RULE_FORM,
 })
 
-export const changeStage = (stage) => ({
+export const changeStage = stage => ({
   type: types.CHANGE_STAGE,
-  stage
+  stage,
 })

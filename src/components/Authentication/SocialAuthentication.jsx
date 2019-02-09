@@ -1,10 +1,10 @@
-import React from 'react'
-import GitHubLogin from 'react-github-login'
-import GoogleLogin from 'react-google-login'
-import { ReactComponent as GitHub} from "../../assets/GitHub.svg"
-import { ReactComponent as Google} from "../../assets/Google.svg"
-import { withStyles } from '@material-ui/core/styles'
-import PropTypes from 'prop-types'
+import React from "react"
+import GitHubLogin from "react-github-login"
+import GoogleLogin from "react-google-login"
+import { withStyles } from "@material-ui/core/styles"
+import PropTypes from "prop-types"
+import { ReactComponent as GitHub } from "../../assets/GitHub.svg"
+import { ReactComponent as Google } from "../../assets/Google.svg"
 
 const flexCenter = {
   display: "flex",
@@ -23,7 +23,7 @@ const externalLogBtn = {
   fontFamily: "Roboto",
   fontSize: "16px",
   textTransform: "uppercase",
-  fontWeight: "500"
+  fontWeight: "500",
 }
 
 const styles = () => ({
@@ -35,8 +35,8 @@ const styles = () => ({
 
     "&:focus": {
       border: "none",
-      outline: "none"
-    } 
+      outline: "none",
+    },
   },
 
   googleBtn: {
@@ -46,27 +46,31 @@ const styles = () => ({
     color: "#fff !important",
     fontSize: "16px !important",
     background: "linear-gradient(180deg, #00A1F1 0%, #4285F4 100%)",
-    marginBottom: "40px"
+    marginBottom: "40px",
   },
 
   buttonsIcon: {
-    marginRight: "10px"
+    marginRight: "10px",
   },
 })
 
-const SocialAuthentication = ({ classes, onSuccess, onFailure, text }) => (
+const SocialAuthentication = ({
+  classes, onSuccess, onFailure, text,
+}) => (
   <React.Fragment>
-    <GitHubLogin 
+    <GitHubLogin
       className={classes.gitHubBtn}
       onSuccess={onSuccess}
       onFailure={onFailure}
       clientId="ece43ff6f0052f0666c4"
     >
-      <GitHub className={classes.buttonsIcon}/>
-      { text } with github
+      <GitHub className={classes.buttonsIcon} />
+      { text }
+      {" "}
+with github
     </GitHubLogin>
 
-    <GoogleLogin 
+    <GoogleLogin
       className={classes.googleBtn}
       icon={false}
       disabledStyle={{}}
@@ -76,17 +80,19 @@ const SocialAuthentication = ({ classes, onSuccess, onFailure, text }) => (
       clientId="618395372364-bfhsfau7jtp6tocvjim89je1o98r6ve0.apps.googleusercontent.com"
     >
       <div className={classes.flexCenter}>
-        <Google className={classes.buttonsIcon}/>
-        { text } with Google
+        <Google className={classes.buttonsIcon} />
+        { text }
+        {" "}
+with Google
       </div>
     </GoogleLogin>
   </React.Fragment>
 )
 
 SocialAuthentication.propTypes = {
-  onSuccess: PropTypes.func.isRequired, 
+  onSuccess: PropTypes.func.isRequired,
   onFailure: PropTypes.func.isRequired,
-  text: PropTypes.string.isRequired
+  text: PropTypes.string.isRequired,
 }
 
 export default withStyles(styles)(SocialAuthentication)

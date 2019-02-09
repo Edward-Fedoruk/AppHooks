@@ -6,7 +6,7 @@ import { withStyles } from "@material-ui/core"
 import MainButton from "../MainButton"
 
 const styles = ({ breakpoints }) => ({
-  btnGroup: { 
+  btnGroup: {
     position: "absolute",
     bottom: "-60px",
 
@@ -14,43 +14,41 @@ const styles = ({ breakpoints }) => ({
       paddingLeft: "15px",
       height: "60px",
       width: "100%",
-      backgroundColor: "#fff"
+      backgroundColor: "#fff",
     },
   },
 
-  cancel: { 
+  cancel: {
     textTransform: "capitalize",
-    marginRight: "15px"
+    marginRight: "15px",
   },
 })
 
-const PopUpButtons = ({ classes, show, toggleForm }) => {
-  return (
-    <div style={{ display: !show && "none" }} className={classes.btnGroup}>
-      <Grow
-        in={show}
-        style={{ transformOrigin: '0 0 0' }}
+const PopUpButtons = ({ classes, show, toggleForm }) => (
+  <div style={{ display: !show && "none" }} className={classes.btnGroup}>
+    <Grow
+      in={show}
+      style={{ transformOrigin: "0 0 0" }}
+    >
+      <Button
+        variant="outlined"
+        color="secondary"
+        size="medium"
+        className={classes.cancel}
+        onClick={toggleForm}
       >
-        <Button
-          variant="outlined"
-          color="secondary"
-          size="medium"
-          className={classes.cancel}
-          onClick={toggleForm}
-        >
           cancel
-        </Button>
-      </Grow>
-      <Grow
-        in={show}
-        style={{ transformOrigin: '0 0 0' }}
-        {...(show ? { timeout: 1000 } : {})}
-      >
-        <MainButton type="submit" size="medium">Confirm</MainButton>
-      </Grow>
-    </div>
-  )
-}
+      </Button>
+    </Grow>
+    <Grow
+      in={show}
+      style={{ transformOrigin: "0 0 0" }}
+      {...(show ? { timeout: 1000 } : {})}
+    >
+      <MainButton type="submit" size="medium">Confirm</MainButton>
+    </Grow>
+  </div>
+)
 
 PopUpButtons.propTypes = {
   classes: PropTypes.object.isRequired,

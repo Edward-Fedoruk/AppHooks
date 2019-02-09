@@ -5,10 +5,10 @@ import { withStyles } from "@material-ui/core/styles"
 import SwipeableViews from "react-swipeable-views"
 import Tabs from "@material-ui/core/Tabs"
 import Tab from "@material-ui/core/Tab"
-import RequestInfo from "./RequestInfo"
-import ResponseInfo from "./ResponseInfo"
 import TransitEnterexit from "@material-ui/icons/TransitEnterexit"
 import { compose } from "redux"
+import RequestInfo from "./RequestInfo"
+import ResponseInfo from "./ResponseInfo"
 import withNavigation from "../withNavigation"
 import TopBar from "../TopBar"
 import { fetchRequest } from "../../actions/requestLogs"
@@ -21,16 +21,16 @@ const styles = ({ palette, breakpoints }) => ({
 
   tabs: {
     background: "#fff",
-    borderBottom: "1px solid #E2E5F4"
+    borderBottom: "1px solid #E2E5F4",
   },
 
   req: {
-    transform: "rotate(180deg)"
+    transform: "rotate(180deg)",
   },
 
   res: {
-    transform: "rotate(270deg)"
-  }, 
+    transform: "rotate(270deg)",
+  },
 
   contentWrap: {
     padding: "20px 26px 20px 13px",
@@ -47,14 +47,14 @@ export class LogInfo extends Component {
   }
 
   static propTypes = {
-    classes: PropTypes.object.isRequired
+    classes: PropTypes.object.isRequired,
   }
 
   handleChange = (event, value) => {
     this.setState({ value })
   }
 
-  handleChangeIndex = index => {
+  handleChangeIndex = (index) => {
     this.setState({ value: index })
   }
 
@@ -75,8 +75,8 @@ export class LogInfo extends Component {
               onChange={this.handleChange}
               indicatorColor="secondary"
               textColor="secondary"
-              classes={{ 
-                root: classes.tabs
+              classes={{
+                root: classes.tabs,
               }}
             >
               <Tab icon={<TransitEnterexit className={classes.req} />} label="Request" />
@@ -98,11 +98,11 @@ export class LogInfo extends Component {
 }
 
 const mapStateToProps = ({ requestLogs }) => ({
-  openedLog: requestLogs.openedLog
+  openedLog: requestLogs.openedLog,
 })
 
 const mapDispatchToProps = dispatch => ({
-  fetchRequest: id => dispatch(fetchRequest(id))
+  fetchRequest: id => dispatch(fetchRequest(id)),
 })
 
 export default compose(

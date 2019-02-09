@@ -11,12 +11,11 @@ const styles = ({ palette }) => ({
   cell: {
     color: palette.primary.main,
     fontSize: "16px",
-  }
+  },
 })
 
 
-class AccessTableBody extends Component { 
-
+class AccessTableBody extends Component {
   desc = (a, b, orderBy) => {
     if (b[orderBy] < a[orderBy]) {
       return -1
@@ -26,7 +25,7 @@ class AccessTableBody extends Component {
     }
     return 0
   }
-  
+
   stableSort = (array, cmp) => {
     const stabilizedThis = array.map((el, index) => [el, index])
     stabilizedThis.sort((a, b) => {
@@ -36,29 +35,27 @@ class AccessTableBody extends Component {
     })
     return stabilizedThis.map(el => el[0])
   }
-  
-  getSorting = (order, orderBy) => order === "desc" 
-      ? (a, b) => this.desc(a, b, orderBy) 
-      : (a, b) => -(this.desc(a, b, orderBy))
+
+  getSorting = (order, orderBy) => (order === "desc"
+    ? (a, b) => this.desc(a, b, orderBy)
+    : (a, b) => -(this.desc(a, b, orderBy)))
 
   handleRowClick = (e, id) => {
-    if(e.target.tagName === "TD" || e.target.tagName === "INPUT") 
-      this.props.handleClick(e, id)
-    return
+    if (e.target.tagName === "TD" || e.target.tagName === "INPUT") { this.props.handleClick(e, id) }
   }
 
   render() {
-    const { 
-      data, order, orderBy, 
-      page, rowsPerPage, emptyRows, 
-      isSelected, classes
+    const {
+      data, order, orderBy,
+      page, rowsPerPage, emptyRows,
+      isSelected, classes,
     } = this.props
 
     return (
       <TableBody>
         {this.stableSort(data, this.getSorting(order, orderBy))
           .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-          .map(n => {
+          .map((n) => {
             const selected = isSelected(n.id)
             return (
               <TableRow
@@ -82,7 +79,7 @@ class AccessTableBody extends Component {
                 <TableCell className={classes.cell}>{n.response_text}</TableCell>
                 <TableCell className={classes.cell}>{n.response_code}</TableCell>
                 <TableCell>
-                  <LogMenu id={n.id} />    
+                  <LogMenu id={n.id} />
                 </TableCell>
               </TableRow>
             )
@@ -106,7 +103,7 @@ AccessTableBody.propTypes = {
   rowsPerPage: PropTypes.number,
   emptyRows: PropTypes.number,
   isSelected: PropTypes.func,
-  handleClick: PropTypes.func 
+  handleClick: PropTypes.func,
 }
 
 export default withStyles(styles)(AccessTableBody)

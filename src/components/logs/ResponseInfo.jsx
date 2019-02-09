@@ -4,8 +4,8 @@ import Paper from "@material-ui/core/Paper"
 import Typography from "@material-ui/core/Typography"
 import { withStyles } from "@material-ui/core"
 import OutlinedInput from "@material-ui/core/OutlinedInput"
+import { Scrollbars } from "react-custom-scrollbars"
 import { styles } from "./RequestInfo"
-import { Scrollbars } from 'react-custom-scrollbars'
 
 const ResponseInfo = ({ classes, data }) => {
   console.log(data)
@@ -17,7 +17,7 @@ const ResponseInfo = ({ classes, data }) => {
           <Typography color="primary" className={classes.title}>
             View Attempt:
           </Typography>
-          <OutlinedInput 
+          <OutlinedInput
             value={data.attempted_at}
             fullWidth
             className={classes.input}
@@ -28,7 +28,7 @@ const ResponseInfo = ({ classes, data }) => {
           <Typography color="primary" className={classes.title}>
             Status:
           </Typography>
-          <OutlinedInput 
+          <OutlinedInput
             value={requestData.status}
             fullWidth
             className={classes.input}
@@ -39,7 +39,7 @@ const ResponseInfo = ({ classes, data }) => {
           <Typography color="primary" className={classes.title}>
             Destination URL:
           </Typography>
-          <OutlinedInput 
+          <OutlinedInput
             value={data.destination.url}
             fullWidth
             className={classes.input}
@@ -53,7 +53,9 @@ const ResponseInfo = ({ classes, data }) => {
           <Paper className={classes.paper} elevation={0}>
             {Object.entries(requestData.headers).map(([key, value]) => (
               <Typography color="primary" className={classes.headerName}>
-                {key}: <span className={classes.key}>{value}</span>
+                {key}
+:
+                <span className={classes.key}>{value}</span>
               </Typography>
             ))}
           </Paper>
@@ -63,7 +65,7 @@ const ResponseInfo = ({ classes, data }) => {
           <Typography color="primary" className={classes.title}>
             Body:
           </Typography>
-          <OutlinedInput 
+          <OutlinedInput
             value={requestData.body}
             fullWidth
             className={classes.input}
@@ -76,7 +78,7 @@ const ResponseInfo = ({ classes, data }) => {
 }
 
 ResponseInfo.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
 }
 
 export default withStyles(styles)(ResponseInfo)

@@ -4,7 +4,7 @@ import Paper from "@material-ui/core/Paper"
 import Typography from "@material-ui/core/Typography"
 import { withStyles } from "@material-ui/core"
 import OutlinedInput from "@material-ui/core/OutlinedInput"
-import { Scrollbars } from 'react-custom-scrollbars'
+import { Scrollbars } from "react-custom-scrollbars"
 
 export const styles = ({ breakpoints }) => ({
   root: {
@@ -22,7 +22,7 @@ export const styles = ({ breakpoints }) => ({
     marginBottom: "14px",
 
     [breakpoints.down(768)]: {
-      flexDirection: "column"
+      flexDirection: "column",
     },
   },
 
@@ -57,7 +57,7 @@ export const styles = ({ breakpoints }) => ({
   key: {
     fontWeight: "400",
     wordWrap: "break-word",
-    
+
   },
 
   input: {
@@ -67,7 +67,7 @@ export const styles = ({ breakpoints }) => ({
     [breakpoints.down(375)]: {
       fontSize: "14px",
       height: "32px",
-      width: "96%", 
+      width: "96%",
     },
   },
 
@@ -75,8 +75,8 @@ export const styles = ({ breakpoints }) => ({
     width: "76%",
     padding: "21px 16px 0px 16px",
     border: "1px solid #E2E5F4",
-    
-  }
+
+  },
 
 })
 
@@ -89,18 +89,18 @@ const RequestInfo = ({ classes, data }) => {
           <Typography color="primary" className={classes.title}>
             Input Name:
           </Typography>
-          <OutlinedInput 
+          <OutlinedInput
             value={data.endpoint.name}
             fullWidth
             className={classes.input}
           />
         </div>
-        
+
         <div className={classes.wrap}>
           <Typography color="primary" className={classes.title}>
             Incoming Gateway:
           </Typography>
-          <OutlinedInput 
+          <OutlinedInput
             value={data.endpoint.url}
             fullWidth
             className={classes.input}
@@ -111,7 +111,7 @@ const RequestInfo = ({ classes, data }) => {
           <Typography color="primary" className={classes.title}>
             Method:
           </Typography>
-          <OutlinedInput 
+          <OutlinedInput
             value="Asynchronous"
             fullWidth
             className={classes.input}
@@ -122,8 +122,8 @@ const RequestInfo = ({ classes, data }) => {
           <Typography color="primary" className={classes.title}>
             Authentication:
           </Typography>
-          <OutlinedInput 
-            value={data.endpoint.auth_type === null 
+          <OutlinedInput
+            value={data.endpoint.auth_type === null
               ? "No Authentication" : data.endpoint.auth_type}
             fullWidth
             className={classes.input}
@@ -137,7 +137,9 @@ const RequestInfo = ({ classes, data }) => {
           <Paper className={classes.paper} elevation={0}>
             {Object.entries(requestData.headers).map(([key, value]) => (
               <Typography color="primary" className={classes.headerName}>
-                {key}: <span className={classes.key}>{value}</span>
+                {key}
+:
+                <span className={classes.key}>{value}</span>
               </Typography>
             ))}
           </Paper>
@@ -147,7 +149,7 @@ const RequestInfo = ({ classes, data }) => {
           <Typography color="primary" className={classes.title}>
             Body:
           </Typography>
-          <OutlinedInput 
+          <OutlinedInput
             value={requestData.body}
             fullWidth
             className={classes.input}
@@ -160,7 +162,7 @@ const RequestInfo = ({ classes, data }) => {
 }
 
 RequestInfo.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
 }
 
 export default withStyles(styles)(RequestInfo)

@@ -18,5 +18,5 @@ export default combineReducers({
   requestLogs,
   users,
   rules,
-  userSettings
+  userSettings,
 })

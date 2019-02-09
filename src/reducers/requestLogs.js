@@ -6,32 +6,31 @@ const initialState = {
     endpoint: {},
     destination: {},
     request: {
-      headers: {}
+      headers: {},
     },
     response: {
-      headers: {}
-    }
-  }
+      headers: {},
+    },
+  },
 }
 
 export default (state = initialState, action) => {
   switch (action.type) {
-
   case types.SET_LOGS:
-    return { 
-      ...state, 
-      requests: [...action.logs] 
+    return {
+      ...state,
+      requests: [...action.logs],
     }
 
   case types.DELETE_LOGS:
     return {
       ...state,
-      requests: state.requests.filter(({ id }) => !action.ids.includes(id))
+      requests: state.requests.filter(({ id }) => !action.ids.includes(id)),
     }
-  case types.SET_LOG: 
+  case types.SET_LOG:
     return {
       ...state,
-      openedLog: action.log
+      openedLog: action.log,
     }
   default:
     return state

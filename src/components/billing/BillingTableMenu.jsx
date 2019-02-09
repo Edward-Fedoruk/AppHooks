@@ -6,8 +6,8 @@ import TableHead from "@material-ui/core/TableHead"
 import TableRow from "@material-ui/core/TableRow"
 import { withStyles } from "@material-ui/core"
 import Typography from "@material-ui/core/Typography"
-import { ReactComponent as BillingChart} from "../../assets/BillingChart.svg"
 import PropTypes from "prop-types"
+import { ReactComponent as BillingChart } from "../../assets/BillingChart.svg"
 
 const styles = ({ breakpoints }) => ({
   tableRoot: {
@@ -27,7 +27,7 @@ const styles = ({ breakpoints }) => ({
   },
 
   chartIcon: {
-    marginBottom: "42px"
+    marginBottom: "42px",
   },
 
   privilege: {
@@ -40,20 +40,20 @@ const styles = ({ breakpoints }) => ({
   },
 
   cellRoot: {
-  }
+  },
 })
 
 const privileges = [
-  "Max Concurrent", 
-  "Number of Channels", 
-  "Messages / Day", 
-  "Support", 
-  "SSL Protection", 
-  "Manitoring Integrations"
+  "Max Concurrent",
+  "Number of Channels",
+  "Messages / Day",
+  "Support",
+  "SSL Protection",
+  "Manitoring Integrations",
 ]
 
 const BillingTableMenu = ({ classes }) => (
-  <Table classes={{root: classes.tableRoot}}>
+  <Table classes={{ root: classes.tableRoot }}>
     <TableHead>
       <TableRow>
         <TableCell>
@@ -77,7 +77,7 @@ const BillingTableMenu = ({ classes }) => (
 )
 
 BillingTableMenu.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
 }
 
 

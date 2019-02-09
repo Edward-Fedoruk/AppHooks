@@ -18,7 +18,7 @@ import NavListItem from "./NavListItem"
 const itemTextStyles = {
   color: "rgba(255, 255, 255, 0.7)",
   paddingLeft: "5px",
-  
+
 }
 
 const styles = ({ transitions, breakpoints }) => ({
@@ -27,7 +27,7 @@ const styles = ({ transitions, breakpoints }) => ({
     background: "linear-gradient(180deg, #192B81 0%, #344DBC 100%)",
     padding: "10% 0 20% 0",
     overflow: "auto",
-    height: "100%"
+    height: "100%",
   },
 
   navWrap: {
@@ -49,106 +49,105 @@ const styles = ({ transitions, breakpoints }) => ({
     color: "#fff",
     fontSize: "28px",
     fontWeight: "300",
-    
+
     paddingBottom: "10px",
     background: "#192B81",
     paddingLeft: "21px",
-    paddingTop: "20px"
+    paddingTop: "20px",
   },
 
   itemText: itemTextStyles,
 
   activeTab: {
     ...itemTextStyles,
-    color: "#fff"
+    color: "#fff",
   },
 
   itemIcon: {
     color: "rgba(255, 255, 255, 0.7)",
-    margin: "0"
+    margin: "0",
   },
 
   item: {
     paddingLeft: "21px",
-    paddingRight: "0"
-  }
-  
+    paddingRight: "0",
+  },
+
 })
 
 export class RightPanel extends Component {
-
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    location: PropTypes.object.isRequired
+    location: PropTypes.object.isRequired,
   }
 
   render() {
     const { classes, location } = this.props
-    
+
     return (
       <div className={classes.navWrap}>
-        <Typography 
-          align={"left"}
-          component={"h1"}
+        <Typography
+          align="left"
+          component="h1"
           className={classes.appName}
         >
-          Apphooks 
-        </Typography>  
+          Apphooks
+        </Typography>
         <div className={classes.navigation}>
-        <Scrollbars >
+          <Scrollbars>
 
-          <List className={classes.listItems}>
-            <NavListItem 
-              path="/"
-              currentPath={location.pathname}
-              Icon={Dashboard}
-              itemText="Dashboard"
-              exact={true}
-            />
+            <List className={classes.listItems}>
+              <NavListItem
+                path="/"
+                currentPath={location.pathname}
+                Icon={Dashboard}
+                itemText="Dashboard"
+                exact
+              />
 
-            <NavListItem 
-              path="/channels"
-              currentPath={location.pathname}
-              Icon={ExitToApp}
-              itemText="Channels"
-              exact={false}
-            />
+              <NavListItem
+                path="/channels"
+                currentPath={location.pathname}
+                Icon={ExitToApp}
+                itemText="Channels"
+                exact={false}
+              />
 
-            <NavListItem 
-              path="/webhooks"
-              currentPath={location.pathname}
-              Icon={NewReleases}
-              itemText="Webhooks Rules"
-              exact={false}
-            />
-      
-            <NavListItem 
-              path="/users"
-              currentPath={location.pathname}
-              Icon={GroupAdd}
-              itemText="Sub-Users"
-              exact={false}
-            />
+              <NavListItem
+                path="/webhooks"
+                currentPath={location.pathname}
+                Icon={NewReleases}
+                itemText="Webhooks Rules"
+                exact={false}
+              />
 
-            <NavListItem 
-              path="/logs"
-              currentPath={location.pathname}
-              Icon={DateRange}
-              itemText="Access Logs"
-              exact={false}
-            />
+              <NavListItem
+                path="/users"
+                currentPath={location.pathname}
+                Icon={GroupAdd}
+                itemText="Sub-Users"
+                exact={false}
+              />
 
-            <NavListItem 
-              path="/billing"
-              currentPath={location.pathname}
-              Icon={AccountBalanceWallet}
-              itemText="Billing"
-              exact={false}
-            />
+              <NavListItem
+                path="/logs"
+                currentPath={location.pathname}
+                Icon={DateRange}
+                itemText="Access Logs"
+                exact={false}
+              />
 
-          </List>
-          
-        </Scrollbars>
+              <NavListItem
+                path="/billing"
+                currentPath={location.pathname}
+                Icon={AccountBalanceWallet}
+                itemText="Billing"
+                exact={false}
+              />
+
+            </List>
+
+          </Scrollbars>
         </div>
       </div>
     )
@@ -157,7 +156,7 @@ export class RightPanel extends Component {
 
 
 const mapStateToProps = ({ view }) => ({
-  open: view.open, 
+  open: view.open,
 })
 
 export default compose(

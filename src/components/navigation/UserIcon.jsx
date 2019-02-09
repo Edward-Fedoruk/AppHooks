@@ -1,7 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 import { withStyles } from "@material-ui/core"
-import Gravatar  from "react-gravatar"
+import Gravatar from "react-gravatar"
 import IconButton from "@material-ui/core/IconButton"
 import { withRouter } from "react-router-dom"
 import { connect } from "react-redux"
@@ -11,12 +11,14 @@ const styles = () => ({
   user: {
     height: "45px",
     borderRadius: "50%",
-    width: "45px"
+    width: "45px",
   },
 })
 
 
-const UserIcon = ({ classes, className, history, email }) => {
+const UserIcon = ({
+  classes, className, history, email,
+}) => {
   const openSettings = () => history.push("/settings")
   return (
     <IconButton onClick={openSettings} className={className}>
@@ -28,11 +30,11 @@ const UserIcon = ({ classes, className, history, email }) => {
 UserIcon.propTypes = {
   classes: PropTypes.object.isRequired,
   className: PropTypes.string,
-  history: PropTypes.object.isRequired
+  history: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = ({ userSettings }) => ({
-  email: userSettings.settings.email
+  email: userSettings.settings.email,
 })
 
 export default compose(

@@ -9,29 +9,43 @@ import PropTypes from "prop-types"
 import { withStyles } from "@material-ui/core"
 
 const rows = [
-  { id: "attempt", numeric: false, disablePadding: true, label: "Sent/Last Attempt" },
-  { id: "application", numeric: false, disablePadding: false, label: "Application" },
-  { id: "endpoint", numeric: false, disablePadding: false, label: "Endpoint" },
-  { id: "destination", numeric: false, disablePadding: false, label: "Destination" },
-  { id: "status", numeric: false, disablePadding: false, label: "Status/Attempts" },
-  { id: "code", numeric: false, disablePadding: false, label: "Response Code" },
+  {
+    id: "attempt", numeric: false, disablePadding: true, label: "Sent/Last Attempt",
+  },
+  {
+    id: "application", numeric: false, disablePadding: false, label: "Application",
+  },
+  {
+    id: "endpoint", numeric: false, disablePadding: false, label: "Endpoint",
+  },
+  {
+    id: "destination", numeric: false, disablePadding: false, label: "Destination",
+  },
+  {
+    id: "status", numeric: false, disablePadding: false, label: "Status/Attempts",
+  },
+  {
+    id: "code", numeric: false, disablePadding: false, label: "Response Code",
+  },
 ]
 
 const styles = ({ palette }) => ({
   headerCell: {
     color: "#192B7F",
     fontWeight: "bold",
-    fontSize: "16px"
-  }
+    fontSize: "16px",
+  },
 })
 
 class EnhancedTableHead extends React.Component {
-  createSortHandler = property => event => {
+  createSortHandler = property => (event) => {
     this.props.onRequestSort(event, property)
   }
 
   render() {
-    const { onSelectAllClick, order, orderBy, numSelected, rowCount, classes } = this.props
+    const {
+      onSelectAllClick, order, orderBy, numSelected, rowCount, classes,
+    } = this.props
 
     return (
       <TableHead>
@@ -66,8 +80,9 @@ class EnhancedTableHead extends React.Component {
                   </TableSortLabel>
                 </Tooltip>
               </TableCell>
-            ))}
-          <TableCell></TableCell>
+            )
+          )}
+          <TableCell />
         </TableRow>
       </TableHead>
     )
