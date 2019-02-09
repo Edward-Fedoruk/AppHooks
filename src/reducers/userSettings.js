@@ -4,7 +4,8 @@ const initialState = {
   settings: {
     name: "",
     company: "",
-    phone: ""
+    phone: "",
+    package: ""
   },
   error: {}
 }
