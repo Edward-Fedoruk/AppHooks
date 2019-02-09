@@ -2,7 +2,16 @@ import * as types from "../actions/types"
 
 const initialState = {
   requests: [],
-  openedLog: {}
+  openedLog: {
+    endpoint: {},
+    destination: {},
+    request: {
+      headers: {}
+    },
+    response: {
+      headers: {}
+    }
+  }
 }
 
 export default (state = initialState, action) => {

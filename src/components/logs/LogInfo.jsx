@@ -83,8 +83,8 @@ export class LogInfo extends Component {
               index={this.state.value}
               onChangeIndex={this.handleChangeIndex}
             >
-              <RequestInfo data={openedLog.request} />
-              <ResponseInfo data={openedLog.response} />
+              <RequestInfo data={openedLog} />
+              <ResponseInfo data={openedLog} />
             </SwipeableViews>
           </div>
         </div>
