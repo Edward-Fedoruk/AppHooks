@@ -6,6 +6,7 @@ import Drawer from '@material-ui/core/Drawer'
 import LeftPanel from './LeftPanel'
 import RightPanel from './RightPanel'
 import { toggleNavBar } from '../../actions/ui'
+import { fetchUserSettings } from '../../actions/user'
 import withWidth from '@material-ui/core/withWidth'
 
 const styles = ({ transitions, breakpoints }) => ({
@@ -44,6 +45,10 @@ class AppNavigation extends Component {
     classes: PropTypes.object.isRequired,
   }
 
+  componentDidMount() {
+    this.props.fetchUserSettings()
+  }
+
   toggleDrawer = () => {
     this.setState({ open: !this.state.open })
   }
@@ -77,7 +82,8 @@ const mapStateToProps = ({ view }) => ({
 })
 
 const mapDispatchToProps = {
-  toggleNavBar
+  toggleNavBar,
+  fetchUserSettings
 }
 
 export default withWidth()(withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(AppNavigation)))
