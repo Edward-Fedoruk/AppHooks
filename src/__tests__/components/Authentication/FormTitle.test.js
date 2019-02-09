@@ -2,7 +2,7 @@ import React from 'react'
 import FormTitle from '../../../components/Authentication/FormTitle'
 import { shallow } from "enzyme"
 
-describe('FormTitle', () => {
+xdescribe('FormTitle', () => {
   it('should be defined', () => {
     expect(FormTitle).toBeDefined()
   })
