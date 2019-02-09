@@ -20,7 +20,7 @@ const UserIcon = ({ classes, className, history, email }) => {
   const openSettings = () => history.push("/settings")
   return (
     <IconButton onClick={openSettings} className={className}>
-      <Gravatar email={email} className={classes.user} />
+      <Gravatar email={email} default="identicon" className={classes.user} />
     </IconButton>
   )
 }

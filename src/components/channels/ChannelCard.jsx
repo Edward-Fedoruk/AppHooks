@@ -11,7 +11,7 @@ import Divider from '@material-ui/core/Divider'
 import SettingsOutlined from '@material-ui/icons/SettingsOutlined'
 import { Link } from 'react-router-dom'
 
-const styles = () => ({
+const styles = ({ breakpoints }) => ({
   card: {
     width: "270px",
     minHeight: "197px",
@@ -21,11 +21,14 @@ const styles = () => ({
   },
 
   CardName: {
-    
     marginBottom: "40px",
     color: "#192B7F",
     fontWeight: "bold",
-    fontSize: "14px"
+    fontSize: "14px",
+
+    [breakpoints.down(425)]: {
+      padding: "25px 17px"
+    },
   },
 
   stats: {

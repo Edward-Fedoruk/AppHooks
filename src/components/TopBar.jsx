@@ -12,7 +12,7 @@ import { connect } from 'react-redux'
 import { compose }  from "redux"
 import { toggleNavBar } from '../actions/ui'
 
-const styles = () => ({
+const styles = ({ breakpoints }) => ({
   title: {
     flexGrow: 1,
     fontSize: "25px",
@@ -43,7 +43,12 @@ const styles = () => ({
   menuButton: {
     marginLeft: -12,
     marginRight: 20,
-    color: "#192B81"
+    color: "#192B81",
+
+    [breakpoints.down(425)]: {
+      fontSize: "16px",
+      marginRight: "0",
+    },
   },
 })
 

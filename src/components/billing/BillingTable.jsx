@@ -6,6 +6,8 @@ import BillingTableMenu from "./BillingTableMenu"
 import BillingTablePlan from "./BillingTablePlan"
 import slickSettings from "./slickSettings"
 import PropTypes from "prop-types"
+import { connect } from "react-redux"
+import { compose } from "redux"
 
 const styles = () => ({
   tableWrap: {
@@ -20,55 +22,74 @@ const styles = () => ({
 
 export class BillingTable extends Component {
   static propTypes = {
-    classes: PropTypes.object.isRequired
+    classes: PropTypes.object.isRequired,
+    package: PropTypes.string
   }
 
-  render() {
-    const { classes } = this.props
+  checkActive = plan => plan.toLowerCase() === this.props.userPackage.toLowerCase() 
 
+  render() {
+    const { classes, userPackage } = this.props
+    console.log(userPackage)
     return (
       <Paper elevation={0} className={classes.tableWrap}>
         <BillingTableMenu />
         <Slider {...slickSettings}>
+
           <BillingTablePlan 
-            planName="Basic"
+            planName="Sandbox"
             price={0}
             concurrent={100}
             messages="200 000"
             support="Limited"
             monitoring={false}
-            ssl
+            ssl={false}
             channels
+            active={this.checkActive("sandbox")}
           />
           <BillingTablePlan 
-            planName="Basic"
-            price={0}
-            concurrent={100}
-            messages="200 000"
+            planName="Startup"
+            price={49}
+            concurrent={200}
+            messages="4 000 000"
             support="Limited"
             monitoring={false}
-            ssl
+            ssl={false}
             channels 
+            active={this.checkActive("Startup")}
           />
           <BillingTablePlan 
-            planName="Basic"
-            price={0}
-            concurrent={100}
-            messages="200 000"
-            support="Limited"
-            monitoring={false}
+            planName="Pro"
+            price={100}
+            concurrent={500}
+            messages="200 000 000"
+            support="Standard"
+            monitoring
             ssl
             channels
+            active={this.checkActive("pro")}
           />
           <BillingTablePlan 
-            planName="Basic"
-            price={0}
-            concurrent={100}
-            messages="200 000"
-            support="Limited"
-            monitoring={false}
+            planName="Business"
+            price={200}
+            concurrent={800}
+            messages="400 000 000"
+            support="Standard"
+            monitoring
             ssl
             channels
+            active={this.checkActive("Business")}            
+          />
+          <BillingTablePlan 
+            planName="Enterpirse"
+            price={300}
+            concurrent={1000}
+            messages="800 000 000"
+            support="Standard"
+            monitoring
+            ssl
+            channels
+            active={this.checkActive("Enterpirse")}            
           />
         </Slider>
       </Paper>
@@ -76,4 +97,11 @@ export class BillingTable extends Component {
   }
 }
 
-export default withStyles(styles)(BillingTable)
+const mapStateToProps = ({ userSettings }) => ({
+  userPackage: userSettings.settings.package
+})
+
+export default compose(
+  withStyles(styles),
+  connect(mapStateToProps, null)
+)(BillingTable)

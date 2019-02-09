@@ -1,36 +1,28 @@
-import React, { Component, Fragment } from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { withStyles } from '@material-ui/core/styles'
-import { compose } from 'redux'
-import ChannelCard from './ChannelCard'
-import TopBar from '../TopBar'
-import Typography from '@material-ui/core/Typography'
-import CreateChannel from './CreateChannel'
-import Button from '@material-ui/core/Button'
+import React, { Component, Fragment } from "react"
+import PropTypes from "prop-types"
+import { connect } from "react-redux"
+import { withStyles } from "@material-ui/core/styles"
+import { compose } from "redux"
+import ChannelCard from "./ChannelCard"
+import TopBar from "../TopBar"
+import Typography from "@material-ui/core/Typography"
+import CreateChannel from "./CreateChannel"
+import MainButton from "../MainButton"
 
-const styles = () => ({
+const styles = ({ breakpoints }) => ({
   contentWrap: {
-    padding: "25px 35px"
+    padding: "25px 35px",
+    
+    [breakpoints.down(425)]: {
+      padding: "25px 17px"
+    },
   },
 
   region: {
-    
     marginBottom: "20px",
     color: "#192B7F",
     fontSize: "16px",
     paddingLeft: "10px"
-  },
-
-  createChannel: {
-    textTransform: "capitalize",
-    color: "#fff",
-    fontSize: "16px",
-    background: "#35C1CE",
-    "&:hover": {
-      opacity: ".9",
-      background: "#192B81",
-    },
   },
 })
 
@@ -47,7 +39,7 @@ export class ChannelsList extends Component {
     this.setState({ open: !this.state.open })
   }
 
-  render() {
+  render() { 
     const { classes, channels } = this.props
     const { open } = this.state
     if(open) {
@@ -58,16 +50,8 @@ export class ChannelsList extends Component {
     else {
       return (
         <Fragment>
-          <TopBar title="Your Channels Apps">
-            <Button 
-              size="large"
-              color="primary" 
-              variant="text" 
-              className={classes.createChannel}
-              onClick={this.createChannel}
-            >
-              Create New App
-            </Button>
+          <TopBar title="Channels Apps">
+            <MainButton>Create New App</MainButton>
           </TopBar>
 
           <div className={classes.contentWrap}>  

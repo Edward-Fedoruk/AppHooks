@@ -10,7 +10,11 @@ export const styles = ({ breakpoints }) => ({
   root: {
     padding: "14px 5px 16px 0px",
     height: "calc(100vh - 95px)",
-    overflow: "auto"
+    overflow: "auto",
+
+    [breakpoints.down(375)]: {
+      padding: "14px 5px 16px 20px",
+    },
   },
 
   wrap: {
@@ -44,6 +48,10 @@ export const styles = ({ breakpoints }) => ({
     fontSize: "16px",
     marginBottom: "17px",
     fontWeight: "bold",
+
+    [breakpoints.down(375)]: {
+      fontSize: "14px",
+    },
   },
 
   key: {
@@ -54,7 +62,13 @@ export const styles = ({ breakpoints }) => ({
 
   input: {
     height: "42px",
-    width: "76%"
+    width: "76%",
+
+    [breakpoints.down(375)]: {
+      fontSize: "14px",
+      height: "32px",
+      width: "96%", 
+    },
   },
 
   paper: {
@@ -67,59 +81,80 @@ export const styles = ({ breakpoints }) => ({
 })
 
 const RequestInfo = ({ classes, data }) => {
-  const requestData = data !== undefined ? data : {headers: {}}
+  const requestData = data.request
   return (
     <Paper className={classes.root}>
       <Scrollbars>
-      <div className="test">
-      <div className={classes.wrap}>
-        <Typography color="primary" className={classes.title}>
-          Incoming Gateway:
-        </Typography>
-        <OutlinedInput 
-          value={requestData.url}
-          fullWidth
-          className={classes.input}
-        />
-      </div>
+        <div className={classes.wrap}>
+          <Typography color="primary" className={classes.title}>
+            Input Name:
+          </Typography>
+          <OutlinedInput 
+            value={data.endpoint.name}
+            fullWidth
+            className={classes.input}
+          />
+        </div>
+        
+        <div className={classes.wrap}>
+          <Typography color="primary" className={classes.title}>
+            Incoming Gateway:
+          </Typography>
+          <OutlinedInput 
+            value={data.endpoint.url}
+            fullWidth
+            className={classes.input}
+          />
+        </div>
 
-      <div className={classes.wrap}>
-        <Typography color="primary" className={classes.title}>
-          Method:
-        </Typography>
-        <OutlinedInput 
-          value={requestData.method}
-          fullWidth
-          className={classes.input}
-        />
-      </div>
+        <div className={classes.wrap}>
+          <Typography color="primary" className={classes.title}>
+            Method:
+          </Typography>
+          <OutlinedInput 
+            value="Asynchronous"
+            fullWidth
+            className={classes.input}
+          />
+        </div>
 
-      <div className={classes.wrap}>
-        <Typography color="primary" className={classes.title}>
-          Headers:
-        </Typography>
-        <Paper className={classes.paper} elevation={0}>
-          {Object.entries(requestData.headers).map(([key, value]) => (
-            <Typography color="primary" className={classes.headerName}>
-              {key}: <span className={classes.key}>{value}</span>
-            </Typography>
-          ))}
-        </Paper>
-      </div>
+        <div className={classes.wrap}>
+          <Typography color="primary" className={classes.title}>
+            Authentication:
+          </Typography>
+          <OutlinedInput 
+            value={data.endpoint.auth_type === null 
+              ? "No Authentication" : data.endpoint.auth_type}
+            fullWidth
+            className={classes.input}
+          />
+        </div>
 
-      <div className={classes.wrap}>
-        <Typography color="primary" className={classes.title}>
-          Body:
-        </Typography>
-        <OutlinedInput 
-          value={requestData.body}
-          fullWidth
-          className={classes.input}
-          multiline
-        />
-      </div>
-      </div>
-    </Scrollbars>
+        <div className={classes.wrap}>
+          <Typography color="primary" className={classes.title}>
+            Headers:
+          </Typography>
+          <Paper className={classes.paper} elevation={0}>
+            {Object.entries(requestData.headers).map(([key, value]) => (
+              <Typography color="primary" className={classes.headerName}>
+                {key}: <span className={classes.key}>{value}</span>
+              </Typography>
+            ))}
+          </Paper>
+        </div>
+
+        <div className={classes.wrap}>
+          <Typography color="primary" className={classes.title}>
+            Body:
+          </Typography>
+          <OutlinedInput 
+            value={requestData.body}
+            fullWidth
+            className={classes.input}
+            multiline
+          />
+        </div>
+      </Scrollbars>
     </Paper>
   )
 }

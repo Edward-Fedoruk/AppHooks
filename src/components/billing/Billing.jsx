@@ -16,7 +16,7 @@ const styles = ({ breakpoints }) => ({
     padding: "20px 26px 20px 13px",
 
     [breakpoints.down(600)]: {
-      padding: "0",
+      padding: "10px 0",
     },
   },
 })

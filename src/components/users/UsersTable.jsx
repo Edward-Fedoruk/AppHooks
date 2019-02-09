@@ -83,7 +83,7 @@ export class UsersTable extends Component {
   render() {
     const { anchorEl, open, selected } = this.state
     const { classes, data, page, rowsPerPage, emptyRows } = this.props
-    const collNames = ["Email", "Name", "Role", "Privileges", "Active", ""]
+    const collNames = ["Email", "Name", "Role", "Active", ""]
     console.log(data)
     return (
       <div className={classes.tableWrapper}>
@@ -105,7 +105,7 @@ export class UsersTable extends Component {
           {data
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             .map((row, i) => (
-              <TableRow selected={selected === `${row.id}`} key={row.id}>
+              <TableRow hover selected={selected === `${row.id}`} key={row.id}>
                 <TableCell padding="checkbox" className={classNames(classes.cell, classes.avatar)}>
                   <Gravatar 
                     default="identicon" 
@@ -117,7 +117,7 @@ export class UsersTable extends Component {
                 <TableCell className={classes.cell}>{row.email}</TableCell>
                 <TableCell className={classes.cell}>{row.name === null ? "-" : row.name}</TableCell>
                 <TableCell className={classes.cell}>
-                  {selected === `${i}` 
+                  {selected === `${row.id}` 
                     ? <Select
                         className={classes.cell}
                         multiple
@@ -133,7 +133,7 @@ export class UsersTable extends Component {
                       </Select>
                     : row.role}   
                 </TableCell>
-                <TableCell className={classes.cell}>
+                {/* <TableCell className={classes.cell}>
                   {selected === `${i}` 
                     ? <Select
                         className={classes.cell}
@@ -147,9 +147,9 @@ export class UsersTable extends Component {
                         </MenuItem>
                       </Select>
                     : row.privileges}
-                </TableCell>
+                </TableCell> */}
                 <TableCell className={classes.cell}>
-                  {selected === `${i}` 
+                  {selected === `${row.id}` 
                     ? <Select
                         className={classes.cell}
                         value={row.active}

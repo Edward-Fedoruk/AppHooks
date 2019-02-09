@@ -9,46 +9,68 @@ import { Scrollbars } from 'react-custom-scrollbars'
 
 const ResponseInfo = ({ classes, data }) => {
   console.log(data)
-  const requestData = data !== undefined ? data : {headers: {}}
+  const requestData = data.response
   return (
     <Paper className={classes.root}>
       <Scrollbars>
-      <div className={classes.wrap}>
-        <Typography color="primary" className={classes.title}>
-          Status:
-        </Typography>
-        <OutlinedInput 
-          value={requestData.status}
-          fullWidth
-          className={classes.input}
-        />
-      </div>
+        <div className={classes.wrap}>
+          <Typography color="primary" className={classes.title}>
+            View Attempt:
+          </Typography>
+          <OutlinedInput 
+            value={data.attempted_at}
+            fullWidth
+            className={classes.input}
+          />
+        </div>
 
-      <div className={classes.wrap}>
-        <Typography color="primary" className={classes.title}>
-          Headers:
-        </Typography>
-        <Paper className={classes.paper} elevation={0}>
-          {Object.entries(requestData.headers).map(([key, value]) => (
-            <Typography color="primary" className={classes.headerName}>
-              {key}: <span className={classes.key}>{value}</span>
-            </Typography>
-          ))}
-        </Paper>
-      </div>
+        <div className={classes.wrap}>
+          <Typography color="primary" className={classes.title}>
+            Status:
+          </Typography>
+          <OutlinedInput 
+            value={requestData.status}
+            fullWidth
+            className={classes.input}
+          />
+        </div>
 
-      <div className={classes.wrap}>
-        <Typography color="primary" className={classes.title}>
-          Body:
-        </Typography>
-        <OutlinedInput 
-          value={requestData.body}
-          fullWidth
-          className={classes.input}
-          multiline
-        />
-      </div>
-    </Scrollbars>
+        <div className={classes.wrap}>
+          <Typography color="primary" className={classes.title}>
+            Destination URL:
+          </Typography>
+          <OutlinedInput 
+            value={data.destination.url}
+            fullWidth
+            className={classes.input}
+          />
+        </div>
+
+        <div className={classes.wrap}>
+          <Typography color="primary" className={classes.title}>
+            Headers:
+          </Typography>
+          <Paper className={classes.paper} elevation={0}>
+            {Object.entries(requestData.headers).map(([key, value]) => (
+              <Typography color="primary" className={classes.headerName}>
+                {key}: <span className={classes.key}>{value}</span>
+              </Typography>
+            ))}
+          </Paper>
+        </div>
+
+        <div className={classes.wrap}>
+          <Typography color="primary" className={classes.title}>
+            Body:
+          </Typography>
+          <OutlinedInput 
+            value={requestData.body}
+            fullWidth
+            className={classes.input}
+            multiline
+          />
+        </div>
+      </Scrollbars>
     </Paper>
   )
 }

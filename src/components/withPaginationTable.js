@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import TablePagination from "@material-ui/core/TablePagination"
 import Paper from "@material-ui/core/Paper"
 import { withStyles } from "@material-ui/core"
+import withWidth from "@material-ui/core/withWidth"
 
 const styles = ({ spacing }) => ({
   root: {
@@ -30,9 +31,9 @@ export default () => WrappedComponent => {
 
     render() {
       const { rowsPerPage, page } = this.state
-      const { classes, data } = this.props
+      const { classes, data, width } = this.props
       const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage)
-      
+      const showSelect = width !== "xs" ? [5, 10, 25] : []
       return (
         <Paper elevation={0} className={classes.root}>
           <WrappedComponent 
@@ -42,7 +43,7 @@ export default () => WrappedComponent => {
             data={data}
           />
           <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
+            rowsPerPageOptions={showSelect}
             component="div"
             count={data.length}
             rowsPerPage={rowsPerPage}
@@ -61,5 +62,5 @@ export default () => WrappedComponent => {
     }
   }
 
-  return withStyles(styles)(hocComponent)
+  return withWidth()(withStyles(styles)(hocComponent))
 }

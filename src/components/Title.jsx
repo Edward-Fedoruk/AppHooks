@@ -3,14 +3,17 @@ import { withStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import PropTypes from 'prop-types'
 
-const styles = () => ({
+const styles = ({ breakpoints }) => ({
   title: {
     flexGrow: 1,
     fontSize: "25px",
-    
     textTransform: "capitalize",
     color: "#192B7F",
-    fontWeight: "bold"
+    fontWeight: "bold",
+
+    [breakpoints.down(425)]: {
+      fontSize: "18px"
+    },
   },  
 })
 

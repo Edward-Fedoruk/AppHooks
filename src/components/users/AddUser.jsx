@@ -8,11 +8,16 @@ import { ValidatorForm, TextValidator } from "react-material-ui-form-validator"
 import { inviteUser } from "../../actions/subUsers"
 import ErrorSnackbar from "../Authentication/ErrorSnackbar"
 
-const styles = () => ({
+const styles = ({ breakpoints }) => ({
   form: {
     display: "flex",
     alignItems: "stretch",
-    margin: "22px 0 0 62px"
+    margin: "22px 0 0 62px",
+
+    [breakpoints.down(375)]: {
+      margin: "22px 0 0 0"
+    },
+
   },
 
   add: {
