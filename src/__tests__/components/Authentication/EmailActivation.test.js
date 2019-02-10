@@ -9,13 +9,8 @@ const location = {
   },
 }
 
-<<<<<<< HEAD
-describe("EmailActivation", () => {
-  it("should be defined", () => {
-=======
 xdescribe('EmailActivation', () => {
   it('should be defined', () => {
->>>>>>> fcc5d6dd65dd9969357b32707c90195578291cc8
     expect(EmailActivation).toBeDefined()
   })
 
