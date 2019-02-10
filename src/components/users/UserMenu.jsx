@@ -123,11 +123,21 @@ const ChannelMenu = ({
   </div>
 )
 
+ChannelMenu.defaultProps = {
+  anchorEl: {},
+}
+
 ChannelMenu.propTypes = {
   classes: PropTypes.object.isRequired,
-  handleClick: PropTypes.func,
-  handleClose: PropTypes.func,
+  handleClick: PropTypes.func.isRequired,
+  handleClose: PropTypes.func.isRequired,
   deleteUser: PropTypes.func.isRequired,
+  open: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+  anchorEl: PropTypes.object,
+  handleEdit: PropTypes.func.isRequired,
+  selected: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+  confirmChange: PropTypes.func.isRequired,
+  id: PropTypes.number.isRequired,
 }
 
 const mapDispatchToProps = dispatch => ({
