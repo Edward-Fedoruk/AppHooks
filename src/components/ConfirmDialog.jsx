@@ -12,12 +12,8 @@ export const ConfirmDialog = ({ open, handleClose, handleCloseWithAction }) => (
     aria-describedby="alert-dialog-description"
   >
     <DialogActions>
-      <Button onClick={handleClose} color="primary">
-        Disagree
-      </Button>
-      <Button onClick={handleCloseWithAction} color="primary" autoFocus>
-        Agree
-      </Button>
+      <Button onClick={handleClose} color="primary">Disagree</Button>
+      <Button onClick={handleCloseWithAction} color="primary" autoFocus>Agree</Button>
     </DialogActions>
   </Dialog>
 )
