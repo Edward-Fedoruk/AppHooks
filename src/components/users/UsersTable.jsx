@@ -8,35 +8,18 @@ import TableCell from "@material-ui/core/TableCell"
 import TableHead from "@material-ui/core/TableHead"
 import TableRow from "@material-ui/core/TableRow"
 import Typography from "@material-ui/core/Typography"
-import Select from "@material-ui/core/Select"
-import MenuItem from "@material-ui/core/MenuItem"
-import Gravatar from "react-gravatar"
-import classNames from "classnames"
 import { compose } from "redux"
 import { connect } from "react-redux"
 import UserMenu from "./UserMenu"
 import withPaginationTable from "../withPaginationTable"
 import { updateSubUser } from "../../actions/subUsers"
+import UserTableRow from "./UserTableRow"
 
-const styles = ({ palette }) => ({
+const styles = () => ({
   colName: {
     fontWeight: "bold",
     fontSize: "16px",
     transition: "all 3s",
-  },
-
-  avatar: { padding: "0 0 0 10px" },
-  menu: { padding: "0" },
-
-  cell: {
-    color: palette.primary.main,
-    fontSize: "16px",
-    transition: "all 3s",
-  },
-
-  gravatar: {
-    borderRadius: "50%",
-    verticalAlign: "middle",
   },
 
   tableWrapper: {
@@ -47,7 +30,7 @@ const styles = ({ palette }) => ({
 export class UsersTable extends Component {
   state = {
     open: -1,
-    anchorEl: null,
+    anchorEl: {},
     selected: 1,
     clickedRow: {},
   }
@@ -111,7 +94,6 @@ export class UsersTable extends Component {
       classes, data, page, rowsPerPage, emptyRows,
     } = this.props
     const collNames = ["Email", "Name", "Role", "Active", ""]
-    console.log(data)
     return (
       <div className={classes.tableWrapper}>
         <Table>
@@ -130,71 +112,26 @@ export class UsersTable extends Component {
           <TableBody>
             {data
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => {
-                const active = row.is_active ? "Yes" : "No"
-                return (
-                  <TableRow hover selected={selected === `${row.id}`} key={row.id}>
-                    <TableCell padding="checkbox" className={classNames(classes.cell, classes.avatar)}>
-                      <Gravatar
-                        default="identicon"
-                        email={row.email}
-                        className={classes.gravatar}
-                        size={35}
-                      />
-                    </TableCell>
-                    <TableCell className={classes.cell}>{row.email}</TableCell>
-                    <TableCell className={classes.cell}>{row.name === null ? "-" : row.name}</TableCell>
-                    <TableCell className={classes.cell}>
-                      {selected === `${row.id}`
-                        ? (
-                          <Select
-                            className={classes.cell}
-                            value={clickedRow.role}
-                            onChange={this.changeSelect("role")}
-                          >
-                            <MenuItem value="owner">
-                              owner
-                            </MenuItem>
-                            <MenuItem value="user">
-                              user
-                            </MenuItem>
-                          </Select>
-                        )
-                        : row.role}
-                    </TableCell>
-                    <TableCell className={classes.cell}>
-                      {selected === `${row.id}`
-                        ? (
-                          <Select
-                            className={classes.cell}
-                            value={clickedRow.is_active}
-                            onChange={this.changeSelect("is_active")}
-                          >
-                            <MenuItem value={1}>
-                              Yes
-                            </MenuItem>
-                            <MenuItem value={0}>
-                              No
-                            </MenuItem>
-                          </Select>
-                        )
-                        : active}
-                    </TableCell>
-                    <TableCell className={classNames(classes.cell, classes.menu)}>
-                      <UserMenu
-                        handleClick={this.handleClick}
-                        handleClose={this.handleClose}
-                        handleEdit={this.handleEdit}
-                        confirmChange={this.confirmChange}
-                        open={open}
-                        selected={selected}
-                        anchorEl={anchorEl}
-                        id={row.id}
-                      />
-                    </TableCell>
-                  </TableRow>
-                )
-              })}
+              .map(row => (
+                <UserTableRow
+                  clickedRow={clickedRow}
+                  row={row}
+                  selected={selected}
+                  changeSelect={this.changeSelect}
+                  key={row.id}
+                >
+                  <UserMenu
+                    handleClick={this.handleClick}
+                    handleClose={this.handleClose}
+                    handleEdit={this.handleEdit}
+                    confirmChange={this.confirmChange}
+                    open={open}
+                    selected={selected}
+                    anchorEl={anchorEl}
+                    id={row.id}
+                  />
+                </UserTableRow>
+              ))}
             {emptyRows > 0 && (
               <TableRow style={{ height: 49 * emptyRows }}>
                 <TableCell colSpan={6} />
