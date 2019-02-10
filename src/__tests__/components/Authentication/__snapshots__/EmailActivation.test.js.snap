@@ -9,14 +9,19 @@ exports[`EmailActivation should render correctly 1`] = `
     Thank you for registration!
   </WithStyles(Typography)>
   <WithStyles(Typography)>
-    We’ve sent a verification email to 
+    We’ve sent a verification email to
+     
     email
     . Please use the link provided in the email to activate and start using your AppHooks account.
   </WithStyles(Typography)>
   <WithStyles(Typography)>
-    You can 
+    You can
+     
     <span
       onClick={[Function]}
+      onKeyDown={[Function]}
+      role="button"
+      tabIndex={0}
     >
       re-send a verification mail.
     </span>

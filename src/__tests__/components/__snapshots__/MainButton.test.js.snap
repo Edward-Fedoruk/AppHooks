@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MainButton should match snapshot 1`] = `
+<MainButton
+  className=""
+  classes={
+    Object {
+      "btn": "MainButton-btn-1",
+    }
+  }
+/>
+`;
