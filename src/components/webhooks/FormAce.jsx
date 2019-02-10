@@ -1,6 +1,8 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable import/no-extraneous-dependencies */
 import React from "react"
 import PropTypes from "prop-types"
+import brace from "brace"
 import "brace/mode/javascript"
 import "brace/theme/xcode"
 import AceEditor from "react-ace"

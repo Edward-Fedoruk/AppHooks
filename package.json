@@ -37,13 +37,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-<<<<<<< HEAD
-    "fake": "react-scripts test",
-    "test": "npm run fake -- FakeTest",
-=======
     "jest": "react-scripts test --env=node --coverage",
     "test": "npm run jest && npm run lint",
->>>>>>> fcc5d6dd65dd9969357b32707c90195578291cc8
     "lint": "eslint ./src --ext .js --ext .jsx",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",

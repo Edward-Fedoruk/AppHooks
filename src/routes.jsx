@@ -11,7 +11,7 @@ import Channel from "./components/channels/Channel"
 import AccessLogs from "./components/logs/AccessLogs"
 import SubUsers from "./components/users/SubUsers"
 import Settings from "./components/settings/Settings"
-import ProtectedRout from "./ProtectedRout"
+import ProtectedRoute from "./ProtectedRoute"
 import App from "./App"
 import WebhooksRules from "./components/webhooks/WebhooksRules"
 import Billing from "./components/billing/Billing"
@@ -19,16 +19,16 @@ import LogInfo from "./components/logs/LogInfo"
 
 const WithNavigation = () => (
   <div style={{ display: "flex" }}>
-    <ProtectedRout component={AppNavigation} />
-    <ProtectedRout path="/" exact component={App} />
-    <ProtectedRout path="/channels" exact component={Channels} />
-    <ProtectedRout path="/channels/:id" exact component={Channel} />
-    <ProtectedRout path="/logs" exact component={AccessLogs} />
-    <ProtectedRout path="/logs/:id" exact component={LogInfo} />
-    <ProtectedRout path="/webhooks" exact component={WebhooksRules} />
-    <ProtectedRout path="/billing" exact component={Billing} />
-    <ProtectedRout path="/settings" exact component={Settings} />
-    <ProtectedRout path="/users" exact component={SubUsers} />
+    <ProtectedRoute component={AppNavigation} />
+    <ProtectedRoute path="/" exact component={App} />
+    <ProtectedRoute path="/channels" exact component={Channels} />
+    <ProtectedRoute path="/channels/:id" exact component={Channel} />
+    <ProtectedRoute path="/logs" exact component={AccessLogs} />
+    <ProtectedRoute path="/logs/:id" exact component={LogInfo} />
+    <ProtectedRoute path="/webhooks" exact component={WebhooksRules} />
+    <ProtectedRoute path="/billing" exact component={Billing} />
+    <ProtectedRoute path="/settings" exact component={Settings} />
+    <ProtectedRoute path="/users" exact component={SubUsers} />
   </div>
 )
 
@@ -45,7 +45,7 @@ class Routes extends React.Component {
           <Route path="/login" exact component={LogIn} />
           <Route path="/signup" exact component={SignUp} />
           <Route path="/password" exact component={ForgetPassword} />
-          <ProtectedRout path="/resetPassword" exact component={ResetPassword} />
+          <ProtectedRoute path="/resetPassword" exact component={ResetPassword} />
           <Route path="/signup/success" exact component={EmailActivation} />
           <Route component={WithNavigation} />
         </Switch>
