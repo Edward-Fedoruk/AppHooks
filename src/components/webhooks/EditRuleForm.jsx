@@ -38,8 +38,8 @@ export class EditRuleForm extends Component {
     currentRecipe: PropTypes.func.isRequired,
   }
 
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     const { currentRecipe } = this.props
     this.state = {
       code: currentRecipe.code === null ? "" : currentRecipe.code,
