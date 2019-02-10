@@ -65,7 +65,7 @@ const EmailActivation = ({ classes, location, reSendEmail }) => {
       <Typography className={classes.p}>
         You can
         {" "}
-        <span className={classes.link} onClick={resend}>re-send a verification mail.</span>
+        <span className={classes.link} role="button" tabIndex={0} onKeyDown={resend} onClick={resend}>re-send a verification mail.</span>
       </Typography>
     </Paper>
   )
@@ -74,7 +74,7 @@ const EmailActivation = ({ classes, location, reSendEmail }) => {
 EmailActivation.propTypes = {
   reSendEmail: PropTypes.func.isRequired,
   location: PropTypes.object.isRequired,
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
 }
 
 const mapDispatchToProps = dispatch => ({
