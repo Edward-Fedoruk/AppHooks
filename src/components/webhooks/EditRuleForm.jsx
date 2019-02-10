@@ -32,10 +32,16 @@ const styles = ({ breakpoints }) => ({
 })
 
 export class EditRuleForm extends Component {
+  state = {
+    code: "",
+    input: "",
+    name: "",
+  }
+
   static propTypes = {
     classes: PropTypes.object.isRequired,
     editRule: PropTypes.func.isRequired,
-    currentRecipe: PropTypes.func.isRequired,
+    currentRecipe: PropTypes.object.isRequired,
   }
 
   constructor(props) {
@@ -51,6 +57,8 @@ export class EditRuleForm extends Component {
   codeChange = code => this.setState({ code })
 
   nameChange = e => this.setState({ name: e.target.value })
+
+  inputCodeChange = input => this.setState({ input })
 
   submit = () => {
     const { editRule, currentRecipe } = this.props
@@ -68,9 +76,8 @@ export class EditRuleForm extends Component {
   }
 
   render() {
-    const { classes, currentRecipe } = this.props
+    const { classes } = this.props
     const { code, input, name } = this.state
-    console.log(currentRecipe)
     return (
       <ValidatorForm onSubmit={this.submit}>
         <FormRuleName onChange={this.nameChange} value={name} />
@@ -95,7 +102,6 @@ export class EditRuleForm extends Component {
 const mapDispatchToProps = dispatch => ({
   fetchRule: data => dispatch(fetchRule(data)),
   editRule: (id, data) => dispatch(editRule(id, data)),
-
 })
 
 const mapStateToProps = ({ rules }) => ({

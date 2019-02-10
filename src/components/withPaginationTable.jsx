@@ -23,7 +23,7 @@ export default () => (WrappedComponent) => {
 
     static propTypes = {
       classes: PropTypes.object.isRequired,
-      data: PropTypes.object.isRequired,
+      data: PropTypes.array.isRequired,
       width: PropTypes.string.isRequired,
     }
 

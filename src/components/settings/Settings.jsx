@@ -32,22 +32,28 @@ export class Settings extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
     settings: PropTypes.object.isRequired,
+    deleteAccount: PropTypes.func.isRequired,
+    fetchUserSettings: PropTypes.func.isRequired,
+    error: PropTypes.object,
   }
 
-  toggleDialog = () => this.setState(({ open }) => ({ open: !open }))
-
-  handleCloseWithAction = () => {
-    this.props.deleteAccount()
-    this.toggleDialog()
+  static defaultProps = {
+    error: { message: "" },
   }
 
   componentDidMount() {
     this.props.fetchUserSettings()
   }
 
+  handleCloseWithAction = () => {
+    this.props.deleteAccount()
+    this.toggleDialog()
+  }
+
+  toggleDialog = () => this.setState(({ open }) => ({ open: !open }))
+
   render() {
     const { classes, settings, error } = this.props
-    console.log(settings)
     return (
       <Fragment>
         <ErrorSnackbar message={error.message} />

@@ -71,7 +71,7 @@ export default (WrappedComponent) => {
   )
 
   hocComponent.propTypes = {
-    width: PropTypes.object.isRequired,
+    width: PropTypes.string.isRequired,
     classes: PropTypes.object.isRequired,
   }
 

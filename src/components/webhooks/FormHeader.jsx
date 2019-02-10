@@ -27,7 +27,7 @@ const FormHeader = ({ classes, header, subHeader }) => (
     <Typography className={classes.header} variant="h1">
       {header}
     </Typography>
-    <Typography className={classes.subHead} variant="subheading">
+    <Typography className={classes.subHead} variant="subtitle1">
       {subHeader}
     </Typography>
   </div>

@@ -97,7 +97,7 @@ export const deleteRule = id => (dispatch) => {
 
   fetch(`${domain}/recipes/${id}`, settings)
     .then(response => (response.ok ? Promise.resolve() : Promise.reject()))
-    .then((response) => {
+    .then(() => {
       dispatch(deleteRuleFromStore(id))
     })
     .catch((err) => {

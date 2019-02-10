@@ -54,7 +54,7 @@ export class UsersTable extends Component {
 
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    data: PropTypes.object.isRequired,
+    data: PropTypes.array.isRequired,
     page: PropTypes.number.isRequired,
     rowsPerPage: PropTypes.number.isRequired,
     emptyRows: PropTypes.number.isRequired,

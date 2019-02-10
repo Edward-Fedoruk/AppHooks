@@ -49,7 +49,9 @@ class LogMenu extends Component {
 
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    deleteLogs: PropTypes.object.isRequired,
+    deleteLogs: PropTypes.func.isRequired,
+    id: PropTypes.number.isRequired,
+    history: PropTypes.object.isRequired,
   }
 
   toggleDialog = () => this.setState(state => ({ openDialog: !state.openDialog }))

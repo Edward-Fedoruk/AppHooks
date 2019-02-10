@@ -51,18 +51,16 @@ class RuleMenu extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
     id: PropTypes.number.isRequired,
-    deleteLogs: PropTypes.func.isRequired,
     fetchRule: PropTypes.func.isRequired,
     deleteRule: PropTypes.func.isRequired,
   }
 
-  toggleDialog = () => this.setState(state => ({ openDialog: !state.openDialog }))
-
+  toggleDialog = () => this.setState(state => ({ openDialog: !state.openDialog }), this.handleClose)
 
   handleCloseWithAction = () => {
-    const { id, deleteLogs } = this.props
+    const { id, deleteRule } = this.props
     this.toggleDialog()
-    deleteLogs([id])
+    deleteRule(id)
   }
 
   handleMenuClick = (event) => {
@@ -75,11 +73,6 @@ class RuleMenu extends Component {
   fetchRule = () => {
     const { id, fetchRule } = this.props
     fetchRule(id)
-  }
-
-  deleteRule = () => {
-    const { id, deleteRule } = this.props
-    deleteRule(id)
   }
 
   handleClose = () => {
@@ -122,7 +115,7 @@ class RuleMenu extends Component {
             <Typography noWrap color="primary">edit</Typography>
           </MenuItem>
 
-          <MenuItem onClick={this.deleteRule}>
+          <MenuItem onClick={this.toggleDialog}>
             <ListItemIcon>
               <DeleteIcon className={classes.deleteIcon} />
             </ListItemIcon>

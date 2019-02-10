@@ -136,9 +136,9 @@ const RequestInfo = ({ classes, data }) => {
           </Typography>
           <Paper className={classes.paper} elevation={0}>
             {Object.entries(requestData.headers).map(([key, value]) => (
-              <Typography color="primary" className={classes.headerName}>
+              <Typography key={key} color="primary" className={classes.headerName}>
                 {key}
-:
+                :
                 <span className={classes.key}>{value}</span>
               </Typography>
             ))}
@@ -163,6 +163,7 @@ const RequestInfo = ({ classes, data }) => {
 
 RequestInfo.propTypes = {
   classes: PropTypes.object.isRequired,
+  data: PropTypes.object.isRequired,
 }
 
 export default withStyles(styles)(RequestInfo)

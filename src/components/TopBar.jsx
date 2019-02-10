@@ -84,11 +84,15 @@ export const TopBar = ({
   )
 }
 
+TopBar.defaultProps = {
+  children: "",
+}
+
 TopBar.propTypes = {
   classes: PropTypes.object.isRequired,
   title: PropTypes.string.isRequired,
   toggleMenu: PropTypes.func.isRequired,
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
   width: PropTypes.string.isRequired,
 }
 

@@ -64,10 +64,15 @@ const ErrorSnackbar = ({
   </Snackbar>
 )
 
+ErrorSnackbar.defaultProps = {
+  className: "",
+  message: "",
+}
+
 ErrorSnackbar.propTypes = {
   classes: PropTypes.object.isRequired,
-  className: PropTypes.string.isRequired,
-  message: PropTypes.string.isRequired,
+  className: PropTypes.string,
+  message: PropTypes.string,
   toggleSnackbar: PropTypes.func.isRequired,
   snackbar: PropTypes.bool.isRequired,
 }

@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import axios from "axios"
 
 export const domain = "https://app.develop.apphooks.io"

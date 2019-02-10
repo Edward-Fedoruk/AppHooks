@@ -8,7 +8,6 @@ import { Scrollbars } from "react-custom-scrollbars"
 import { styles } from "./RequestInfo"
 
 const ResponseInfo = ({ classes, data }) => {
-  console.log(data)
   const requestData = data.response
   return (
     <Paper className={classes.root}>
@@ -52,9 +51,9 @@ const ResponseInfo = ({ classes, data }) => {
           </Typography>
           <Paper className={classes.paper} elevation={0}>
             {Object.entries(requestData.headers).map(([key, value]) => (
-              <Typography color="primary" className={classes.headerName}>
+              <Typography key={key} color="primary" className={classes.headerName}>
                 {key}
-:
+                :
                 <span className={classes.key}>{value}</span>
               </Typography>
             ))}
@@ -79,6 +78,7 @@ const ResponseInfo = ({ classes, data }) => {
 
 ResponseInfo.propTypes = {
   classes: PropTypes.object.isRequired,
+  data: PropTypes.object.isRequired,
 }
 
 export default withStyles(styles)(ResponseInfo)

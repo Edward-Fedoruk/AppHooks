@@ -1,6 +1,5 @@
-import React, { Component, Fragment } from "react"
+import React, { Fragment } from "react"
 import PropTypes from "prop-types"
-import { connect } from "react-redux"
 import { withStyles } from "@material-ui/core"
 import BillingTable from "./BillingTable"
 import withNavigation from "../withNavigation"
@@ -21,30 +20,17 @@ const styles = ({ breakpoints }) => ({
   },
 })
 
-export class Billing extends Component {
-  static propTypes = {
-    prop: PropTypes,
-  }
+const Billing = ({ classes }) => (
+  <Fragment>
+    <TopBar title="Plan & Billing" />
+    <div className={classes.contentWrap}>
+      <BillingTable />
+    </div>
+  </Fragment>
+)
 
-  render() {
-    const { classes } = this.props
-    return (
-      <Fragment>
-        <TopBar title="Plan & Billing" />
-        <div className={classes.contentWrap}>
-          <BillingTable />
-        </div>
-      </Fragment>
-    )
-  }
+Billing.propTypes = {
+  classes: PropTypes.object.isRequired,
 }
 
-const mapStateToProps = state => ({
-
-})
-
-const mapDispatchToProps = {
-
-}
-
-export default withNavigation(withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(Billing)))
+export default withNavigation(withStyles(styles)(Billing))

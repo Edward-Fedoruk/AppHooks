@@ -34,7 +34,11 @@ export class AddUser extends Component {
 
   static propTypes = {
     classes: PropTypes.object.isRequired,
+    inviteUser: PropTypes.func.isRequired,
+    inviteError: PropTypes.string.isRequired,
   }
+
+  email = React.createRef()
 
   onSubmit = (e) => {
     e.preventDefault()
@@ -44,9 +48,6 @@ export class AddUser extends Component {
   }
 
   onChange = input => e => this.setState({ [input]: e.target.value })
-
-  handleBlur = event => this.refs[event.target.name].validate(event.target.value)
-
 
   render() {
     const { classes, inviteError } = this.props
@@ -60,16 +61,14 @@ export class AddUser extends Component {
             variant="outlined"
             label="Add new sub-user"
             name="email"
-            ref="email"
+            ref={this.email}
             margin="none"
             placeholder="e.g., carl@cloud.ci"
             onChange={this.onChange("email")}
-            onBlur={this.handleBlur}
             className={classes.textField}
             value={this.state.email}
             validators={["required", "isEmail"]}
             errorMessages={["this field is required", "email is not valid"]}
-            on
           />
           <Button type="submit" className={classes.add} variant="outlined" color="primary" size="large">Add</Button>
         </ValidatorForm>

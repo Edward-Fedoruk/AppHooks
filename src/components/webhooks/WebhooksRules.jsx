@@ -63,9 +63,8 @@ export class WebhooksRules extends Component {
     fetchRules: PropTypes.func.isRequired,
     recipes: PropTypes.array.isRequired,
     toggleEdit: PropTypes.func.isRequired,
-    editRuleForm: PropTypes.func.isRequired,
+    editRuleForm: PropTypes.bool.isRequired,
   }
-
 
   componentDidMount() {
     // eslint-disable-next-line react/destructuring-assignment

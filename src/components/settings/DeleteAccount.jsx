@@ -4,8 +4,6 @@ import Typography from "@material-ui/core/Typography"
 import { withStyles } from "@material-ui/core"
 import Cancel from "@material-ui/icons/Cancel"
 import { compose } from "redux"
-import { connect } from "react-redux"
-import { changeUserPassword } from "../../actions/user"
 
 const styles = ({ breakpoints }) => ({
   settingsWrap: {
@@ -71,7 +69,7 @@ const DeleteAccount = ({ classes, openDialog }) => (
           Danger Zone
       </Typography>
     </div>
-    <div onClick={openDialog} className={classes.settingsWrap}>
+    <div onClick={openDialog} tabIndex={0} role="button" onKeyDown={openDialog} className={classes.settingsWrap}>
       <Typography className={classes.field} variant="body2">This is a permanent action and cant’t be undone.</Typography>
       <div className={classes.delWrap}>
         <Cancel className={classes.deleteIcon} />
@@ -85,6 +83,7 @@ const DeleteAccount = ({ classes, openDialog }) => (
 
 DeleteAccount.propTypes = {
   classes: PropTypes.object.isRequired,
+  openDialog: PropTypes.func.isRequired,
 }
 
 export default compose(

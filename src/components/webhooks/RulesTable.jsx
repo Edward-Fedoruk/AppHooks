@@ -25,7 +25,7 @@ RulesTable.defaultProps = {
 }
 
 RulesTable.propTypes = {
-  data: PropTypes.number.isRequired,
+  data: PropTypes.array.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
   page: PropTypes.number.isRequired,
   emptyRows: PropTypes.number,
