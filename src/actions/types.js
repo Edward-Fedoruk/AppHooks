@@ -34,6 +34,7 @@ export const SET_USER = "SET_USER"
 export const ADD_USER = "ADD_USER"
 export const INVITE_ERROR = "INVITE_ERROR"
 export const DELETE_USER = "DELETE_USER"
+export const CHANGE_USER_PRIVILEGES = "CHANGE_USER_PRIVILAGES"
 
 // webhooks rules
 export const SET_RULES = "SET_RULES"

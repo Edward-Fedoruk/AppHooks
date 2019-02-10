@@ -33,6 +33,11 @@ export default (state = initialState, action) => {
       ...state,
       users: state.users.filter(({ id }) => id !== action.id),
     }
+  case types.CHANGE_USER_PRIVILEGES:
+    return {
+      ...state,
+      users: state.users.map(user => (user.id === action.userData.id ? action.userData : user)),
+    }
   default:
     return state
   }

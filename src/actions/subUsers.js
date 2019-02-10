@@ -1,6 +1,7 @@
 import { domain, setFetchSettings } from "./utils"
 import * as types from "./types"
 import { toggleSnackbar } from "./ui"
+import axios from "./utils"
 
 export const setUsers = users => ({
   type: types.SET_USERS,
@@ -25,6 +26,11 @@ export const throwInviteError = err => ({
 export const removeUserFromStore = id => ({
   type: types.DELETE_USER,
   id,
+})
+
+export const changeUserInStore = userData => ({
+  type: types.CHANGE_USER_PRIVILEGES,
+  userData,
 })
 
 export const fetchUsers = () => (dispatch) => {
@@ -82,6 +88,17 @@ export const deleteUser = id => (dispatch) => {
     .then((response) => {
       console.log(response.data)
       dispatch(removeUserFromStore(id))
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+}
+
+export const updateSubUser = (id, data) => (dispatch) => {
+  console.log(id, data)
+  axios.put(`/users/${id}`, data)
+    .then(({ data }) => {
+      dispatch(changeUserInStore(data.data))
     })
     .catch((error) => {
       console.log(error)
