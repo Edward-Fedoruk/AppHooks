@@ -20,6 +20,14 @@ const theme = createMuiTheme({
     useNextVariants: true,
   },
 
+  overrides: {
+    MuiFormLabel: { // Name of the component ⚛️ / style sheet
+      root: { // Name of the rule
+        color: "#828CB8", // Some CSS
+      },
+    },
+  },
+
   props: {
     // withWidth component ⚛️
     MuiWithWidth: {
