@@ -4,13 +4,13 @@ html, body {
 
 .slick-initialized {
   width: 100%;
-  max-width: 676px
+  max-width: 56.4vw
 }
 
 @media only screen and (max-width: 1280px) {
   .slick-initialized {
     width: 100%;
-    max-width: 53vw
+    max-width: 56.4vw
   }
 }
 

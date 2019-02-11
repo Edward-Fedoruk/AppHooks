@@ -1,21 +1,27 @@
 import React from "react"
 import Table from "@material-ui/core/Table"
 import TableBody from "@material-ui/core/TableBody"
-import TableCell from "@material-ui/core/TableCell"
 import TableHead from "@material-ui/core/TableHead"
-import TableRow from "@material-ui/core/TableRow"
 import { withStyles } from "@material-ui/core"
 import Typography from "@material-ui/core/Typography"
 import PropTypes from "prop-types"
+import TableRow from "../TableRow"
+import TableCell from "../TableCell"
 import { ReactComponent as BillingChart } from "../../assets/BillingChart.svg"
 
 const styles = ({ breakpoints }) => ({
   tableRoot: {
-    minWidth: "240px",
-    maxWidth: "250px",
+    minWidth: "200px",
+    maxWidth: "200px",
 
     [breakpoints.down(600)]: {
-      minWidth: "155px",
+      minWidth: "140px",
+    },
+  },
+
+  headCell: {
+    [breakpoints.down(600)]: {
+      padding: "4px 20px",
     },
   },
 
@@ -27,7 +33,7 @@ const styles = ({ breakpoints }) => ({
   },
 
   chartIcon: {
-    marginBottom: "42px",
+    marginBottom: "41px",
   },
 
   privilege: {
@@ -56,17 +62,15 @@ const BillingTableMenu = ({ classes }) => (
   <Table classes={{ root: classes.tableRoot }}>
     <TableHead>
       <TableRow>
-        <TableCell>
-          <Typography className={classes.plan} variant="h3">
-            Account Plan
-          </Typography>
+        <TableCell className={classes.headCell}>
+          <Typography className={classes.plan} variant="h3">Account Plan</Typography>
           <BillingChart className={classes.chartIcon} />
         </TableCell>
       </TableRow>
     </TableHead>
     <TableBody>
-      {privileges.map((privilege, i) => (
-        <TableRow key={i}>
+      {privileges.map(privilege => (
+        <TableRow key={privilege}>
           <TableCell padding="none">
             <Typography className={classes.privilege} color="primary">{privilege}</Typography>
           </TableCell>

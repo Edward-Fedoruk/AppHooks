@@ -1,16 +1,17 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 import React from "react"
 import PropTypes from "prop-types"
 import Table from "@material-ui/core/Table"
 import TableBody from "@material-ui/core/TableBody"
-import TableCell from "@material-ui/core/TableCell"
 import TableHead from "@material-ui/core/TableHead"
-import TableRow from "@material-ui/core/TableRow"
 import { withStyles } from "@material-ui/core"
 import Paper from "@material-ui/core/Paper"
 import AllInclusive from "@material-ui/icons/AllInclusive"
 import Check from "@material-ui/icons/Check"
 import Typography from "@material-ui/core/Typography"
 import Button from "@material-ui/core/Button"
+import TableRow from "../TableRow"
+import TableCell from "../TableCell"
 
 const styles = ({ breakpoints, palette }) => ({
   planName: {
@@ -83,9 +84,7 @@ const BillingTablePlan = ({
               $
               {price}
             </Typography>
-            <Typography className={classes.caption} align="center" variant="caption">
-              per month
-            </Typography>
+            <Typography className={classes.caption} align="center" variant="caption">per month</Typography>
             {active
               ? <Typography gutterBottom className={classes.currentPlan} color="primary" variant="h6">Your plan</Typography>
               : <Button size="small" className={classes.upgrade} color="primary" variant="outlined">Upgrade</Button>}

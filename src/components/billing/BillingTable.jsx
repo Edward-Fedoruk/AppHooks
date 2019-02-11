@@ -23,14 +23,14 @@ const styles = () => ({
 export class BillingTable extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    package: PropTypes.string,
+    package: PropTypes.string.isRequired,
+    userPackage: PropTypes.string.isRequired,
   }
 
   checkActive = plan => plan.toLowerCase() === this.props.userPackage.toLowerCase()
 
   render() {
-    const { classes, userPackage } = this.props
-    console.log(userPackage)
+    const { classes } = this.props
     return (
       <Paper elevation={0} className={classes.tableWrap}>
         <BillingTableMenu />
