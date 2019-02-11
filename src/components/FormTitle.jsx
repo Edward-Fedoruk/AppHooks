@@ -3,17 +3,17 @@ import PropTypes from "prop-types"
 import Typography from "@material-ui/core/Typography"
 import { withStyles } from "@material-ui/core/styles"
 
-const styles = () => ({
+const styles = ({ palette }) => ({
   title: {
     fontWeight: "500",
     fontSize: "25px",
-    color: "#5A5B5F",
+    color: palette.primary.main,
     marginBottom: "25px",
   },
 
   p: {
     fontSize: "16px",
-    color: "#7C7D81",
+    color: palette.primary.main,
   },
 })
 

@@ -9,7 +9,7 @@ import AceEditor from "react-ace"
 import Typography from "@material-ui/core/Typography"
 import { withStyles } from "@material-ui/core"
 
-const styles = ({ breakpoints }) => ({
+const styles = ({ breakpoints, palette }) => ({
   area: {
     width: "49%",
     height: "100%",
@@ -26,13 +26,17 @@ const styles = ({ breakpoints }) => ({
     borderRadius: "3px",
   },
 
+  label: {
+    color: palette.primary.main,
+  },
+
 })
 
 const FormAce = ({
   classes, caption, code, onChange,
 }) => (
   <div className={classes.area}>
-    <Typography variant="caption">{caption}</Typography>
+    <Typography className={classes.label} variant="caption">{caption}</Typography>
     <AceEditor
       className={classes.editor}
       mode="javascript"

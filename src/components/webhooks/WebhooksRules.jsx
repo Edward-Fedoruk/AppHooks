@@ -13,8 +13,8 @@ import { fetchRules } from "../../actions/rules"
 import { toggleEditForm as toggleEdit } from "../../actions/ui"
 import CreateRuleForm from "./CreateRuleForm"
 import EditRuleForm from "./EditRuleForm"
-import FormHeader from "./FormHeader"
 import MainButton from "../MainButton"
+import FormTitle from "../FormTitle"
 
 const styles = ({ breakpoints }) => ({
   contentWrap: {
@@ -90,9 +90,9 @@ export class WebhooksRules extends Component {
           toggleDialog={this.toggleDialog}
         >
           <div className={classes.formWrap}>
-            <FormHeader
-              header="Create WebHook Rule"
-              subHeader="Create a WebHook Rule. You can create as many rules as you need."
+            <FormTitle
+              title="Create WebHook Rule"
+              paragraph="Create a WebHook Rule. You can create as many rules as you need."
             />
             <CreateRuleForm />
           </div>
@@ -103,14 +103,13 @@ export class WebhooksRules extends Component {
           toggleDialog={toggleEdit}
         >
           <div className={classes.formWrap}>
-            <FormHeader
-              header="Edit WebHook Rule"
-              subHeader="You can create as many rules as you need."
+            <FormTitle
+              title="Edit WebHook Rule"
+              paragraph="You can create as many rules as you need."
             />
             <EditRuleForm />
           </div>
         </FormDrawer>
-        {console.log(this.toggleEditDialog)}
         <div className={classes.contentWrap}>
           {recipes.length
             ? <RulesTable data={recipes} />
