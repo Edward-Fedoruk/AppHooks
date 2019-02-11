@@ -1,10 +1,10 @@
 import React, { Component } from "react"
 import PropTypes from "prop-types"
 import TableBody from "@material-ui/core/TableBody"
-import TableCell from "@material-ui/core/TableCell"
-import TableRow from "@material-ui/core/TableRow"
 import Checkbox from "@material-ui/core/Checkbox"
 import { withStyles } from "@material-ui/core"
+import TableCell from "../TableCell"
+import TableRow from "../TableRow"
 import LogMenu from "./LogMenu"
 
 const styles = ({ palette }) => ({
@@ -96,14 +96,15 @@ class AccessTableBody extends Component {
 
 
 AccessTableBody.propTypes = {
-  data: PropTypes.array,
-  order: PropTypes.string,
-  orderBy: PropTypes.string,
-  page: PropTypes.number,
-  rowsPerPage: PropTypes.number,
-  emptyRows: PropTypes.number,
-  isSelected: PropTypes.func,
-  handleClick: PropTypes.func,
+  data: PropTypes.array.isRequired,
+  order: PropTypes.string.isRequired,
+  orderBy: PropTypes.string.isRequired,
+  page: PropTypes.number.isRequired,
+  rowsPerPage: PropTypes.number.isRequired,
+  emptyRows: PropTypes.number.isRequired,
+  isSelected: PropTypes.func.isRequired,
+  handleClick: PropTypes.func.isRequired,
+  classes: PropTypes.object.isRequired,
 }
 
 export default withStyles(styles)(AccessTableBody)

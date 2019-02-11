@@ -1,22 +1,16 @@
 import React from "react"
 import PropTypes from "prop-types"
 import Gravatar from "react-gravatar"
-import TableRow from "@material-ui/core/TableRow"
-import TableCell from "@material-ui/core/TableCell"
 import { withStyles } from "@material-ui/core/styles"
 import classNames from "classnames"
 import Select from "@material-ui/core/Select"
 import MenuItem from "@material-ui/core/MenuItem"
+import TableCell from "../TableCell"
+import TableRow from "../TableRow"
 
-const styles = ({ palette }) => ({
+const styles = () => ({
   avatar: { padding: "0 0 0 10px" },
   menu: { padding: "0" },
-
-  cell: {
-    color: palette.primary.main,
-    fontSize: "16px",
-    transition: "all 3s",
-  },
 
   gravatar: {
     borderRadius: "50%",

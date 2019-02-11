@@ -35,11 +35,12 @@ class LogsTable extends Component {
   }
 
   static propTypes = {
-    classes: PropTypes.object,
-    data: PropTypes.array,
-    rowsPerPage: PropTypes.number,
-    page: PropTypes.number,
-    emptyRows: PropTypes.number,
+    classes: PropTypes.object.isRequired,
+    data: PropTypes.array.isRequired,
+    rowsPerPage: PropTypes.number.isRequired,
+    page: PropTypes.number.isRequired,
+    emptyRows: PropTypes.number.isRequired,
+    deleteLogs: PropTypes.func.isRequired,
   }
 
   toggleDialog = () => this.setState(state => ({ openDialog: !state.openDialog }))
@@ -62,7 +63,7 @@ class LogsTable extends Component {
 
   handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      this.setState(state => ({ selected: this.props.data.map(n => n.id) }))
+      this.setState(() => ({ selected: this.props.data.map(n => n.id) }))
       return
     }
     this.setState({ selected: [] })

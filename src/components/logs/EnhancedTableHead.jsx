@@ -1,12 +1,12 @@
 import React from "react"
 import TableSortLabel from "@material-ui/core/TableSortLabel"
 import TableHead from "@material-ui/core/TableHead"
-import TableCell from "@material-ui/core/TableCell"
-import TableRow from "@material-ui/core/TableRow"
 import Tooltip from "@material-ui/core/Tooltip"
 import Checkbox from "@material-ui/core/Checkbox"
 import PropTypes from "prop-types"
 import { withStyles } from "@material-ui/core"
+import TableRow from "../TableRow"
+import TableCell from "../TableCell"
 
 const rows = [
   {
@@ -29,7 +29,7 @@ const rows = [
   },
 ]
 
-const styles = ({ palette }) => ({
+const styles = () => ({
   headerCell: {
     color: "#192B7F",
     fontWeight: "bold",
@@ -96,6 +96,7 @@ EnhancedTableHead.propTypes = {
   order: PropTypes.string.isRequired,
   orderBy: PropTypes.string.isRequired,
   rowCount: PropTypes.number.isRequired,
+  classes: PropTypes.object.isRequired,
 }
 
 export default withStyles(styles)(EnhancedTableHead)
