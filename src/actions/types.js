@@ -3,6 +3,7 @@ export const NAV_BAR = "NAV_BAR"
 export const TOGGLE_SNACKBAR = "TOGGLE_SNACKBAR"
 export const CHANGE_STAGE = "CHANGE_STAGE"
 export const TOGGLE_EDIT_RULE_FORM = "TOGGLE_EDIT_RULE_FORM"
+export const TOGGLE_BILLING_FORM = "TOGGLE_BILLING_FORM"
 
 // user authentication
 export const AUTH_ERROR = "AUTH_ERROR"

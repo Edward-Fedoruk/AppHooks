@@ -34,6 +34,14 @@ const styles = ({ breakpoints }) => ({
       display: "block",
     },
   },
+
+  formWrap: {
+    padding: "20px 13vw",
+
+    [breakpoints.down(768)]: {
+      padding: "20px 10vw",
+    },
+  },
 })
 
 function Transition(props) {
@@ -56,7 +64,9 @@ export const FormDrawer = ({
     >
       <Close />
     </IconButton>
-    {children}
+    <div className={classes.formWrap}>
+      {children}
+    </div>
   </Dialog>
 )
 
