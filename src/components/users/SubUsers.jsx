@@ -3,21 +3,29 @@ import PropTypes from "prop-types"
 import { connect } from "react-redux"
 import { compose } from "redux"
 import { withStyles } from "@material-ui/core"
+import Typography from "@material-ui/core/Typography"
 import UsersTable from "./UsersTable"
 import withNavigation from "../withNavigation"
 import TopBar from "../TopBar"
 import { fetchUsers } from "../../actions/subUsers"
 import AddUser from "./AddUser"
 
-const styles = ({ breakpoints }) => ({
+const styles = () => ({
   contentWrap: {
     padding: "20px 26px 20px 13px",
+  },
+
+  hint: {
+    fontWeight: "300",
+    fontSize: "14px",
   },
 })
 
 export class SubUsers extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
+    users: PropTypes.array.isRequired,
+    fetchUsers: PropTypes.func.isRequired,
   }
 
   componentDidMount() {
@@ -26,11 +34,11 @@ export class SubUsers extends Component {
 
   render() {
     const { classes, users } = this.props
-    console.log(users)
     return (
       <Fragment>
         <TopBar title="Sub-Users" />
         <div className={classes.contentWrap}>
+          <Typography gutterBottom className={classes.hint}>Sub-users can view an app’s stats, debug console, app settings and app keys.</Typography>
           <UsersTable data={users} />
           <AddUser />
         </div>
