@@ -89,26 +89,26 @@ export class WebhooksRules extends Component {
           open={open}
           toggleDialog={this.toggleDialog}
         >
-          <div className={classes.formWrap}>
+          <Fragment>
             <FormTitle
               title="Create WebHook Rule"
               paragraph="Create a WebHook Rule. You can create as many rules as you need."
             />
             <CreateRuleForm />
-          </div>
+          </Fragment>
         </FormDrawer>
 
         <FormDrawer
           open={editRuleForm}
           toggleDialog={toggleEdit}
         >
-          <div className={classes.formWrap}>
+          <Fragment>
             <FormTitle
               title="Edit WebHook Rule"
               paragraph="You can create as many rules as you need."
             />
             <EditRuleForm />
-          </div>
+          </Fragment>
         </FormDrawer>
         <div className={classes.contentWrap}>
           {recipes.length
