@@ -10,8 +10,11 @@ import AllInclusive from "@material-ui/icons/AllInclusive"
 import Check from "@material-ui/icons/Check"
 import Typography from "@material-ui/core/Typography"
 import Button from "@material-ui/core/Button"
+import { compose } from "redux"
+import { connect } from "react-redux"
 import TableRow from "../TableRow"
 import TableCell from "../TableCell"
+import { toggleBillingForm } from "../../actions/ui"
 
 const styles = ({ breakpoints, palette }) => ({
   planName: {
@@ -71,6 +74,7 @@ const BillingTablePlan = ({
   classes, planName, price,
   concurrent, messages, support,
   ssl, monitoring, channels, active,
+  toggleBillingForm,
 }) => (
   <Paper elevation={0} className={active ? classes.active : ""}>
     <Table>
@@ -87,7 +91,7 @@ const BillingTablePlan = ({
             <Typography className={classes.caption} align="center" variant="caption">per month</Typography>
             {active
               ? <Typography gutterBottom className={classes.currentPlan} color="primary" variant="h6">Your plan</Typography>
-              : <Button size="small" className={classes.upgrade} color="primary" variant="outlined">Upgrade</Button>}
+              : <Button size="small" onClick={toggleBillingForm} className={classes.upgrade} color="primary" variant="outlined">Upgrade</Button>}
           </TableCell>
         </TableRow>
       </TableHead>
@@ -156,6 +160,14 @@ BillingTablePlan.propTypes = {
   monitoring: PropTypes.bool.isRequired,
   channels: PropTypes.bool.isRequired,
   active: PropTypes.bool.isRequired,
+  toggleBillingForm: PropTypes.func.isRequired,
 }
 
-export default withStyles(styles)(BillingTablePlan)
+const mapDispatchToProps = {
+  toggleBillingForm,
+}
+
+export default compose(
+  withStyles(styles),
+  connect(null, mapDispatchToProps)
+)(BillingTablePlan)
