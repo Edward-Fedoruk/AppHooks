@@ -62,14 +62,29 @@ class SignUp extends Component {
 
   static propTypes = {
     createUser: PropTypes.func.isRequired,
-    match: PropTypes.object.isRequired,
-    location: PropTypes.object.isRequired,
     history: PropTypes.object.isRequired,
+    classes: PropTypes.object.isRequired,
+    errors: PropTypes.object.isRequired,
+  }
+
+  email = React.createRef()
+
+  password = React.createRef()
+
+  phone = React.createRef()
+
+  componentDidMount() {
+    ValidatorForm.addValidationRule("isPhoneValid", (phone) => {
+      const phoneRe = /(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})/
+      if (phoneRe.test(phone)) return true
+      return false
+    })
   }
 
   onSubmit = (e) => {
     e.preventDefault()
-    this.props.createUser(this.state, this.props.history)
+    const userData = { ...this.state, package_id: 1 }
+    this.props.createUser(userData, this.props.history)
   }
 
   onSuccess = response => console.log(response)
@@ -80,18 +95,10 @@ class SignUp extends Component {
     console.log(recaptchaToken)
   }
 
-  handleBlur = event => this.refs[event.target.name].validate(event.target.value)
+  handleBlur = event => this[event.target.name].current.validate(event.target.value)
 
 
   onChange = input => e => this.setState({ [input]: e.target.value })
-
-  componentDidMount() {
-    ValidatorForm.addValidationRule("isPhoneValid", (phone) => {
-      const phoneRe = /(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})/
-      if (phoneRe.test(phone)) return true
-      return false
-    })
-  }
 
   render() {
     const { classes, errors } = this.props
@@ -115,7 +122,7 @@ class SignUp extends Component {
             FormHelperTextProps={{ error: true }}
             label="Enter your email"
             name="email"
-            ref="email"
+            ref={this.email}
             autoFocus
             placeholder="e.g., carl@cloud.ci"
             onChange={this.onChange("email")}
@@ -134,7 +141,7 @@ class SignUp extends Component {
             FormHelperTextProps={{ error: true }}
             label="+(41 20)-123-4567"
             name="phone"
-            ref="phone"
+            ref={this.phone}
             placeholder="phone number"
             onChange={this.onChange("phone")}
             onBlur={this.handleBlur}
@@ -159,7 +166,7 @@ class SignUp extends Component {
             value={this.state.password}
             margin="normal"
             name="password"
-            ref="password"
+            ref={this.password}
             validators={["required", "minStringLength:6", "maxStringLength:16"]}
             errorMessages={["this field is required", "password must contain at least 6 characters", "password must contain no more then 16 characters"]}
           />
@@ -176,16 +183,11 @@ class SignUp extends Component {
             verifyCallback={this.verifyCallback}
           /> */}
 
-          <Typography className={classes.privacy}>
-            You agree to the AppHooks Terms of Servise and Privacy Policy
-          </Typography>
+          <Typography className={classes.privacy}>You agree to the AppHooks Terms of Servise and Privacy Policy</Typography>
 
           <Typography className={classes.signLink}>
-            Already have an account?
-            <span />
-            <Link style={{ color: "blue" }} to="/login">
-              Login
-            </Link>
+            <span>Already have an account? </span>
+            <Link style={{ color: "blue" }} to="/login">Login</Link>
           </Typography>
         </ValidatorForm>
       </Paper>

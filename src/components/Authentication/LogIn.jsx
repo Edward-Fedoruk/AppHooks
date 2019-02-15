@@ -1,4 +1,5 @@
 import React, { Component } from "react"
+import PropTypes from "prop-types"
 import { withStyles } from "@material-ui/core/styles"
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator"
 import Paper from "@material-ui/core/Paper"
@@ -6,7 +7,7 @@ import Typography from "@material-ui/core/Typography"
 import { Link } from "react-router-dom"
 import { compose } from "redux"
 import { connect } from "react-redux"
-import { withRouter } from "react-router"
+import { withRouter } from "react-router-dom"
 import SocialAuthentication from "./SocialAuthentication"
 import FormTitle from "./FormTitle"
 import SubmitButton from "./SubmitButton"
@@ -20,7 +21,7 @@ const flexCenter = {
   alignItems: "center",
 }
 
-const styles = ({ breakpoints, spacing }) => ({
+const styles = ({ breakpoints }) => ({
   paper: {
     width: "30%",
     height: "min-content",
@@ -59,10 +60,22 @@ const styles = ({ breakpoints, spacing }) => ({
 })
 
 class LogIn extends Component {
+  static propTypes = {
+    classes: PropTypes.object.isRequired,
+    logInError: PropTypes.bool.isRequired,
+    logInErrorMessage: PropTypes.string.isRequired,
+    logIn: PropTypes.func.isRequired,
+    history: PropTypes.object.isRequired,
+  }
+
   state = {
     email: "",
     password: "",
   }
+
+  email = React.createRef()
+
+  password = React.createRef()
 
   onSuccess = response => console.log(response)
 
@@ -70,12 +83,15 @@ class LogIn extends Component {
 
   onSubmit = (e) => {
     e.preventDefault()
-    this.props.logIn(this.state, this.props.history)
+    const { logIn, history } = this.props
+    logIn(this.state, history)
   }
 
   onChange = input => e => this.setState({ [input]: e.target.value })
 
-  handleBlur = event => this.refs[event.target.name].validate(event.target.value)
+  handleBlur = (event) => {
+    this[event.target.name].current.validate(event.target.value)
+  }
 
   render() {
     const { classes, logInError, logInErrorMessage } = this.props
@@ -103,7 +119,7 @@ class LogIn extends Component {
             variant="outlined"
             label="Enter your email"
             name="email"
-            ref="email"
+            ref={this.email}
             autoFocus
             placeholder="e.g., carl@cloud.ci"
             onChange={this.onChange("email")}
@@ -127,25 +143,20 @@ class LogIn extends Component {
             value={this.state.password}
             margin="normal"
             name="password"
-            ref="password"
+            ref={this.password}
             validators={["required", "minStringLength:6", "maxStringLength:16"]}
             errorMessages={["this field is required", "password must contain at least 6 characters", "password must contain no more then 16 characters"]}
           />
 
           <Typography className={classes.remindLink}>
-            <Link style={{ color: "blue" }} to="/password">
-              Forgot password?
-            </Link>
+            <Link style={{ color: "blue" }} to="/password">Forgot password?</Link>
           </Typography>
 
           <SubmitButton text="Log in" />
 
           <Typography className={classes.signLink}>
-            Don"t have an account?
-            <span />
-            <Link style={{ color: "blue" }} to="/signup">
-              Sign Up
-            </Link>
+            <span>Don`t have an account? </span>
+            <Link style={{ color: "blue" }} to="/signup">Sign Up</Link>
           </Typography>
         </ValidatorForm>
       </Paper>
@@ -154,7 +165,7 @@ class LogIn extends Component {
 }
 
 
-const mapStateToProps = ({ authentication, view }) => ({
+const mapStateToProps = ({ authentication }) => ({
   logInError: authentication.logInError,
   logInErrorMessage: authentication.logInErrorMessage,
 })
