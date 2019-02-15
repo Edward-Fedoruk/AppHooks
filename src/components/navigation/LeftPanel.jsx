@@ -1,6 +1,5 @@
-import React, { Component } from "react"
+import React from "react"
 import PropTypes from "prop-types"
-import { connect } from "react-redux"
 import { withStyles } from "@material-ui/core/styles"
 import AddCircle from "@material-ui/icons/AddCircle"
 import IconButton from "@material-ui/core/IconButton"
@@ -18,12 +17,12 @@ const iconsGroup = {
   flexWrap: "wrap",
 }
 
-const styles = ({ breakpoints }) => ({
+const styles = () => ({
   paper: {
     background: "#192B81",
     minWidth: "73px",
     maxWidth: "88px",
-    width: "7%",
+    width: "6%",
     height: "100vh",
     paddingTop: "13px",
     zIndex: "1300",
@@ -38,19 +37,9 @@ const styles = ({ breakpoints }) => ({
     justifyContent: "center",
   },
 
-  topIcons: iconsGroup,
-
-  logoIcon: {
-    width: "100%",
-  },
-
   addCircleWrap: {
     marginTop: "45px",
     color: "#d1d5e6",
-  },
-
-  addCircle: {
-    fontSize: "35px",
   },
 
   bottomIcons: {
@@ -59,63 +48,43 @@ const styles = ({ breakpoints }) => ({
     marginTop: "25px",
   },
 
-  questionMarkWrap: {
-    marginBottom: "20px",
-  },
+  topIcons: iconsGroup,
+  logoIcon: { width: "100%" },
+  addCircle: { fontSize: "35px" },
+  questionMarkWrap: { marginBottom: "20px" },
+  questionMark: { height: "35px" },
+  userWrap: { marginBottom: "33px" },
 
-  questionMark: {
-    height: "35px",
-  },
-
-  userWrap: {
-    marginBottom: "33px",
-  },
 })
 
-export class LeftPanel extends Component {
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-  }
+const LeftPanel = ({ classes }) => (
+  <div className={classes.paper}>
+    <Scrollbars>
+      <div className={classes.iconsWrap}>
+        <div className={classes.topIcons}>
+          <LogoIcon className={classes.logoIcon} />
 
-  openSettings = () => this.props.history.push("/settings")
+          <IconButton className={classes.addCircleWrap}>
+            <AddCircle className={classes.addCircle} />
+          </IconButton>
+        </div>
+        <div className={classes.bottomIcons}>
+          <IconButton className={classes.questionMarkWrap}>
+            <QuestionMark className={classes.questionMark} />
+          </IconButton>
 
-  render() {
-    const { classes } = this.props
-    return (
-      <div className={classes.paper}>
-        <Scrollbars>
-          <div className={classes.iconsWrap}>
-            <div className={classes.topIcons}>
-              <LogoIcon className={classes.logoIcon} />
-
-              <IconButton className={classes.addCircleWrap}>
-                <AddCircle className={classes.addCircle} />
-              </IconButton>
-            </div>
-            <div className={classes.bottomIcons}>
-              <IconButton className={classes.questionMarkWrap}>
-                <QuestionMark className={classes.questionMark} />
-              </IconButton>
-
-              <UserIcon className={classes.userWrap} />
-            </div>
-          </div>
-        </Scrollbars>
+          <UserIcon className={classes.userWrap} />
+        </div>
       </div>
-    )
-  }
-}
+    </Scrollbars>
+  </div>
+)
 
-const mapStateToProps = state => ({
-
-})
-
-const mapDispatchToProps = {
-
+LeftPanel.propTypes = {
+  classes: PropTypes.object.isRequired,
 }
 
 export default compose(
   withStyles(styles),
   withRouter,
-  connect(mapStateToProps, mapDispatchToProps)
 )(LeftPanel)

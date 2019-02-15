@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import React from "react"
 import PropTypes from "prop-types"
 import { withStyles } from "@material-ui/core/styles"
 import List from "@material-ui/core/List"
@@ -32,7 +32,7 @@ const styles = ({ transitions, breakpoints }) => ({
 
   navWrap: {
     height: "100%",
-    width: "71%",
+    width: "74%",
     position: "absolute",
     right: "0",
     transition: transitions.create("right", {
@@ -75,85 +75,27 @@ const styles = ({ transitions, breakpoints }) => ({
 
 })
 
-export class RightPanel extends Component {
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-    location: PropTypes.object.isRequired,
-  }
+const RightPanel = ({ classes }) => (
+  <div className={classes.navWrap}>
+    <Typography align="left" component="h1" className={classes.appName}>Apphooks</Typography>
+    <div className={classes.navigation}>
+      <Scrollbars>
+        <List className={classes.listItems}>
+          <NavListItem path="/" Icon={Dashboard} itemText="Dashboard" exact />
+          <NavListItem path="/channels" Icon={ExitToApp} itemText="Channels" />
+          <NavListItem path="/webhooks" Icon={NewReleases} itemText="Webhooks Rules" />
+          <NavListItem path="/users" Icon={GroupAdd} itemText="Sub-Users" />
+          <NavListItem path="/logs" Icon={DateRange} itemText="Access Logs" />
+          <NavListItem path="/billing" Icon={AccountBalanceWallet} itemText="Billing" />
+        </List>
+      </Scrollbars>
+    </div>
+  </div>
+)
 
-  render() {
-    const { classes, location } = this.props
-
-    return (
-      <div className={classes.navWrap}>
-        <Typography
-          align="left"
-          component="h1"
-          className={classes.appName}
-        >
-          Apphooks
-        </Typography>
-        <div className={classes.navigation}>
-          <Scrollbars>
-
-            <List className={classes.listItems}>
-              <NavListItem
-                path="/"
-                currentPath={location.pathname}
-                Icon={Dashboard}
-                itemText="Dashboard"
-                exact
-              />
-
-              <NavListItem
-                path="/channels"
-                currentPath={location.pathname}
-                Icon={ExitToApp}
-                itemText="Channels"
-                exact={false}
-              />
-
-              <NavListItem
-                path="/webhooks"
-                currentPath={location.pathname}
-                Icon={NewReleases}
-                itemText="Webhooks Rules"
-                exact={false}
-              />
-
-              <NavListItem
-                path="/users"
-                currentPath={location.pathname}
-                Icon={GroupAdd}
-                itemText="Sub-Users"
-                exact={false}
-              />
-
-              <NavListItem
-                path="/logs"
-                currentPath={location.pathname}
-                Icon={DateRange}
-                itemText="Access Logs"
-                exact={false}
-              />
-
-              <NavListItem
-                path="/billing"
-                currentPath={location.pathname}
-                Icon={AccountBalanceWallet}
-                itemText="Billing"
-                exact={false}
-              />
-
-            </List>
-
-          </Scrollbars>
-        </div>
-      </div>
-    )
-  }
+RightPanel.propTypes = {
+  classes: PropTypes.object.isRequired,
 }
-
 
 const mapStateToProps = ({ view }) => ({
   open: view.open,
