@@ -12,7 +12,7 @@ const styles = ({ breakpoints }) => ({
   form: {
     display: "flex",
     alignItems: "stretch",
-    margin: "22px 0 0 62px",
+    margin: "22px auto 10px 10px",
 
     [breakpoints.down(375)]: {
       margin: "22px 0 0 0",
