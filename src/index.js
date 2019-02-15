@@ -15,7 +15,7 @@ const store = configureStore()
 
 
 ReactDOM.render(
-  <StripeProvider apiKey="pk_test_qMst2t2l3YbB2OQJh40wE3eq">
+  <StripeProvider apiKey={process.env.REACT_APP_STRIPE_KEY}>
     <MuiThemeProvider theme={theme}>
       <CssBaseline />
       <Provider store={store}>

@@ -62,14 +62,12 @@ const SocialAuthentication = ({
       className={classes.gitHubBtn}
       onSuccess={onSuccess}
       onFailure={onFailure}
-      clientId="ece43ff6f0052f0666c4"
+      clientId={process.env.REACT_APP_OAUTH2_GITHUB_CLIENT_ID}
     >
       <GitHub className={classes.buttonsIcon} />
-      { text }
-      {" "}
-with github
+      {text}
+      <span>with github</span>
     </GitHubLogin>
-
     <GoogleLogin
       className={classes.googleBtn}
       icon={false}
@@ -77,13 +75,12 @@ with github
       onSuccess={onSuccess}
       onFailure={onFailure}
       style={{}}
-      clientId="618395372364-bfhsfau7jtp6tocvjim89je1o98r6ve0.apps.googleusercontent.com"
+      clientId={process.env.REACT_APP_OAUTH2_GOOGLE_CLIENT_ID}
     >
       <div className={classes.flexCenter}>
         <Google className={classes.buttonsIcon} />
         { text }
-        {" "}
-with Google
+        <span>with Google</span>
       </div>
     </GoogleLogin>
   </React.Fragment>
@@ -93,6 +90,7 @@ SocialAuthentication.propTypes = {
   onSuccess: PropTypes.func.isRequired,
   onFailure: PropTypes.func.isRequired,
   text: PropTypes.string.isRequired,
+  classes: PropTypes.object.isRequired,
 }
 
 export default withStyles(styles)(SocialAuthentication)
