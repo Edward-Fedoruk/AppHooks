@@ -4,12 +4,13 @@ import { connect } from "react-redux"
 import { withStyles } from "@material-ui/core/styles"
 import Drawer from "@material-ui/core/Drawer"
 import withWidth from "@material-ui/core/withWidth"
+import { compose } from "redux"
 import LeftPanel from "./LeftPanel"
 import RightPanel from "./RightPanel"
 import { toggleNavBar } from "../../actions/ui"
 import { fetchUserSettings } from "../../actions/user"
 
-const styles = ({ transitions, breakpoints }) => ({
+const styles = ({ breakpoints }) => ({
   drawerPaper: {
     background: "#192B81",
     display: "flex",
@@ -21,7 +22,7 @@ const styles = ({ transitions, breakpoints }) => ({
 
 
     [breakpoints.down(600)]: {
-      minWidth: "200px",
+      minWidth: "220px",
     },
   },
 
@@ -42,21 +43,20 @@ const styles = ({ transitions, breakpoints }) => ({
 class AppNavigation extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
+    open: PropTypes.bool.isRequired,
+    toggleNavBar: PropTypes.func.isRequired,
+    width: PropTypes.string.isRequired,
+    fetchUserSettings: PropTypes.func.isRequired,
   }
 
   componentDidMount() {
     this.props.fetchUserSettings()
   }
 
-  toggleDrawer = () => {
-    this.setState({ open: !this.state.open })
-  }
-
   render() {
     const {
       classes, open, toggleNavBar, width,
     } = this.props
-    console.log(width)
     const downMd = width === "sm" || width === "xs"
     return (
       <div>
@@ -87,4 +87,8 @@ const mapDispatchToProps = {
   fetchUserSettings,
 }
 
-export default withWidth()(withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(AppNavigation)))
+export default compose(
+  withWidth(),
+  withStyles(styles),
+  connect(mapStateToProps, mapDispatchToProps)
+)(AppNavigation)
