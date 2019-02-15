@@ -10,9 +10,16 @@ import TopBar from "../TopBar"
 import { fetchUsers } from "../../actions/subUsers"
 import AddUser from "./AddUser"
 
-const styles = () => ({
+const styles = ({ breakpoints }) => ({
   contentWrap: {
     padding: "20px 26px 20px 13px",
+
+    [breakpoints.down(768)]: {
+      padding: "20px 15px 5px 15px",
+    },
+    [breakpoints.down(600)]: {
+      padding: "10px 0px 5px 0px",
+    },
   },
 
   hint: {

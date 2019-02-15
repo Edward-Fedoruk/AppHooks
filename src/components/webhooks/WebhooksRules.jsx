@@ -24,12 +24,10 @@ const styles = ({ breakpoints }) => ({
     [breakpoints.down(768)]: {
       padding: "20px 15px 5px 15px",
     },
-  },
+    [breakpoints.down(600)]: {
+      padding: "10px 0px 5px 0px",
+    },
 
-  placeholder: {
-    margin: "auto",
-    marginTop: "170px",
-    width: "545px",
   },
 
   newRule: {
@@ -67,7 +65,6 @@ export class WebhooksRules extends Component {
   }
 
   componentDidMount() {
-    // eslint-disable-next-line react/destructuring-assignment
     this.props.fetchRules()
   }
 
@@ -78,7 +75,6 @@ export class WebhooksRules extends Component {
       classes, recipes, toggleEdit, editRuleForm,
     } = this.props
     const { open } = this.state
-    console.log(recipes)
     return (
       <Fragment>
         <TopBar title="WebHooks Rules">
@@ -117,7 +113,6 @@ export class WebhooksRules extends Component {
               <Placeholder
                 imgSrc={webhooks}
                 title="Here should be WebHooks rules."
-                className={classes.placeholder}
               />
             )}
         </div>

@@ -10,22 +10,25 @@ import withNavigation from "../withNavigation"
 import TopBar from "../TopBar"
 import { fetchRequests } from "../../actions/requestLogs"
 
-const styles = () => ({
-  placeholder: {
-    margin: "auto",
-    marginTop: "170px",
-  },
-
+const styles = ({ breakpoints }) => ({
   contentWrap: {
     padding: "20px 26px 20px 13px",
     overflowX: "hidden",
+
+    [breakpoints.down(768)]: {
+      padding: "20px 15px 5px 15px",
+    },
+    [breakpoints.down(600)]: {
+      padding: "10px 0px 5px 0px",
+    },
   },
 })
 
 export class AccessLogs extends Component {
   static propTypes = {
-    data: PropTypes.array,
+    data: PropTypes.array.isRequired,
     classes: PropTypes.object.isRequired,
+    fetchRequests: PropTypes.object.isRequired,
   }
 
   componentDidMount() {
@@ -48,7 +51,6 @@ export class AccessLogs extends Component {
               <Placeholder
                 title="Log Viewer is empty"
                 imgSrc={logs}
-                className={classes.placeholder}
               />
             )}
         </div>
