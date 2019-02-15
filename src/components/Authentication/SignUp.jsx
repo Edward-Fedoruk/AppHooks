@@ -7,7 +7,7 @@ import { Link } from "react-router-dom"
 import { connect } from "react-redux"
 import { compose } from "redux"
 import PropTypes from "prop-types"
-import { withRouter } from "react-router"
+import { withRouter } from "react-router-dom"
 import { createUser } from "../../actions/auth"
 import SubmitButton from "./SubmitButton"
 import FromTitle from "./FormTitle"
@@ -23,7 +23,6 @@ const styles = ({ breakpoints }) => ({
     maxWidth: "450px",
     padding: "34px 34px 27px 34px",
     marginTop: "6%",
-    boxShadow: "2px 4px 50px rgba(0, 0, 0, 0.25)",
 
     [breakpoints.down(500)]: {
       width: "100%",
@@ -104,7 +103,7 @@ class SignUp extends Component {
     const { classes, errors } = this.props
 
     return (
-      <Paper className={classes.paper}>
+      <Paper elevation={0} className={classes.paper}>
         <SocialAuthentication
           text="sign up"
           onSuccess={this.onFailure}

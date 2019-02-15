@@ -17,13 +17,14 @@ const styles = () => ({
 })
 
 const SubmitButton = ({
-  classes, text, styles, className = {},
+  classes, text, styles, className,
 }) => (
   <Button
     fullWidth
     variant="text"
     color="primary"
     type="submit"
+    size="large"
     className={classNames(classes.logIn, className)}
     style={styles}
   >
@@ -31,6 +32,10 @@ const SubmitButton = ({
   </Button>
 )
 
+SubmitButton.defaultProps = {
+  className: {},
+  styles: {},
+}
 
 SubmitButton.propTypes = {
   text: PropTypes.string.isRequired,

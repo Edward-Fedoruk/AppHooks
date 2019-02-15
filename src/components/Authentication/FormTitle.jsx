@@ -9,12 +9,6 @@ const styles = () => ({
     marginBottom: "15px",
   },
 
-  line: {
-    width: "100%",
-    height: "1px",
-    backgroundColor: "#DADADA",
-  },
-
   formTitle: {
     textTransform: "uppercase",
     color: "#8E8F93",
@@ -27,19 +21,19 @@ const styles = () => ({
     right: "50%",
     transform: "translate(50%, -50%)",
     textAlign: "center",
-    width: "max-content",
+    width: "100%",
   },
 })
 
 const FormTitle = ({ classes, text }) => (
   <div className={classes.formTitleWrap}>
-    <div className={classes.line} />
     <Typography className={classes.formTitle}>{ text }</Typography>
   </div>
 )
 
 FormTitle.propTypes = {
   text: PropTypes.string.isRequired,
+  classes: PropTypes.object.isRequired,
 }
 
 export default withStyles(styles)(FormTitle)
