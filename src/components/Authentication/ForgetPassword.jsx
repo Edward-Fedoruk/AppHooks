@@ -6,7 +6,7 @@ import Typography from "@material-ui/core/Typography"
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator"
 import { connect } from "react-redux"
 import { compose } from "redux"
-import { withRouter } from "react-router"
+import { withRouter } from "react-router-dom"
 import { paperStyles, titleStyles } from "./formStyles"
 import SubmitButton from "./SubmitButton"
 import { reSendEmail } from "../../actions/auth"
@@ -50,33 +50,35 @@ class ForgetPassword extends React.Component {
 
   static propTypes = {
     reSendEmail: PropTypes.func.isRequired,
+    classes: PropTypes.object.isRequired,
+    resendError: PropTypes.func.isRequired,
+    history: PropTypes.object.isRequired,
+    resendErrorMessage: PropTypes.func.isRequired,
   }
+
+  email = React.createRef()
 
   onChange = input => e => this.setState({ [input]: e.target.value })
 
-  handleBlur = event => this.refs[event.target.name].validate(event.target.value)
+  handleBlur = event => this[event.target.name].current.validate(event.target.value)
 
   onSubmit = (e) => {
     e.preventDefault()
-    console.log(this.props, this.props.history)
-    this.props.reSendEmail(this.state, this.props.history)
+    const { history, reSendEmail } = this.props
+    reSendEmail(this.state, history)
   }
 
   render() {
     const { classes, resendError, resendErrorMessage } = this.props
     return (
-      <Paper className={classes.paper}>
+      <Paper elevation={0} className={classes.paper}>
         <ErrorSnackbar
           variant="error"
           message={resendErrorMessage}
         />
 
-        <Typography className={classes.title} variant="h3" align="center">
-          Forgot your password?
-        </Typography>
-        <Typography className={classes.p} align="left">
-          We’ve got you covered
-        </Typography>
+        <Typography className={classes.title} variant="h3" align="center">Forgot your password?</Typography>
+        <Typography className={classes.p} align="left">We’ve got you covered</Typography>
 
         <ValidatorForm onSubmit={this.onSubmit} instantValidate={false}>
           <TextValidator
@@ -84,7 +86,7 @@ class ForgetPassword extends React.Component {
             variant="outlined"
             label="Enter your email"
             name="email"
-            ref="email"
+            ref={this.email}
             autoFocus
             placeholder="e.g., carl@cloud.ci"
             onChange={this.onChange("email")}
@@ -96,9 +98,7 @@ class ForgetPassword extends React.Component {
             errorMessages={["this field is required", "email is not valid"]}
           />
 
-          <SubmitButton
-            text="Send reset instructions"
-          />
+          <SubmitButton text="Send reset instructions" />
         </ValidatorForm>
       </Paper>
     )

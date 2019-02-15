@@ -1,8 +1,9 @@
 import React from "react"
 import withWidth from "@material-ui/core/withWidth"
 import { withStyles } from "@material-ui/core"
+import PropTypes from "prop-types"
 import { ReactComponent as Logo } from "../../assets/Logo.svg"
-import { ReactComponent as LogoIcon } from "../../assets/LogoIcon.svg"
+import { ReactComponent as LogoIcon } from "../../assets/BlueLogoIcon.svg"
 
 const styles = ({ breakpoints }) => ({
   formWrap: {
@@ -15,9 +16,9 @@ const styles = ({ breakpoints }) => ({
 
     [breakpoints.down(500)]: {
       alignItems: "flex-end",
+      background: "#fff",
     },
     [breakpoints.down(800)]: {
-      paddingTop: "30px",
     },
   },
 
@@ -44,20 +45,20 @@ const styles = ({ breakpoints }) => ({
 })
 
 const withBackground = (Component) => {
-  class HOC extends Component {
-    render() {
-      const { width, classes } = this.props
-      return (
-        <div className={classes.formWrap}>
-          {width === "xs"
-            ? <LogoIcon className={classes.pageLogo} />
-            : <Logo className={classes.pageLogo} />}
+  const HOC = ({ width, classes }) => (
+    <div className={classes.formWrap}>
+      {width === "xs"
+        ? <LogoIcon className={classes.pageLogo} />
+        : <Logo className={classes.pageLogo} />}
 
-          <Component />
+      <Component />
 
-        </div>
-      )
-    }
+    </div>
+  )
+
+  HOC.propTypes = {
+    width: PropTypes.string.isRequired,
+    classes: PropTypes.object.isRequired,
   }
 
   return withWidth()(withStyles(styles)(HOC))

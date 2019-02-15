@@ -29,7 +29,6 @@ const styles = ({ breakpoints }) => ({
     maxWidth: "450px",
     padding: "34px 34px 27px 34px",
     marginTop: "7%",
-    boxShadow: "2px 4px 50px rgba(0, 0, 0, 0.25)",
 
     [breakpoints.down(500)]: {
       width: "100%",
@@ -96,7 +95,7 @@ class LogIn extends Component {
   render() {
     const { classes, logInError, logInErrorMessage } = this.props
     return (
-      <Paper className={classes.paper}>
+      <Paper elevation={0} className={classes.paper}>
 
         <ErrorSnackbar
           variant="error"

@@ -32,6 +32,7 @@ const styles = () => ({
     background: "linear-gradient(180deg, #303030 0%, #171717 100%)",
     marginBottom: "15px",
     border: "none",
+    boxShadow: "none",
 
     "&:focus": {
       border: "none",
@@ -42,7 +43,7 @@ const styles = () => ({
   googleBtn: {
     ...externalLogBtn,
     borderRadius: "6px !important",
-    boxShadow: "2px 4px 10px rgba(0, 0, 0, 0.15) !important",
+    boxShadow: "none !important",
     color: "#fff !important",
     fontSize: "16px !important",
     background: "linear-gradient(180deg, #00A1F1 0%, #4285F4 100%)",
