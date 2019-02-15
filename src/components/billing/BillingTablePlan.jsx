@@ -85,24 +85,19 @@ const BillingTablePlan = ({
               {planName}
             </Typography>
             <Typography className={classes.price} align="center" variant="subtitle1">
-              $
-              {price}
+              ${price}
             </Typography>
             <Typography className={classes.caption} align="center" variant="caption">per month</Typography>
             {active
               ? <Typography gutterBottom className={classes.currentPlan} color="primary" variant="h6">Your plan</Typography>
-              : <Button size="small" onClick={toggleBillingForm} className={classes.upgrade} color="primary" variant="outlined">Upgrade</Button>}
+              : <Button size="small" onClick={() => toggleBillingForm(price)} className={classes.upgrade} color="primary" variant="outlined">Upgrade</Button>}
           </TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
         <TableRow>
           <TableCell>
-            <Typography
-              align="center"
-              className={classes.privilege}
-              color="primary"
-            >
+            <Typography align="center" className={classes.privilege} color="primary">
               {concurrent}
             </Typography>
           </TableCell>
@@ -114,22 +109,14 @@ const BillingTablePlan = ({
         </TableRow>
         <TableRow>
           <TableCell>
-            <Typography
-              align="center"
-              className={classes.privilege}
-              color="primary"
-            >
+            <Typography align="center" className={classes.privilege} color="primary">
               {messages}
             </Typography>
           </TableCell>
         </TableRow>
         <TableRow>
           <TableCell>
-            <Typography
-              align="center"
-              className={classes.privilege}
-              color="primary"
-            >
+            <Typography align="center" className={classes.privilege} color="primary">
               {support}
             </Typography>
           </TableCell>
@@ -163,9 +150,9 @@ BillingTablePlan.propTypes = {
   toggleBillingForm: PropTypes.func.isRequired,
 }
 
-const mapDispatchToProps = {
-  toggleBillingForm,
-}
+const mapDispatchToProps = dispatch => ({
+  toggleBillingForm: price => dispatch(toggleBillingForm(price)),
+})
 
 export default compose(
   withStyles(styles),

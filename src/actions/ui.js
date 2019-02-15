@@ -12,8 +12,9 @@ export const toggleEditForm = () => ({
   type: types.TOGGLE_EDIT_RULE_FORM,
 })
 
-export const toggleBillingForm = () => ({
+export const toggleBillingForm = price => ({
   type: types.TOGGLE_BILLING_FORM,
+  price,
 })
 
 export const changeStage = stage => ({

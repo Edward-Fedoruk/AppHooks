@@ -23,7 +23,6 @@ const styles = () => ({
 export class BillingTable extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    package: PropTypes.string.isRequired,
     userPackage: PropTypes.string.isRequired,
   }
 

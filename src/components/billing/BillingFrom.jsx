@@ -1,9 +1,12 @@
-import React, { Component } from "react"
+/* eslint-disable react/jsx-one-expression-per-line */
+import React, { Component, Fragment } from "react"
 import PropTypes from "prop-types"
 import { injectStripe, CardElement } from "react-stripe-elements"
 import { withStyles } from "@material-ui/core"
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator"
 import FormHelperText from "@material-ui/core/FormHelperText"
+import { connect } from "react-redux"
+import { compose } from "redux"
 import MainButton from "../MainButton"
 
 const styles = () => ({
@@ -51,6 +54,7 @@ const createOptions = fontSize => ({
 export class BillingFrom extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
+    price: PropTypes.number.isRequired,
   }
 
   state = {
@@ -64,14 +68,15 @@ export class BillingFrom extends Component {
 
   changeCard = ({ error }) => this.setState({ errorMessage: error ? error.message : "" })
 
-  submit = () => {
+  submit = (e) => {
+    e.preventDefault()
   }
 
   render() {
     const {
       name, city, email, errorMessage,
     } = this.state
-    const { classes } = this.props
+    const { classes, price } = this.props
     return (
       <ValidatorForm onSubmit={this.submit}>
         <TextValidator
@@ -118,10 +123,20 @@ export class BillingFrom extends Component {
           />
           <FormHelperText error className={classes.helperText}>{errorMessage}</FormHelperText>
         </div>
-        <MainButton type="submit" className={classes.btn}>Pay</MainButton>
+        <MainButton type="submit" className={classes.btn}>
+          <Fragment>Pay ${price}</Fragment>
+        </MainButton>
       </ValidatorForm>
     )
   }
 }
 
-export default injectStripe(withStyles(styles)(BillingFrom))
+const mapStateToProps = ({ view }) => ({
+  price: view.billingPrice,
+})
+
+export default compose(
+  injectStripe,
+  withStyles(styles),
+  connect(mapStateToProps),
+)(BillingFrom)

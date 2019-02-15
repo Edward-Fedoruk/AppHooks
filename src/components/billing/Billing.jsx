@@ -55,9 +55,9 @@ const mapStateToProps = ({ view }) => ({
   openBilling: view.billingForm,
 })
 
-const mapDispatchToProps = {
-  toggleBillingForm,
-}
+const mapDispatchToProps = dispatch => ({
+  toggleBillingForm: () => dispatch(toggleBillingForm(0)),
+})
 
 export default compose(
   withNavigation,

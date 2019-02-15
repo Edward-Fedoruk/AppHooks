@@ -6,6 +6,7 @@ const initialState = {
   currentStage: 0,
   editRuleForm: false,
   billingForm: false,
+  billingPrice: 0,
 }
 
 export default (state = initialState, action) => {
@@ -19,7 +20,12 @@ export default (state = initialState, action) => {
   case types.TOGGLE_EDIT_RULE_FORM:
     return { ...state, editRuleForm: !state.editRuleForm }
   case types.TOGGLE_BILLING_FORM:
-    return { ...state, billingForm: !state.billingForm }
+    console.log(action.price)
+    return {
+      ...state,
+      billingPrice: action.price,
+      billingForm: !state.billingForm,
+    }
   default:
     return state
   }

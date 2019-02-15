@@ -42,12 +42,13 @@ const MainButton = (props) => {
 
 MainButton.defaultProps = {
   className: "",
+  children: "",
 }
 
 MainButton.propTypes = {
   classes: PropTypes.object.isRequired,
   className: PropTypes.string,
-  children: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
+  children: PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.number]),
 }
 
 export default withStyles(styles)(MainButton)
