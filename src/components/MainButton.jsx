@@ -18,7 +18,7 @@ const styles = ({ breakpoints }) => ({
 
     [breakpoints.down(425)]: {
       fontSize: "12px",
-      padding: "8px 7px",
+      padding: "8px 10px",
     },
   },
 })
