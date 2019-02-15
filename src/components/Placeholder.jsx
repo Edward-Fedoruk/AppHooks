@@ -4,26 +4,36 @@ import Typography from "@material-ui/core/Typography"
 import classNames from "classnames"
 import PropTypes from "prop-types"
 
-const styles = () => ({
+const styles = ({ breakpoints }) => ({
   placeholder: {
-    width: "500px",
+    width: "100%",
     display: "flex",
     flexWrap: "wrap",
     alignItems: "center",
     justifyContent: "center",
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
   },
 
   subtitle: {
     color: "#3049B5",
-
     fontSize: "15px",
+
+    [breakpoints.down(600)]: {
+      fontSize: "10px",
+    },
   },
 
   title: {
     color: "#5D6AA8",
-
     fontSize: "25px",
     fontWeight: "300",
+
+    [breakpoints.down(600)]: {
+      fontSize: "20px",
+    },
   },
 
   textButton: {
@@ -39,25 +49,30 @@ const styles = () => ({
   wrap: {
     display: "flex",
     flexWrap: "wrap",
-    width: "65%",
+    width: "auto",
     marginLeft: "10px",
   },
 })
 
 const Placeholder = ({
-  classes, title, subtitle, button, className, imgSrc,
+  classes, title, subtitle, button, className, imgSrc, children,
 }) => (
   <div className={classNames(classes.placeholder, className)}>
     <img src={imgSrc} alt="stages" />
     <div className={classes.wrap}>
       <Typography variant="h5" className={classes.title}>{ title }</Typography>
-      <Typography variant="subtitle2" className={classes.subtitle}>
-        { subtitle }
-        <span className={classes.textButton}>
-          {" "}
-          { button }
-        </span>
-      </Typography>
+      {subtitle
+        ? (
+          <Typography variant="subtitle2" className={classes.subtitle}>
+            { subtitle }
+            <span className={classes.textButton}>
+              {" "}
+              { button }
+            </span>
+          </Typography>
+        )
+        : ""}
+      {children}
     </div>
   </div>
 )
@@ -67,6 +82,7 @@ Placeholder.defaultProps = {
   subtitle: "",
   button: "",
   className: "",
+  children: "",
 }
 
 Placeholder.propTypes = {
@@ -76,6 +92,7 @@ Placeholder.propTypes = {
   button: PropTypes.string,
   className: PropTypes.string,
   imgSrc: PropTypes.string.isRequired,
+  children: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
 }
 
 export default withStyles(styles)(Placeholder)
