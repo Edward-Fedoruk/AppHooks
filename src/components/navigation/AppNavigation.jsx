@@ -17,7 +17,7 @@ const styles = ({ breakpoints }) => ({
     flexWrap: "wrap",
     width: "23vw",
     maxWidth: "306px",
-    minWidth: "250px",
+    minWidth: "270px",
     overflow: "hidden",
 
 

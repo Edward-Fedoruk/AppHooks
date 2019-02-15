@@ -4,7 +4,6 @@ import LogIn from "./components/Authentication/LogIn"
 import SignUp from "./components/Authentication/SignUp"
 import EmailActivation from "./components/Authentication/EmailActivation"
 import ForgetPassword from "./components/Authentication/ForgetPassword"
-import ResetPassword from "./components/Authentication/ResetPassword"
 import AppNavigation from "./components/navigation/AppNavigation"
 import Channels from "./components/channels/Channels"
 import Channel from "./components/channels/Channel"
@@ -45,7 +44,6 @@ class Routes extends React.Component {
           <Route path="/login" exact component={LogIn} />
           <Route path="/signup" exact component={SignUp} />
           <Route path="/password" exact component={ForgetPassword} />
-          <ProtectedRoute path="/resetPassword" exact component={ResetPassword} />
           <Route path="/signup/success" exact component={EmailActivation} />
           <Route component={WithNavigation} />
         </Switch>
