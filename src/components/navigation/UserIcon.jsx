@@ -9,9 +9,9 @@ import { compose } from "redux"
 
 const styles = () => ({
   user: {
-    height: "45px",
+    height: "35px",
     borderRadius: "50%",
-    width: "45px",
+    width: "35px",
   },
 })
 
@@ -27,10 +27,15 @@ const UserIcon = ({
   )
 }
 
+UserIcon.defaultProps = {
+  className: "",
+}
+
 UserIcon.propTypes = {
   classes: PropTypes.object.isRequired,
   className: PropTypes.string,
   history: PropTypes.object.isRequired,
+  email: PropTypes.string.isRequired,
 }
 
 const mapStateToProps = ({ userSettings }) => ({
