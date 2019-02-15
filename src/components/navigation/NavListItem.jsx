@@ -3,9 +3,13 @@ import PropTypes from "prop-types"
 import ListItem from "@material-ui/core/ListItem"
 import ListItemIcon from "@material-ui/core/ListItemIcon"
 import ListItemText from "@material-ui/core/ListItemText"
-import { matchPath } from "react-router"
+import { matchPath } from "react-router-dom"
 import { Link } from "react-router-dom"
 import { withStyles } from "@material-ui/core"
+import { withRouter } from "react-router-dom"
+import { connect } from "react-redux"
+import { compose } from "redux"
+import { toggleNavBar } from "../../actions/ui"
 
 const itemTextStyles = {
   color: "rgba(255, 255, 255, 0.7)",
@@ -33,9 +37,9 @@ const styles = () => ({
 })
 
 const NavListItem = ({
-  path, currentPath, Icon, classes, itemText, exact,
+  path, Icon, classes, itemText, exact, location, toggleNavBar,
 }) => {
-  const match = matchPath(currentPath, { path, exact, strict: false })
+  const match = matchPath(location.pathname, { path, exact, strict: false })
 
   return (
     <ListItem
@@ -43,6 +47,7 @@ const NavListItem = ({
       component={Link}
       to={path}
       selected={match !== null}
+      onClick={toggleNavBar}
       button
     >
       <ListItemIcon
@@ -64,11 +69,26 @@ const NavListItem = ({
   )
 }
 
-NavListItem.propTypes = {
-  path: PropTypes.string,
-  currentPath: PropTypes.string,
-  classes: PropTypes.object,
-  exact: PropTypes.bool,
+NavListItem.defaultProps = {
+  exact: false,
 }
 
-export default withStyles(styles)(NavListItem)
+NavListItem.propTypes = {
+  path: PropTypes.string.isRequired,
+  classes: PropTypes.object.isRequired,
+  exact: PropTypes.bool,
+  itemText: PropTypes.string.isRequired,
+  location: PropTypes.object.isRequired,
+  Icon: PropTypes.node.isRequired,
+  toggleNavBar: PropTypes.func.isRequired,
+}
+
+const mapDispatchToProps = {
+  toggleNavBar,
+}
+
+export default compose(
+  withStyles(styles),
+  withRouter,
+  connect(null, mapDispatchToProps)
+)(NavListItem)
