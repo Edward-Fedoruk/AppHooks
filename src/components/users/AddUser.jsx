@@ -7,6 +7,7 @@ import Button from "@material-ui/core/Button"
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator"
 import { inviteUser } from "../../actions/subUsers"
 import ErrorSnackbar from "../Authentication/ErrorSnackbar"
+import { createErrorMessageSelector } from "../../actions/utils"
 
 const styles = ({ breakpoints }) => ({
   form: {
@@ -77,8 +78,10 @@ export class AddUser extends Component {
   }
 }
 
-const mapStateToProps = ({ users }) => ({
-  inviteError: users.inviteError,
+const errorSelector = createErrorMessageSelector(["INVITE_ERROR"])
+
+const mapStateToProps = ({ errorHandler }) => ({
+  inviteError: errorSelector(errorHandler),
 })
 
 const mapDispatchToProps = dispatch => ({
