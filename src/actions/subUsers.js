@@ -1,10 +1,11 @@
-import { domain, setFetchSettings } from "./utils"
+import { compose } from "redux"
+import { initiateLoading, createError } from "./utils"
 import * as types from "./types"
 import { toggleSnackbar } from "./ui"
 import axios from "./utils"
 
 export const setUsers = users => ({
-  type: types.SET_USERS,
+  type: types.SET_USERS_SUCCESS,
   users,
 })
 
@@ -19,7 +20,7 @@ export const addUser = user => ({
 })
 
 export const throwInviteError = err => ({
-  type: types.INVITE_ERROR,
+  type: types.INVITE_ERROR_FAILURE,
   err,
 })
 
@@ -34,61 +35,26 @@ export const changeUserInStore = userData => ({
 })
 
 export const fetchUsers = () => (dispatch) => {
-  const accessToken = localStorage.getItem("JWT")
-  const settings = setFetchSettings("GET", accessToken, null)
-
-  fetch(`${domain}/users`, settings)
-    .then(response => response.json().then(json => (response.ok ? Promise.resolve(json) : Promise.reject(json))))
-    .then((response) => {
-      console.log(response.data)
-      dispatch(setUsers(response.data))
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-}
-
-export const fetchUser = () => (dispatch) => {
-  const accessToken = localStorage.getItem("JWT")
-  const settings = setFetchSettings("GET", accessToken, null)
-
-  fetch(`${domain}/users`, settings)
-    .then(response => response.json().then(json => (response.ok ? Promise.resolve(json) : Promise.reject(json))))
-    .then((response) => {
-      console.log(response.data)
-      dispatch(setUsers(response.data))
-    })
+  dispatch(initiateLoading("SET_USERS"))
+  axios.get("/users")
+    .then(({ data: { data } }) => compose(dispatch, setUsers)(data))
     .catch((err) => {
       console.log(err)
     })
 }
 
 export const inviteUser = data => (dispatch) => {
-  const accessToken = localStorage.getItem("JWT")
-  const settings = setFetchSettings("POST", accessToken, JSON.stringify(data))
-
-  fetch(`${domain}/users`, settings)
-    .then(response => response.json().then(json => (response.ok ? Promise.resolve(json) : Promise.reject(json))))
-    .then((response) => {
-      console.log(response.data)
-      dispatch(addUser(response.data))
-    })
-    .catch(({ errors }) => {
-      console.log(errors)
-      dispatch(throwInviteError(errors.email[0]))
+  axios.post("/users", data)
+    .then(({ data: { data } }) => compose(dispatch, addUser)(data))
+    .catch(({ response: { data } }) => {
+      dispatch(createError("INVITE_ERROR")(data))
       dispatch(toggleSnackbar())
     })
 }
 
 export const deleteUser = id => (dispatch) => {
-  const accessToken = localStorage.getItem("JWT")
-  const settings = setFetchSettings("DELETE", accessToken, null)
-  console.log(id)
-  fetch(`${domain}/users/${id}`, settings)
-    .then((response) => {
-      console.log(response.data)
-      dispatch(removeUserFromStore(id))
-    })
+  axios.delete(`/users/${id}`)
+    .then(() => compose(dispatch, removeUserFromStore)(id))
     .catch((error) => {
       console.log(error)
     })
@@ -97,10 +63,8 @@ export const deleteUser = id => (dispatch) => {
 export const updateSubUser = (id, data) => (dispatch) => {
   console.log(id, data)
   axios.put(`/users/${id}`, data)
-    .then(({ data }) => {
-      dispatch(changeUserInStore(data.data))
-    })
-    .catch((error) => {
-      console.log(error)
+    .then(({ data: { data } }) => compose(dispatch, changeUserInStore)(data))
+    .catch(({ response: { data } }) => {
+      console.log(data)
     })
 }

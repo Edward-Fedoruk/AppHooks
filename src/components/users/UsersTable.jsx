@@ -60,10 +60,16 @@ export class UsersTable extends Component {
 
   confirmChange = () => {
     const {
-      clickedRow: {
-        name, phone, company, is_active, role, id,
-      },
+      clickedRow: { is_active, role, id },
     } = this.state
+    let {
+      clickedRow: { name, phone, company },
+    } = this.state
+
+    // will be changed with better solution
+    name = name === null ? "" : name
+    phone = phone === null ? "" : phone
+    company = company === null ? "" : company
 
     this.props.updateSubUser(id, {
       name, phone, company, is_active, role, id,
