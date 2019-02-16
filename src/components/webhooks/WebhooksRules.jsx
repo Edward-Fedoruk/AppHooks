@@ -15,6 +15,8 @@ import CreateRuleForm from "./CreateRuleForm"
 import EditRuleForm from "./EditRuleForm"
 import MainButton from "../MainButton"
 import FormTitle from "../FormTitle"
+import { createLoadingSelector } from "../../actions/utils"
+import Preloader from "../Preloader"
 
 const styles = ({ breakpoints }) => ({
   contentWrap: {
@@ -62,6 +64,7 @@ export class WebhooksRules extends Component {
     recipes: PropTypes.array.isRequired,
     toggleEdit: PropTypes.func.isRequired,
     editRuleForm: PropTypes.bool.isRequired,
+    isLoading: PropTypes.bool.isRequired,
   }
 
   componentDidMount() {
@@ -72,10 +75,11 @@ export class WebhooksRules extends Component {
 
   render() {
     const {
-      classes, recipes, toggleEdit, editRuleForm,
+      classes, recipes, toggleEdit, editRuleForm, isLoading,
     } = this.props
     const { open } = this.state
-    return (
+
+    return isLoading ? <Preloader /> : (
       <Fragment>
         <TopBar title="WebHooks Rules">
           <MainButton onClick={this.toggleDialog}>Create New Rule</MainButton>
@@ -121,9 +125,12 @@ export class WebhooksRules extends Component {
   }
 }
 
-const mapStateToProps = ({ rules, view }) => ({
+const loadingSelector = createLoadingSelector(["SET_RULES"])
+
+const mapStateToProps = ({ rules, view, preloader }) => ({
   recipes: rules.recipes,
   editRuleForm: view.editRuleForm,
+  isLoading: loadingSelector(preloader),
 })
 
 const mapDispatchToProps = {
