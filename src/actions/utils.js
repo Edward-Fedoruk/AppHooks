@@ -8,7 +8,7 @@ export const initiateLoading = loadType => ({
   type: types[`${loadType}_REQUEST`],
 })
 
-export const throwError = (loadType, error) => ({
+export const createError = loadType => error => ({
   type: types[`${loadType}_FAILURE`],
   error,
 })
