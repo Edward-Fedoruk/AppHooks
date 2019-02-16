@@ -38,7 +38,9 @@ export const DELETE_USER = "DELETE_USER"
 export const CHANGE_USER_PRIVILEGES = "CHANGE_USER_PRIVILAGES"
 
 // webhooks rules
-export const SET_RULES = "SET_RULES"
+export const SET_RULES_SUCCESS = "SET_RULES_SUCCESS"
+export const SET_RULES_REQUEST = "SET_RULES_REQUEST"
+export const SET_RULES_FAILURE = "SET_RULES_FAILURE"
 export const ADD_RULE = "ADD_RULE"
 export const SET_RULE = "SET_RULE"
 export const EDIT_RULE = "EDIT_RULE"
