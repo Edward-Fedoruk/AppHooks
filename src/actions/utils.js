@@ -1,7 +1,19 @@
 /* eslint-disable no-param-reassign */
 import axios from "axios"
+import * as types from "./types"
 
 export const domain = "https://app.develop.apphooks.io"
+
+export const initiateLoading = loadType => ({
+  type: types[`${loadType}_REQUEST`],
+})
+
+export const throwError = (loadType, error) => ({
+  type: types[`${loadType}_FAILURE`],
+  error,
+})
+
+export const createLoadingSelector = actions => state => actions.some(action => state[action])
 
 export const setFetchSettings = (method, accessToken, body) => ({
   method,
