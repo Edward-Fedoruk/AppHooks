@@ -3,12 +3,11 @@ import * as types from "../actions/types"
 const initialState = {
   users: [],
   currentUser: {},
-  inviteError: "",
 }
 
 export default (state = initialState, action) => {
   switch (action.type) {
-  case types.SET_USERS:
+  case types.SET_USERS_SUCCESS:
     return {
       ...state,
       users: action.users,
@@ -22,11 +21,6 @@ export default (state = initialState, action) => {
     return {
       ...state,
       users: [...state.users, action.user],
-    }
-  case types.INVITE_ERROR:
-    return {
-      ...state,
-      inviteError: action.err,
     }
   case types.DELETE_USER:
     return {
