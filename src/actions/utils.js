@@ -15,6 +15,11 @@ export const createError = loadType => error => ({
 
 export const createLoadingSelector = actions => state => actions.some(action => state[action])
 
+export const createErrorMessageSelector = actions => (state) => {
+  const errors = actions.map(action => state[action])
+  return errors && errors[0] ? errors[0] : ""
+}
+
 export const setFetchSettings = (method, accessToken, body) => ({
   method,
   headers: {
