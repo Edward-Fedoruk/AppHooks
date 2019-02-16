@@ -29,13 +29,14 @@ const UserIcon = ({
 
 UserIcon.defaultProps = {
   className: "",
+  email: "placeholder@gmail.com",
 }
 
 UserIcon.propTypes = {
   classes: PropTypes.object.isRequired,
   className: PropTypes.string,
   history: PropTypes.object.isRequired,
-  email: PropTypes.string.isRequired,
+  email: PropTypes.string,
 }
 
 const mapStateToProps = ({ userSettings }) => ({
