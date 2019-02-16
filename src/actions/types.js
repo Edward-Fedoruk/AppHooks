@@ -30,10 +30,12 @@ export const SET_LOG = "SET_LOG"
 export const DELETE_LOGS = "DELETE_LOGS"
 
 // sub-users
-export const SET_USERS = "SET_USERS"
+export const SET_USERS_SUCCESS = "SET_USERS_SUCCESS"
+export const SET_USERS_REQUEST = "SET_USERS_REQUEST"
+export const SET_USERS_FAILURE = "SET_USERS_FAILURE"
 export const SET_USER = "SET_USER"
 export const ADD_USER = "ADD_USER"
-export const INVITE_ERROR = "INVITE_ERROR"
+export const INVITE_ERROR_FAILURE = "INVITE_ERROR_FAILURE"
 export const DELETE_USER = "DELETE_USER"
 export const CHANGE_USER_PRIVILEGES = "CHANGE_USER_PRIVILAGES"
 
