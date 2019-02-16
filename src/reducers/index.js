@@ -8,6 +8,8 @@ import requestLogs from "./requestLogs"
 import users from "./users"
 import rules from "./rules"
 import userSettings from "./userSettings"
+import preloader from "./preloader"
+import errorHandler from "./errorHandler"
 
 export default combineReducers({
   view,
@@ -19,4 +21,6 @@ export default combineReducers({
   users,
   rules,
   userSettings,
+  preloader,
+  errorHandler,
 })
