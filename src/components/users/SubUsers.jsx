@@ -9,6 +9,8 @@ import withNavigation from "../withNavigation"
 import TopBar from "../TopBar"
 import { fetchUsers } from "../../actions/subUsers"
 import AddUser from "./AddUser"
+import Preloader from "../Preloader"
+import { createLoadingSelector } from "../../actions/utils"
 
 const styles = ({ breakpoints }) => ({
   contentWrap: {
@@ -33,6 +35,7 @@ export class SubUsers extends Component {
     classes: PropTypes.object.isRequired,
     users: PropTypes.array.isRequired,
     fetchUsers: PropTypes.func.isRequired,
+    isLoading: PropTypes.bool.isRequired,
   }
 
   componentDidMount() {
@@ -40,8 +43,8 @@ export class SubUsers extends Component {
   }
 
   render() {
-    const { classes, users } = this.props
-    return (
+    const { classes, users, isLoading } = this.props
+    return isLoading ? <Preloader /> : (
       <Fragment>
         <TopBar title="Sub-Users" />
         <div className={classes.contentWrap}>
@@ -54,8 +57,11 @@ export class SubUsers extends Component {
   }
 }
 
-const mapStateToProps = ({ users }) => ({
+const loadingSelector = createLoadingSelector(["SET_USERS"])
+
+const mapStateToProps = ({ users, preloader }) => ({
   users: users.users,
+  isLoading: loadingSelector(preloader),
 })
 
 const mapDispatchToProps = {
