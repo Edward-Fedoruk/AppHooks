@@ -2,11 +2,13 @@
 
 exports[`SubmitButton should render correctly 1`] = `
 <SubmitButton
+  className={Object {}}
   classes={
     Object {
       "logIn": "SubmitButton-logIn-1",
     }
   }
+  styles={Object {}}
   text="test"
 />
 `;
