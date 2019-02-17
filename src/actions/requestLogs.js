@@ -1,8 +1,9 @@
 import * as types from "./types"
-import { domain, setFetchSettings } from "./utils"
+import { handleResponse, handleErrorResponse, createError } from "./utils"
+import axios from "./utils"
 
 export const setLogs = logs => ({
-  type: types.SET_LOGS,
+  type: types.SET_LOGS_SUCCESS,
   logs,
 })
 
@@ -17,46 +18,24 @@ export const setLog = log => ({
 })
 
 export const fetchRequests = () => (dispatch) => {
-  const accessToken = localStorage.getItem("JWT")
-  const settings = setFetchSettings("GET", accessToken, null)
-
-  fetch(`${domain}/request-logs`, settings)
-    .then(response => response.json().then(json => (response.ok ? Promise.resolve(json) : Promise.reject(json))))
-    .then((response) => {
-      console.log(response.data)
-      dispatch(setLogs(response.data))
-    })
-    .catch((err) => {
-      console.log(err)
-    })
+  axios.get("/request-logs")
+    .then(handleResponse(dispatch, setLogs))
+    .catch(handleErrorResponse(dispatch, createError("SET_LOGS")))
 }
 
 export const deleteLogs = id => (dispatch) => {
-  const accessToken = localStorage.getItem("JWT")
   const ids = JSON.stringify({ data: id })
-  const settings = setFetchSettings("DELETE", accessToken, ids)
 
-  dispatch(deleteLogsFromStore(id))
-
-  fetch(`${domain}/request-logs`, settings)
-    .then(response => response.json().then(json => (response.ok ? Promise.resolve(json) : Promise.reject(json))))
-    .then(() => {
-      dispatch(deleteLogsFromStore(id))
-    })
+  axios.delete("/request-logs", ids)
+    .then(dispatch(deleteLogsFromStore(id)))
     .catch((err) => {
       console.log(err)
     })
 }
 
 export const fetchRequest = id => (dispatch) => {
-  const accessToken = localStorage.getItem("JWT")
-  const settings = setFetchSettings("GET", accessToken, null)
-
-  fetch(`${domain}/request-logs/${id}`, settings)
-    .then(response => response.json().then(json => (response.ok ? Promise.resolve(json) : Promise.reject(json))))
-    .then((response) => {
-      dispatch(setLog(response.data))
-    })
+  axios.get(`/request-logs/${id}`)
+    .then(handleResponse(dispatch, setLog))
     .catch((err) => {
       console.log(err)
     })
