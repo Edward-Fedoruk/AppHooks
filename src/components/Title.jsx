@@ -9,7 +9,7 @@ const titleStyles = ({ breakpoints }) => ({
     fontSize: "25px",
     textTransform: "capitalize",
     color: "#192B7F",
-    fontWeight: "bold",
+    fontWeight: "500",
 
     [breakpoints.down(425)]: {
       fontSize: "18px",
