@@ -24,7 +24,7 @@ const styles = () => ({
     maxWidth: "88px",
     width: "6%",
     height: "100vh",
-    paddingTop: "13px",
+    paddingTop: "9px",
     zIndex: "1300",
     position: "fixed",
 
