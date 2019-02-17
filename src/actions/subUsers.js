@@ -1,5 +1,5 @@
 import { compose } from "redux"
-import { initiateLoading, createError } from "./utils"
+import { initiateLoading, createError, handleResponse } from "./utils"
 import * as types from "./types"
 import { toggleSnackbar } from "./ui"
 import axios from "./utils"
@@ -37,15 +37,13 @@ export const changeUserInStore = userData => ({
 export const fetchUsers = () => (dispatch) => {
   dispatch(initiateLoading("SET_USERS"))
   axios.get("/users")
-    .then(({ data: { data } }) => compose(dispatch, setUsers)(data))
-    .catch((err) => {
-      console.log(err)
-    })
+    .then(handleResponse(dispatch, setUsers))
+    .catch(({ response: { data } }) => compose(dispatch, createError("SET_USERS"))(data))
 }
 
 export const inviteUser = data => (dispatch) => {
   axios.post("/users", data)
-    .then(({ data: { data } }) => compose(dispatch, addUser)(data))
+    .then(handleResponse(dispatch, addUser))
     .catch(({ response: { data } }) => {
       dispatch(createError("INVITE_ERROR")(data))
       dispatch(toggleSnackbar())
@@ -63,7 +61,7 @@ export const deleteUser = id => (dispatch) => {
 export const updateSubUser = (id, data) => (dispatch) => {
   console.log(id, data)
   axios.put(`/users/${id}`, data)
-    .then(({ data: { data } }) => compose(dispatch, changeUserInStore)(data))
+    .then(handleResponse(dispatch, changeUserInStore))
     .catch(({ response: { data } }) => {
       console.log(data)
     })

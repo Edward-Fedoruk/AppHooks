@@ -1,5 +1,6 @@
 /* eslint-disable no-param-reassign */
 import axios from "axios"
+import { compose } from "redux"
 import * as types from "./types"
 
 export const domain = "https://app.develop.apphooks.io"
@@ -19,6 +20,12 @@ export const createErrorMessageSelector = actions => (state) => {
   const errors = actions.map(action => state[action])
   return errors && errors[0] ? errors[0] : ""
 }
+
+const destruct = ({ data: { data } }) => data
+export const handleResponse = (dispatch, action) => compose(
+  compose(dispatch, action),
+  destruct
+)
 
 export const setFetchSettings = (method, accessToken, body) => ({
   method,
