@@ -1,5 +1,7 @@
 import * as types from "./types"
-import { handleResponse, handleErrorResponse, createError } from "./utils"
+import {
+  handleResponse, handleErrorResponse, createError, initiateLoading,
+} from "./utils"
 import axios from "./utils"
 
 export const setLogs = logs => ({
@@ -18,6 +20,8 @@ export const setLog = log => ({
 })
 
 export const fetchRequests = () => (dispatch) => {
+  dispatch(initiateLoading("SET_LOGS"))
+
   axios.get("/request-logs")
     .then(handleResponse(dispatch, setLogs))
     .catch(handleErrorResponse(dispatch, createError("SET_LOGS")))
