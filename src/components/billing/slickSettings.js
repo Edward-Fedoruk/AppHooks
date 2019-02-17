@@ -1,33 +1,32 @@
 
 const settings = {
   dots: true,
-  infinite: true,
+  infinite: false,
   speed: 500,
-  slidesToShow: 4,
+  slidesToShow: 5,
   slidesToScroll: 1,
   adaptiveHeight: true,
   arrows: false,
   responsive: [
     {
-      breakpoint: 1300,
+      breakpoint: 1560,
       settings: {
         slidesToShow: 4,
         slidesToScroll: 1,
       },
     },
     {
-      breakpoint: 1280,
+      breakpoint: 1400,
       settings: {
         slidesToShow: 3,
         slidesToScroll: 1,
       },
     },
     {
-      breakpoint: 1100,
+      breakpoint: 1220,
       settings: {
         slidesToShow: 2,
         slidesToScroll: 2,
-        initialSlide: 2,
       },
     },
     {

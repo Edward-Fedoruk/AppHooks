@@ -3,14 +3,25 @@ html, body {
 }
 
 .slick-initialized {
-  width: 100%;
-  max-width: 56.4vw
+  width: 100%
 }
 
-@media only screen and (max-width: 1280px) {
+
+@media only screen and (max-width: 1560px) {
   .slick-initialized {
-    width: 100%;
-    max-width: 56.4vw
+    width: 83%
+  }
+}
+
+@media only screen and (max-width: 1400px) {
+  .slick-initialized {
+    width: 81%
+  }
+}
+
+@media only screen and (max-width: 1220px) {
+  .slick-initialized {
+    width: 78%
   }
 }
 

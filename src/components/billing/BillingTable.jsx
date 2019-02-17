@@ -14,9 +14,8 @@ const styles = () => ({
     padding: "21px 0px 41px 0px",
     display: "flex",
     width: "100%",
-    maxWidth: "924px",
+    // maxWidth: "81vw",
     overflow: "hidden",
-    margin: "auto",
   },
 })
 
