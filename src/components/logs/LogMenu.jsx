@@ -94,7 +94,9 @@ class LogMenu extends Component {
           open={openDialog}
           handleClose={this.toggleDialog}
           handleCloseWithAction={this.handleCloseWithAction}
-        />
+        >
+          Are you shure that you want to delete this log
+        </ConfirmDialog>
 
         <Menu
           id="simple-menu"

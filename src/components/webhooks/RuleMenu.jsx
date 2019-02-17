@@ -15,7 +15,7 @@ import { withRouter } from "react-router-dom"
 import { fetchRule, deleteRule } from "../../actions/rules"
 import ConfirmDialog from "../ConfirmDialog"
 
-const styles = () => ({
+const styles = ({ palette }) => ({
   menu: {
     width: "300px",
   },
@@ -37,7 +37,7 @@ const styles = () => ({
 
   cancel: { color: "#A6AFD5" },
   check: { color: "#35C1CE" },
-
+  vertIcon: { color: palette.primary.dark },
 })
 
 
@@ -91,14 +91,16 @@ class RuleMenu extends Component {
           onClick={this.handleMenuClick}
           id={id}
         >
-          <MoreVertIcon />
+          <MoreVertIcon className={classes.vertIcon} />
         </IconButton>
 
         <ConfirmDialog
           open={openDialog}
           handleClose={this.toggleDialog}
           handleCloseWithAction={this.handleCloseWithAction}
-        />
+        >
+          Are you shure that you want to delete this rule
+        </ConfirmDialog>
 
         <Menu
           id="simple-menu"

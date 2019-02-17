@@ -1,4 +1,4 @@
-import React, { Fragment } from "react"
+import React, { Fragment, Component } from "react"
 import PropTypes from "prop-types"
 import Menu from "@material-ui/core/Menu"
 import MoreVertIcon from "@material-ui/icons/MoreVert"
@@ -14,8 +14,9 @@ import DeleteIcon from "@material-ui/icons/Delete"
 import { connect } from "react-redux"
 import { compose } from "redux"
 import { deleteUser } from "../../actions/subUsers"
+import ConfirmDialog from "../ConfirmDialog"
 
-const styles = () => ({
+const styles = ({ palette }) => ({
   menu: {
     width: "300px",
   },
@@ -43,85 +44,99 @@ const styles = () => ({
 
   cancel: { color: "#A6AFD5" },
   check: { color: "#35C1CE" },
+  vertIcon: { color: palette.primary.dark }
 })
 
 
-const ChannelMenu = ({
-  classes, id, handleClick,
-  handleClose, open, anchorEl,
-  handleEdit, selected, confirmChange,
-  deleteUser,
-}) => (
-  <div className={classes.root}>
-    {selected !== `${id}`
-      ? (
-        <IconButton
-          aria-owns="simple-menu"
-          aria-haspopup="true"
-          onClick={handleClick}
-          id={id}
-        >
-          <MoreVertIcon />
-        </IconButton>
-      )
-      : (
-        <Fragment>
-          <IconButton
-            className={classes.cancel}
-            aria-owns="simple-menu"
-            aria-haspopup="true"
-            onClick={handleClose}
-            id={id}
-          >
-            <Cancel />
-          </IconButton>
-          <IconButton
-            className={classes.check}
-            aria-owns="simple-menu"
-            aria-haspopup="true"
-            onClick={confirmChange}
-            id={id}
-          >
-            <CheckCircle />
-          </IconButton>
-        </Fragment>
-      )}
+class ChannelMenu extends Component {
+  state = {
+    openDialog: false,
+  }
 
-    <Menu
-      id="simple-menu"
-      anchorEl={anchorEl}
-      open={`${id}` === open}
-      onClose={handleClose}
-      className={classes.menu}
-      elevation={1}
-    >
-      <MenuItem onClick={handleEdit}>
-        <ListItemIcon>
-          <Edit />
-        </ListItemIcon>
-        <Typography
-          noWrap
-          color="primary"
-        >
-            Edit
-        </Typography>
-      </MenuItem>
+  toggleDialog = () => this.setState(({ openDialog }) => ({ openDialog: !openDialog }))
 
-      <MenuItem onClick={deleteUser(id)}>
-        <ListItemIcon>
-          <DeleteIcon className={classes.deleteIcon} />
-        </ListItemIcon>
-        <Typography
-          className={classes.delete}
-          noWrap
-        >
-            Delete
-        </Typography>
-      </MenuItem>
+  handleCloseWithAction = () => {
+    console.log("s")
+    const { deleteUser, id } = this.props
+    deleteUser(id)
+  }
 
-    </Menu>
-  </div>
-)
+  render() {
+    const {
+      classes, id, handleClick,
+      handleClose, open, anchorEl,
+      handleEdit, selected, confirmChange,
+    } = this.props
+    return (
+      <div className={classes.root}>
+        {selected !== `${id}`
+          ? (
+            <IconButton
+              aria-owns="simple-menu"
+              aria-haspopup="true"
+              onClick={handleClick}
+              id={id}
+            >
+              <MoreVertIcon className={classes.vertIcon} />
+            </IconButton>
+          )
+          : (
+            <Fragment>
+              <IconButton
+                className={classes.cancel}
+                aria-owns="simple-menu"
+                aria-haspopup="true"
+                onClick={handleClose}
+                id={id}
+              >
+                <Cancel />
+              </IconButton>
+              <IconButton
+                className={classes.check}
+                aria-owns="simple-menu"
+                aria-haspopup="true"
+                onClick={confirmChange}
+                id={id}
+              >
+                <CheckCircle />
+              </IconButton>
+            </Fragment>
+          )}
+
+        <ConfirmDialog
+          open={this.state.openDialog}
+          handleClose={this.toggleDialog}
+          handleCloseWithAction={this.handleCloseWithAction}
+        >
+          Are you shure that you want to delete this rule
+        </ConfirmDialog>
+
+        <Menu
+          id="simple-menu"
+          anchorEl={anchorEl}
+          open={`${id}` === open}
+          onClose={handleClose}
+          className={classes.menu}
+          elevation={1}
+        >
+          <MenuItem onClick={handleEdit}>
+            <ListItemIcon>
+              <Edit />
+            </ListItemIcon>
+            <Typography noWrap color="primary">Edit</Typography>
+          </MenuItem>
+
+          <MenuItem onClick={this.toggleDialog}>
+            <ListItemIcon>
+              <DeleteIcon className={classes.deleteIcon} />
+            </ListItemIcon>
+            <Typography noWrap className={classes.delete}>Delete</Typography>
+          </MenuItem>
+        </Menu>
+      </div>
+    )
+  }
+}
 
 ChannelMenu.defaultProps = {
   anchorEl: {},
@@ -141,7 +156,7 @@ ChannelMenu.propTypes = {
 }
 
 const mapDispatchToProps = dispatch => ({
-  deleteUser: id => () => dispatch(deleteUser(id)),
+  deleteUser: id => dispatch(deleteUser(id)),
 })
 
 export default compose(
