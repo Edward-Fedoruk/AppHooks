@@ -9,6 +9,8 @@ import logs from "../../assets/logs.png"
 import withNavigation from "../withNavigation"
 import TopBar from "../TopBar"
 import { fetchRequests } from "../../actions/requestLogs"
+import Preloader from "../Preloader"
+import { createLoadingSelector } from "../../actions/utils"
 
 const styles = ({ breakpoints }) => ({
   contentWrap: {
@@ -28,7 +30,8 @@ export class AccessLogs extends Component {
   static propTypes = {
     data: PropTypes.array.isRequired,
     classes: PropTypes.object.isRequired,
-    fetchRequests: PropTypes.object.isRequired,
+    fetchRequests: PropTypes.func.isRequired,
+    isLoading: PropTypes.bool.isRequired,
   }
 
   componentDidMount() {
@@ -36,8 +39,8 @@ export class AccessLogs extends Component {
   }
 
   render() {
-    const { classes, data } = this.props
-    return (
+    const { classes, data, isLoading } = this.props
+    return isLoading ? <Preloader /> : (
       <Fragment>
         <TopBar title="Request Log Viewer" />
         <div className={classes.contentWrap}>
@@ -59,8 +62,11 @@ export class AccessLogs extends Component {
   }
 }
 
-const mapStateToProps = ({ requestLogs }) => ({
+const loadingSelector = createLoadingSelector(["SET_LOGS"])
+
+const mapStateToProps = ({ requestLogs, preloader }) => ({
   data: requestLogs.requests,
+  isLoading: loadingSelector(preloader),
 })
 
 const mapDispatchToProps = {

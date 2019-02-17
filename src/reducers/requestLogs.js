@@ -16,7 +16,7 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-  case types.SET_LOGS:
+  case types.SET_LOGS_SUCCESS:
     return {
       ...state,
       requests: [...action.logs],

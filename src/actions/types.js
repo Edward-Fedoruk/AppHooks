@@ -25,7 +25,9 @@ export const REMOVE_STAGES = "REMOVE_STAGES"
 export const SET_CURRENT_STAGE = "SET_CURRENT_STAGE"
 
 // access logs
-export const SET_LOGS = "SET_LOGS"
+export const SET_LOGS_REQUEST = "SET_LOGS_REQUEST"
+export const SET_LOGS_SUCCESS = "SET_LOGS_SUCCESS"
+export const SET_LOGS_FAILURE = "SET_LOGS_FAILURE"
 export const SET_LOG = "SET_LOG"
 export const DELETE_LOGS = "DELETE_LOGS"
 
