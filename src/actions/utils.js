@@ -5,6 +5,7 @@ import * as types from "./types"
 
 export const domain = "https://app.develop.apphooks.io"
 
+// action creators
 export const initiateLoading = loadType => ({
   type: types[`${loadType}_REQUEST`],
 })
@@ -14,6 +15,7 @@ export const createError = loadType => error => ({
   error,
 })
 
+// store selectors
 export const createLoadingSelector = actions => state => actions.some(action => state[action])
 
 export const createErrorMessageSelector = actions => (state) => {
@@ -21,11 +23,16 @@ export const createErrorMessageSelector = actions => (state) => {
   return errors && errors[0] ? errors[0] : ""
 }
 
-const destruct = ({ data: { data } }) => data
-export const handleResponse = (dispatch, action) => compose(
+
+const destructData = ({ data: { data } }) => data
+const destructError = ({ data: { data } }) => data
+const createResponseHandler = destruct => (dispatch, action) => compose(
   compose(dispatch, action),
   destruct
 )
+export const handleResponse = createResponseHandler(destructData)
+export const handleErrorResponse = createResponseHandler(destructError)
+
 
 export const setFetchSettings = (method, accessToken, body) => ({
   method,
