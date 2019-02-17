@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 import React from "react"
 import { withStyles } from "@material-ui/core/styles"
 import Paper from "@material-ui/core/Paper"
@@ -45,20 +46,18 @@ const styles = ({ breakpoints }) => ({
 
 })
 
-const EmailActivation = ({ classes, location, reSendEmail }) => {
+export const EmailActivation = ({ classes, location, reSendEmail }) => {
   const resend = () => reSendEmail({ email: location.state.userData.userEmail })
 
   return (
     <Paper className={classes.paper}>
-      {console.log(location.state)}
       <Typography className={classes.title} variant="h3" align="center">
         Thank you for registration!
       </Typography>
       <Typography className={classes.p}>
         We’ve sent a verification email to
         {" "}
-        { location.state.userData.userEmail }
-.
+        { location.state.userData.userEmail }.
          Please use the link provided in the email to activate
         and start using your AppHooks account.
       </Typography>

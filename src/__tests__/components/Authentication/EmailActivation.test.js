@@ -1,7 +1,7 @@
 import React from "react"
 import { shallow } from "enzyme"
 import sinon from "sinon"
-import EmailActivation from "../../../components/Authentication/EmailActivation"
+import { EmailActivation } from "../../../components/Authentication/EmailActivation"
 
 const location = {
   state: {
@@ -17,7 +17,7 @@ describe("EmailActivation", () => {
   it("should render correctly", () => {
     const spy = sinon.spy()
     const tree = shallow(
-      <EmailActivation.WrappedComponent classes={{}} location={location} reSenEmail={spy} />
+      <EmailActivation classes={{}} location={location} reSendEmail={spy} />
     )
     expect(tree).toMatchSnapshot()
   })
@@ -26,7 +26,7 @@ describe("EmailActivation", () => {
     const spy = sinon.spy()
 
     const tree = shallow(
-      <EmailActivation.WrappedComponent classes={{}} location={location} reSendEmail={spy} />
+      <EmailActivation classes={{}} location={location} reSendEmail={spy} />
     )
 
     tree
