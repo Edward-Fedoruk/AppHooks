@@ -1,5 +1,10 @@
 import { compose } from "redux"
-import { initiateLoading, createError, handleResponse } from "./utils"
+import {
+  initiateLoading,
+  createError,
+  handleResponse,
+  handleErrorResponse,
+} from "./utils"
 import * as types from "./types"
 import { toggleSnackbar } from "./ui"
 import axios from "./utils"
@@ -38,7 +43,7 @@ export const fetchUsers = () => (dispatch) => {
   dispatch(initiateLoading("SET_USERS"))
   axios.get("/users")
     .then(handleResponse(dispatch, setUsers))
-    .catch(({ response: { data } }) => compose(dispatch, createError("SET_USERS"))(data))
+    .catch(handleErrorResponse(dispatch, createError("SET_USERS")))
 }
 
 export const inviteUser = data => (dispatch) => {

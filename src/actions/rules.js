@@ -1,15 +1,10 @@
 import { compose } from "redux"
 import * as types from "./types"
-import { initiateLoading, createError } from "./utils"
+import { initiateLoading, createError, handleErrorResponse } from "./utils"
 import axios from "./utils"
 import { toggleEditForm } from "./ui"
 
 const throwRuleErr = createError("SET_RULES")
-const destructError = ({ response }) => response.data
-const handleError = dispatch => compose(
-  compose(dispatch, throwRuleErr),
-  destructError
-)
 
 export const setRules = recipes => ({
   type: types.SET_RULES_SUCCESS,
@@ -43,7 +38,7 @@ export const fetchRules = () => (dispatch) => {
 
   axios.get("/recipes")
     .then(({ data: { data } }) => compose(dispatch, setRules)(data))
-    .catch(({ response: { data } }) => compose(dispatch, throwRuleErr)(data))
+    .catch(handleErrorResponse(dispatch, throwRuleErr))
 }
 
 export const fetchRule = id => (dispatch) => {
@@ -53,13 +48,13 @@ export const fetchRule = id => (dispatch) => {
       dispatch(setRule(data))
       dispatch(toggleEditForm())
     })
-    .catch(handleError(dispatch))
+    .catch(handleErrorResponse(dispatch, throwRuleErr))
 }
 
 export const createRule = data => (dispatch) => {
   axios.post("/recipes", data)
     .then(({ data: { data } }) => compose(dispatch, addRule)(data))
-    .catch(handleError(dispatch))
+    .catch(handleErrorResponse(dispatch, throwRuleErr))
 }
 
 export const editRule = (id, data) => (dispatch) => {
@@ -69,11 +64,11 @@ export const editRule = (id, data) => (dispatch) => {
       dispatch(editRuleInStore(id, data))
       dispatch(toggleEditForm())
     })
-    .catch(handleError(dispatch))
+    .catch(handleErrorResponse(dispatch, throwRuleErr))
 }
 
 export const deleteRule = id => (dispatch) => {
   axios.delete(`/recipes/${id}`)
     .then(() => compose(dispatch, deleteRuleFromStore)(id))
-    .catch(handleError(dispatch))
+    .catch(handleErrorResponse(dispatch, throwRuleErr))
 }
