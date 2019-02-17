@@ -18,9 +18,6 @@ const styles = () => ({
 const Preloader = ({ loading, classes }) => (
   <Fade
     in={loading}
-    style={{
-      transitionDelay: loading ? "800ms" : "0ms",
-    }}
     unmountOnExit
   >
     <div className={classes.root}>
