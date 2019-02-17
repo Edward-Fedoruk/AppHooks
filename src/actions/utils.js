@@ -25,7 +25,7 @@ export const createErrorMessageSelector = actions => (state) => {
 
 
 const destructData = ({ data: { data } }) => data
-const destructError = ({ data: { data } }) => data
+const destructError = ({ response: { data } }) => data
 const createResponseHandler = destruct => (dispatch, action) => compose(
   compose(dispatch, action),
   destruct
