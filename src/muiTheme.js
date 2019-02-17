@@ -26,13 +26,19 @@ const theme = createMuiTheme({
         color: "#828CB8", // Some CSS
       },
     },
+    MuiTablePagination: {
+      caption: {
+        color: "#192B81",
+      },
+      select: {
+        color: "#192B81",
+      },
+    },
   },
 
   props: {
-    // withWidth component ⚛️
     MuiWithWidth: {
-      // Initial width property
-      initialWidth: "lg", // Breakpoint being globally set
+      initialWidth: "lg",
     },
   },
 })
