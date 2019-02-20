@@ -14,11 +14,13 @@ const styles = ({ breakpoints }) => ({
     justifyContent: "center",
     position: "relative",
 
-    [breakpoints.down(500)]: {
+    [breakpoints.down(800)]: {
+      paddingTop: "7%",
+    },
+    [breakpoints.down(600)]: {
       alignItems: "flex-end",
       background: "#fff",
-    },
-    [breakpoints.down(800)]: {
+      paddingTop: "0%",
     },
   },
 
@@ -32,10 +34,8 @@ const styles = ({ breakpoints }) => ({
     [breakpoints.down(900)]: {
       left: "10px",
     },
-    [breakpoints.down(800)]: {
-      display: "none",
-    },
-    [breakpoints.down(500)]: {
+
+    [breakpoints.down(600)]: {
       display: "block",
       left: "50%",
       transform: "translateX(-50%)",

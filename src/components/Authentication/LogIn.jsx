@@ -88,9 +88,9 @@ class LogIn extends Component {
 
   onChange = input => e => this.setState({ [input]: e.target.value })
 
-  handleBlur = (event) => {
-    this[event.target.name].current.validate(event.target.value)
-  }
+  handleBlur = event => this[event.target.name].current.validate(event.target.value)
+
+  handleFocus = event => this[event.target.name].current.makeValid()
 
   render() {
     const { classes, logInError, logInErrorMessage } = this.props
@@ -119,10 +119,10 @@ class LogIn extends Component {
             label="Enter your email"
             name="email"
             ref={this.email}
-            autoFocus
             placeholder="e.g., carl@cloud.ci"
             onChange={this.onChange("email")}
             onBlur={this.handleBlur}
+            onFocus={this.handleFocus}
             className={classes.textField}
             value={this.state.email}
             margin="normal"
@@ -138,6 +138,7 @@ class LogIn extends Component {
             placeholder="e.g., *******"
             onChange={this.onChange("password")}
             onBlur={this.handleBlur}
+            onFocus={this.handleFocus}
             className={classes.textField}
             value={this.state.password}
             margin="normal"
@@ -148,14 +149,14 @@ class LogIn extends Component {
           />
 
           <Typography className={classes.remindLink}>
-            <Link style={{ color: "blue" }} to="/password">Forgot password?</Link>
+            <Link style={{ color: "#4285F4" }} to="/password">Forgot password?</Link>
           </Typography>
 
           <SubmitButton text="Log in" />
 
           <Typography className={classes.signLink}>
             <span>Don`t have an account? </span>
-            <Link style={{ color: "blue" }} to="/signup">Sign Up</Link>
+            <Link style={{ color: "#4285F4" }} to="/signup">Sign Up</Link>
           </Typography>
         </ValidatorForm>
       </Paper>

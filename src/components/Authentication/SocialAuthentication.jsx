@@ -65,9 +65,11 @@ const SocialAuthentication = ({
       onFailure={onFailure}
       clientId={process.env.REACT_APP_OAUTH2_GITHUB_CLIENT_ID}
     >
-      <GitHub className={classes.buttonsIcon} />
-      {text}
-      <span>with github</span>
+      <div className={classes.flexCenter}>
+        <GitHub className={classes.buttonsIcon} />
+        { `${text} ` }
+        <span> with github</span>
+      </div>
     </GitHubLogin>
     <GoogleLogin
       className={classes.googleBtn}
@@ -80,8 +82,8 @@ const SocialAuthentication = ({
     >
       <div className={classes.flexCenter}>
         <Google className={classes.buttonsIcon} />
-        { text }
-        <span>with Google</span>
+        { `${text} ` }
+        <span> with Google</span>
       </div>
     </GoogleLogin>
   </React.Fragment>

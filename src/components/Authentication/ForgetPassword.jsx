@@ -12,8 +12,9 @@ import SubmitButton from "./SubmitButton"
 import { reSendEmail } from "../../actions/auth"
 import ErrorSnackbar from "./ErrorSnackbar"
 import withBackground from "./withBackground"
+import Title from "../Title"
 
-const styles = ({ breakpoints }) => ({
+const styles = ({ breakpoints, palette }) => ({
   paper: {
     ...paperStyles,
     paddingRigth: "70px",
@@ -33,7 +34,8 @@ const styles = ({ breakpoints }) => ({
 
   p: {
     fontSize: "12px",
-    color: "#7C7D81",
+    color: palette.primary.dark,
+    margin: "15px 0",
   },
 
   textField: {
@@ -77,7 +79,7 @@ class ForgetPassword extends React.Component {
           message={resendErrorMessage}
         />
 
-        <Typography className={classes.title} variant="h3" align="center">Forgot your password?</Typography>
+        <Title>Forgot your password?</Title>
         <Typography className={classes.p} align="left">We’ve got you covered</Typography>
 
         <ValidatorForm onSubmit={this.onSubmit} instantValidate={false}>

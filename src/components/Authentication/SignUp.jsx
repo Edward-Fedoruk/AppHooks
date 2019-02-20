@@ -96,6 +96,8 @@ class SignUp extends Component {
 
   handleBlur = event => this[event.target.name].current.validate(event.target.value)
 
+  handleFocus = event => this[event.target.name].current.makeValid()
+
 
   onChange = input => e => this.setState({ [input]: e.target.value })
 
@@ -122,10 +124,10 @@ class SignUp extends Component {
             label="Enter your email"
             name="email"
             ref={this.email}
-            autoFocus
             placeholder="e.g., carl@cloud.ci"
             onChange={this.onChange("email")}
             onBlur={this.handleBlur}
+            onFocus={this.handleFocus}
             className={classes.textField}
             value={this.state.email}
             margin="normal"
@@ -144,6 +146,7 @@ class SignUp extends Component {
             placeholder="phone number"
             onChange={this.onChange("phone")}
             onBlur={this.handleBlur}
+            onFocus={this.handleFocus}
             className={classes.textField}
             value={this.state.phone}
             margin="normal"
@@ -186,7 +189,7 @@ class SignUp extends Component {
 
           <Typography className={classes.signLink}>
             <span>Already have an account? </span>
-            <Link style={{ color: "blue" }} to="/login">Login</Link>
+            <Link style={{ color: "#4285F4" }} to="/login">Login</Link>
           </Typography>
         </ValidatorForm>
       </Paper>
