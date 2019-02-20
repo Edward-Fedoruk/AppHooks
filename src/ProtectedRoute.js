@@ -1,7 +1,7 @@
 import React from "react"
 import { Route, Redirect } from "react-router-dom"
 import { connect } from "react-redux"
-
+import PropTypes from "prop-types"
 
 const ProtectedRoute = ({
   component: Comp, isAuthenticated, path, ...rest
@@ -24,6 +24,12 @@ const ProtectedRoute = ({
     ))}
   />
 )
+
+ProtectedRoute.propTypes = {
+  component: PropTypes.node.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
+  path: PropTypes.string.isRequired,
+}
 
 const mapStateToProps = ({ authentication }) => ({
   isAuthenticated: authentication.isAuthenticated,
