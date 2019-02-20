@@ -7,11 +7,9 @@ import { Provider } from "react-redux"
 import { StripeProvider } from "react-stripe-elements"
 import theme from "./muiTheme"
 import * as serviceWorker from "./serviceWorker"
-import configureStore from "./store"
+import store from "./store"
 import Routes from "./routes"
 import "./i18n"
-
-const store = configureStore()
 
 
 ReactDOM.render(
