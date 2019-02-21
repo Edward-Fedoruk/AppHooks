@@ -20,8 +20,10 @@ const styles = ({ breakpoints }) => ({
   },
 
   headCell: {
+    paddingTop: "20px",
+
     [breakpoints.down(600)]: {
-      padding: "4px 20px",
+      padding: "20px 20px 4px 20px",
     },
   },
 

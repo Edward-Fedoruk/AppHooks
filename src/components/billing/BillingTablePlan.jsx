@@ -8,10 +8,12 @@ import { withStyles } from "@material-ui/core"
 import Paper from "@material-ui/core/Paper"
 import AllInclusive from "@material-ui/icons/AllInclusive"
 import Check from "@material-ui/icons/Check"
+import Close from "@material-ui/icons/Close"
 import Typography from "@material-ui/core/Typography"
 import Button from "@material-ui/core/Button"
 import { compose } from "redux"
 import { connect } from "react-redux"
+import classNames from "classnames"
 import TableRow from "../TableRow"
 import TableCell from "../TableCell"
 import { toggleBillingForm } from "../../actions/ui"
@@ -50,7 +52,11 @@ const styles = ({ breakpoints, palette }) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+    paddingTop: "20px",
   },
+
+  activeHeadCell: { paddingTop: "18px" },
+
   privilege: {
     fontSize: "16px",
 
@@ -67,7 +73,8 @@ const styles = ({ breakpoints, palette }) => ({
   infinity: { color: "#35C1CE" },
   check: { color: "#ABE829" },
   iconWrap: { textAlign: "center" },
-  active: { border: "solid #30B4C1 1px" },
+  close: { color: "#FA8484" },
+  active: { border: "solid #30B4C1 1px", borderRadius: ".6em" },
 })
 
 const BillingTablePlan = ({
@@ -80,7 +87,7 @@ const BillingTablePlan = ({
     <Table>
       <TableHead>
         <TableRow>
-          <TableCell className={classes.headCell}>
+          <TableCell className={classNames(classes.headCell, active ? classes.activeHeadCell : "")}>
             <Typography className={classes.planName} color="primary" align="center" variant="h3">
               {planName}
             </Typography>
@@ -123,12 +130,12 @@ const BillingTablePlan = ({
         </TableRow>
         <TableRow>
           <TableCell className={classes.iconWrap}>
-            {ssl ? <Check className={classes.check} /> : ""}
+            {ssl ? <Check className={classes.check} /> : <Close className={classes.close} />}
           </TableCell>
         </TableRow>
         <TableRow>
           <TableCell className={classes.iconWrap}>
-            {monitoring ? <Check className={classes.check} /> : ""}
+            {monitoring ? <Check className={classes.check} /> : <Close className={classes.close} />}
           </TableCell>
         </TableRow>
       </TableBody>

@@ -11,7 +11,7 @@ import slickSettings from "./slickSettings"
 
 const styles = () => ({
   tableWrap: {
-    padding: "21px 0px 41px 0px",
+    padding: "6px 0px 41px 0px",
     display: "flex",
     width: "100%",
     // maxWidth: "81vw",
