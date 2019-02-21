@@ -6,7 +6,6 @@ import Typography from "@material-ui/core/Typography"
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator"
 import { connect } from "react-redux"
 import { compose } from "redux"
-import { withRouter } from "react-router-dom"
 import { paperStyles, titleStyles } from "./formStyles"
 import SubmitButton from "./SubmitButton"
 import { reSendEmail } from "../../actions/auth"
@@ -33,7 +32,7 @@ const styles = ({ breakpoints, palette }) => ({
   },
 
   p: {
-    fontSize: "12px",
+    fontSize: "14px",
     color: palette.primary.dark,
     margin: "15px 0",
   },
@@ -119,6 +118,5 @@ const mapStateToProps = ({ authentication }) => ({
 export default compose(
   withBackground,
   withStyles(styles),
-  withRouter,
   connect(mapStateToProps, mapDispatchToProps)
 )(ForgetPassword)

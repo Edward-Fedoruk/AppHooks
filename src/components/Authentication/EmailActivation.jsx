@@ -46,33 +46,28 @@ const styles = ({ breakpoints }) => ({
 
 })
 
-export const EmailActivation = ({ classes, location, reSendEmail }) => {
-  const resend = () => reSendEmail({ email: location.state.userData.userEmail })
+export const EmailActivation = ({ classes, location }) => (
+  <Paper className={classes.paper}>
+    <Typography className={classes.title} variant="h3" align="center">
+      Thank you for registration!
+    </Typography>
+    <Typography className={classes.p}>
+      We’ve sent a verification email to
+      {" "}
+      { location.state.userData.email }.
+        Please use the link provided in the email to activate
+      and start using your AppHooks account.
+    </Typography>
+  </Paper>
+)
 
-  return (
-    <Paper className={classes.paper}>
-      <Typography className={classes.title} variant="h3" align="center">
-        Thank you for registration!
-      </Typography>
-      <Typography className={classes.p}>
-        We’ve sent a verification email to
-        {" "}
-        { location.state.userData.userEmail }.
-         Please use the link provided in the email to activate
-        and start using your AppHooks account.
-      </Typography>
-      <Typography className={classes.p}>
-        You can
-        {" "}
-        <span className={classes.link} role="button" tabIndex={0} onKeyDown={resend} onClick={resend}>re-send a verification mail.</span>
-      </Typography>
-    </Paper>
-  )
+
+EmailActivation.defaultProps = {
+  location: { state: { userData: "your email" } }
 }
 
 EmailActivation.propTypes = {
-  reSendEmail: PropTypes.func.isRequired,
-  location: PropTypes.object.isRequired,
+  location: PropTypes.object,
   classes: PropTypes.object.isRequired,
 }
 

@@ -102,8 +102,8 @@ class SignUp extends Component {
   onChange = input => e => this.setState({ [input]: e.target.value })
 
   render() {
-    const { classes, errors } = this.props
-
+    const { classes } = this.props
+    const errors = this.props.errors === undefined ? {} : this.props.errors
     return (
       <Paper elevation={0} className={classes.paper}>
         <SocialAuthentication
