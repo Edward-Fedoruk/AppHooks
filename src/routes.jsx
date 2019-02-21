@@ -1,5 +1,6 @@
 import React, { lazy } from "react"
-import { Route, Switch, BrowserRouter } from "react-router-dom"
+import { Route, Switch, Router } from "react-router-dom"
+import history from "./history"
 import LogIn from "./components/Authentication/LogIn"
 import SignUp from "./components/Authentication/SignUp"
 import EmailActivation from "./components/Authentication/EmailActivation"
@@ -41,7 +42,7 @@ class Routes extends React.Component {
 
   render() {
     return (
-      <BrowserRouter>
+      <Router history={history}>
         <Switch>
           <Route path="/login" exact component={LogIn} />
           <Route path="/signup" exact component={SignUp} />
@@ -49,7 +50,7 @@ class Routes extends React.Component {
           <Route path="/signup/success" exact component={EmailActivation} />
           <Route component={WithNavigation} />
         </Switch>
-      </BrowserRouter>
+      </Router>
     )
   }
 }
