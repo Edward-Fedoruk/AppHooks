@@ -1,7 +1,9 @@
+/* eslint-disable camelcase */
 /* eslint-disable no-param-reassign */
 import axios from "axios"
 import { compose } from "redux"
 import * as types from "./types"
+import history from "../history"
 
 export const domain = "https://app.develop.apphooks.io"
 
@@ -44,10 +46,17 @@ export const setFetchSettings = (method, accessToken, body) => ({
   body,
 })
 
-export default axios.create({
+
+export const getLocalStorageItem = (key) => {
+  try {
+    return localStorage.getItem(key)
+  } catch { return undefined }
+}
+
+const instance = axios.create({
   baseURL: domain,
   transformRequest: [(data, headers) => {
-    headers.Authorization = `Bearer ${localStorage.getItem("JWT")}`
+    headers.Authorization = `Bearer ${getLocalStorageItem("JWT")}`
     return JSON.stringify(data)
   }],
   headers: {
@@ -55,3 +64,14 @@ export default axios.create({
     "Content-Type": "application/json",
   },
 })
+
+instance.interceptors.response.use(response => response,
+  (error) => {
+    const { response: { status } } = error
+    if (status === 401) {
+      history.push("/login")
+    }
+    return Promise.reject(error)
+  })
+
+export default instance
