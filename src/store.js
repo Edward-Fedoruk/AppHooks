@@ -13,11 +13,7 @@ const configureStore = (preloadState) => {
   const middlewares = enhanceWith(thunk)
   const store = createStore(rootReducer, preloadState, middlewares)
 
-  if (module.hot) {
-    module.hot.accept("./reducers", () => store.replaceReducer(rootReducer))
-  }
-
   return store
 }
 
-export default configureStore
+export default configureStore()
