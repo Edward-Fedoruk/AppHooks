@@ -1,8 +1,10 @@
 import { compose } from "redux"
 import * as types from "./types"
 import { toggleSnackbar } from "./ui"
-import { domain } from "./utils"
+import axios, { domain } from "./utils"
 import { fetchUserSettings } from "./user"
+import history from "../history"
+import { startTimer } from "./refreshToken"
 
 export const authenticate = payload => ({
   type: types.CREATE_USER,
@@ -14,33 +16,15 @@ export const throwAuthError = error => ({
   error,
 })
 
-export const createUser = (userData, routeHistory) => (dispatch) => {
-  const stringifiedData = JSON.stringify(userData)
-
-  fetch(`${domain}/auth/register`, {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: stringifiedData,
-  })
-    .then(response => response.json()
-      .then((json) => {
-        if (response.ok) {
-          return Promise.resolve(json)
-        }
-        return Promise.reject(json)
-      }))
-    .then((jsonData) => {
-      const user = {
+export const createUser = userData => (dispatch) => {
+  axios.post("/auth/register", userData)
+    .then(() => {
+      compose(dispatch, authenticate)({
         isAuthenticated: true,
         errors: {},
-      }
+      })
 
-      compose(dispatch, authenticate)(user)
-
-      routeHistory.push({
+      history.push({
         pathname: "/signup/success",
         state: { userData },
       })
@@ -54,7 +38,7 @@ export const createUser = (userData, routeHistory) => (dispatch) => {
     })
 }
 
-export const logIn = (userData, routeHistory) => (dispatch) => {
+export const logIn = userData => (dispatch) => {
   const stringifiedData = JSON.stringify(userData)
 
   fetch(`${domain}/auth/login`, {
@@ -74,16 +58,16 @@ export const logIn = (userData, routeHistory) => (dispatch) => {
       }))
     .then((jsonData) => {
       console.log(jsonData)
+      localStorage.setItem("expTime", jsonData.expires_at)
+      localStorage.setItem("JWT", jsonData.access_token)
+      startTimer()
       fetchUserSettings()
 
-      localStorage.setItem("JWT", jsonData.access_token)
-      const user = {
+      compose(dispatch, authenticate)({
         isAuthenticated: true,
-      }
+      })
 
-      compose(dispatch, authenticate)(user)
-
-      routeHistory.push("/channels")
+      history.push("/channels")
     })
     .catch((er) => {
       const user = {
@@ -92,48 +76,23 @@ export const logIn = (userData, routeHistory) => (dispatch) => {
         logInErrorMessage: er.message,
       }
       dispatch(throwAuthError(user))
-      dispatch(toggleSnackbar(false))
+      dispatch(toggleSnackbar())
     })
 }
 
-export const reSendEmail = (email, routeHistory) => (dispatch) => {
-  const stringifiedData = JSON.stringify(email)
-
-  fetch(`${domain}/auth/password/email`, {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: stringifiedData,
-  })
-    .then(response => response.json()
-      .then((json) => {
-        if (response.ok) {
-          return Promise.resolve(json)
-        }
-        return Promise.reject(json)
-      }))
-    .then((jsonData) => {
-      console.log(jsonData, routeHistory)
-
-      routeHistory.push({
-        pathname: "/signup/success",
-        state: { userData: { userEmail: email.email } },
-      })
-    })
+export const reSendEmail = email => (dispatch) => {
+  axios("/auth/password/email", email)
     .catch((er) => {
       dispatch(throwAuthError({
         resendErrorMessage: er.message,
         resendError: true,
       }))
-      console.log(er)
-      dispatch(toggleSnackbar(false))
+      dispatch(toggleSnackbar())
     })
 }
 
 
-export const resetPassword = (userData, routeHistory) => (dispatch) => {
+export const resetPassword = userData => () => {
   const stringifiedData = JSON.stringify(userData)
 
   fetch(`${domain}/auth/password/reset`, {
@@ -152,7 +111,7 @@ export const resetPassword = (userData, routeHistory) => (dispatch) => {
         return Promise.reject(json)
       }))
     .then(() => {
-      routeHistory.push({
+      history.push({
         pathname: "/",
       })
     })
