@@ -24,11 +24,6 @@ export const addUser = user => ({
   user,
 })
 
-export const throwInviteError = err => ({
-  type: types.INVITE_ERROR_FAILURE,
-  err,
-})
-
 export const removeUserFromStore = id => ({
   type: types.DELETE_USER,
   id,
@@ -49,25 +44,26 @@ export const fetchUsers = () => (dispatch) => {
 export const inviteUser = data => (dispatch) => {
   axios.post("/users", data)
     .then(handleResponse(dispatch, addUser))
-    .catch(({ response: { data } }) => {
-      dispatch(createError("INVITE_ERROR")(data))
-      dispatch(toggleSnackbar())
-    })
+    .catch(compose(
+      compose(dispatch, toggleSnackbar),
+      handleErrorResponse(dispatch, createError("USER_ERROR"))
+    ))
 }
 
 export const deleteUser = id => (dispatch) => {
   axios.delete(`/users/${id}`)
     .then(() => compose(dispatch, removeUserFromStore)(id))
-    .catch((error) => {
-      console.log(error)
-    })
+    .catch(compose(
+      compose(dispatch, toggleSnackbar),
+      handleErrorResponse(dispatch, createError("USER_ERROR"))
+    ))
 }
 
 export const updateSubUser = (id, data) => (dispatch) => {
-  console.log(id, data)
   axios.put(`/users/${id}`, data)
     .then(handleResponse(dispatch, changeUserInStore))
-    .catch(({ response: { data } }) => {
-      console.log(data)
-    })
+    .catch(compose(
+      compose(dispatch, toggleSnackbar),
+      handleErrorResponse(dispatch, createError("USER_ERROR"))
+    ))
 }
