@@ -66,7 +66,7 @@ const ErrorSnackbar = ({
 
 ErrorSnackbar.defaultProps = {
   className: "",
-  message: "",
+  message: "something went wrong",
 }
 
 ErrorSnackbar.propTypes = {
