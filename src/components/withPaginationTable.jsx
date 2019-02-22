@@ -8,7 +8,6 @@ import PropTypes from "prop-types"
 const styles = () => ({
   root: {
     width: "100%",
-    maxWidth: "1050px",
     marginRight: "auto",
     marginLeft: "auto",
   },
