@@ -62,17 +62,9 @@ export class UsersTable extends Component {
     const {
       clickedRow: { is_active, role, id },
     } = this.state
-    let {
-      clickedRow: { name, phone, company },
-    } = this.state
-
-    // will be changed with better solution
-    name = name === null ? "" : name
-    phone = phone === null ? "" : phone
-    company = company === null ? "" : company
 
     this.props.updateSubUser(id, {
-      name, phone, company, is_active, role, id,
+      is_active, role,
     })
 
     this.setState({ selected: -1 })
