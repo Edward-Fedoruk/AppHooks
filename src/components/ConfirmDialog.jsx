@@ -27,12 +27,15 @@ export const ConfirmDialog = ({
   </Dialog>
 )
 
+ConfirmDialog.defaultProps = {
+  children: "Are you shure?",
+}
 
 ConfirmDialog.propTypes = {
   open: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
   handleCloseWithAction: PropTypes.func.isRequired,
-  children: PropTypes.string.isRequired
+  children: PropTypes.string,
 }
 
 export default ConfirmDialog
