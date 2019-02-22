@@ -11,6 +11,8 @@ import { fetchUsers } from "../../actions/subUsers"
 import AddUser from "./AddUser"
 import Preloader from "../Preloader"
 import { createLoadingSelector } from "../../actions/utils"
+import { createErrorMessageSelector } from "../../actions/utils"
+import ErrorSnackbar from "../Authentication/ErrorSnackbar"
 
 const styles = ({ breakpoints }) => ({
   contentWrap: {
@@ -36,6 +38,11 @@ export class SubUsers extends Component {
     users: PropTypes.array.isRequired,
     fetchUsers: PropTypes.func.isRequired,
     isLoading: PropTypes.bool.isRequired,
+    errorMessage: PropTypes.string,
+  }
+
+  static defaultProps = {
+    errorMessage: "Something went wrong.",
   }
 
   componentDidMount() {
@@ -43,11 +50,14 @@ export class SubUsers extends Component {
   }
 
   render() {
-    const { classes, users, isLoading } = this.props
+    const {
+      classes, users, isLoading, errorMessage,
+    } = this.props
     return isLoading ? <Preloader /> : (
       <Fragment>
         <TopBar title="Sub-Users" />
         <div className={classes.contentWrap}>
+          <ErrorSnackbar message={errorMessage} />
           <Typography gutterBottom className={classes.hint}>Sub-users can view an app’s stats, debug console, app settings and app keys.</Typography>
           <UsersTable data={users} />
           <AddUser />
@@ -58,10 +68,12 @@ export class SubUsers extends Component {
 }
 
 const loadingSelector = createLoadingSelector(["SET_USERS"])
+const errorSelector = createErrorMessageSelector(["USER_ERROR"])
 
-const mapStateToProps = ({ users, preloader }) => ({
+const mapStateToProps = ({ users, preloader, errorHandler }) => ({
   users: users.users,
   isLoading: loadingSelector(preloader),
+  errorMessage: errorSelector(errorHandler),
 })
 
 const mapDispatchToProps = {

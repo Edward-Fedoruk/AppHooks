@@ -6,8 +6,6 @@ import { withStyles } from "@material-ui/core"
 import Button from "@material-ui/core/Button"
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator"
 import { inviteUser } from "../../actions/subUsers"
-import ErrorSnackbar from "../Authentication/ErrorSnackbar"
-import { createErrorMessageSelector } from "../../actions/utils"
 
 const styles = ({ breakpoints }) => ({
   form: {
@@ -36,7 +34,6 @@ export class AddUser extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
     inviteUser: PropTypes.func.isRequired,
-    inviteError: PropTypes.string.isRequired,
   }
 
   email = React.createRef()
@@ -51,12 +48,9 @@ export class AddUser extends Component {
   onChange = input => e => this.setState({ [input]: e.target.value })
 
   render() {
-    const { classes, inviteError } = this.props
+    const { classes } = this.props
     return (
       <div>
-        <ErrorSnackbar
-          message={inviteError}
-        />
         <ValidatorForm onSubmit={this.onSubmit} className={classes.form}>
           <TextValidator
             variant="outlined"
@@ -78,17 +72,11 @@ export class AddUser extends Component {
   }
 }
 
-const errorSelector = createErrorMessageSelector(["INVITE_ERROR"])
-
-const mapStateToProps = ({ errorHandler }) => ({
-  inviteError: errorSelector(errorHandler),
-})
-
 const mapDispatchToProps = dispatch => ({
   inviteUser: email => dispatch(inviteUser(email)),
 })
 
 export default compose(
   withStyles(styles),
-  connect(mapStateToProps, mapDispatchToProps)
+  connect(null, mapDispatchToProps)
 )(AddUser)
