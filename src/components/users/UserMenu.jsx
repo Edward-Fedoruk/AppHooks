@@ -1,4 +1,5 @@
-import React, { Fragment, Component } from "react"
+/* eslint-disable react/jsx-one-expression-per-line */
+import React, { Component } from "react"
 import PropTypes from "prop-types"
 import Menu from "@material-ui/core/Menu"
 import MoreVertIcon from "@material-ui/icons/MoreVert"
@@ -13,18 +14,13 @@ import MenuItem from "@material-ui/core/MenuItem"
 import DeleteIcon from "@material-ui/icons/Delete"
 import { connect } from "react-redux"
 import { compose } from "redux"
+import Fade from "@material-ui/core/Fade"
 import { deleteUser } from "../../actions/subUsers"
 import ConfirmDialog from "../ConfirmDialog"
 
 const styles = ({ palette }) => ({
   menu: {
     width: "300px",
-  },
-
-  root: {
-    display: "flex",
-    flexDirection: "row",
-    flexWrap: "nowrap",
   },
 
   select: {
@@ -42,9 +38,16 @@ const styles = ({ palette }) => ({
     cursor: "pointer",
   },
 
+  formControl: {
+    position: "absolute",
+    right: "18px",
+    top: "0",
+    display: "flex",
+  },
+
   cancel: { color: "#A6AFD5" },
   check: { color: "#35C1CE" },
-  vertIcon: { color: palette.primary.dark }
+  vertIcon: { color: palette.primary.dark },
 })
 
 
@@ -68,39 +71,45 @@ class ChannelMenu extends Component {
       handleEdit, selected, confirmChange,
     } = this.props
     return (
-      <div className={classes.root}>
+      <div>
         {selected !== `${id}`
           ? (
-            <IconButton
-              aria-owns="simple-menu"
-              aria-haspopup="true"
-              onClick={handleClick}
-              id={id}
-            >
-              <MoreVertIcon className={classes.vertIcon} />
-            </IconButton>
+            <Fade timeout={1000} in={selected !== `${id}`}>
+              <IconButton
+                aria-owns="simple-menu"
+                aria-haspopup="true"
+                onClick={handleClick}
+                id={id}
+              >
+                <MoreVertIcon className={classes.vertIcon} />
+              </IconButton>
+            </Fade>
           )
           : (
-            <Fragment>
-              <IconButton
-                className={classes.cancel}
-                aria-owns="simple-menu"
-                aria-haspopup="true"
-                onClick={handleClose}
-                id={id}
-              >
-                <Cancel />
-              </IconButton>
-              <IconButton
-                className={classes.check}
-                aria-owns="simple-menu"
-                aria-haspopup="true"
-                onClick={confirmChange}
-                id={id}
-              >
-                <CheckCircle />
-              </IconButton>
-            </Fragment>
+            <div className={classes.formControl}>
+              <Fade timeout={1000} in={selected === `${id}`}>
+                <IconButton
+                  className={classes.cancel}
+                  aria-owns="simple-menu"
+                  aria-haspopup="true"
+                  onClick={handleClose}
+                  id={id}
+                >
+                  <Cancel />
+                </IconButton>
+              </Fade>
+              <Fade timeout={1500} in={selected === `${id}`}>
+                <IconButton
+                  className={classes.check}
+                  aria-owns="simple-menu"
+                  aria-haspopup="true"
+                  onClick={confirmChange}
+                  id={id}
+                >
+                  <CheckCircle />
+                </IconButton>
+              </Fade>
+            </div>
           )}
 
         <ConfirmDialog

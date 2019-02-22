@@ -10,7 +10,10 @@ import TableRow from "../TableRow"
 
 const styles = () => ({
   avatar: { padding: "0 0 0 10px" },
-  menu: { padding: "0" },
+  menu: {
+    padding: "0",
+    position: "relative",
+  },
 
   gravatar: {
     borderRadius: "50%",
@@ -62,7 +65,7 @@ const UserTableRow = ({
           )
           : active}
       </TableCell>
-      <TableCell className={classNames(classes.cell, classes.menu)}>
+      <TableCell align="right" className={classNames(classes.cell, classes.menu)}>
         {children}
       </TableCell>
     </TableRow>
