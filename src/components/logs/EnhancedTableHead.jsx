@@ -13,19 +13,19 @@ const rows = [
     id: "attempt", numeric: false, disablePadding: true, label: "Sent/Last Attempt",
   },
   {
-    id: "application", numeric: false, disablePadding: false, label: "Application",
+    id: "application", numeric: false, disablePadding: true, label: "Application",
   },
   {
-    id: "endpoint", numeric: false, disablePadding: false, label: "Endpoint",
+    id: "endpoint", numeric: false, disablePadding: true, label: "Endpoint",
   },
   {
-    id: "destination", numeric: false, disablePadding: false, label: "Destination",
+    id: "destination", numeric: false, disablePadding: true, label: "Destination",
   },
   {
-    id: "status", numeric: false, disablePadding: false, label: "Status/Attempts",
+    id: "status", numeric: false, disablePadding: true, label: "Status/Attempts",
   },
   {
-    id: "code", numeric: false, disablePadding: false, label: "Response Code",
+    id: "code", numeric: false, disablePadding: true, label: "Response Code",
   },
 ]
 
@@ -58,13 +58,12 @@ class EnhancedTableHead extends React.Component {
             />
           </TableCell>
           {rows.map(
-            (row, i) => (
+            row => (
               <TableCell
                 key={row.id}
                 padding={row.disablePadding ? "none" : "default"}
                 sortDirection={orderBy === row.id ? order : false}
                 className={classes.headerCell}
-                style={{ paddingRight: i === 0 && "150px" }}
               >
                 <Tooltip
                   title="Sort"

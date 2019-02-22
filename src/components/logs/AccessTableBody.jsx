@@ -67,18 +67,18 @@ class AccessTableBody extends Component {
                 key={n.id}
                 selected={selected}
               >
-                <TableCell className={classes.cell} padding="checkbox">
+                <TableCell padding="checkbox" className={classes.cell}>
                   <Checkbox checked={selected} />
                 </TableCell>
-                <TableCell className={classes.cell} padding="none">
+                <TableCell padding="none" className={classes.cell}>
                   {n.attempted_at}
                 </TableCell>
-                <TableCell className={classes.cell}>{n.application.name}</TableCell>
-                <TableCell className={classes.cell}>{n.endpoint.name}</TableCell>
-                <TableCell className={classes.cell}>{n.destination.name}</TableCell>
-                <TableCell className={classes.cell}>{n.response_text}</TableCell>
-                <TableCell className={classes.cell}>{n.response_code}</TableCell>
-                <TableCell>
+                <TableCell padding="none" className={classes.cell}>{n.application.name}</TableCell>
+                <TableCell padding="none" className={classes.cell}>{n.endpoint.name}</TableCell>
+                <TableCell padding="none" className={classes.cell}>{n.destination.name}</TableCell>
+                <TableCell padding="none" className={classes.cell}>{n.response_text}</TableCell>
+                <TableCell padding="none" className={classes.cell}>{n.response_code}</TableCell>
+                <TableCell align="right">
                   <LogMenu id={n.id} />
                 </TableCell>
               </TableRow>
@@ -86,7 +86,7 @@ class AccessTableBody extends Component {
           })}
         {emptyRows > 0 && (
           <TableRow style={{ height: 49 * emptyRows }}>
-            <TableCell colSpan={6} />
+            <TableCell colSpan={8} />
           </TableRow>
         )}
       </TableBody>
