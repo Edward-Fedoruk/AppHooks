@@ -6,12 +6,19 @@ import IconButton from "@material-ui/core/IconButton"
 import { withRouter } from "react-router-dom"
 import { connect } from "react-redux"
 import { compose } from "redux"
+import classNames from "classnames"
 
 const styles = () => ({
   user: {
     height: "35px",
     borderRadius: "50%",
     width: "35px",
+  },
+
+  userIcon: {
+    "&:hover": {
+      backgroundColor: "transparent",
+    },
   },
 })
 
@@ -21,7 +28,7 @@ const UserIcon = ({
 }) => {
   const openSettings = () => history.push("/settings")
   return (
-    <IconButton onClick={openSettings} className={className}>
+    <IconButton disableRipple onClick={openSettings} className={classNames(className, classes.userIcon)}>
       <Gravatar email={email} default="identicon" className={classes.user} />
     </IconButton>
   )
