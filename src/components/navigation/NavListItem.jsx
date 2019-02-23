@@ -14,7 +14,7 @@ import { toggleNavBar } from "../../actions/ui"
 const itemTextStyles = {
   color: "rgba(255, 255, 255, 0.7)",
   paddingLeft: "5px",
-
+  fontWeight: "200",
 }
 
 const styles = () => ({
@@ -28,6 +28,7 @@ const styles = () => ({
   itemIcon: {
     color: "rgba(255, 255, 255, 0.7)",
     margin: "0",
+    fontWeight: "200",
   },
 
   item: {

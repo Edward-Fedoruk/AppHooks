@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import React, { Component, Fragment } from "react"
 import PropTypes from "prop-types"
 import { connect } from "react-redux"
 import { withStyles } from "@material-ui/core/styles"
@@ -15,9 +15,9 @@ const styles = ({ breakpoints }) => ({
     background: "#192B81",
     display: "flex",
     flexWrap: "wrap",
-    width: "23vw",
-    maxWidth: "306px",
-    minWidth: "270px",
+    width: "250px",
+    // maxWidth: "306px",
+    // minWidth: "270px",
     overflow: "hidden",
 
 
@@ -28,7 +28,7 @@ const styles = ({ breakpoints }) => ({
 
   drawer: {
     color: "rgba(255, 255, 255, 0.7)",
-    width: "23vw",
+    // width: "23vw",
     maxWidth: "306px",
     minWidth: "250px",
 
@@ -59,7 +59,7 @@ class AppNavigation extends Component {
     } = this.props
     const downMd = width === "sm" || width === "xs"
     return (
-      <div>
+      <Fragment>
         {width !== "xs" && <LeftPanel />}
         <Drawer
           variant={downMd ? "temporary" : "permanent"}
@@ -73,7 +73,7 @@ class AppNavigation extends Component {
         >
           <RightPanel />
         </Drawer>
-      </div>
+      </Fragment>
     )
   }
 }

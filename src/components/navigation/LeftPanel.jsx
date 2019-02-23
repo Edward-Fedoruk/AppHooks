@@ -20,11 +20,9 @@ const iconsGroup = {
 const styles = () => ({
   paper: {
     background: "#192B81",
-    minWidth: "73px",
-    maxWidth: "88px",
-    width: "6%",
+    width: "55px",
     height: "100vh",
-    paddingTop: "9px",
+    paddingTop: "3px",
     zIndex: "1300",
     position: "fixed",
 
@@ -38,8 +36,12 @@ const styles = () => ({
   },
 
   addCircleWrap: {
-    marginTop: "45px",
+    marginTop: "15px",
     color: "#d1d5e6",
+
+    "&:hover": {
+      backgroundColor: "transparent",
+    },
   },
 
   bottomIcons: {
@@ -48,12 +50,19 @@ const styles = () => ({
     marginTop: "25px",
   },
 
+  questionMarkWrap: {
+    marginBottom: "0px",
+
+    "&:hover": {
+      backgroundColor: "transparent",
+    },
+  },
+
   topIcons: iconsGroup,
   logoIcon: { width: "100%" },
   addCircle: { fontSize: "35px" },
-  questionMarkWrap: { marginBottom: "20px" },
   questionMark: { height: "35px" },
-  userWrap: { marginBottom: "33px" },
+  userWrap: { marginBottom: "15px" },
 
 })
 
@@ -64,12 +73,12 @@ const LeftPanel = ({ classes }) => (
         <div className={classes.topIcons}>
           <LogoIcon className={classes.logoIcon} />
 
-          <IconButton className={classes.addCircleWrap}>
+          <IconButton disableRipple className={classes.addCircleWrap}>
             <AddCircle className={classes.addCircle} />
           </IconButton>
         </div>
         <div className={classes.bottomIcons}>
-          <IconButton className={classes.questionMarkWrap}>
+          <IconButton disableRipple className={classes.questionMarkWrap}>
             <QuestionMark className={classes.questionMark} />
           </IconButton>
 

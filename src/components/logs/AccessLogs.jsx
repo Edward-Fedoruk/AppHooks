@@ -14,7 +14,7 @@ import { createLoadingSelector } from "../../actions/utils"
 
 const styles = ({ breakpoints }) => ({
   contentWrap: {
-    padding: "20px 26px 20px 13px",
+    padding: "20px 26px 20px 20px",
     overflowX: "hidden",
 
     [breakpoints.down(768)]: {

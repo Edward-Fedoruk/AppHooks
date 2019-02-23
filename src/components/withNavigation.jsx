@@ -12,15 +12,15 @@ import UserIcon from "./navigation/UserIcon"
 const styles = ({ breakpoints }) => ({
   background: {
     backgroundColor: "#F4F8FB",
-    minWidth: "calc(100% - 305px)",
-    maxWidth: "calc(100% - 250px)",
+    minWidth: "calc(100% - 250px)",
+    maxWidth: "calc(100% - 270px)",
     marginLeft: "auto",
     minHeight: "100vh",
     width: "77vw",
 
     [breakpoints.down(960)]: {
       width: "100%",
-      marginLeft: "75px",
+      marginLeft: "55px",
       minWidth: "unset",
       maxWidth: "unset",
     },

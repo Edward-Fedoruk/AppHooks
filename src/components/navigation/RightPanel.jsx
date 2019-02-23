@@ -3,9 +3,9 @@ import PropTypes from "prop-types"
 import { withStyles } from "@material-ui/core/styles"
 import List from "@material-ui/core/List"
 import Typography from "@material-ui/core/Typography"
-import Dashboard from "@material-ui/icons/Dashboard"
-import ExitToApp from "@material-ui/icons/ExitToApp"
-import GroupAdd from "@material-ui/icons/GroupAdd"
+import Dashboard from "@material-ui/icons/DashboardOutlined"
+import ExitToApp from "@material-ui/icons/ExitToAppOutlined"
+import GroupAdd from "@material-ui/icons/GroupAddOutlined"
 import DateRange from "@material-ui/icons/DateRangeOutlined"
 import AccountBalanceWallet from "@material-ui/icons/AccountBalanceWalletOutlined"
 import NewReleases from "@material-ui/icons/NewReleasesOutlined"
@@ -32,7 +32,7 @@ const styles = ({ transitions, breakpoints }) => ({
 
   navWrap: {
     height: "100%",
-    width: "74%",
+    width: "78%",
     position: "absolute",
     right: "0",
     transition: transitions.create("right", {
@@ -53,7 +53,7 @@ const styles = ({ transitions, breakpoints }) => ({
     paddingBottom: "10px",
     background: "#192B81",
     paddingLeft: "21px",
-    paddingTop: "20px",
+    paddingTop: "12px",
   },
 
   itemText: itemTextStyles,
