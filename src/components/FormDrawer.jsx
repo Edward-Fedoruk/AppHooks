@@ -8,7 +8,7 @@ import IconButton from "@material-ui/core/IconButton"
 
 const styles = ({ breakpoints }) => ({
   dialog: {
-    minWidth: "calc(100% - 305px)",
+    minWidth: "calc(100% - 250px)",
     maxWidth: "calc(100% - 250px)",
     width: "77vw",
     left: "unset",
