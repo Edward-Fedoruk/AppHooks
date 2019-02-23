@@ -10,6 +10,7 @@ const styles = ({ breakpoints }) => ({
     color: "#fff",
     fontSize: "16px",
     background: "#35C1CE",
+    fontWeight: "400",
 
     "&:hover": {
       opacity: ".9",
