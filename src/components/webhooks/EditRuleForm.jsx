@@ -82,16 +82,8 @@ export class EditRuleForm extends Component {
       <ValidatorForm onSubmit={this.submit}>
         <FormRuleName onChange={this.nameChange} value={name} />
         <div className={classes.inputWrap}>
-          <FormAce
-            onChange={this.codeChange}
-            code={code}
-            caption="Transformation code"
-          />
-          <FormAce
-            onChange={this.inputCodeChange}
-            code={input}
-            caption="input data"
-          />
+          <FormAce onChange={this.inputCodeChange} code={input} caption="input data" />
+          <FormAce onChange={this.codeChange} code={code} caption="Transformation code" />
         </div>
         <MainButton className={classes.newRule} type="submit">Edit</MainButton>
       </ValidatorForm>
