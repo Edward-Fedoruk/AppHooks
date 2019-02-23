@@ -87,7 +87,6 @@ export class WebhooksRules extends Component {
     const {
       classes, recipes, toggleEdit, editRuleForm,
       isLoading, successMessage, errorMessage,
-      
     } = this.props
     const { open } = this.state
 
@@ -143,7 +142,9 @@ export class WebhooksRules extends Component {
 const loadingSelector = createLoadingSelector(["SET_RULES"])
 const errorSelector = createErrorMessageSelector(["SET_RULES"])
 
-const mapStateToProps = ({ rules, view, preloader, errorHandler }) => ({
+const mapStateToProps = ({
+  rules, view, preloader, errorHandler,
+}) => ({
   recipes: rules.recipes,
   editRuleForm: view.editRuleForm,
   isLoading: loadingSelector(preloader),

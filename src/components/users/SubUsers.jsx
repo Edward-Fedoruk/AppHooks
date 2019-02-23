@@ -74,7 +74,7 @@ export class SubUsers extends Component {
 const loadingSelector = createLoadingSelector(["SET_USERS"])
 const errorSelector = createErrorMessageSelector(["USER_ERROR"])
 
-const mapStateToProps = ({ 
+const mapStateToProps = ({
   users, preloader, errorHandler, view,
 }) => ({
   users: users.users,
