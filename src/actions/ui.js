@@ -8,6 +8,10 @@ export const toggleSnackbar = () => ({
   type: types.TOGGLE_SNACKBAR,
 })
 
+export const toggleSuccessSnackbar = () => ({
+  type: types.TOGGLE_SUCCESS_SNACKBAR,
+})
+
 export const toggleEditForm = () => ({
   type: types.TOGGLE_EDIT_RULE_FORM,
 })

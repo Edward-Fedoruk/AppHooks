@@ -3,6 +3,7 @@ import * as types from "../actions/types"
 const initialState = {
   open: false,
   snackbar: false,
+  succesSnackbar: false,
   currentStage: 0,
   editRuleForm: false,
   billingForm: false,
@@ -15,6 +16,8 @@ export default (state = initialState, action) => {
     return { ...state, open: !state.open }
   case types.TOGGLE_SNACKBAR:
     return { ...state, snackbar: !state.snackbar }
+  case types.TOGGLE_SUCCESS_SNACKBAR:
+    return { ...state, snackbar: !state.succesSnackbar }
   case types.CHANGE_STAGE:
     return { ...state, currentStage: action.stage }
   case types.TOGGLE_EDIT_RULE_FORM:
