@@ -35,7 +35,7 @@ const styles = ({ breakpoints }) => ({
 
   appBar: {
     background: "#fff",
-    height: "80px",
+    height: "60px",
     display: "flex",
     justifyContent: "center",
   },
