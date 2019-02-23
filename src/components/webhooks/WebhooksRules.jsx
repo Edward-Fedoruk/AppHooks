@@ -17,6 +17,9 @@ import MainButton from "../utils/MainButton"
 import FormTitle from "../utils/FormTitle"
 import { createLoadingSelector } from "../../actions/utils"
 import Preloader from "../Preloader"
+import SuccessSnackbar from "../utils/SuccessSnackbar"
+import ErrorSnackbar from "../utils/ErrorSnackbar"
+import { createErrorMessageSelector } from "../../actions/utils"
 
 const styles = ({ breakpoints }) => ({
   contentWrap: {
@@ -65,6 +68,13 @@ export class WebhooksRules extends Component {
     toggleEdit: PropTypes.func.isRequired,
     editRuleForm: PropTypes.bool.isRequired,
     isLoading: PropTypes.bool.isRequired,
+    successMessage: PropTypes.string,
+    errorMessage: PropTypes.string,
+  }
+
+  static defaultProps = {
+    successMessage: "Action was successful",
+    errorMessage: "Something went wrong",
   }
 
   componentDidMount() {
@@ -75,7 +85,9 @@ export class WebhooksRules extends Component {
 
   render() {
     const {
-      classes, recipes, toggleEdit, editRuleForm, isLoading,
+      classes, recipes, toggleEdit, editRuleForm,
+      isLoading, successMessage, errorMessage,
+      
     } = this.props
     const { open } = this.state
 
@@ -84,6 +96,9 @@ export class WebhooksRules extends Component {
         <TopBar title="WebHooks Rules">
           <MainButton onClick={this.toggleDialog}>Create New Rule</MainButton>
         </TopBar>
+
+        <SuccessSnackbar message={successMessage} />
+        <ErrorSnackbar message={errorMessage} />
 
         <FormDrawer
           open={open}
@@ -126,11 +141,14 @@ export class WebhooksRules extends Component {
 }
 
 const loadingSelector = createLoadingSelector(["SET_RULES"])
+const errorSelector = createErrorMessageSelector(["SET_RULES"])
 
-const mapStateToProps = ({ rules, view, preloader }) => ({
+const mapStateToProps = ({ rules, view, preloader, errorHandler }) => ({
   recipes: rules.recipes,
   editRuleForm: view.editRuleForm,
   isLoading: loadingSelector(preloader),
+  successMessage: view.successMessage,
+  errorMessage: errorSelector(errorHandler),
 })
 
 const mapDispatchToProps = {

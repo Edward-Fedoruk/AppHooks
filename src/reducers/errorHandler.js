@@ -1,7 +1,7 @@
 export default (state = {}, action) => {
   const { type, error } = action
   const matches = /(.*)_(REQUEST|FAILURE)/.exec(type)
-  let errorMessages = ""
+  let errorMessages
 
   if (!matches || error === undefined) return state
 

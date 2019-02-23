@@ -15,7 +15,7 @@ const SuccessSnackbar = ({
   >
     <SnackbarContent
       className={className}
-      variant="error"
+      variant="success"
       message={message}
     />
   </Snackbar>
@@ -34,11 +34,11 @@ SuccessSnackbar.propTypes = {
 }
 
 const mapStateToProps = ({ view }) => ({
-  snackbar: view.succesSnackbar,
+  snackbar: view.successSnackbar,
 })
 
 const mapDispatchToProps = dispatch => ({
-  toggleSnackbar: () => dispatch(toggleSuccessSnackbar()),
+  toggleSnackbar: () => dispatch(toggleSuccessSnackbar("")),
 })
 
 export default compose(

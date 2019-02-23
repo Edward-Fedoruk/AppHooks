@@ -6,7 +6,7 @@ import {
   handleErrorResponse,
 } from "./utils"
 import * as types from "./types"
-import { toggleSnackbar } from "./ui"
+import { toggleSnackbar, toggleSuccessSnackbar } from "./ui"
 import axios from "./utils"
 
 export const setUsers = users => ({
@@ -43,7 +43,10 @@ export const fetchUsers = () => (dispatch) => {
 
 export const inviteUser = data => (dispatch) => {
   axios.post("/users", data)
-    .then(handleResponse(dispatch, addUser))
+    .then((response) => {
+      handleResponse(dispatch, addUser)(response)
+      dispatch(toggleSuccessSnackbar("User was added"))
+    })
     .catch(compose(
       compose(dispatch, toggleSnackbar),
       handleErrorResponse(dispatch, createError("USER_ERROR"))
@@ -52,7 +55,10 @@ export const inviteUser = data => (dispatch) => {
 
 export const deleteUser = id => (dispatch) => {
   axios.delete(`/users/${id}`)
-    .then(() => compose(dispatch, removeUserFromStore)(id))
+    .then(() => {
+      compose(dispatch, removeUserFromStore)(id)
+      dispatch(toggleSuccessSnackbar("User was deleted"))
+    })
     .catch(compose(
       compose(dispatch, toggleSnackbar),
       handleErrorResponse(dispatch, createError("USER_ERROR"))
@@ -61,7 +67,10 @@ export const deleteUser = id => (dispatch) => {
 
 export const updateSubUser = (id, data) => (dispatch) => {
   axios.put(`/users/${id}`, data)
-    .then(handleResponse(dispatch, changeUserInStore))
+    .then((response) => {
+      handleResponse(dispatch, changeUserInStore)(response)
+      dispatch(toggleSuccessSnackbar("User data was changed"))
+    })
     .catch(compose(
       compose(dispatch, toggleSnackbar),
       handleErrorResponse(dispatch, createError("USER_ERROR"))

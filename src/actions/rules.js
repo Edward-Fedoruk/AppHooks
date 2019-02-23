@@ -1,8 +1,13 @@
 import { compose } from "redux"
 import * as types from "./types"
-import { initiateLoading, createError, handleErrorResponse } from "./utils"
+import {
+  initiateLoading,
+  createError,
+  handleErrorResponse,
+  handleResponse,
+} from "./utils"
 import axios from "./utils"
-import { toggleEditForm } from "./ui"
+import { toggleEditForm, toggleSnackbar, toggleSuccessSnackbar } from "./ui"
 
 const throwRuleErr = createError("SET_RULES")
 
@@ -37,15 +42,18 @@ export const fetchRules = () => (dispatch) => {
   dispatch(initiateLoading("SET_RULES"))
 
   axios.get("/recipes")
-    .then(({ data: { data } }) => compose(dispatch, setRules)(data))
-    .catch(handleErrorResponse(dispatch, throwRuleErr))
+    .then(handleResponse(dispatch, setRules))
+    .catch(compose(
+      compose(dispatch, toggleSnackbar),
+      handleErrorResponse(dispatch, throwRuleErr)
+    ))
 }
 
 export const fetchRule = id => (dispatch) => {
   console.log("test")
   axios.get(`/recipes/${id}`)
-    .then(({ data: { data } }) => {
-      dispatch(setRule(data))
+    .then((response) => {
+      handleResponse(dispatch, setRule)(response)
       dispatch(toggleEditForm())
     })
     .catch(handleErrorResponse(dispatch, throwRuleErr))
@@ -53,8 +61,14 @@ export const fetchRule = id => (dispatch) => {
 
 export const createRule = data => (dispatch) => {
   axios.post("/recipes", data)
-    .then(({ data: { data } }) => compose(dispatch, addRule)(data))
-    .catch(handleErrorResponse(dispatch, throwRuleErr))
+    .then((response) => {
+      handleResponse(dispatch, addRule)(response)
+      dispatch(toggleSuccessSnackbar("Rule was created"))
+    })
+    .catch(() => {
+      handleErrorResponse(dispatch, throwRuleErr)
+      dispatch(toggleSnackbar())
+    })
 }
 
 export const editRule = (id, data) => (dispatch) => {
@@ -63,12 +77,22 @@ export const editRule = (id, data) => (dispatch) => {
       console.log(data, id)
       dispatch(editRuleInStore(id, data))
       dispatch(toggleEditForm())
+      dispatch(toggleSuccessSnackbar("Rule Was edited"))
     })
-    .catch(handleErrorResponse(dispatch, throwRuleErr))
+    .catch(() => {
+      handleErrorResponse(dispatch, throwRuleErr)
+      dispatch(toggleSnackbar())
+    })
 }
 
 export const deleteRule = id => (dispatch) => {
   axios.delete(`/recipes/${id}`)
-    .then(() => compose(dispatch, deleteRuleFromStore)(id))
-    .catch(handleErrorResponse(dispatch, throwRuleErr))
+    .then(() => {
+      compose(dispatch, deleteRuleFromStore)(id)
+      dispatch(toggleSuccessSnackbar("Rule was deleted"))
+    })
+    .catch(() => {
+      handleErrorResponse(dispatch, throwRuleErr)
+      dispatch(toggleSnackbar())
+    })
 }
