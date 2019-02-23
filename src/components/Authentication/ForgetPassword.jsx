@@ -9,9 +9,9 @@ import { compose } from "redux"
 import { paperStyles, titleStyles } from "./formStyles"
 import SubmitButton from "./SubmitButton"
 import { reSendEmail } from "../../actions/auth"
-import ErrorSnackbar from "./ErrorSnackbar"
+import ErrorSnackbar from "../utils/ErrorSnackbar"
 import withBackground from "./withBackground"
-import Title from "../Title"
+import Title from "../utils/Title"
 
 const styles = ({ breakpoints, palette }) => ({
   paper: {

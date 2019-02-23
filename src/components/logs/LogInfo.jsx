@@ -10,7 +10,7 @@ import { compose } from "redux"
 import RequestInfo from "./RequestInfo"
 import ResponseInfo from "./ResponseInfo"
 import withNavigation from "../withNavigation"
-import TopBar from "../TopBar"
+import TopBar from "../utils/TopBar"
 import { fetchRequest } from "../../actions/requestLogs"
 
 const styles = ({ palette, breakpoints }) => ({

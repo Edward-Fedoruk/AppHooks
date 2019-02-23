@@ -8,9 +8,9 @@ import { CountryRegionData } from "react-country-region-selector"
 import { withRouter } from "react-router"
 import SubmitButton from "../Authentication/SubmitButton"
 import SelectInput from "./SelectInput"
-import FormTitle from "../FormTitle"
+import FormTitle from "../utils/FormTitle"
 import { createChannel } from "../../actions/channel"
-import TopBar from "../TopBar"
+import TopBar from "../utils/TopBar"
 
 const styles = () => ({
   formWrap: {

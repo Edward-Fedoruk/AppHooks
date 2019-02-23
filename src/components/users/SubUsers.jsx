@@ -6,13 +6,13 @@ import { withStyles } from "@material-ui/core"
 import Typography from "@material-ui/core/Typography"
 import UsersTable from "./UsersTable"
 import withNavigation from "../withNavigation"
-import TopBar from "../TopBar"
+import TopBar from "../utils/TopBar"
 import { fetchUsers } from "../../actions/subUsers"
 import AddUser from "./AddUser"
 import Preloader from "../Preloader"
 import { createLoadingSelector } from "../../actions/utils"
 import { createErrorMessageSelector } from "../../actions/utils"
-import ErrorSnackbar from "../Authentication/ErrorSnackbar"
+import ErrorSnackbar from "../utils/ErrorSnackbar"
 
 const styles = ({ breakpoints }) => ({
   contentWrap: {

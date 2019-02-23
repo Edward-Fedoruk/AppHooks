@@ -10,7 +10,7 @@ import MenuIcon from "@material-ui/icons/Menu"
 import { connect } from "react-redux"
 import { compose } from "redux"
 import Title from "./Title"
-import { toggleNavBar } from "../actions/ui"
+import { toggleNavBar } from "../../actions/ui"
 
 const styles = ({ breakpoints }) => ({
   title: {

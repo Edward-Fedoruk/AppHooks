@@ -7,7 +7,7 @@ import { compose } from "redux"
 import { withRouter } from "react-router-dom"
 import FormAce from "./FormAce"
 import FormRuleName from "./FormRuleName"
-import MainButton from "../MainButton"
+import MainButton from "../utils/MainButton"
 import { fetchRule, editRule } from "../../actions/rules"
 
 const styles = ({ breakpoints }) => ({

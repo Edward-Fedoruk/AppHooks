@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 import { withStyles } from "@material-ui/core"
 import AddCircle from "@material-ui/icons/AddCircle"
 import { compose } from "redux"
-import Title from "../Title"
+import Title from "../utils/Title"
 import EndpointCard from "./EndpointCard"
 
 const styles = () => ({

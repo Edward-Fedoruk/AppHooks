@@ -5,9 +5,9 @@ import { withStyles } from "@material-ui/core/styles"
 import { compose } from "redux"
 import Typography from "@material-ui/core/Typography"
 import ChannelCard from "./ChannelCard"
-import TopBar from "../TopBar"
+import TopBar from "../utils/TopBar"
 import CreateChannel from "./CreateChannel"
-import MainButton from "../MainButton"
+import MainButton from "../utils/MainButton"
 
 const styles = ({ breakpoints }) => ({
   contentWrap: {

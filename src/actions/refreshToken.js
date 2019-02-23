@@ -18,10 +18,11 @@ export const refreshToken = () => {
     .then(({ data }) => {
       localStorage.setItem("expTime", data.expires_at)
       localStorage.setItem("JWT", data.refresh_token)
+      console.log("updated")
       startTimer()
     })
-    .catch((err) => {
-      console.log(err.data)
+    .catch(({ response: { data } }) => {
+      console.log(data)
       history.push("/login")
     })
 }
@@ -38,13 +39,13 @@ export const startTimer = () => {
       history.push("/login")
       return
     }
-
-    if (currentTimestamp < expirationTime && currentTimestamp > expirationTime - 60000) {
+    console.log(expirationTime, currentTimestamp)
+    if (currentTimestamp < expirationTime && currentTimestamp > expirationTime - 120000) {
       clearInterval(timer)
       refreshToken()
     } else if (currentTimestamp > expirationTime) {
       clearInterval(timer)
       history.push("/login")
     }
-  }, 7000)
+  }, 30000)
 }

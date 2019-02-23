@@ -9,7 +9,7 @@ import { withRouter } from "react-router-dom"
 import { changeStage } from "../../actions/ui"
 import { deleteChannel } from "../../actions/channel"
 import ChannelMenu from "../channels/ChannelMenu"
-import TopBar from "../TopBar"
+import TopBar from "../utils/TopBar"
 
 const styles = () => ({
   menu: {

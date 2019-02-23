@@ -7,7 +7,7 @@ import { ValidatorForm, TextValidator } from "react-material-ui-form-validator"
 import FormHelperText from "@material-ui/core/FormHelperText"
 import { connect } from "react-redux"
 import { compose } from "redux"
-import MainButton from "../MainButton"
+import MainButton from "../utils/MainButton"
 
 const styles = () => ({
   field: {

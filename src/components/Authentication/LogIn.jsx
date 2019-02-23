@@ -13,7 +13,7 @@ import FormTitle from "./FormTitle"
 import SubmitButton from "./SubmitButton"
 import { logIn } from "../../actions/auth"
 import withBackground from "./withBackground"
-import ErrorSnackbar from "./ErrorSnackbar"
+import ErrorSnackbar from "../utils/ErrorSnackbar"
 
 const flexCenter = {
   display: "flex",

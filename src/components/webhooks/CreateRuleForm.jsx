@@ -5,7 +5,7 @@ import { ValidatorForm } from "react-material-ui-form-validator"
 import { withStyles } from "@material-ui/core"
 import FormAce from "./FormAce"
 import FormRuleName from "./FormRuleName"
-import MainButton from "../MainButton"
+import MainButton from "../utils/MainButton"
 import { createRule } from "../../actions/rules"
 
 const styles = ({ breakpoints }) => ({

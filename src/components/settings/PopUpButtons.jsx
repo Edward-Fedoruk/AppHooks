@@ -1,9 +1,10 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 import React from "react"
 import PropTypes from "prop-types"
 import Button from "@material-ui/core/Button"
 import Grow from "@material-ui/core/Grow"
 import { withStyles } from "@material-ui/core"
-import MainButton from "../MainButton"
+import MainButton from "../utils/MainButton"
 
 const styles = ({ breakpoints }) => ({
   btnGroup: {
@@ -37,7 +38,7 @@ const PopUpButtons = ({ classes, show, toggleForm }) => (
         className={classes.cancel}
         onClick={toggleForm}
       >
-          cancel
+        cancel
       </Button>
     </Grow>
     <Grow
