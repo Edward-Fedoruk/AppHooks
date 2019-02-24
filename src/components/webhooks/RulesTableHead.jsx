@@ -8,7 +8,7 @@ import TableCell from "../TableCell"
 
 const styles = () => ({
   colName: {
-    fontWeight: "bold",
+    fontWeight: "500",
     fontSize: "16px",
   },
 })

@@ -17,7 +17,7 @@ import UserTableRow from "./UserTableRow"
 
 const styles = () => ({
   colName: {
-    fontWeight: "bold",
+    fontWeight: "500",
     fontSize: "16px",
     transition: "all 3s",
   },
