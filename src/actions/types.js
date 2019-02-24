@@ -31,6 +31,7 @@ export const SET_LOGS_SUCCESS = "SET_LOGS_SUCCESS"
 export const SET_LOGS_FAILURE = "SET_LOGS_FAILURE"
 export const SET_LOG = "SET_LOG"
 export const DELETE_LOGS = "DELETE_LOGS"
+export const LOGS_SEARCH_TEXT = "LOGS_SEARCH_TEXT"
 
 // sub-users
 export const SET_USERS_SUCCESS = "SET_USERS_SUCCESS"

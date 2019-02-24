@@ -14,7 +14,7 @@ import Grid from "@material-ui/core/Grid"
 import Input from "@material-ui/core/Input"
 import Reply from "@material-ui/icons/Reply"
 import { connect } from "react-redux"
-import { deleteLogs } from "../../actions/requestLogs"
+import { deleteLogs, setSearchText } from "../../actions/requestLogs"
 import ConfirmDialog from "../ConfirmDialog"
 
 const toolbarStyles = theme => ({
@@ -44,7 +44,9 @@ const toolbarStyles = theme => ({
 })
 
 const EnhancedTableToolbar = ({
-  selected, classes, openDialog, toggleDialog, handleCloseWithAction,
+  selected, classes, openDialog,
+  toggleDialog, handleCloseWithAction,
+  setSearchText,
 }) => (
   <Toolbar
     className={classNames(classes.root, {
@@ -87,9 +89,10 @@ const EnhancedTableToolbar = ({
             <Grid item><Search /></Grid>
             <Grid item>
               <Input
-                defaultValue="endpoint #1"
+                defaultValue=""
                 className={classes.input}
                 inputProps={{ "aria-label": "Description" }}
+                onChange={setSearchText}
               />
             </Grid>
           </Grid>
@@ -99,17 +102,18 @@ const EnhancedTableToolbar = ({
   </Toolbar>
 )
 
-
 EnhancedTableToolbar.propTypes = {
   classes: PropTypes.object.isRequired,
   selected: PropTypes.array.isRequired,
   openDialog: PropTypes.func.isRequired,
   toggleDialog: PropTypes.func.isRequired,
   handleCloseWithAction: PropTypes.func.isRequired,
+  setSearchText: PropTypes.func.isRequired,
 }
 
 const mapDispatchToProps = dispatch => ({
   deleteLogs: ids => dispatch(deleteLogs(ids)),
+  setSearchText: e => dispatch(setSearchText(e.target.value)),
 })
 
 export default connect(null, mapDispatchToProps)(withStyles(toolbarStyles)(EnhancedTableToolbar))

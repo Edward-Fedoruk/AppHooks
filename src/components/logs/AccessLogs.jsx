@@ -36,6 +36,7 @@ export class AccessLogs extends Component {
     isLoading: PropTypes.bool.isRequired,
     successMessage: PropTypes.string,
     errorMessage: PropTypes.string,
+    showLogs: PropTypes.number.isRequired,
   }
 
   static defaultProps = {
@@ -49,7 +50,8 @@ export class AccessLogs extends Component {
 
   render() {
     const {
-      classes, data, isLoading, errorMessage, successMessage,
+      classes, data, isLoading, showLogs,
+      errorMessage, successMessage,
     } = this.props
     return isLoading ? <Preloader /> : (
       <Fragment>
@@ -57,7 +59,7 @@ export class AccessLogs extends Component {
         <SuccessSnackbar message={successMessage} />
         <TopBar title="Request Log Viewer" />
         <div className={classes.contentWrap}>
-          {data.length
+          {showLogs
             ? (
               <Fragment>
                 <LogsTable data={data} />
@@ -81,7 +83,9 @@ const errorSelector = createErrorMessageSelector(["SET_LOGS"])
 const mapStateToProps = ({
   requestLogs, preloader, errorHandler, view,
 }) => ({
-  data: requestLogs.requests,
+  showLogs: requestLogs.requests.length,
+  searchText: requestLogs.searchText,
+  data: requestLogs.requests.filter(request => request.application.name.includes(requestLogs.searchText)),
   isLoading: loadingSelector(preloader),
   errorMessage: errorSelector(errorHandler),
   successMessage: view.successMessage,

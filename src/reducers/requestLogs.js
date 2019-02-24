@@ -2,6 +2,7 @@ import * as types from "../actions/types"
 
 const initialState = {
   requests: [],
+  searchText: "",
   openedLog: {
     endpoint: {},
     destination: {},
@@ -21,7 +22,11 @@ export default (state = initialState, action) => {
       ...state,
       requests: [...action.logs],
     }
-
+  case types.LOGS_SEARCH_TEXT:
+    return {
+      ...state,
+      searchText: action.searchText.trim(),
+    }
   case types.DELETE_LOGS:
     return {
       ...state,

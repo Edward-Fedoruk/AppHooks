@@ -1,7 +1,12 @@
+import { compose } from "redux"
 import * as types from "./types"
 import {
-  handleResponse, handleErrorResponse, createError, initiateLoading,
+  handleResponse,
+  handleErrorResponse,
+  createError,
+  initiateLoading,
 } from "./utils"
+import { toggleSuccessSnackbar, toggleSnackbar } from "./ui"
 import axios from "./utils"
 
 export const setLogs = logs => ({
@@ -19,6 +24,11 @@ export const setLog = log => ({
   log,
 })
 
+export const setSearchText = searchText => ({
+  type: types.LOGS_SEARCH_TEXT,
+  searchText,
+})
+
 export const fetchRequests = () => (dispatch) => {
   dispatch(initiateLoading("SET_LOGS"))
 
@@ -28,19 +38,19 @@ export const fetchRequests = () => (dispatch) => {
 }
 
 export const deleteLogs = id => (dispatch) => {
-  const ids = JSON.stringify({ data: id })
-
-  axios.delete("/request-logs", ids)
-    .then(dispatch(deleteLogsFromStore(id)))
-    .catch((err) => {
-      console.log(err)
+  axios.delete("/request-logs", { id })
+    .then(() => {
+      dispatch(deleteLogsFromStore(id))
+      dispatch(toggleSuccessSnackbar("Reuqest log was deleted"))
     })
+    .catch(compose(
+      compose(dispatch, toggleSnackbar),
+      handleErrorResponse(dispatch, createError("SET_LOGS"))
+    ))
 }
 
 export const fetchRequest = id => (dispatch) => {
   axios.get(`/request-logs/${id}`)
     .then(handleResponse(dispatch, setLog))
-    .catch((err) => {
-      console.log(err)
-    })
+    .catch(handleErrorResponse(dispatch, createError("SET_LOGS")))
 }
