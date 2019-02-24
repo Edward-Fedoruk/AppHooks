@@ -10,7 +10,7 @@ import { inviteUser } from "../../actions/subUsers"
 const styles = ({ breakpoints }) => ({
   form: {
     display: "flex",
-    alignItems: "stretch",
+    alignItems: "flex-end",
     margin: "22px auto 10px 10px",
 
     [breakpoints.down(375)]: {
@@ -21,8 +21,9 @@ const styles = ({ breakpoints }) => ({
 
   add: {
     marginLeft: "16px",
-    width: "120px",
-    height: "56px",
+    width: "170px",
+    height: "16px",
+    textTransform: "capitalize",
   },
 })
 
@@ -53,8 +54,7 @@ export class AddUser extends Component {
       <div>
         <ValidatorForm onSubmit={this.onSubmit} className={classes.form}>
           <TextValidator
-            variant="outlined"
-            label="Add new sub-user"
+            label="Email address"
             name="email"
             ref={this.email}
             margin="none"
@@ -65,7 +65,7 @@ export class AddUser extends Component {
             validators={["required", "isEmail"]}
             errorMessages={["this field is required", "email is not valid"]}
           />
-          <Button type="submit" className={classes.add} variant="outlined" color="primary" size="large">Add</Button>
+          <Button type="submit" className={classes.add} variant="outlined" color="primary" size="small">Add new Sub-User</Button>
         </ValidatorForm>
       </div>
     )

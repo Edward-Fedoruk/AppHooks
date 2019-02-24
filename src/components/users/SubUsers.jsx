@@ -30,6 +30,7 @@ const styles = ({ breakpoints }) => ({
   hint: {
     fontWeight: "300",
     fontSize: "14px",
+    marginBottom: "20px",
   },
 })
 
@@ -45,7 +46,7 @@ export class SubUsers extends Component {
 
   static defaultProps = {
     errorMessage: "Something went wrong.",
-    successMessage: "Action was successful", 
+    successMessage: "Action was successful",
   }
 
   componentDidMount() {
@@ -54,7 +55,7 @@ export class SubUsers extends Component {
 
   render() {
     const {
-      classes, users, isLoading, errorMessage, successMessage
+      classes, users, isLoading, errorMessage, successMessage,
     } = this.props
     return isLoading ? <Preloader /> : (
       <Fragment>
