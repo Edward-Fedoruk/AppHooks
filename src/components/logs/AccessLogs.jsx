@@ -81,14 +81,14 @@ const loadingSelector = createLoadingSelector(["SET_LOGS"])
 const errorSelector = createErrorMessageSelector(["SET_LOGS"])
 
 const mapStateToProps = ({
-  requestLogs, preloader, errorHandler, view,
+  requestLogs, preloader, errorHandler
 }) => ({
   showLogs: requestLogs.requests.length,
   searchText: requestLogs.searchText,
   data: requestLogs.requests.filter(request => request.application.name.includes(requestLogs.searchText)),
   isLoading: loadingSelector(preloader),
   errorMessage: errorSelector(errorHandler),
-  successMessage: view.successMessage,
+  // successMessage: view.successMessage,
 })
 
 const mapDispatchToProps = {
