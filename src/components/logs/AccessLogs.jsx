@@ -10,7 +10,9 @@ import withNavigation from "../withNavigation"
 import TopBar from "../utils/TopBar"
 import { fetchRequests } from "../../actions/requestLogs"
 import Preloader from "../Preloader"
-import { createLoadingSelector } from "../../actions/utils"
+import { createLoadingSelector, createErrorMessageSelector } from "../../actions/utils"
+import ErrorSnackbar from "../utils/ErrorSnackbar"
+import SuccessSnackbar from "../utils/SuccessSnackbar"
 
 const styles = ({ breakpoints }) => ({
   contentWrap: {
@@ -32,6 +34,13 @@ export class AccessLogs extends Component {
     classes: PropTypes.object.isRequired,
     fetchRequests: PropTypes.func.isRequired,
     isLoading: PropTypes.bool.isRequired,
+    successMessage: PropTypes.string,
+    errorMessage: PropTypes.string,
+  }
+
+  static defaultProps = {
+    successMessage: "Action was successful",
+    errorMessage: "Something went wrong in logs",
   }
 
   componentDidMount() {
@@ -39,9 +48,13 @@ export class AccessLogs extends Component {
   }
 
   render() {
-    const { classes, data, isLoading } = this.props
+    const {
+      classes, data, isLoading, errorMessage, successMessage,
+    } = this.props
     return isLoading ? <Preloader /> : (
       <Fragment>
+        <ErrorSnackbar message={errorMessage} />
+        <SuccessSnackbar message={successMessage} />
         <TopBar title="Request Log Viewer" />
         <div className={classes.contentWrap}>
           {data.length
@@ -63,10 +76,15 @@ export class AccessLogs extends Component {
 }
 
 const loadingSelector = createLoadingSelector(["SET_LOGS"])
+const errorSelector = createErrorMessageSelector(["SET_LOGS"])
 
-const mapStateToProps = ({ requestLogs, preloader }) => ({
+const mapStateToProps = ({
+  requestLogs, preloader, errorHandler, view,
+}) => ({
   data: requestLogs.requests,
   isLoading: loadingSelector(preloader),
+  errorMessage: errorSelector(errorHandler),
+  successMessage: view.successMessage,
 })
 
 const mapDispatchToProps = {
