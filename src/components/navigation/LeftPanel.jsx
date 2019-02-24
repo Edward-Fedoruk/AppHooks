@@ -6,7 +6,7 @@ import IconButton from "@material-ui/core/IconButton"
 import { Scrollbars } from "react-custom-scrollbars"
 import { compose } from "redux"
 import { withRouter } from "react-router-dom"
-import { ReactComponent as QuestionMark } from "../../assets/QuestionMark.svg"
+import Help from "@material-ui/icons/Help"
 import { ReactComponent as LogoIcon } from "../../assets/LogoIcon.svg"
 import UserIcon from "./UserIcon"
 
@@ -52,6 +52,7 @@ const styles = () => ({
 
   questionMarkWrap: {
     marginBottom: "0px",
+    color: "#d1d5e6",
 
     "&:hover": {
       backgroundColor: "transparent",
@@ -60,8 +61,8 @@ const styles = () => ({
 
   topIcons: iconsGroup,
   logoIcon: { width: "100%" },
-  addCircle: { fontSize: "35px" },
-  questionMark: { height: "35px" },
+  addCircle: { fontSize: "30px" },
+  questionMark: { fontSize: "25px" },
   userWrap: { marginBottom: "15px" },
 
 })
@@ -79,7 +80,7 @@ const LeftPanel = ({ classes }) => (
         </div>
         <div className={classes.bottomIcons}>
           <IconButton disableRipple className={classes.questionMarkWrap}>
-            <QuestionMark className={classes.questionMark} />
+            <Help className={classes.questionMark} />
           </IconButton>
 
           <UserIcon className={classes.userWrap} />
