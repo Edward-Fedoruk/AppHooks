@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 import IconButton from "@material-ui/core/IconButton"
 import Tooltip from "@material-ui/core/Tooltip"
 import DeleteIcon from "@material-ui/icons/Delete"
@@ -43,7 +44,7 @@ const toolbarStyles = theme => ({
 })
 
 const EnhancedTableToolbar = ({
-  selected, classes, deleteLogs, openDialog, toggleDialog, handleCloseWithAction,
+  selected, classes, openDialog, toggleDialog, handleCloseWithAction,
 }) => (
   <Toolbar
     className={classNames(classes.root, {
@@ -58,11 +59,11 @@ const EnhancedTableToolbar = ({
     <div className={classes.title}>
       {selected.length > 0
         && (
-        <Typography color="inherit" variant="subtitle1">
-          {selected.length}
-          {" "}
-selected
-        </Typography>
+          <Typography color="inherit" variant="subtitle1">
+            {selected.length}
+            {" "}
+            selected
+          </Typography>
         )}
     </div>
     <div className={classes.spacer} />
@@ -102,6 +103,9 @@ selected
 EnhancedTableToolbar.propTypes = {
   classes: PropTypes.object.isRequired,
   selected: PropTypes.array.isRequired,
+  openDialog: PropTypes.func.isRequired,
+  toggleDialog: PropTypes.func.isRequired,
+  handleCloseWithAction: PropTypes.func.isRequired,
 }
 
 const mapDispatchToProps = dispatch => ({

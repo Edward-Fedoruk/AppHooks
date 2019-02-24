@@ -48,17 +48,7 @@ class LogsTable extends Component {
   handleCloseWithAction = (ids) => {
     this.toggleDialog()
     this.props.deleteLogs(ids)
-  }
-
-  handleRequestSort = (event, property) => {
-    const orderBy = property
-    let order = "desc"
-
-    if (this.state.orderBy === property && this.state.order === "desc") {
-      order = "asc"
-    }
-
-    this.setState({ order, orderBy })
+    this.setState({ selected: [] })
   }
 
   handleSelectAllClick = (event) => {
@@ -115,7 +105,6 @@ class LogsTable extends Component {
               order={order}
               orderBy={orderBy}
               onSelectAllClick={this.handleSelectAllClick}
-              onRequestSort={this.handleRequestSort}
               rowCount={data.length}
             />
             <AccessTableBody

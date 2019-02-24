@@ -16,44 +16,19 @@ const styles = ({ palette }) => ({
 
 
 class AccessTableBody extends Component {
-  desc = (a, b, orderBy) => {
-    if (b[orderBy] < a[orderBy]) {
-      return -1
-    }
-    if (b[orderBy] > a[orderBy]) {
-      return 1
-    }
-    return 0
-  }
-
-  stableSort = (array, cmp) => {
-    const stabilizedThis = array.map((el, index) => [el, index])
-    stabilizedThis.sort((a, b) => {
-      const order = cmp(a[0], b[0])
-      if (order !== 0) return order
-      return a[1] - b[1]
-    })
-    return stabilizedThis.map(el => el[0])
-  }
-
-  getSorting = (order, orderBy) => (order === "desc"
-    ? (a, b) => this.desc(a, b, orderBy)
-    : (a, b) => -(this.desc(a, b, orderBy)))
-
   handleRowClick = (e, id) => {
     if (e.target.tagName === "TD" || e.target.tagName === "INPUT") { this.props.handleClick(e, id) }
   }
 
   render() {
     const {
-      data, order, orderBy,
-      page, rowsPerPage, emptyRows,
+      data, page, rowsPerPage, emptyRows,
       isSelected, classes,
     } = this.props
 
     return (
       <TableBody>
-        {this.stableSort(data, this.getSorting(order, orderBy))
+        {data
           .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
           .map((n) => {
             const selected = isSelected(n.id)
@@ -67,12 +42,8 @@ class AccessTableBody extends Component {
                 key={n.id}
                 selected={selected}
               >
-                <TableCell padding="checkbox" className={classes.cell}>
-                  <Checkbox checked={selected} />
-                </TableCell>
-                <TableCell padding="none" className={classes.cell}>
-                  {n.attempted_at}
-                </TableCell>
+                <TableCell padding="checkbox" className={classes.cell}><Checkbox checked={selected} /></TableCell>
+                <TableCell padding="none" className={classes.cell}>{n.attempted_at}</TableCell>
                 <TableCell padding="none" className={classes.cell}>{n.application.name}</TableCell>
                 <TableCell padding="none" className={classes.cell}>{n.endpoint.name}</TableCell>
                 <TableCell padding="none" className={classes.cell}>{n.destination.name}</TableCell>
@@ -97,8 +68,6 @@ class AccessTableBody extends Component {
 
 AccessTableBody.propTypes = {
   data: PropTypes.array.isRequired,
-  order: PropTypes.string.isRequired,
-  orderBy: PropTypes.string.isRequired,
   page: PropTypes.number.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
   emptyRows: PropTypes.number.isRequired,
