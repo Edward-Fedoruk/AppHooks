@@ -53,6 +53,11 @@ class AppNavigation extends Component {
     this.props.fetchUserSettings()
   }
 
+  shouldComponentUpdate(nextProps) {
+    return nextProps.width !== this.props.width
+    || nextProps.open !== this.props.open
+  }
+
   render() {
     const {
       classes, open, toggleNavBar, width,
