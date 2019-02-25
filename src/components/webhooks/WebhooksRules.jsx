@@ -20,10 +20,11 @@ import Preloader from "../Preloader"
 import SuccessSnackbar from "../utils/SuccessSnackbar"
 import ErrorSnackbar from "../utils/ErrorSnackbar"
 import { createErrorMessageSelector } from "../../actions/utils"
+import withPlanPanel from "../withPlanPanel"
 
 const styles = ({ breakpoints }) => ({
   contentWrap: {
-    padding: "20px 26px 20px 13px",
+    padding: "20px 26px 80px 13px",
     overflowX: "hidden",
 
     [breakpoints.down(768)]: {
@@ -159,6 +160,7 @@ const mapDispatchToProps = {
 
 export default compose(
   withNavigation,
+  withPlanPanel,
   withStyles(styles),
   connect(mapStateToProps, mapDispatchToProps)
 )(WebhooksRules)

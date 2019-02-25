@@ -14,10 +14,11 @@ import { createLoadingSelector } from "../../actions/utils"
 import { createErrorMessageSelector } from "../../actions/utils"
 import ErrorSnackbar from "../utils/ErrorSnackbar"
 import SuccessSnackbar from "../utils/SuccessSnackbar"
+import withPlanPanel from "../withPlanPanel"
 
 const styles = ({ breakpoints }) => ({
   contentWrap: {
-    padding: "20px 26px 20px 13px",
+    padding: "20px 26px 100px 13px",
 
     [breakpoints.down(768)]: {
       padding: "20px 15px 5px 15px",
@@ -90,6 +91,7 @@ const mapDispatchToProps = {
 
 export default compose(
   withNavigation,
+  withPlanPanel,
   withStyles(styles),
   connect(mapStateToProps, mapDispatchToProps)
 )(SubUsers)

@@ -13,10 +13,11 @@ import Preloader from "../Preloader"
 import { createLoadingSelector, createErrorMessageSelector } from "../../actions/utils"
 import ErrorSnackbar from "../utils/ErrorSnackbar"
 import SuccessSnackbar from "../utils/SuccessSnackbar"
+import withPlanPanel from "../withPlanPanel"
 
 const styles = ({ breakpoints }) => ({
   contentWrap: {
-    padding: "20px 26px 20px 20px",
+    padding: "20px 26px 80px 20px",
     overflowX: "hidden",
 
     [breakpoints.down(768)]: {
@@ -97,6 +98,7 @@ const mapDispatchToProps = {
 
 export default compose(
   withNavigation,
+  withPlanPanel,
   withStyles(styles),
   connect(mapStateToProps, mapDispatchToProps)
 )(AccessLogs)

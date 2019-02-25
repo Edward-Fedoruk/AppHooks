@@ -17,6 +17,7 @@ const styles = ({ breakpoints }) => ({
     marginLeft: "auto",
     minHeight: "100vh",
     width: "77vw",
+    position: "relative",
 
     [breakpoints.down(960)]: {
       width: "100%",
