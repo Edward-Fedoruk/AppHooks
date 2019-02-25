@@ -6,6 +6,7 @@ import { connect } from "react-redux"
 import Typography from "@material-ui/core/Typography"
 import Button from "@material-ui/core/Button"
 import { Link } from "react-router-dom"
+import withWidth from "@material-ui/core/withWidth"
 
 const mapStateToProps = ({ userSettings }) => ({
   userPackage: userSettings.settings.package,
@@ -64,7 +65,7 @@ const styles = ({ palette, breakpoints }) => ({
     flexDirection: "column",
     height: "60px",
     justifyContent: "center",
-    marginLeft: "10px"
+    marginLeft: "10px",
   },
 
   planInfoText: {
@@ -85,32 +86,40 @@ const styles = ({ palette, breakpoints }) => ({
   },
 
   highlight: { fontWeight: "600" },
-  blue: { color: "#00A1F1" }
+  blue: { color: "#00A1F1" },
 })
 
 const hocComponentName = (WrappedComponent) => {
-  const hocComponent = ({ userPackage, classes, ...props }) => (
-    <Fragment>
+  const hocComponent = ({
+    width, userPackage, classes, ...props
+  }) => {
+    const isMobile = width === "xs"
+    return isMobile ? (
       <WrappedComponent {...props} />
-      <div className={classes.panel}>
-        <div className={classes.planCircle}>
-          <Typography variant="caption" className={classes.caption}>{userPackage}</Typography>
+    ) : (
+      <Fragment>
+        <WrappedComponent {...props} />
+        <div className={classes.panel}>
+          <div className={classes.planCircle}>
+            <Typography variant="caption" className={classes.caption}>{userPackage}</Typography>
+          </div>
+          <div className={classes.planInfo}>
+            <Typography className={classes.planInfoText}>Your Channels plan | <span className={classes.blue}>{userPackage}</span></Typography>
+            <Typography className={classes.planInfoText}>includes ,<span>100 connections</span> and <span>200,000 messages per day</span></Typography>
+          </div>
+          <Button variant="outlined" size="medium" className={classes.upgradeButton} component={Link} to="/billing">Upgrade now</Button>
         </div>
-        <div className={classes.planInfo}>
-          <Typography className={classes.planInfoText}>Your Channels plan | <span className={classes.blue}>{userPackage}</span></Typography>
-          <Typography className={classes.planInfoText}>includes ,<span>100 connections</span> and <span>200,000 messages per day</span></Typography>
-        </div>
-        <Button variant="outlined" size="medium" className={classes.upgradeButton} component={Link} to="/billing">Upgrade now</Button>
-      </div>
-    </Fragment>
-  )
+      </Fragment>
+    )
+  }
 
   hocComponent.propTypes = {
     classes: PropTypes.object.isRequired,
     userPackage: PropTypes.string.isRequired,
+    width: PropTypes.string.isRequired,
   }
 
-  return withStyles(styles)(hocComponent)
+  return withWidth()(withStyles(styles)(hocComponent))
 }
 
 
