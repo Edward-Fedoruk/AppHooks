@@ -3,12 +3,6 @@ import PropTypes from "prop-types"
 import { withStyles } from "@material-ui/core/styles"
 import List from "@material-ui/core/List"
 import Typography from "@material-ui/core/Typography"
-import Dashboard from "@material-ui/icons/DashboardOutlined"
-import ExitToApp from "@material-ui/icons/ExitToAppOutlined"
-import GroupAdd from "@material-ui/icons/GroupAddOutlined"
-import DateRange from "@material-ui/icons/DateRangeOutlined"
-import AccountBalanceWallet from "@material-ui/icons/AccountBalanceWalletOutlined"
-import NewReleases from "@material-ui/icons/NewReleasesOutlined"
 import { Scrollbars } from "react-custom-scrollbars"
 import { compose } from "redux"
 import { connect } from "react-redux"
@@ -81,12 +75,12 @@ const RightPanel = ({ classes }) => (
     <div className={classes.navigation}>
       <Scrollbars>
         <List className={classes.listItems}>
-          <NavListItem path="/" Icon={Dashboard} itemText="Dashboard" exact />
-          <NavListItem path="/channels" Icon={ExitToApp} itemText="Channels" />
-          <NavListItem path="/webhooks" Icon={NewReleases} itemText="Webhooks Rules" />
-          <NavListItem path="/users" Icon={GroupAdd} itemText="Sub-Users" />
-          <NavListItem path="/logs" Icon={DateRange} itemText="Access Logs" />
-          <NavListItem path="/billing" Icon={AccountBalanceWallet} itemText="Billing" />
+          <NavListItem path="/" Icon={<i className="icon-dashboard" />} itemText="Dashboard" exact />
+          <NavListItem path="/channels" Icon={<i className="icon-channels" />} itemText="Channels" />
+          <NavListItem path="/webhooks" Icon={<i className="icon-rules" />} itemText="Webhooks Rules" />
+          <NavListItem path="/users" Icon={<i className="icon-sub-user" />} itemText="Sub-Users" />
+          <NavListItem path="/logs" Icon={<i className="icon-logs" />} itemText="Access Logs" />
+          <NavListItem path="/billing" Icon={<i className="icon-billing" />} itemText="Billing" />
         </List>
       </Scrollbars>
     </div>

@@ -29,6 +29,7 @@ const styles = () => ({
     color: "rgba(255, 255, 255, 0.7)",
     margin: "0",
     fontWeight: "200",
+    fontSize: "18px",
   },
 
   item: {
@@ -38,7 +39,8 @@ const styles = () => ({
 })
 
 const NavListItem = ({
-  path, Icon, classes, itemText, exact, location, toggleNavBar,
+  path, Icon, classes, itemText,
+  exact, location, toggleNavBar,
 }) => {
   const match = matchPath(location.pathname, { path, exact, strict: false })
 
@@ -55,7 +57,7 @@ const NavListItem = ({
         className={classes.itemIcon}
         style={{ color: match !== null && "#fff" }}
       >
-        <Icon />
+        {Icon}
       </ListItemIcon>
 
       <ListItemText

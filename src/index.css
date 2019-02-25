@@ -3,6 +3,56 @@ html, body {
   overflow-x: hidden
 }
 
+
+@font-face {
+  font-family: 'icomoon';
+  src: url('assets/icomoon.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-billing:before {
+  content: "\e900";
+  color: #fff;
+}
+.icon-channels:before {
+  content: "\e901";
+  color: #fff;
+}
+.icon-dashboard:before {
+  content: "\e902";
+  color: #fff;
+}
+.icon-logs:before {
+  content: "\e903";
+  color: #fff;
+}
+.icon-rules:before {
+  content: "\e904";
+  color: #fff;
+}
+.icon-sub-user:before {
+  content: "\e905";
+  color: #fff;
+}
+
+
+
 .slick-initialized {
   width: 100%
 }
