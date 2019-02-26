@@ -7,8 +7,10 @@ import { Scrollbars } from "react-custom-scrollbars"
 import { compose } from "redux"
 import { withRouter } from "react-router-dom"
 import Help from "@material-ui/icons/Help"
+import { connect } from "react-redux"
 import { ReactComponent as LogoIcon } from "../../assets/LogoIcon.svg"
 import UserIcon from "./UserIcon"
+import { toggleshortcutPanel } from "../../actions/ui"
 
 const iconsGroup = {
   alignSelf: "flex-start",
@@ -67,14 +69,14 @@ const styles = () => ({
 
 })
 
-const LeftPanel = ({ classes }) => (
+const LeftPanel = ({ classes, toggleshortcutPanel }) => (
   <div className={classes.paper}>
     <Scrollbars>
       <div className={classes.iconsWrap}>
         <div className={classes.topIcons}>
           <LogoIcon className={classes.logoIcon} />
 
-          <IconButton disableRipple className={classes.addCircleWrap}>
+          <IconButton onClick={toggleshortcutPanel} disableRipple className={classes.addCircleWrap}>
             <AddCircle className={classes.addCircle} />
           </IconButton>
         </div>
@@ -92,9 +94,15 @@ const LeftPanel = ({ classes }) => (
 
 LeftPanel.propTypes = {
   classes: PropTypes.object.isRequired,
+  toggleshortcutPanel: PropTypes.func.isRequired,
+}
+
+const mapDispatchToProps = {
+  toggleshortcutPanel,
 }
 
 export default compose(
   withStyles(styles),
   withRouter,
+  connect(null, mapDispatchToProps)
 )(LeftPanel)
