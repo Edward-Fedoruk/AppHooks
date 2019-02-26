@@ -35,6 +35,11 @@ export class AddUser extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
     inviteUser: PropTypes.func.isRequired,
+    className: PropTypes.string,
+  }
+
+  static defaultProps = {
+    className: "",
   }
 
   email = React.createRef()
@@ -49,9 +54,9 @@ export class AddUser extends Component {
   onChange = input => e => this.setState({ [input]: e.target.value })
 
   render() {
-    const { classes } = this.props
+    const { classes, className } = this.props
     return (
-      <div>
+      <div className={className}>
         <ValidatorForm onSubmit={this.onSubmit} className={classes.form}>
           <TextValidator
             label="Email address"
