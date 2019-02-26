@@ -50,7 +50,6 @@ export const fetchRules = () => (dispatch) => {
 }
 
 export const fetchRule = id => (dispatch) => {
-  console.log("test")
   axios.get(`/recipes/${id}`)
     .then((response) => {
       handleResponse(dispatch, setRule)(response)
@@ -65,8 +64,8 @@ export const createRule = data => (dispatch) => {
       handleResponse(dispatch, addRule)(response)
       dispatch(toggleSuccessSnackbar("Rule was created"))
     })
-    .catch(() => {
-      handleErrorResponse(dispatch, throwRuleErr)
+    .catch((response) => {
+      handleErrorResponse(dispatch, throwRuleErr)(response)
       dispatch(toggleSnackbar())
     })
 }
