@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import React, { Component, Fragment } from "react"
 import PropTypes from "prop-types"
 import { connect } from "react-redux"
 import { ValidatorForm } from "react-material-ui-form-validator"
@@ -9,6 +9,7 @@ import FormAce from "./FormAce"
 import FormRuleName from "./FormRuleName"
 import MainButton from "../utils/MainButton"
 import { fetchRule, editRule } from "../../actions/rules"
+import FormTitle from "../utils/FormTitle"
 
 const styles = ({ breakpoints }) => ({
   newRule: {
@@ -79,14 +80,20 @@ export class EditRuleForm extends Component {
     const { classes } = this.props
     const { code, input, name } = this.state
     return (
-      <ValidatorForm onSubmit={this.submit}>
-        <FormRuleName onChange={this.nameChange} value={name} />
-        <div className={classes.inputWrap}>
-          <FormAce onChange={this.inputCodeChange} code={input} caption="input data" />
-          <FormAce onChange={this.codeChange} code={code} caption="Transformation code" />
-        </div>
-        <MainButton className={classes.newRule} type="submit">Edit</MainButton>
-      </ValidatorForm>
+      <Fragment>
+        <FormTitle
+          title="Edit WebHook Rule"
+          paragraph="You can create as many rules as you need."
+        />
+        <ValidatorForm onSubmit={this.submit}>
+          <FormRuleName onChange={this.nameChange} value={name} />
+          <div className={classes.inputWrap}>
+            <FormAce onChange={this.inputCodeChange} code={input} caption="input data" />
+            <FormAce onChange={this.codeChange} code={code} caption="Transformation code" />
+          </div>
+          <MainButton className={classes.newRule} type="submit">Edit</MainButton>
+        </ValidatorForm>
+      </Fragment>
     )
   }
 }

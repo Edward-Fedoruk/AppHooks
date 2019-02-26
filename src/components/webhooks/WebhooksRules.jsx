@@ -14,7 +14,6 @@ import { toggleEditForm as toggleEdit } from "../../actions/ui"
 import CreateRuleForm from "./CreateRuleForm"
 import EditRuleForm from "./EditRuleForm"
 import MainButton from "../utils/MainButton"
-import FormTitle from "../utils/FormTitle"
 import { createLoadingSelector } from "../../actions/utils"
 import Preloader from "../Preloader"
 import SuccessSnackbar from "../utils/SuccessSnackbar"
@@ -100,31 +99,14 @@ export class WebhooksRules extends Component {
         <SuccessSnackbar message={successMessage} />
         <ErrorSnackbar message={errorMessage} />
 
-        <FormDrawer
-          open={open}
-          toggleDialog={this.toggleDialog}
-        >
-          <Fragment>
-            <FormTitle
-              title="Create WebHook Rule"
-              paragraph="Create a WebHook Rule. You can create as many rules as you need."
-            />
-            <CreateRuleForm />
-          </Fragment>
+        <FormDrawer open={open} toggleDialog={this.toggleDialog}>
+          <CreateRuleForm />
         </FormDrawer>
 
-        <FormDrawer
-          open={editRuleForm}
-          toggleDialog={toggleEdit}
-        >
-          <Fragment>
-            <FormTitle
-              title="Edit WebHook Rule"
-              paragraph="You can create as many rules as you need."
-            />
-            <EditRuleForm />
-          </Fragment>
+        <FormDrawer open={editRuleForm} toggleDialog={toggleEdit}>
+          <EditRuleForm />
         </FormDrawer>
+
         <div className={classes.contentWrap}>
           {recipes.length
             ? <RulesTable data={recipes} />
