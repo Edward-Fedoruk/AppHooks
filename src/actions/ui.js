@@ -17,6 +17,10 @@ export const toggleEditForm = () => ({
   type: types.TOGGLE_EDIT_RULE_FORM,
 })
 
+export const toggleshortcutPanel = () => ({
+  type: types.TOGGLE_SHORTCUT_PANEL,
+})
+
 export const toggleBillingForm = price => ({
   type: types.TOGGLE_BILLING_FORM,
   price,

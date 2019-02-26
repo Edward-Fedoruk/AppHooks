@@ -8,6 +8,7 @@ const initialState = {
   editRuleForm: false,
   billingForm: false,
   billingPrice: 0,
+  shortcutPanel: false,
 }
 
 export default (state = initialState, action) => {
@@ -22,12 +23,16 @@ export default (state = initialState, action) => {
       successSnackbar: !state.successSnackbar,
       successMessage: action.successMessage,
     }
+  case types.TOGGLE_SHORTCUT_PANEL:
+    return {
+      ...state,
+      shortcutPanel: !state.shortcutPanel,
+    }
   case types.CHANGE_STAGE:
     return { ...state, currentStage: action.stage }
   case types.TOGGLE_EDIT_RULE_FORM:
     return { ...state, editRuleForm: !state.editRuleForm }
   case types.TOGGLE_BILLING_FORM:
-    console.log(action.price)
     return {
       ...state,
       billingPrice: action.price,
