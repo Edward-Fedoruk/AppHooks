@@ -7,7 +7,10 @@ import { Scrollbars } from "react-custom-scrollbars"
 import { compose } from "redux"
 import { connect } from "react-redux"
 import { withRouter } from "react-router-dom"
+import Drawer from "@material-ui/core/Drawer"
+import withWidth from "@material-ui/core/withWidth"
 import NavListItem from "./NavListItem"
+import { toggleNavBar } from "../../actions/ui"
 
 const itemTextStyles = {
   color: "rgba(255, 255, 255, 0.7)",
@@ -67,36 +70,78 @@ const styles = ({ transitions, breakpoints }) => ({
     paddingRight: "0",
   },
 
+  drawer: {
+    color: "rgba(255, 255, 255, 0.7)",
+    maxWidth: "306px",
+    minWidth: "250px",
+
+    [breakpoints.down(960)]: {
+      zIndex: "0",
+    },
+  },
+
+  drawerPaper: {
+    background: "#192B81",
+    display: "flex",
+    flexWrap: "wrap",
+    width: "250px",
+    overflow: "hidden",
+
+
+    [breakpoints.down(600)]: {
+      minWidth: "220px",
+    },
+  },
+
 })
 
-const RightPanel = ({ classes }) => (
-  <div className={classes.navWrap}>
-    <Typography align="left" component="h1" className={classes.appName}>Apphooks</Typography>
-    <div className={classes.navigation}>
-      <Scrollbars>
-        <List className={classes.listItems}>
-          <NavListItem path="/" Icon={<i className="icon-dashboard" />} itemText="Dashboard" exact />
-          <NavListItem path="/channels" Icon={<i className="icon-channels" />} itemText="Channels" />
-          <NavListItem path="/webhooks" Icon={<i className="icon-rules" />} itemText="Webhooks Rules" />
-          <NavListItem path="/users" Icon={<i className="icon-sub-user" />} itemText="Sub-Users" />
-          <NavListItem path="/logs" Icon={<i className="icon-logs" />} itemText="Access Logs" />
-          <NavListItem path="/billing" Icon={<i className="icon-billing" />} itemText="Billing" />
-        </List>
-      </Scrollbars>
+const RightPanel = ({
+  classes, toggleNavBar, open, width,
+}) => (
+  <Drawer
+    variant={width === "sm" || width === "xs" ? "temporary" : "permanent"}
+    className={classes.drawer}
+    open={open}
+    onClose={toggleNavBar}
+    classes={{ paper: classes.drawerPaper }}
+    anchor="left"
+  >
+    <div className={classes.navWrap}>
+      <Typography align="left" component="h1" className={classes.appName}>Apphooks</Typography>
+      <div className={classes.navigation}>
+        <Scrollbars>
+          <List>
+            <NavListItem path="/" Icon={<i className="icon-dashboard" />} itemText="Dashboard" exact />
+            <NavListItem path="/channels" Icon={<i className="icon-channels" />} itemText="Channels" />
+            <NavListItem path="/webhooks" Icon={<i className="icon-rules" />} itemText="Webhooks Rules" />
+            <NavListItem path="/users" Icon={<i className="icon-sub-user" />} itemText="Sub-Users" />
+            <NavListItem path="/logs" Icon={<i className="icon-logs" />} itemText="Access Logs" />
+            <NavListItem path="/billing" Icon={<i className="icon-billing" />} itemText="Billing" />
+          </List>
+        </Scrollbars>
+      </div>
     </div>
-  </div>
+  </Drawer>
 )
 
 RightPanel.propTypes = {
   classes: PropTypes.object.isRequired,
+  toggleNavBar: PropTypes.func.isRequired,
+  open: PropTypes.bool.isRequired,
+  width: PropTypes.string.isRequired,
 }
 
 const mapStateToProps = ({ view }) => ({
   open: view.open,
 })
 
+const mapDispatchToProps = {
+  toggleNavBar,
+}
+
 export default compose(
+  withWidth(),
   withStyles(styles),
   withRouter,
-  connect(mapStateToProps)
+  connect(mapStateToProps, mapDispatchToProps)
 )(RightPanel)
