@@ -3,10 +3,12 @@ export default (state = {}, action) => {
   const matches = /(.*)_(REQUEST|FAILURE)/.exec(type)
   let errorMessages
 
-  if (!matches || error === undefined) return state
+  if (!matches) return state
 
   console.log(error)
-  if (error.errors) {
+  if (error === undefined) {
+    errorMessages = "something went wrong"
+  } else if (error.errors) {
     errorMessages = Object.values(error.errors).flat().join("\n")
   } else if (error.message) {
     errorMessages = error.message
