@@ -14,11 +14,6 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-  case types.CREATE_USER:
-    return {
-      ...state,
-      ...action.payload,
-    }
   case types.AUTH_ERROR:
     return {
       ...state,
