@@ -49,6 +49,7 @@ const styles = ({ palette, breakpoints }) => ({
     width: "50px",
     display: "flex",
     margin: "5px",
+    marginLeft: "24px",
     height: "50px",
     justifyContent: "center",
     alignItems: "center",
@@ -75,14 +76,14 @@ const styles = ({ palette, breakpoints }) => ({
   },
 
   upgradeButton: {
-    color: "#35C1CE",
+    color: palette.secondary.main,
     textTransform: "capitalize",
     height: "30px",
     alignSelf: "center",
     display: "flex",
     marginLeft: "auto",
     marginRight: "30px",
-
+    borderColor: palette.secondary.main,
   },
 
   highlight: { fontWeight: "600" },
