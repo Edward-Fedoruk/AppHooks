@@ -1,40 +1,22 @@
-import React, { Component, Fragment } from "react"
+import React, { Fragment } from "react"
 import PropTypes from "prop-types"
-import { connect } from "react-redux"
 import withWidth from "@material-ui/core/withWidth"
 import { compose } from "redux"
 import LeftPanel from "./LeftPanel"
 import RightPanel from "./RightPanel"
-import { fetchUserSettings } from "../../actions/user"
 import ShortCutPanel from "./ShortCutPanel"
 
-class AppNavigation extends Component {
-  static propTypes = {
-    width: PropTypes.string.isRequired,
-    fetchUserSettings: PropTypes.func.isRequired,
-  }
+const AppNavigation = ({ width }) => (
+  <Fragment>
+    {width !== "xs" && <LeftPanel />}
+    <RightPanel />
+    <ShortCutPanel />
+  </Fragment>
+)
 
-  componentDidMount() {
-    this.props.fetchUserSettings()
-  }
-
-  render() {
-    const { width } = this.props
-    return (
-      <Fragment>
-        {width !== "xs" && <LeftPanel />}
-        <RightPanel />
-        <ShortCutPanel />
-      </Fragment>
-    )
-  }
+AppNavigation.propTypes = {
+  width: PropTypes.string.isRequired,
 }
-
-const mapDispatchToProps = {
-  fetchUserSettings,
-}
-
 export default compose(
   withWidth(),
-  connect(null, mapDispatchToProps)
 )(AppNavigation)

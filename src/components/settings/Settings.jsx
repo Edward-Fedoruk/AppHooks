@@ -9,7 +9,7 @@ import GeneralSettings from "./GeneralSettings"
 import ChangePassword from "./ChangePassword"
 import ConnectedAccounts from "./ConnectedAccounts"
 import DeleteAccount from "./DeleteAccount"
-import { fetchUserSettings, deleteAccount } from "../../actions/user"
+import { deleteAccount } from "../../actions/user"
 import ErrorSnackbar from "../utils/ErrorSnackbar"
 import ConfirmDialog from "../ConfirmDialog"
 
@@ -33,16 +33,11 @@ export class Settings extends Component {
     classes: PropTypes.object.isRequired,
     settings: PropTypes.object.isRequired,
     deleteAccount: PropTypes.func.isRequired,
-    fetchUserSettings: PropTypes.func.isRequired,
     error: PropTypes.object,
   }
 
   static defaultProps = {
     error: { message: "" },
-  }
-
-  componentDidMount() {
-    this.props.fetchUserSettings()
   }
 
   handleCloseWithAction = () => {
@@ -86,7 +81,6 @@ const mapStateToProps = ({ userSettings }) => ({
 })
 
 const mapDispatchToProps = {
-  fetchUserSettings,
   deleteAccount,
 }
 
