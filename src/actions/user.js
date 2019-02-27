@@ -2,6 +2,7 @@ import axios, {
   initiateLoading,
   handleResponse,
   createError,
+  handleErrorResponse,
 } from "./utils"
 import * as types from "./types"
 import { toggleSnackbar } from "./ui"
@@ -21,7 +22,7 @@ export const fetchUserSettings = () => (dispatch) => {
 
   axios.get("/profile")
     .then(handleResponse(dispatch, setUserToStore))
-    .catch(() => dispatch(createError("SET_USER_SETTINGS")))
+    .catch(handleErrorResponse(dispatch, createError("SET_USER_SETTINGS")))
 }
 
 export const changeUserSettings = data => (dispatch) => {

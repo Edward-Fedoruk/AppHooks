@@ -58,6 +58,10 @@ class Routes extends React.Component {
     startTimer()
   }
 
+  componentDidUpdate() {
+    startTimer()
+  }
+
   render() {
     const { isLoading } = this.props
     return (
@@ -67,7 +71,7 @@ class Routes extends React.Component {
           <Route path="/signup" exact component={SignUp} />
           <Route path="/password" exact component={ForgetPassword} />
           <Route path="/signup/success" exact component={EmailActivation} />
-          {!isLoading ? <Route component={WithNavigation} /> : <Preloader />}
+          {isLoading ? <Preloader /> : <Route component={WithNavigation} />}
         </Switch>
       </Router>
     )
@@ -78,7 +82,6 @@ const loadingSelector = createLoadingSelector(["SET_USER_SETTINGS"])
 
 const mapStateToProps = ({ preloader }) => ({
   isLoading: loadingSelector(preloader),
-
 })
 
 export default connect(mapStateToProps, { fetchUserSettings })(Routes)
