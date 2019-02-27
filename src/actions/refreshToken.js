@@ -5,6 +5,7 @@ import history from "../history"
 import { getLocalStorageItem, domain } from "./utils"
 
 export const refreshToken = () => {
+  console.log("old token - ", getLocalStorageItem("JWT"))
   axios({
     method: "POST",
     url: `${domain}/auth/refresh-token`,
@@ -18,8 +19,8 @@ export const refreshToken = () => {
     .then(({ data }) => {
       localStorage.setItem("expTime", data.expires_at)
       localStorage.setItem("JWT", data.refresh_token)
+      console.log("new token - ", getLocalStorageItem("JWT"))
       console.log("updated")
-      startTimer()
     })
     .catch(({ response: { data } }) => {
       console.log(data)
@@ -33,19 +34,20 @@ export const startTimer = () => {
   timer = setInterval(() => {
     const expirationTime = parseInt(getLocalStorageItem("expTime"), 10)
     const currentTimestamp = Date.now()
-
-    if (Number.isNaN(expirationTime)) {
-      clearInterval(timer)
-      history.push("/login")
-      return
-    }
-    console.log(expirationTime, currentTimestamp)
-    if (currentTimestamp < expirationTime && currentTimestamp > expirationTime - 120000) {
-      clearInterval(timer)
-      refreshToken()
-    } else if (currentTimestamp > expirationTime) {
-      clearInterval(timer)
-      history.push("/login")
-    }
-  }, 30000)
+    if (currentTimestamp < expirationTime) refreshToken()
+    // if (Number.isNaN(expirationTime)) {
+    //   clearInterval(timer)
+    //   history.push("/login")
+    //   return
+    // }
+    // console.log(expirationTime, currentTimestamp, `expired? - ${currentTimestamp > expirationTime}`)
+    // if (currentTimestamp < expirationTime && currentTimestamp > expirationTime - 120000) {
+    //   console.log("start refresh")
+    //   // clearInterval(timer)
+    //   refreshToken()
+    // } else if (currentTimestamp > expirationTime) {
+    //   clearInterval(timer)
+    //   history.push("/login")
+    // }
+  }, 60000)
 }

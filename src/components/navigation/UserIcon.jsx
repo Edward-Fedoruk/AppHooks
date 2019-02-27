@@ -53,5 +53,5 @@ const mapStateToProps = ({ userSettings }) => ({
 export default compose(
   withStyles(styles),
   withRouter,
-  connect(mapStateToProps, null)
+  connect(mapStateToProps)
 )(UserIcon)

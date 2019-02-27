@@ -1,5 +1,7 @@
 import React, { lazy } from "react"
 import { Route, Switch, Router } from "react-router-dom"
+import { connect } from "react-redux"
+import PropTypes from "prop-types"
 import history from "./history"
 import LogIn from "./components/Authentication/LogIn"
 import SignUp from "./components/Authentication/SignUp"
@@ -11,6 +13,10 @@ import ProtectedRoute from "./ProtectedRoute"
 import App from "./App"
 import LogInfo from "./components/logs/LogInfo"
 import withLazyLoading from "./components/withLazyLoading"
+import { fetchUserSettings } from "./actions/user"
+import { startTimer } from "./actions/refreshToken"
+import { createLoadingSelector } from "./actions/utils"
+import Preloader from "./components/Preloader"
 
 const Channel = lazy(() => import("./components/channels/Channel"))
 const AccessLogs = lazy(() => import("./components/logs/AccessLogs"))
@@ -35,12 +41,25 @@ const WithNavigation = () => (
 )
 
 class Routes extends React.Component {
+  static propTypes = {
+    fetchUserSettings: PropTypes.func.isRequired,
+    isLoading: PropTypes.bool,
+  }
+
+  static defaultProps = {
+    isLoading: true,
+  }
+
   componentDidMount() {
     // @TO DO - uncoment in production
     // loadReCaptcha("6Ld8qYcUAAAAADWP8M3N4MD7J_hfIHLvfqoY8nIH")
+    this.props.fetchUserSettings()
+    console.log("initial mount")
+    startTimer()
   }
 
   render() {
+    const { isLoading } = this.props
     return (
       <Router history={history}>
         <Switch>
@@ -48,11 +67,18 @@ class Routes extends React.Component {
           <Route path="/signup" exact component={SignUp} />
           <Route path="/password" exact component={ForgetPassword} />
           <Route path="/signup/success" exact component={EmailActivation} />
-          <Route component={WithNavigation} />
+          {!isLoading ? <Route component={WithNavigation} /> : <Preloader />}
         </Switch>
       </Router>
     )
   }
 }
 
-export default Routes
+const loadingSelector = createLoadingSelector(["SET_USER_SETTINGS"])
+
+const mapStateToProps = ({ preloader }) => ({
+  isLoading: loadingSelector(preloader),
+
+})
+
+export default connect(mapStateToProps, { fetchUserSettings })(Routes)
