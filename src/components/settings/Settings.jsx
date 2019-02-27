@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 import React, { Component, Fragment } from "react"
 import PropTypes from "prop-types"
 import { connect } from "react-redux"
@@ -57,7 +58,10 @@ export class Settings extends Component {
           open={this.state.open}
           handleCloseWithAction={this.handleCloseWithAction}
           handleClose={this.toggleDialog}
-        />
+          title="Delete your account"
+        >
+          Are you sure you want to delete your account? It can`t be undone
+        </ConfirmDialog>
 
         <TopBar title="Account Settings" />
         <div className={classes.contentWrap}>

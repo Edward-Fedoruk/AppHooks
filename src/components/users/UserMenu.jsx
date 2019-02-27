@@ -116,8 +116,9 @@ class ChannelMenu extends Component {
           open={this.state.openDialog}
           handleClose={this.toggleDialog}
           handleCloseWithAction={this.handleCloseWithAction}
+          title="Delete this user"
         >
-          Are you shure that you want to delete this rule
+          Are you shure that you want to delete this user
         </ConfirmDialog>
 
         <Menu

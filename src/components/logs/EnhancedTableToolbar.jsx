@@ -88,7 +88,10 @@ class EnhancedTableToolbar extends Component {
           open={openDialog}
           handleClose={toggleDialog}
           handleCloseWithAction={() => handleCloseWithAction(selected)}
-        />
+          title="Delete this log"
+        >
+          Are you sure that you want to delete this logs?
+        </ConfirmDialog>
         <div className={classes.title}>
           {selected.length > 0
             && (

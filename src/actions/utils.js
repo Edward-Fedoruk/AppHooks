@@ -69,6 +69,7 @@ instance.interceptors.response.use(response => response,
   (error) => {
     const { response: { status } } = error
     if (status === 401) {
+      console.log("failed at ", `${new Date().getHours()}:${new Date().getMinutes()}`)
       history.push("/login")
     }
     return Promise.reject(error)

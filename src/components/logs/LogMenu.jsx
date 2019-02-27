@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 import React, { Component } from "react"
 import { withStyles } from "@material-ui/core"
 import { connect } from "react-redux"
@@ -94,6 +95,7 @@ class LogMenu extends Component {
           open={openDialog}
           handleClose={this.toggleDialog}
           handleCloseWithAction={this.handleCloseWithAction}
+          title="Delete this log"
         >
           Are you shure that you want to delete this log
         </ConfirmDialog>

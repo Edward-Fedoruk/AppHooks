@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 import React, { Component } from "react"
 import PropTypes from "prop-types"
 import Menu from "@material-ui/core/Menu"
@@ -98,6 +99,7 @@ class RuleMenu extends Component {
           open={openDialog}
           handleClose={this.toggleDialog}
           handleCloseWithAction={this.handleCloseWithAction}
+          titile="Delete rule"
         >
           Are you shure that you want to delete this rule
         </ConfirmDialog>
