@@ -2,6 +2,7 @@ import React from "react"
 import { Route, Redirect } from "react-router-dom"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
+import { createErrorMessageSelector } from "./actions/utils"
 
 const ProtectedRoute = ({
   component: Comp, isAuthenticated, path, ...rest
@@ -31,8 +32,9 @@ ProtectedRoute.propTypes = {
   path: PropTypes.string.isRequired,
 }
 
-const mapStateToProps = ({ authentication }) => ({
-  isAuthenticated: authentication.isAuthenticated,
+
+const mapStateToProps = ({ userSettings }) => ({
+  isAuthenticated: userSettings.isAuthenticated,
 })
 
 export default connect(mapStateToProps, null, null, { pure: false })(ProtectedRoute)
