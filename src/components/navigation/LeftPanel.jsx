@@ -3,7 +3,6 @@ import PropTypes from "prop-types"
 import { withStyles } from "@material-ui/core/styles"
 import AddCircle from "@material-ui/icons/AddCircle"
 import IconButton from "@material-ui/core/IconButton"
-import { Scrollbars } from "react-custom-scrollbars"
 import { compose } from "redux"
 import { withRouter } from "react-router-dom"
 import Help from "@material-ui/icons/Help"
@@ -71,24 +70,22 @@ const styles = () => ({
 
 const LeftPanel = ({ classes, toggleshortcutPanel }) => (
   <div className={classes.paper}>
-    <Scrollbars>
-      <div className={classes.iconsWrap}>
-        <div className={classes.topIcons}>
-          <LogoIcon className={classes.logoIcon} />
+    <div className={classes.iconsWrap}>
+      <div className={classes.topIcons}>
+        <LogoIcon className={classes.logoIcon} />
 
-          <IconButton onClick={toggleshortcutPanel} disableRipple className={classes.addCircleWrap}>
-            <AddCircle className={classes.addCircle} />
-          </IconButton>
-        </div>
-        <div className={classes.bottomIcons}>
-          <IconButton disableRipple className={classes.questionMarkWrap}>
-            <Help className={classes.questionMark} />
-          </IconButton>
-
-          <UserIcon className={classes.userWrap} />
-        </div>
+        <IconButton onClick={toggleshortcutPanel} disableRipple className={classes.addCircleWrap}>
+          <AddCircle className={classes.addCircle} />
+        </IconButton>
       </div>
-    </Scrollbars>
+      <div className={classes.bottomIcons}>
+        <IconButton disableRipple className={classes.questionMarkWrap}>
+          <Help className={classes.questionMark} />
+        </IconButton>
+
+        <UserIcon className={classes.userWrap} />
+      </div>
+    </div>
   </div>
 )
 

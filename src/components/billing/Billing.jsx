@@ -19,7 +19,7 @@ const styles = ({ breakpoints }) => ({
   },
 
   contentWrap: {
-    padding: "20px 26px 20px 13px",
+    padding: "20px 13px 20px 13px",
 
     [breakpoints.down(600)]: {
       padding: "10px 0",
