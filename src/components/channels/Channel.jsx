@@ -1,8 +1,9 @@
+/* eslint-disable no-nested-ternary */
 import React, { Component, Fragment } from "react"
 import PropTypes from "prop-types"
 import { connect } from "react-redux"
 import { withStyles } from "@material-ui/core"
-import { withRouter } from "react-router"
+import { withRouter } from "react-router-dom"
 import { compose } from "redux"
 import withNavigation from "../withNavigation"
 import Title from "../utils/Title"
@@ -26,15 +27,31 @@ const styles = () => ({
 })
 
 export class Channel extends Component {
-  state = {
-    open: false,
-  }
-
   static propTypes = {
     classes: PropTypes.object.isRequired,
     currentStage: PropTypes.object,
     endpoints: PropTypes.array,
     stages: PropTypes.array,
+    deleteChannel: PropTypes.func.isRequired,
+    fetchChannel: PropTypes.func.isRequired,
+    match: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired,
+  }
+
+  static defaultProps = {
+    currentStage: {},
+    endpoints: [],
+    stages: [],
+  }
+
+  state = {
+    open: false,
+  }
+
+
+  componentDidMount() {
+    const { history, match } = this.props
+    this.props.fetchChannel(match.params.id, history)
   }
 
   handleCloseWithAction = () => {
@@ -47,11 +64,6 @@ export class Channel extends Component {
   }
 
   addStage = () => {}
-
-  componentDidMount() {
-    const { history, match } = this.props
-    this.props.fetchChannel(match.params.id, history)
-  }
 
   render() {
     const {
