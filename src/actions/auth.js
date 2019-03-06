@@ -3,6 +3,7 @@ import { toggleSnackbar } from "./ui"
 import axios, { domain } from "./utils"
 import history from "../history"
 import { startTimer } from "./refreshToken"
+import { fetchUserSettings } from "./user"
 
 export const throwAuthError = error => ({
   type: types.AUTH_ERROR,
@@ -48,6 +49,7 @@ export const logIn = userData => (dispatch) => {
       localStorage.setItem("expTime", jsonData.expires_at)
       localStorage.setItem("JWT", jsonData.access_token)
       startTimer()
+      dispatch(fetchUserSettings())
       history.push("/webhooks")
     })
     .catch((er) => {

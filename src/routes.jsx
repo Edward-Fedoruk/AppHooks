@@ -73,8 +73,7 @@ class Routes extends React.Component {
           <Route path="/signup" exact component={SignUp} />
           <Route path="/password" exact component={ForgetPassword} />
           <Route path="/signup/success" exact component={EmailActivation} />
-          {isAuthenticated
-            && (isLoading ? <Preloader /> : <Route component={WithNavigation} />)}
+          {isAuthenticated && isLoading ? <Preloader /> : <Route component={WithNavigation} />}
         </Switch>
       </Router>
     )
