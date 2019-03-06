@@ -24,7 +24,7 @@ const styles = ({ breakpoints }) => ({
 })
 
 const MySnakcbar = ({
-  classes, toggleSnackbar, snackbar, children, ...other
+  classes, toggleSnackbar, snackbar, children, message, ...other
 }) => (
   <Snackbar
     className={classes.snackbar}
@@ -32,6 +32,7 @@ const MySnakcbar = ({
     autoHideDuration={7000}
     open={snackbar}
     onClose={toggleSnackbar}
+    key={message}
     {...other}
   >
     { children }
@@ -43,6 +44,7 @@ MySnakcbar.propTypes = {
   toggleSnackbar: PropTypes.func.isRequired,
   snackbar: PropTypes.bool.isRequired,
   children: PropTypes.node.isRequired,
+  message: PropTypes.string.isRequired,
 }
 
 export default compose(

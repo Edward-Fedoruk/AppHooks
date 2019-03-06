@@ -97,10 +97,7 @@ class LogIn extends Component {
     return (
       <Paper elevation={0} className={classes.paper}>
 
-        <ErrorSnackbar
-          variant="error"
-          message={logInErrorMessage}
-        />
+        <ErrorSnackbar variant="error" message={logInErrorMessage} />
 
         <SocialAuthentication
           onSuccess={this.onSuccess}
@@ -108,9 +105,7 @@ class LogIn extends Component {
           text="Log in"
         />
 
-        <FormTitle
-          text="or login with email"
-        />
+        <FormTitle text="or login with email" />
 
         <ValidatorForm onSubmit={this.onSubmit} instantValidate={false}>
           <TextValidator
@@ -163,7 +158,6 @@ class LogIn extends Component {
     )
   }
 }
-
 
 const mapStateToProps = ({ authentication }) => ({
   logInError: authentication.logInError,

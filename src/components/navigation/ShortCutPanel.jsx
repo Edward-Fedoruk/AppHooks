@@ -16,9 +16,10 @@ import { toggleshortcutPanel } from "../../actions/ui"
 import CreateRuleForm from "../webhooks/CreateRuleForm"
 import FormDrawer from "../FormDrawer"
 import AddUser from "../users/AddUser"
-import ErrorSnackbar from "../utils/ErrorSnackbar"
-import SuccessSnackbar from "../utils/SuccessSnackbar"
+import Snackbar from "../utils/Snackbar"
+import SnackbarContent from "../utils/SnackbarContent"
 import { createErrorMessageSelector } from "../../actions/utils"
+import { toggleSnackbar, toggleSuccessSnackbar } from "../../actions/ui"
 
 const styles = ({ palette }) => ({
   panel: {
@@ -78,6 +79,10 @@ export class ShortCutPanel extends Component {
     open: PropTypes.bool.isRequired,
     errorMessage: PropTypes.string,
     successMessage: PropTypes.string,
+    errorSnackbar: PropTypes.bool.isRequired,
+    successSnackbar: PropTypes.bool.isRequired,
+    toggleErrorSnackbar: PropTypes.func.isRequired,
+    toggleSuccessSnackbar: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
@@ -90,12 +95,19 @@ export class ShortCutPanel extends Component {
   render() {
     const {
       classes, toggleshortcutPanel, open,
-      errorMessage, successMessage,
+      errorMessage, successMessage, errorSnackbar,
+      successSnackbar, toggleErrorSnackbar,
+      toggleSuccessSnackbar,
     } = this.props
     return (
       <Fragment>
-        <ErrorSnackbar message={errorMessage} />
-        <SuccessSnackbar message={successMessage} />
+        <Snackbar open={errorSnackbar} onClose={toggleErrorSnackbar}>
+          <SnackbarContent variant="error" message={errorMessage} />
+        </Snackbar>
+
+        <Snackbar open={successSnackbar} onClose={toggleSuccessSnackbar}>
+          <SnackbarContent variant="success" message={successMessage} />
+        </Snackbar>
 
         <FormDrawer open={this.state.createRule} toggleDialog={this.toggleForm("createRule")}>
           <CreateRuleForm />
@@ -152,10 +164,14 @@ const mapStateToProps = ({ view, errorHandler }) => ({
   open: view.shortcutPanel,
   errorMessage: errorSelector(errorHandler),
   successMessage: view.successMessage,
+  errorSnackbar: view.shortcutPanel && view.snackbar,
+  successSnackbar: view.shortcutPanel && view.successSnackbar,
 })
 
-const mapDispatchToProps = {
-  toggleshortcutPanel,
-}
+const mapDispatchToProps = dispatch => ({
+  toggleshortcutPanel: () => dispatch(toggleshortcutPanel()),
+  toggleErrorSnackbar: () => dispatch(toggleSnackbar()),
+  toggleSuccessSnackbar: () => dispatch(toggleSuccessSnackbar("")),
+})
 
 export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(ShortCutPanel))

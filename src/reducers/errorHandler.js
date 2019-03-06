@@ -17,9 +17,10 @@ export default (state = {}, action) => {
     console.log(error)
   }
 
+  console.log(errorMessages)
   const [, requestName, requestState] = matches
   return {
     ...state,
-    [requestName]: requestState === "FAILURE" ? errorMessages : "",
+    [requestName]: requestState === "FAILURE" ? errorMessages : "Something went wrong",
   }
 }

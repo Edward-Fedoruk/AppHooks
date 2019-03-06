@@ -111,9 +111,7 @@ class SignUp extends Component {
           onSuccess={this.onFailure}
           onFailure={this.onSuccess}
         />
-        <FromTitle
-          text="or sign up with email"
-        />
+        <FromTitle text="or sign up with email" />
         <ValidatorForm instantValidate={false} onSubmit={this.onSubmit}>
 
           <TextValidator

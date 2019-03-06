@@ -44,10 +44,12 @@ class Routes extends React.Component {
   static propTypes = {
     fetchUserSettings: PropTypes.func.isRequired,
     isLoading: PropTypes.bool,
+    isAuthenticated: PropTypes.bool,
   }
 
   static defaultProps = {
     isLoading: true,
+    isAuthenticated: false,
   }
 
   componentDidMount() {

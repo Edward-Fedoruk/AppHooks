@@ -4,7 +4,7 @@ import { compose } from "redux"
 import PropTypes from "prop-types"
 import Snackbar from "./Snackbar"
 import { toggleSuccessSnackbar } from "../../actions/ui"
-import SnackbarContent from "./SanckbarContent"
+import SnackbarContent from "./SnackbarContent"
 
 const SuccessSnackbar = ({
   className, message, toggleSnackbar, snackbar,
@@ -34,7 +34,7 @@ SuccessSnackbar.propTypes = {
 }
 
 const mapStateToProps = ({ view }) => ({
-  snackbar: view.successSnackbar,
+  snackbar: !view.shortcutPanel && view.successSnackbar,
 })
 
 const mapDispatchToProps = dispatch => ({
