@@ -10,7 +10,7 @@ import Placeholder from "../Placeholder"
 import webhooks from "../../assets/webhooks.png"
 import FormDrawer from "../FormDrawer"
 import { fetchRules } from "../../actions/rules"
-import { toggleEditForm as toggleEdit } from "../../actions/ui"
+import { toggleEditForm as toggleEdit, toggleCreateForm } from "../../actions/ui"
 import CreateRuleForm from "./CreateRuleForm"
 import EditRuleForm from "./EditRuleForm"
 import MainButton from "../utils/MainButton"
@@ -57,10 +57,6 @@ const styles = ({ breakpoints }) => ({
 
 
 export class WebhooksRules extends Component {
-  state = {
-    open: false,
-  }
-
   static propTypes = {
     classes: PropTypes.object.isRequired,
     fetchRules: PropTypes.func.isRequired,
@@ -70,6 +66,8 @@ export class WebhooksRules extends Component {
     isLoading: PropTypes.bool.isRequired,
     successMessage: PropTypes.string,
     errorMessage: PropTypes.string,
+    createRuleForm: PropTypes.func.isRequired,
+    toggleCreateForm: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
@@ -81,25 +79,23 @@ export class WebhooksRules extends Component {
     this.props.fetchRules()
   }
 
-  toggleDialog = () => this.setState(({ open }) => ({ open: !open }))
-
   render() {
     const {
       classes, recipes, toggleEdit, editRuleForm,
       isLoading, successMessage, errorMessage,
+      toggleCreateForm, createRuleForm,
     } = this.props
-    const { open } = this.state
 
     return isLoading ? <Preloader /> : (
       <Fragment>
         <TopBar title="WebHooks Rules">
-          <MainButton onClick={this.toggleDialog}>Create New Rule</MainButton>
+          <MainButton onClick={toggleCreateForm}>Create New Rule</MainButton>
         </TopBar>
 
         <SuccessSnackbar message={successMessage} />
         <ErrorSnackbar message={errorMessage} />
 
-        <FormDrawer open={open} toggleDialog={this.toggleDialog}>
+        <FormDrawer open={createRuleForm} toggleDialog={toggleCreateForm}>
           <CreateRuleForm />
         </FormDrawer>
 
@@ -130,6 +126,7 @@ const mapStateToProps = ({
 }) => ({
   recipes: rules.recipes,
   editRuleForm: view.editRuleForm,
+  createRuleForm: view.createRuleForm,
   isLoading: loadingSelector(preloader),
   successMessage: view.successMessage,
   errorMessage: errorSelector(errorHandler),
@@ -138,6 +135,7 @@ const mapStateToProps = ({
 const mapDispatchToProps = {
   fetchRules,
   toggleEdit,
+  toggleCreateForm,
 }
 
 export default compose(

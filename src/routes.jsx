@@ -9,7 +9,6 @@ import EmailActivation from "./components/Authentication/EmailActivation"
 import ForgetPassword from "./components/Authentication/ForgetPassword"
 import AppNavigation from "./components/navigation/AppNavigation"
 import Channels from "./components/channels/Channels"
-import ProtectedRoute from "./ProtectedRoute"
 import App from "./App"
 import LogInfo from "./components/logs/LogInfo"
 import withLazyLoading from "./components/withLazyLoading"
@@ -27,16 +26,16 @@ const WebhooksRules = lazy(() => import("./components/webhooks/WebhooksRules"))
 
 const WithNavigation = () => (
   <div style={{ display: "flex" }}>
-    <ProtectedRoute component={AppNavigation} />
-    <ProtectedRoute path="/" exact component={App} />
-    <ProtectedRoute path="/channels" exact component={Channels} />
-    <ProtectedRoute path="/channels/:id" exact component={withLazyLoading(Channel)} />
-    <ProtectedRoute path="/logs" exact component={withLazyLoading(AccessLogs)} />
-    <ProtectedRoute path="/logs/:id" exact component={LogInfo} />
-    <ProtectedRoute path="/webhooks" exact component={withLazyLoading(WebhooksRules)} />
-    <ProtectedRoute path="/billing" exact component={withLazyLoading(Billing)} />
-    <ProtectedRoute path="/settings" exact component={withLazyLoading(Settings)} />
-    <ProtectedRoute path="/users" exact component={withLazyLoading(SubUsers)} />
+    <Route component={AppNavigation} />
+    <Route path="/" exact component={App} />
+    <Route path="/channels" exact component={Channels} />
+    <Route path="/channels/:id" exact component={withLazyLoading(Channel)} />
+    <Route path="/logs" exact component={withLazyLoading(AccessLogs)} />
+    <Route path="/logs/:id" exact component={LogInfo} />
+    <Route path="/webhooks" exact component={withLazyLoading(WebhooksRules)} />
+    <Route path="/billing" exact component={withLazyLoading(Billing)} />
+    <Route path="/settings" exact component={withLazyLoading(Settings)} />
+    <Route path="/users" exact component={withLazyLoading(SubUsers)} />
   </div>
 )
 

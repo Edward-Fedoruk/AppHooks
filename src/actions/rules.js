@@ -7,7 +7,12 @@ import {
   handleResponse,
 } from "./utils"
 import axios from "./utils"
-import { toggleEditForm, toggleSnackbar, toggleSuccessSnackbar } from "./ui"
+import {
+  toggleEditForm,
+  toggleSnackbar,
+  toggleSuccessSnackbar,
+  toggleCreateForm,
+} from "./ui"
 
 const throwRuleErr = createError("SET_RULES")
 
@@ -25,7 +30,6 @@ export const addRule = recipe => ({
   type: types.ADD_RULE,
   recipe,
 })
-
 
 export const editRuleInStore = (id, newRule) => ({
   type: types.EDIT_RULE,
@@ -62,6 +66,7 @@ export const createRule = data => (dispatch) => {
   axios.post("/recipes", data)
     .then((response) => {
       handleResponse(dispatch, addRule)(response)
+      dispatch(toggleCreateForm())
       dispatch(toggleSuccessSnackbar("Rule was created"))
     })
     .catch((response) => {
