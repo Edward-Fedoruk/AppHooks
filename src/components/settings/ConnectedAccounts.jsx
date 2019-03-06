@@ -16,7 +16,7 @@ const styles = ({ breakpoints }) => ({
 
   header: {
     fontSize: "18px",
-    fontWeight: "900",
+    fontWeight: "500",
     marginRight: "5px",
 
     [breakpoints.down(425)]: {
@@ -49,9 +49,7 @@ const styles = ({ breakpoints }) => ({
 const ConnectedAccounts = ({ classes }) => (
   <div className={classes.contentWrap}>
     <div className={classes.headerWrap}>
-      <Typography className={classes.header} variant="h2" color="primary">
-          Connected accounts
-      </Typography>
+      <Typography className={classes.header} variant="h2" color="primary">Connected accounts</Typography>
     </div>
     <div className={classes.settingsWrap}>
       <Typography className={classes.field} variant="body2">Connected accounts to your AppHooks account if you want to log in to your AppHooks dashboard using them.</Typography>

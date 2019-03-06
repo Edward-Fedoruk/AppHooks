@@ -8,7 +8,7 @@ import Create from "@material-ui/icons/CreateOutlined"
 const styles = ({ breakpoints }) => ({
   header: {
     fontSize: "18px",
-    fontWeight: "900",
+    fontWeight: "500",
     marginRight: "5px",
 
     [breakpoints.down(425)]: {

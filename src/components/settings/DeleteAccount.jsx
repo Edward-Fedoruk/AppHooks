@@ -24,7 +24,7 @@ const styles = ({ breakpoints }) => ({
 
   header: {
     fontSize: "18px",
-    fontWeight: "900",
+    fontWeight: "500",
   },
 
   headerWrap: {
@@ -66,16 +66,18 @@ const DeleteAccount = ({ classes, openDialog }) => (
   <div>
     <div className={classes.headerWrap}>
       <Typography className={classes.header} variant="h2" color="primary">
+
           Danger Zone
-      </Typography>
+</Typography>
     </div>
     <div onClick={openDialog} tabIndex={0} role="button" onKeyDown={openDialog} className={classes.settingsWrap}>
       <Typography className={classes.field} variant="body2">This is a permanent action and cant’t be undone.</Typography>
       <div className={classes.delWrap}>
         <Cancel className={classes.deleteIcon} />
         <Typography className={classes.delete} variant="h2" color="primary">
+
             Delete account
-        </Typography>
+</Typography>
       </div>
     </div>
   </div>
