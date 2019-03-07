@@ -5,7 +5,6 @@ export default (state = {}, action) => {
 
   if (!matches) return state
 
-  console.log(error)
   if (error === undefined) {
     errorMessages = "something went wrong"
   } else if (error.errors) {
@@ -14,10 +13,8 @@ export default (state = {}, action) => {
     errorMessages = error.message
   } else {
     errorMessages = "something went wrong"
-    console.log(error)
   }
 
-  console.log(errorMessages)
   const [, requestName, requestState] = matches
   return {
     ...state,

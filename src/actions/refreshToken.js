@@ -5,7 +5,7 @@ import history from "../history"
 import { getLocalStorageItem, domain } from "./utils"
 
 export const refreshToken = () => {
-  console.log("old token - ", getLocalStorageItem("JWT"))
+  // console.log("old token - ", getLocalStorageItem("JWT"))
   axios({
     method: "POST",
     url: `${domain}/auth/refresh-token`,
@@ -19,12 +19,12 @@ export const refreshToken = () => {
     .then(({ data }) => {
       localStorage.setItem("expTime", data.expires_at)
       localStorage.setItem("JWT", data.refresh_token)
-      console.log("new token - ", getLocalStorageItem("JWT"))
-      console.log("updated at ", `${new Date().getHours()}:${new Date().getMinutes()}`)
+      // console.log("new token - ", getLocalStorageItem("JWT"))
+      // console.log("updated at ", `${new Date().getHours()}:${new Date().getMinutes()}`)
     })
     .catch(({ response: { data } }) => {
-      console.log("failed at ", `${new Date().getHours()}:${new Date().getMinutes()}`)
-      console.log(data)
+      // console.log("failed at ", `${new Date().getHours()}:${new Date().getMinutes()}`)
+      // console.log(data)
       history.push("/login")
     })
 }
