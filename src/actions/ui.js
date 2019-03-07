@@ -30,6 +30,10 @@ export const toggleBillingForm = price => ({
   price,
 })
 
+export const toggleCreateChannelForm = () => ({
+  type: types.TOGGLE_CREATE_CHANNEL_FORM,
+})
+
 export const changeStage = stage => ({
   type: types.CHANGE_STAGE,
   stage,

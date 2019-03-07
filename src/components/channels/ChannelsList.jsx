@@ -1,13 +1,9 @@
-import React, { Component, Fragment } from "react"
+import React, { Fragment } from "react"
 import PropTypes from "prop-types"
-import { connect } from "react-redux"
 import { withStyles } from "@material-ui/core/styles"
 import { compose } from "redux"
 import Typography from "@material-ui/core/Typography"
 import ChannelCard from "./ChannelCard"
-import TopBar from "../utils/TopBar"
-import CreateChannel from "./CreateChannel"
-import MainButton from "../utils/MainButton"
 
 const styles = ({ breakpoints }) => ({
   contentWrap: {
@@ -26,75 +22,40 @@ const styles = ({ breakpoints }) => ({
   },
 })
 
-export class ChannelsList extends Component {
-  state = {
-    open: false,
-  }
+const ChannelsList = ({ classes, channels }) => (
+  <div className={classes.contentWrap}>
+    {Object.keys(channels).map((key, i, arr) => {
+      let setRegion = true
+      if (arr[i - 1]) {
+        const channelIndex = arr[i - 1]
+        setRegion = channels[channelIndex].region !== channels[key].region
+      }
 
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-  }
-
-  createChannel = () => {
-    this.setState({ open: !this.state.open })
-  }
-
-  render() {
-    const { classes, channels } = this.props
-    const { open } = this.state
-    if (open) {
       return (
-        <CreateChannel />
+        <Fragment key={key}>
+          {setRegion && (
+            <Typography className={classes.region} variant="h3">
+              {channels[key].region}
+            </Typography>
+          )}
+
+          <ChannelCard
+            channelId={channels[key].id}
+            appName={channels[key].name}
+            requests={channels[key].requests || 0}
+            connections={channels[key].connections || 0}
+          />
+        </Fragment>
       )
-    }
+    })}
+  </div>
+)
 
-    return (
-      <Fragment>
-        <TopBar title="Channels Apps">
-          <MainButton>Create New App</MainButton>
-        </TopBar>
-
-        <div className={classes.contentWrap}>
-          {Object.keys(channels).map((key, i, arr) => {
-            let setRegion = true
-            if (arr[i - 1]) {
-              setRegion = channels[arr[i - 1]].region !== channels[key].region
-            }
-
-            return (
-              <Fragment key={i}>
-                {setRegion
-                    && (
-                    <Typography className={classes.region} variant="h3">
-                      {channels[key].region}
-                    </Typography>
-                    )}
-
-                <ChannelCard
-                  channelId={channels[key].id}
-                  appName={channels[key].name}
-                  requests={channels[key].requests || 0}
-                  connections={channels[key].connections || 0}
-                />
-              </Fragment>
-            )
-          })}
-        </div>
-
-      </Fragment>
-    )
-  }
-}
-
-const mapStateToProps = ({ channels }) => ({
-
-})
-
-const mapDispatchToProps = {
-
+ChannelsList.propTypes = {
+  classes: PropTypes.object.isRequired,
+  channels: PropTypes.object.isRequired,
 }
 
 export default compose(
   withStyles(styles),
-  connect(mapStateToProps, mapDispatchToProps)
 )(ChannelsList)

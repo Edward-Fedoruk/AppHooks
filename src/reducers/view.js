@@ -6,6 +6,7 @@ const initialState = {
   successSnackbar: false,
   currentStage: 0,
   editRuleForm: false,
+  createChannelForm: false,
   createRuleForm: false,
   billingForm: false,
   billingPrice: 0,
@@ -16,6 +17,8 @@ export default (state = initialState, action) => {
   switch (action.type) {
   case types.NAV_BAR:
     return { ...state, open: !state.open }
+  case types.TOGGLE_CREATE_CHANNEL_FORM:
+    return { ...state, createChannelForm: !state.createChannelForm }
   case types.TOGGLE_SNACKBAR:
     return { ...state, snackbar: !state.snackbar }
   case types.TOGGLE_CREATE_RULE_FORM:

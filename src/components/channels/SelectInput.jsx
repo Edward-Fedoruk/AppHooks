@@ -1,3 +1,4 @@
+/* eslint-disable react/no-find-dom-node */
 import React from "react"
 import ReactDOM from "react-dom"
 import PropTypes from "prop-types"
@@ -9,14 +10,26 @@ import FormControl from "@material-ui/core/FormControl"
 import Select from "@material-ui/core/Select"
 import FormHelperText from "@material-ui/core/FormHelperText"
 
-const styles = theme => ({
+const styles = () => ({
   formControl: {
     minWidth: "300px",
   },
-
 })
 
 class SelectInput extends React.Component {
+  static propTypes = {
+    classes: PropTypes.object.isRequired,
+    name: PropTypes.string.isRequired,
+    styles: PropTypes.object.isRequired,
+    handleChange: PropTypes.func.isRequired,
+    option: PropTypes.string.isRequired,
+    error: PropTypes.bool.isRequired,
+    errText: PropTypes.string.isRequired,
+  }
+
+  static defaultProps = {
+  }
+
   state = {
     labelWidth: 0,
   }
@@ -29,10 +42,18 @@ class SelectInput extends React.Component {
 
   render() {
     const {
-      classes, options, name,
+      classes, name,
       styles, handleChange, option,
       error, errText,
     } = this.props
+
+    const regions = [
+      "us-east-1",
+      "us-west-1",
+      "ap-northeast-1",
+      "eu-central-1",
+      "sa-east-1",
+    ]
 
     return (
       <FormControl
@@ -63,9 +84,9 @@ class SelectInput extends React.Component {
           <MenuItem value="">
             <em>None</em>
           </MenuItem>
-          {options.map((option, index) => (
-            <MenuItem key={index} value={option}>
-              {option[0]}
+          {regions.map(option => (
+            <MenuItem key={option} value={option}>
+              {option}
             </MenuItem>
           ))}
         </Select>
@@ -74,13 +95,6 @@ class SelectInput extends React.Component {
       </FormControl>
     )
   }
-}
-
-SelectInput.propTypes = {
-  classes: PropTypes.object.isRequired,
-  name: PropTypes.string.isRequired,
-  styles: PropTypes.object.isRequired,
-  options: PropTypes.array,
 }
 
 export default withStyles(styles)(SelectInput)
