@@ -17,12 +17,8 @@ export default (state = initialState, action) => {
       error: false,
       errorMessage: 0,
     }
-  case types.CREATE_CHANNEL_ERROR:
-    return {
-      ...state,
-      errorMessage: action.errorMessage,
-      error: true,
-    }
+  case types.CREATE_CHANNEL_FAILURE:
+    return { ...state, error: true }
   case types.SET_CURRENT_CHANNEL:
     return {
       ...state,

@@ -5,7 +5,7 @@ import * as types from "../actions/types"
 const initialState = {
   entities: {
     stages: {},
-    channels: {},
+    channels: { stages: [] },
     endpoints: {},
   },
   result: [],
@@ -100,14 +100,26 @@ export default (state = initialState, action) => {
   }
   case types.ADD_CHANNEL: {
     const { entities, result } = state
+    const { payload } = action
+    const stages = payload.entities.channels[payload.result].stages === undefined
+      ? [] : payload.entities.channels[payload.result].stages
     return {
       ...state,
       entities: {
         ...entities,
-        ...action.payload.entities,
-        channels: { ...entities.channels, ...action.payload.entities.channels },
+        stages: {
+          ...payload.entities.stages,
+          ...entities.stages,
+        },
+        channels: {
+          ...entities.channels,
+          [payload.result]: {
+            ...payload.entities.channels[payload.result],
+            stages: [...stages],
+          },
+        },
       },
-      result: [...result, action.payload.result],
+      result: [...result, payload.result],
     }
   }
   default:
