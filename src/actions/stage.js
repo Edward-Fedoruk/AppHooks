@@ -1,7 +1,7 @@
 import { normalize } from "normalizr"
 import * as types from "./types"
 import { stageSchema } from "./schemas"
-import { domain, setFetchSettings } from "./utils"
+import axios from "./utils"
 
 export const setStagesData = (payload, id) => ({
   type: types.SET_STAGES,
@@ -20,24 +20,14 @@ export const setCurrentStage = stage => ({
 })
 
 export const createStage = (id, stageData, routeHistory) => (dispatch) => {
-  const accessToken = localStorage.getItem("JWT")
-  const stringifiedData = JSON.stringify(stageData)
-  const settings = setFetchSettings("POST", accessToken, stringifiedData)
-
-  fetch(`${domain}/apps/${id}/stages`, settings)
-    .then(response => response.json()
-      .then((json) => {
-        if (response.ok) {
-          return Promise.resolve(json)
-        }
-        return Promise.reject(json)
-      }))
-    .then(({ data }) => {
-      dispatch(setStagesData(normalize(data, stageSchema), id, data.id))
-      routeHistory.push(`/channels/${id}`)
+  axios.post(`/apps/${id}/stages`, stageData)
+    .then(({ data: { data } }) => {
+      const normalizedData = normalize(data, stageSchema)
+      dispatch(setStagesData(normalizedData, id, data.id))
     })
+    .then(() => routeHistory.push(`/channels/${id}`))
     .catch((er) => {
-      console.log(er)
+      console.log(er.response)
       dispatch(throwStageCreationError(er.message))
     })
 }

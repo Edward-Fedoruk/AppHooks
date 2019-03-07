@@ -3,7 +3,8 @@ import { compose } from "redux"
 import * as types from "./types"
 import { createStage } from "./stage"
 import { channelSchema } from "./schemas"
-import { domain, setFetchSettings } from "./utils"
+import axios, { handleErrorResponse, createError } from "./utils"
+import { toggleCreateChannelForm } from "./ui"
 
 export const setChannelsData = payload => ({
   type: types.SET_CHANNELS,
@@ -11,7 +12,7 @@ export const setChannelsData = payload => ({
 })
 
 export const throwChannelCreationError = errorMessage => ({
-  type: types.CREATE_CHANNEL_ERROR,
+  type: types.CREATE_CHANNEL_FAILURE,
   errorMessage,
 })
 
@@ -31,131 +32,46 @@ export const removeChannelFromStore = id => ({
 })
 
 export const createChannel = (channelData, routeHistory) => (dispatch) => {
-  const accessToken = localStorage.getItem("JWT")
-
-  if (accessToken === null) {
-    routeHistory.push({
-      pathname: "/login",
-    })
-
-    return
-  }
-
-  const stringifiedData = JSON.stringify(channelData)
-  const settings = setFetchSettings("POST", accessToken, stringifiedData)
-
-  fetch(`${domain}/apps`, settings)
-    .then(response => response.json()
-      .then((json) => {
-        if (response.ok) {
-          return Promise.resolve(json)
-        }
-        return Promise.reject(json)
-      }))
-    .then(({ data }) => {
+  axios.post("/apps", channelData)
+    .then(({ data: { data } }) => {
       const stageData = { name: `${data.name.trim()}-default` }
+      const normalizedData = normalize(data, channelSchema)
 
-      compose(
-        dispatch,
-        addChannel
-      )(normalize(data, channelSchema))
-
+      dispatch(addChannel(normalizedData))
       dispatch(createStage(data.id, stageData, routeHistory))
+      dispatch(toggleCreateChannelForm())
     })
-    .catch((er) => {
-      console.log(er)
-      dispatch(throwChannelCreationError(er.message))
-    })
+    .catch(handleErrorResponse(dispatch, createError("CHANNEL_CREATE")))
 }
 
 export const fetchChannels = routeHistory => (dispatch) => {
-  const accessToken = localStorage.getItem("JWT")
-
-  if (accessToken === null) {
-    routeHistory.push({
-      pathname: "/login",
+  axios.get("/apps")
+    .then(({ data: { data } }) => {
+      const normalizedData = normalize(data, [channelSchema])
+      dispatch(setChannelsData(normalizedData))
     })
-    return
-  }
-
-  const settings = setFetchSettings("GET", accessToken, null)
-
-  fetch(`${domain}/apps`, settings)
-    .then(response => response.json()
-      .then((json) => {
-        if (response.ok) {
-          return Promise.resolve(json)
-        }
-        return Promise.reject(json)
-      }))
-    .then(data => compose(
-      dispatch,
-      setChannelsData,
-    )(normalize(data.data, [channelSchema])))
-    .catch((er) => {
-      console.log(er)
-      routeHistory.push({
-        pathname: "/login",
-      })
-    })
+    .catch(() => routeHistory.push({ pathname: "/login" }))
 }
 
 export const fetchChannel = (id, routeHistory) => (dispatch) => {
-  const accessToken = localStorage.getItem("JWT")
-
-  const settings = setFetchSettings("GET", accessToken, null)
-
-  fetch(`${domain}/apps/${id}`, settings)
-    .then(response => response.json()
-      .then((json) => {
-        if (response.ok) {
-          return Promise.resolve(json)
-        }
-        return Promise.reject(json)
-      }))
-    .then(({ data }) => {
-      console.log(data)
+  axios.get(`/apps/${id}`)
+    .then(({ data: { data } }) => {
       const normalizedData = normalize(data, channelSchema)
 
-      compose(
-        dispatch,
-        addChannel,
-      )(normalizedData)
-
+      dispatch(addChannel(normalizedData))
       compose(dispatch, setCurrentChannel)({
         channelId: id,
         stageIds: normalizedData.entities.channels[id].stages,
       })
     })
-    .catch((er) => {
-      console.log(er)
-      routeHistory.push({
-        pathname: "/login",
-      })
-    })
+    .catch(() => routeHistory.push({ pathname: "/login" }))
 }
 
 export const deleteChannel = (id, routeHistory) => (dispatch) => {
-  const accessToken = localStorage.getItem("JWT")
-
-  const settings = setFetchSettings("DELETE", accessToken, null)
-
-  fetch(`${domain}/apps/${id}`, settings)
-    .then((response) => {
-      if (response.ok) {
-        return Promise.resolve(response)
-      }
-      return Promise.reject(response)
-    })
-    .then((data) => {
-      console.log(data)
+  axios.delete(`/apps/${id}`)
+    .then(() => {
       dispatch(removeChannelFromStore(id))
       routeHistory.push("/channels")
     })
-    .catch((er) => {
-      console.log(er)
-      routeHistory.push({
-        pathname: "/login",
-      })
-    })
+    .catch(() => routeHistory.push({ pathname: "/login" }))
 }
