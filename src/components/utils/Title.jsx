@@ -30,12 +30,13 @@ const Title = ({ classes, styles, children }) => (
 
 Title.defaultProps = {
   styles: {},
+  children: "",
 }
 
 Title.propTypes = {
   classes: PropTypes.object.isRequired,
   styles: PropTypes.object,
-  children: PropTypes.string.isRequired,
+  children: PropTypes.string,
 }
 
 export default withStyles(titleStyles)(Title)
