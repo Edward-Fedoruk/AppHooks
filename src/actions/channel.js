@@ -3,11 +3,11 @@ import { compose } from "redux"
 import * as types from "./types"
 import { createStage } from "./stage"
 import { channelSchema } from "./schemas"
-import axios, { handleErrorResponse, createError } from "./utils"
+import axios, { handleErrorResponse, createError, initiateLoading } from "./utils"
 import { toggleCreateChannelForm, toggleSnackbar, toggleSuccessSnackbar } from "./ui"
 
 export const setChannelsData = payload => ({
-  type: types.SET_CHANNELS,
+  type: types.FETCH_CHANNELS_SUCCESS,
   payload,
 })
 
@@ -49,6 +49,8 @@ export const createChannel = (channelData, routeHistory) => (dispatch) => {
 }
 
 export const fetchChannels = routeHistory => (dispatch) => {
+  dispatch(initiateLoading("FETCH_CHANNELS"))
+
   axios.get("/apps")
     .then(({ data: { data } }) => {
       const normalizedData = normalize(data, [channelSchema])

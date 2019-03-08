@@ -12,6 +12,8 @@ import CreateChannel from "./CreateChannel"
 import MainButton from "../utils/MainButton"
 import TopBar from "../utils/TopBar"
 import SuccessSnackbar from "../utils/SuccessSnackbar"
+import { createLoadingSelector } from "../../actions/utils"
+import Preloader from "../Preloader"
 
 export class Channels extends Component {
   static propTypes = {
@@ -21,11 +23,13 @@ export class Channels extends Component {
     toggleCreateChannelForm: PropTypes.func.isRequired,
     createChannelForm: PropTypes.bool.isRequired,
     successMessage: PropTypes.string,
+    isLoading: PropTypes.bool,
   }
 
   static defaultProps = {
     channels: {},
     successMessage: "Action was successful",
+    isLoading: false,
   }
 
   componentDidMount() {
@@ -34,9 +38,10 @@ export class Channels extends Component {
 
   render() {
     const {
-      channels, toggleCreateChannelForm, createChannelForm, successMessage,
+      channels, toggleCreateChannelForm, createChannelForm,
+      successMessage, isLoading,
     } = this.props
-    return (
+    return isLoading ? <Preloader /> : (
       <Fragment>
         <TopBar title="Channels Apps">
           <MainButton onClick={toggleCreateChannelForm}>Create New App</MainButton>
@@ -51,11 +56,14 @@ export class Channels extends Component {
   }
 }
 
-const mapStateToProps = ({ channelsEntities, view }) => ({
+const loadingSelector = createLoadingSelector(["FETCH_CHANNELS"])
+
+const mapStateToProps = ({ channelsEntities, view, preloader }) => ({
   channels: channelsEntities.entities.channels,
   result: channelsEntities.result,
   createChannelForm: view.createChannelForm,
   successMessage: view.successMessage,
+  isLoading: loadingSelector(preloader),
 })
 
 const mapDispatchToProps = {

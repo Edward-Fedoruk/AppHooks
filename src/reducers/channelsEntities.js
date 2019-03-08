@@ -13,7 +13,7 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-  case types.SET_CHANNELS:
+  case types.FETCH_CHANNELS_SUCCESS:
     return {
       ...state,
       entities: {
