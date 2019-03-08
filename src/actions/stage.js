@@ -25,7 +25,7 @@ export const createStage = (id, stageData, routeHistory) => (dispatch) => {
       const normalizedData = normalize(data, stageSchema)
       dispatch(setStagesData(normalizedData, id, data.id))
     })
-    .then(() => routeHistory.push(`/channels/${id}`))
+    // .then(() => routeHistory.push(`/channels/${id}`))
     .catch((er) => {
       console.log(er.response)
       dispatch(throwStageCreationError(er.message))

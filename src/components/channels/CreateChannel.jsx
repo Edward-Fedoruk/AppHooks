@@ -9,6 +9,8 @@ import SelectInput from "./SelectInput"
 import FormTitle from "../utils/FormTitle"
 import { createChannel } from "../../actions/channel"
 import MainButton from "../utils/MainButton"
+import ErrorSnackbar from "../utils/ErrorSnackbar"
+import { createErrorMessageSelector } from "../../actions/utils"
 
 const styles = () => ({
   formWrap: {
@@ -49,9 +51,13 @@ export class CreateChannel extends Component {
 
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    error: PropTypes.bool.isRequired,
     createChannel: PropTypes.func.isRequired,
     history: PropTypes.object.isRequired,
+    errorMessage: PropTypes.string,
+  }
+
+  static defaultProps = {
+    errorMessage: "Something went wrong",
   }
 
   onSubmit = (e) => {
@@ -59,7 +65,6 @@ export class CreateChannel extends Component {
     const { region, name } = this.state
     const { history, createChannel } = this.props
 
-    if (!region) this.setState({ error: true })
     createChannel({ name, region }, history)
   }
 
@@ -70,10 +75,11 @@ export class CreateChannel extends Component {
   onChange = input => e => this.setState({ [input]: e.target.value })
 
   render() {
-    const { classes, error } = this.props
+    const { classes, errorMessage } = this.props
     const { name, region } = this.state
     return (
       <Fragment>
+        <ErrorSnackbar message={errorMessage} />
         <FormTitle
           paragraph="Create a Channels app to generate your unique credentials. You can create as manyapps as you need."
           title="Create your Channels App"
@@ -81,7 +87,7 @@ export class CreateChannel extends Component {
 
         <ValidatorForm onSubmit={this.onSubmit}>
           <TextValidator
-            error={error}
+            // error={error}
             label="Name your app (required)"
             name="name"
             autoFocus
@@ -100,8 +106,6 @@ export class CreateChannel extends Component {
             option={region}
             handleChange={this.handleChange}
             styles={{ width: "100%", marginTop: "35px" }}
-            error={this.state.error || error}
-            errText={error ? "" : "required field"}
           />
 
           <MainButton className={classes.submitButton} type="submit">Create Application</MainButton>
@@ -112,8 +116,10 @@ export class CreateChannel extends Component {
   }
 }
 
-const mapStateToProps = ({ channels }) => ({
-  error: channels.error,
+const errorSelector = createErrorMessageSelector(["CREATE_CHANNEL"])
+
+const mapStateToProps = ({ errorHandler }) => ({
+  errorMessage: errorSelector(errorHandler),
 })
 
 const mapDispatchToProps = dispatch => ({

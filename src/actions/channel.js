@@ -4,7 +4,7 @@ import * as types from "./types"
 import { createStage } from "./stage"
 import { channelSchema } from "./schemas"
 import axios, { handleErrorResponse, createError } from "./utils"
-import { toggleCreateChannelForm } from "./ui"
+import { toggleCreateChannelForm, toggleSnackbar, toggleSuccessSnackbar } from "./ui"
 
 export const setChannelsData = payload => ({
   type: types.SET_CHANNELS,
@@ -17,7 +17,7 @@ export const throwChannelCreationError = errorMessage => ({
 })
 
 export const addChannel = payload => ({
-  type: types.ADD_CHANNEL,
+  type: types.ADD_CHANNEL_SUCCESS,
   payload,
 })
 
@@ -39,9 +39,13 @@ export const createChannel = (channelData, routeHistory) => (dispatch) => {
 
       dispatch(addChannel(normalizedData))
       dispatch(createStage(data.id, stageData, routeHistory))
+      dispatch(toggleSuccessSnackbar("Channel was created"))
       dispatch(toggleCreateChannelForm())
     })
-    .catch(handleErrorResponse(dispatch, createError("CHANNEL_CREATE")))
+    .catch(compose(
+      compose(dispatch, toggleSnackbar),
+      handleErrorResponse(dispatch, createError("CREATE_CHANNEL"))
+    ))
 }
 
 export const fetchChannels = routeHistory => (dispatch) => {

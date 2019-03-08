@@ -98,7 +98,7 @@ export default (state = initialState, action) => {
       },
     }
   }
-  case types.ADD_CHANNEL: {
+  case types.ADD_CHANNEL_SUCCESS: {
     const { entities, result } = state
     const { payload } = action
     const stages = payload.entities.channels[payload.result].stages === undefined

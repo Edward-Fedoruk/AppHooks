@@ -23,11 +23,13 @@ class SelectInput extends React.Component {
     styles: PropTypes.object.isRequired,
     handleChange: PropTypes.func.isRequired,
     option: PropTypes.string.isRequired,
-    error: PropTypes.bool.isRequired,
-    errText: PropTypes.string.isRequired,
+    error: PropTypes.bool,
+    errText: PropTypes.string,
   }
 
   static defaultProps = {
+    error: false,
+    errText: "field is required",
   }
 
   state = {

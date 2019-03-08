@@ -11,19 +11,21 @@ import FormDrawer from "../FormDrawer"
 import CreateChannel from "./CreateChannel"
 import MainButton from "../utils/MainButton"
 import TopBar from "../utils/TopBar"
+import SuccessSnackbar from "../utils/SuccessSnackbar"
 
 export class Channels extends Component {
   static propTypes = {
     fetchChannels: PropTypes.func.isRequired,
     channels: PropTypes.object,
-    result: PropTypes.array.isRequired,
     history: PropTypes.object.isRequired,
     toggleCreateChannelForm: PropTypes.func.isRequired,
     createChannelForm: PropTypes.bool.isRequired,
+    successMessage: PropTypes.string,
   }
 
   static defaultProps = {
     channels: {},
+    successMessage: "Action was successful",
   }
 
   componentDidMount() {
@@ -32,16 +34,14 @@ export class Channels extends Component {
 
   render() {
     const {
-      channels, result, toggleCreateChannelForm, createChannelForm,
+      channels, toggleCreateChannelForm, createChannelForm, successMessage,
     } = this.props
-    const showChannels = result !== undefined && result.length !== 0
-    console.log(showChannels, channels)
     return (
       <Fragment>
         <TopBar title="Channels Apps">
           <MainButton onClick={toggleCreateChannelForm}>Create New App</MainButton>
         </TopBar>
-
+        <SuccessSnackbar message={successMessage} />
         <FormDrawer open={createChannelForm} toggleDialog={toggleCreateChannelForm}>
           <CreateChannel />
         </FormDrawer>
@@ -55,6 +55,7 @@ const mapStateToProps = ({ channelsEntities, view }) => ({
   channels: channelsEntities.entities.channels,
   result: channelsEntities.result,
   createChannelForm: view.createChannelForm,
+  successMessage: view.successMessage,
 })
 
 const mapDispatchToProps = {
