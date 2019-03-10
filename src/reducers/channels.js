@@ -24,6 +24,14 @@ export default (state = initialState, action) => {
       ...state,
       currentChannel: action.channel,
     }
+  case types.ADD_STAGE_TO_CURRENT_CHANNEL:
+    return {
+      ...state,
+      currentChannel: {
+        ...state.currentChannel,
+        stageIds: [...state.currentChannel.stageIds, action.id],
+      },
+    }
   case types.REMOVE_CHANNEL:
     return {
       ...state,
