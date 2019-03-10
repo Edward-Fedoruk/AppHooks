@@ -19,13 +19,12 @@ export const setCurrentStage = stage => ({
   stage,
 })
 
-export const createStage = (id, stageData, routeHistory) => (dispatch) => {
+export const createStage = (id, stageData) => (dispatch) => {
   axios.post(`/apps/${id}/stages`, stageData)
     .then(({ data: { data } }) => {
       const normalizedData = normalize(data, stageSchema)
       dispatch(setStagesData(normalizedData, id, data.id))
     })
-    // .then(() => routeHistory.push(`/channels/${id}`))
     .catch((er) => {
       console.log(er.response)
       dispatch(throwStageCreationError(er.message))

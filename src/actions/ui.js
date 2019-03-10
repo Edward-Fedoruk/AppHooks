@@ -21,6 +21,10 @@ export const toggleCreateForm = () => ({
   type: types.TOGGLE_CREATE_RULE_FORM,
 })
 
+export const toggleCreateStageForm = () => ({
+  type: types.TOGGLE_CREATE_STAGE_FORM,
+})
+
 export const toggleshortcutPanel = () => ({
   type: types.TOGGLE_SHORTCUT_PANEL,
 })

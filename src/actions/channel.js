@@ -5,6 +5,7 @@ import { createStage } from "./stage"
 import { channelSchema } from "./schemas"
 import axios, { handleErrorResponse, createError, initiateLoading } from "./utils"
 import { toggleCreateChannelForm, toggleSnackbar, toggleSuccessSnackbar } from "./ui"
+import history from "../history"
 
 export const setChannelsData = payload => ({
   type: types.FETCH_CHANNELS_SUCCESS,
@@ -31,14 +32,14 @@ export const removeChannelFromStore = id => ({
   id,
 })
 
-export const createChannel = (channelData, routeHistory) => (dispatch) => {
+export const createChannel = channelData => (dispatch) => {
   axios.post("/apps", channelData)
     .then(({ data: { data } }) => {
       const stageData = { name: `${data.name.trim()}-default` }
       const normalizedData = normalize(data, channelSchema)
 
       dispatch(addChannel(normalizedData))
-      dispatch(createStage(data.id, stageData, routeHistory))
+      dispatch(createStage(data.id, stageData))
       dispatch(toggleSuccessSnackbar("Channel was created"))
       dispatch(toggleCreateChannelForm())
     })
@@ -59,7 +60,7 @@ export const fetchChannels = routeHistory => (dispatch) => {
     .catch(() => routeHistory.push({ pathname: "/login" }))
 }
 
-export const fetchChannel = (id, routeHistory) => (dispatch) => {
+export const fetchChannel = id => (dispatch) => {
   axios.get(`/apps/${id}`)
     .then(({ data: { data } }) => {
       const normalizedData = normalize(data, channelSchema)
@@ -70,14 +71,14 @@ export const fetchChannel = (id, routeHistory) => (dispatch) => {
         stageIds: normalizedData.entities.channels[id].stages,
       })
     })
-    .catch(() => routeHistory.push({ pathname: "/login" }))
+    .catch(() => history.push({ pathname: "/login" }))
 }
 
-export const deleteChannel = (id, routeHistory) => (dispatch) => {
+export const deleteChannel = id => (dispatch) => {
   axios.delete(`/apps/${id}`)
     .then(() => {
       dispatch(removeChannelFromStore(id))
-      routeHistory.push("/channels")
+      history.push("/channels")
     })
-    .catch(() => routeHistory.push({ pathname: "/login" }))
+    .catch(() => history.push({ pathname: "/login" }))
 }
