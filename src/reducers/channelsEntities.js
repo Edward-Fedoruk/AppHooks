@@ -5,7 +5,7 @@ import * as types from "../actions/types"
 const initialState = {
   entities: {
     stages: {},
-    channels: { stages: [] },
+    channels: {},
     endpoints: {},
   },
   result: [],
@@ -61,11 +61,8 @@ export default (state = initialState, action) => {
     }
   }
   case types.REMOVE_CHANNEL: {
-    const channels = state.entities.channels
+    const { channels, stages, endpoints } = state.entities
     const stagesIds = channels[action.id].stages
-    const stages = state.entities.stages
-    const endpoints = state.entities.endpoints
-    console.log("entities", state.entities)
     const newEndpoints = Object.keys(endpoints)
       .filter(key => endpoints[key].application_id === action.id)
       .reduce((result, current) => {
