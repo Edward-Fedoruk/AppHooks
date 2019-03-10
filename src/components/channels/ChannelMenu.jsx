@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 import React from "react"
 import PropTypes from "prop-types"
 import Menu from "@material-ui/core/Menu"
@@ -10,6 +11,10 @@ import Edit from "@material-ui/icons/Edit"
 import Add from "@material-ui/icons/Add"
 import { withStyles } from "@material-ui/core"
 import MenuItem from "@material-ui/core/MenuItem"
+import { connect } from "react-redux"
+import { compose } from "redux"
+import { withRouter } from "react-router-dom"
+import { toggleCreateStageForm } from "../../actions/ui"
 
 const styles = () => ({
   menu: {
@@ -37,7 +42,7 @@ const styles = () => ({
 const ChannelMenu = ({
   classes, anchorEl, handleClick,
   handleClose, currentStageName, currentChannel,
-  deleteChannel,
+  deleteChannelAction, toggleCreateStageForm,
 }) => (
   <div>
     <IconButton
@@ -57,63 +62,23 @@ const ChannelMenu = ({
       elevation={4}
     >
       <MenuItem onClick={handleClose}>
-        <ListItemIcon>
-          <Edit />
-        </ListItemIcon>
-        <Typography
-          noWrap
-          variant="inherit"
-          color="primary"
-        >
-            Edit stage name
-        </Typography>
+        <ListItemIcon><Edit /></ListItemIcon>
+        <Typography noWrap variant="inherit" color="primary">Edit stage name</Typography>
+      </MenuItem>
+
+      <MenuItem onClick={toggleCreateStageForm}>
+        <ListItemIcon><Add /></ListItemIcon>
+        <Typography noWrap variant="inherit" color="primary">Add new stage</Typography>
       </MenuItem>
 
       <MenuItem onClick={handleClose}>
-        <ListItemIcon>
-          <Add />
-        </ListItemIcon>
-        <Typography
-          noWrap
-          variant="inherit"
-          color="primary"
-        >
-            Add new stage
-        </Typography>
+        <ListItemIcon><AddCircle className={classes.deleteIcon} /></ListItemIcon>
+        <Typography className={classes.delete} noWrap variant="inherit">Delete {` ${currentStageName} `} stage</Typography>
       </MenuItem>
 
-      <MenuItem onClick={handleClose}>
-        <ListItemIcon>
-          <AddCircle className={classes.deleteIcon} />
-        </ListItemIcon>
-        <Typography
-          className={classes.delete}
-          noWrap
-          variant="inherit"
-        >
-            Delete
-          {" "}
-          {currentStageName}
-          {" "}
-stage
-        </Typography>
-      </MenuItem>
-
-      <MenuItem onClick={deleteChannel}>
-        <ListItemIcon>
-          <AddCircle className={classes.deleteIcon} />
-        </ListItemIcon>
-        <Typography
-          className={classes.delete}
-          noWrap
-          variant="inherit"
-        >
-            Delete
-          {" "}
-          {currentChannel}
-          {" "}
-Channel App
-        </Typography>
+      <MenuItem onClick={deleteChannelAction}>
+        <ListItemIcon><AddCircle className={classes.deleteIcon} /></ListItemIcon>
+        <Typography className={classes.delete} noWrap variant="inherit">Delete {` ${currentChannel} `} Channel App</Typography>
       </MenuItem>
 
     </Menu>
@@ -123,11 +88,28 @@ Channel App
 ChannelMenu.propTypes = {
   classes: PropTypes.object.isRequired,
   anchorEl: PropTypes.bool.isRequired,
+  toggleCreateStageForm: PropTypes.func.isRequired,
   handleClick: PropTypes.func,
   handleClose: PropTypes.func,
   currentStageName: PropTypes.string,
   currentChannel: PropTypes.string,
-  deleteChannel: PropTypes.func,
+  deleteChannelAction: PropTypes.func,
 }
 
-export default withStyles(styles)(ChannelMenu)
+ChannelMenu.defaultProps = {
+  handleClick: () => {},
+  handleClose: () => {},
+  deleteChannelAction: () => {},
+  currentStageName: "this",
+  currentChannel: "this",
+}
+
+const mapDispatchToProps = dispatch => ({
+  toggleCreateStageForm: () => dispatch(toggleCreateStageForm()),
+})
+
+export default compose(
+  withStyles(styles),
+  withRouter,
+  connect(null, mapDispatchToProps)
+)(ChannelMenu)

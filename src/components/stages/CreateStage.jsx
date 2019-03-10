@@ -4,13 +4,12 @@ import { connect } from "react-redux"
 import { withStyles } from "@material-ui/core/styles"
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator"
 import { compose } from "redux"
-import { CountryRegionData } from "react-country-region-selector"
-import { withRouter } from "react-router"
-import SubmitButton from "../Authentication/SubmitButton"
-import SelectInput from "./SelectInput"
 import FormTitle from "../utils/FormTitle"
-import { createChannel } from "../../actions/channel"
-import TopBar from "../utils/TopBar"
+import { createStage } from "../../actions/stage"
+import MainButton from "../utils/MainButton"
+import ErrorSnackbar from "../utils/ErrorSnackbar"
+import { createErrorMessageSelector } from "../../actions/utils"
+import history from "../../history"
 
 const styles = () => ({
   formWrap: {
@@ -22,6 +21,11 @@ const styles = () => ({
   textField: {
     width: "100%",
     marginTop: "70px",
+  },
+
+  submitButton: {
+    margin: "25px auto",
+    display: "flex",
   },
 
   title: {
@@ -38,95 +42,79 @@ const styles = () => ({
 
 })
 
-export class CreateChannel extends Component {
+export class CreateStage extends Component {
   state = {
     name: "",
-    region: "",
   }
 
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    errorMessage: PropTypes.string.isRequired,
-    error: PropTypes.bool.isRequired,
+    createStage: PropTypes.func.isRequired,
+    errorMessage: PropTypes.string,
+  }
+
+  static defaultProps = {
+    errorMessage: "Something went wrong",
   }
 
   onSubmit = (e) => {
     e.preventDefault()
-    if (!this.state.region) this.setState({ error: true })
-    console.log({ name: this.state.name, region: this.state.region[0] })
+    const { createStage } = this.props
+    const channelId = history.location.pathname.split("/").reverse()[0]
 
-    this.props.createChannel({ name: this.state.name, region: this.state.region[0] })
+    createStage(channelId, this.state)
   }
 
-  handleChange = (event) => {
-    this.setState({ [event.target.name]: event.target.value })
-  }
+  handleChange = event => this.setState({ [event.target.name]: event.target.value })
+
 
   onChange = input => e => this.setState({ [input]: e.target.value })
 
   render() {
-    const { classes, errorMessage, error } = this.props
-    const { name, region } = this.state
+    const { classes, errorMessage } = this.props
+    const { name } = this.state
     return (
       <Fragment>
-        <TopBar
-          buttonText="Create New App"
-          title=""
+        <ErrorSnackbar message={errorMessage} />
+        <FormTitle
+          paragraph="Use the below to create a new input destination for you webhooks. Once completed, you will be given an endpoint URL for your webhook provider."
+          title="Create Stage"
         />
-        <div className={classes.formWrap}>
-          <FormTitle
-            paragraph="Create a Channels app to generate your unique credentials. You can create as many apps as you need."
-            title="Create your Channels App"
+
+        <ValidatorForm onSubmit={this.onSubmit}>
+          <TextValidator
+            label="Stage name"
+            name="name"
+            autoFocus
+            variant="outlined"
+            placeholder="MyStage"
+            onChange={this.onChange("name")}
+            className={classes.textField}
+            value={name}
+            margin="normal"
+            validators={["required"]}
+            errorMessages={["this field is required"]}
           />
 
-          <ValidatorForm onSubmit={this.onSubmit}>
-            <TextValidator
-              error={error}
-              label="Name your app (required)"
-              name="name"
-              autoFocus
-              variant="outlined"
-              placeholder="MyApp"
-              onChange={this.onChange("name")}
-              className={classes.textField}
-              value={name}
-              margin="normal"
-              validators={["required"]}
-              errorMessages={["this field is required"]}
-            />
+          <MainButton className={classes.submitButton} type="submit">Create Stage</MainButton>
 
-            <SelectInput
-              options={CountryRegionData}
-              name="region"
-              option={region}
-              handleChange={this.handleChange}
-              styles={{ width: "100%", marginTop: "35px" }}
-              error={this.state.error || error}
-              errText={error ? "" : "required field"}
-            />
-
-            <SubmitButton
-              text="Create Application"
-              styles={{ width: "250px", display: "block", margin: "84px auto 20px auto" }}
-            />
-          </ValidatorForm>
-        </div>
+        </ValidatorForm>
       </Fragment>
     )
   }
 }
 
-const mapStateToProps = ({ channels }) => ({
-  error: channels.error,
-  errorMessage: channels.errorMessage,
+const errorSelector = createErrorMessageSelector(["CREATE_ENDPOINT"])
+
+const mapStateToProps = ({ errorHandler }) => ({
+  errorMessage: errorSelector(errorHandler),
 })
 
 const mapDispatchToProps = dispatch => ({
-  createChannel: (channelData, routeHistory) => dispatch(createChannel(channelData, routeHistory)),
+  createStage: (id, stageData) => dispatch(createStage(id, stageData)),
 })
 
 export default compose(
   withStyles(styles),
-  withRouter,
   connect(mapStateToProps, mapDispatchToProps)
-)(CreateChannel)
+)(CreateStage)

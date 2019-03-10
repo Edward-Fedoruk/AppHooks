@@ -98,7 +98,7 @@ export const ConfirmDialog = ({
     </DialogContent>
     <DialogActions className={classes.actions}>
       <Button onClick={handleClose} className={classes.cancel} autoFocus variant="outlined" color="primary">Cancel</Button>
-      <Button onClick={handleCloseWithAction} className={classes.delete} variant="flat" color="primary">Delete</Button>
+      <Button onClick={handleCloseWithAction} className={classes.delete} variant="text" color="primary">Delete</Button>
     </DialogActions>
   </Dialog>
 )

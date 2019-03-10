@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 import React, { Component } from "react"
 import PropTypes from "prop-types"
 import { connect } from "react-redux"
@@ -7,9 +8,10 @@ import { withStyles } from "@material-ui/core"
 import { compose } from "redux"
 import { withRouter } from "react-router-dom"
 import { changeStage } from "../../actions/ui"
-import { deleteChannel } from "../../actions/channel"
 import ChannelMenu from "../channels/ChannelMenu"
 import TopBar from "../utils/TopBar"
+import ConfirmDialog from "../ConfirmDialog"
+import { deleteChannel } from "../../actions/channel"
 
 const styles = () => ({
   menu: {
@@ -36,31 +38,37 @@ const styles = () => ({
 export class StageTopBar extends Component {
   state = {
     anchorEl: null,
+    open: false,
+
   }
 
   static propTypes = {
     classes: PropTypes.object.isRequired,
+    changeStage: PropTypes.func.isRequired,
+    currentStage: PropTypes.number.isRequired,
+    match: PropTypes.object.isRequired,
+    deleteChannel: PropTypes.func.isRequired,
     stages: PropTypes.array,
     channel: PropTypes.object,
-    currentStage: PropTypes.number,
-    deleteChannel: PropTypes.func.isRequired,
   }
 
-  handleChange = (event) => {
-    this.props.changeStage(event.target.value)
+  static defaultProps = {
+    stages: [],
+    channel: { name: "" },
   }
 
-  handleClick = (event) => {
-    this.setState({ anchorEl: event.currentTarget })
-  }
+  handleChange = event => this.props.changeStage(event.target.value)
 
-  handleClose = () => {
-    this.setState({ anchorEl: null })
-  }
+  handleClick = event => this.setState({ anchorEl: event.currentTarget })
 
-  deleteChannel = () => {
-    const { deleteChannel, match, history } = this.props
-    deleteChannel(match.params.id, history)
+  handleClose = () => this.setState({ anchorEl: null })
+
+  toggleDialog = () => this.setState(({ open }) => ({ open: !open }))
+
+  handleCloseWithAction = () => {
+    const { match, deleteChannel } = this.props
+    deleteChannel(match.params.id)
+    this.toggleDialog()
   }
 
   render() {
@@ -68,10 +76,9 @@ export class StageTopBar extends Component {
       classes, stages, channel, currentStage,
     } = this.props
     const { anchorEl } = this.state
-    const currentChannel = channel !== undefined && channel.name
     const currentStageName = stages[currentStage] !== undefined && stages[currentStage].name
     return (
-      <TopBar title={currentChannel}>
+      <TopBar title={channel.name}>
         <Select
           value={currentStage}
           onChange={this.handleChange}
@@ -88,9 +95,17 @@ export class StageTopBar extends Component {
           handleClick={this.handleClick}
           handleClose={this.handleClose}
           currentStageName={currentStageName}
-          currentChannel={currentChannel}
-          deleteChannel={this.deleteChannel}
+          currentChannel={channel.name}
+          deleteChannelAction={this.toggleDialog}
         />
+
+        <ConfirmDialog
+          handleCloseWithAction={this.handleCloseWithAction}
+          handleClose={this.toggleDialog}
+          open={this.state.open}
+        >
+          Are you sure you want to delete this channel? It can`t be undone
+        </ConfirmDialog>
 
       </TopBar>
     )
@@ -98,9 +113,9 @@ export class StageTopBar extends Component {
 }
 
 const mapStateToProps = ({ channels: { currentChannel }, channelsEntities, view }) => ({
+  currentStage: view.currentStage,
   stages: currentChannel.stageIds.map(id => channelsEntities.entities.stages[id]),
   channel: channelsEntities.entities.channels[currentChannel.channelId],
-  currentStage: view.currentStage,
 })
 
 const mapDispatchToProps = dispatch => ({

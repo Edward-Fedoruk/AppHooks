@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable no-nested-ternary */
 import React, { Component, Fragment } from "react"
 import PropTypes from "prop-types"
@@ -8,12 +9,15 @@ import { compose } from "redux"
 import withNavigation from "../withNavigation"
 import Title from "../utils/Title"
 import { fetchChannel } from "../../actions/channel"
+import { toggleCreateStageForm } from "../../actions/ui"
 import ConfirmDialog from "../ConfirmDialog"
 import StageTopBar from "../stages/StageTopBar"
 import Endpoints from "../endpoints/Endpoints"
 import Placeholder from "../Placeholder"
 import stageImg from "../../assets/stages.png"
 import endpointImg from "../../assets/endpoints.png"
+import CreateStage from "../stages/CreateStage"
+import FormDrawer from "../FormDrawer"
 
 const styles = () => ({
   contentWrap: {
@@ -32,10 +36,11 @@ export class Channel extends Component {
     currentStage: PropTypes.object,
     endpoints: PropTypes.array,
     stages: PropTypes.array,
-    deleteChannel: PropTypes.func.isRequired,
+    toggleCreateStageForm: PropTypes.func.isRequired,
     fetchChannel: PropTypes.func.isRequired,
     match: PropTypes.object.isRequired,
     history: PropTypes.object.isRequired,
+    createStageForm: PropTypes.bool.isRequired,
   }
 
   static defaultProps = {
@@ -56,23 +61,27 @@ export class Channel extends Component {
 
   handleCloseWithAction = () => {
     this.setState({ open: false })
-    this.props.deleteChannel(this.props.match.params.id, this.props.history)
+    // this.props.deleteChannel(this.props.match.params.id, this.props.history)
   }
 
   handleClose = () => {
     this.setState({ open: false })
   }
 
-  addStage = () => {}
 
   render() {
     const {
-      classes, currentStage, endpoints, stages,
+      classes, currentStage, endpoints,
+      stages, createStageForm, toggleCreateStageForm,
     } = this.props
     return (
       <Fragment>
         <StageTopBar />
         <div className={classes.contentWrap}>
+
+          <FormDrawer open={createStageForm} toggleDialog={toggleCreateStageForm}>
+            <CreateStage />
+          </FormDrawer>
 
           {stages.length
             ? (
@@ -107,7 +116,9 @@ export class Channel extends Component {
             handleCloseWithAction={this.handleCloseWithAction}
             handleClose={this.handleClose}
             open={this.state.open}
-          />
+          >
+            sdf
+          </ConfirmDialog>
 
         </div>
       </Fragment>
@@ -121,11 +132,17 @@ const mapStateToProps = ({ channels, channelsEntities: { entities }, view }) => 
   let endpoints = []
   if (currentStage !== undefined) { endpoints = currentStage.endpoints.map(id => entities.endpoints[id]) }
 
-  return { currentStage, endpoints, stages }
+  return {
+    currentStage,
+    endpoints,
+    stages,
+    createStageForm: view.createStageForm,
+  }
 }
 
 const mapDispatchToProps = dispatch => ({
   fetchChannel: (id, routeHistory) => dispatch(fetchChannel(id, routeHistory)),
+  toggleCreateStageForm: () => dispatch(toggleCreateStageForm()),
 })
 
 export default compose(
