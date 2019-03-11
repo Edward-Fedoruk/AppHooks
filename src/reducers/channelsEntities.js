@@ -11,6 +11,12 @@ const initialState = {
   result: [],
 }
 
+const filterEntities = (entity, filter) => Object.keys(entity)
+  .filter(filter).reduce((result, current) => {
+    result[current] = entity[current]
+    return result
+  }, {})
+
 export default (state = initialState, action) => {
   switch (action.type) {
   case types.FETCH_CHANNELS_SUCCESS:
@@ -43,52 +49,34 @@ export default (state = initialState, action) => {
   case types.REMOVE_STAGES: {
     const { entities, channels, entities: { stages } } = state
     const { id } = action
-    const stagesKeys = Object.keys(entities.stages)
-      .filter(key => !channels[id].stages.includes(parseInt(key, 10)))
+    const filterStages = key => !channels[id].stages.includes(parseInt(key, 10))
+    const newStages = filterEntities(stages, filterStages)
     return {
       ...state,
       entities: {
         ...entities,
-        stages: stagesKeys.reduce((result, current) => {
-          result[current] = stages[current]
-          return result
-        }, {}),
+        stages: newStages,
         channels: {
           ...channels,
-          [id]: { ...channels[id], stages: stagesKeys },
+          [id]: { ...channels[id], stages: Object.keys(newStages) },
         },
       },
     }
   }
   case types.REMOVE_CHANNEL: {
     const { channels, stages, endpoints } = state.entities
-    const stagesIds = channels[action.id].stages
-    const newEndpoints = Object.keys(endpoints)
-      .filter(key => endpoints[key].application_id === action.id)
-      .reduce((result, current) => {
-        result[current] = endpoints[current]
-        return result
-      }, {})
-    const newStages = Object.keys(stages)
-      .filter(key => !stagesIds.includes(parseInt(key, 10)))
-      .reduce((result, current) => {
-        result[current] = stages[current]
-        return result
-      }, {})
-    const newChannels = Object.keys(channels)
-      .filter(key => key !== action.id)
-      .reduce((result, current) => {
-        result[current] = channels[current]
-        return result
-      }, {})
+
+    const filterStages = key => !channels[action.id].stages.includes(parseInt(key, 10))
+    const filterEndpoints = key => endpoints[key].application_id === action.id
+    const filterChannels = key => key !== action.id
 
     return {
       ...state,
       entities: {
         ...state.entities,
-        endpoints: newEndpoints,
-        stages: newStages,
-        channels: newChannels,
+        endpoints: filterEntities(endpoints, filterEndpoints),
+        stages: filterEntities(stages, filterStages),
+        channels: filterEntities(channels, filterChannels),
       },
       result: {
         data: state.result.filter(id => id !== action.id),
