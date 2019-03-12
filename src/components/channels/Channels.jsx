@@ -18,7 +18,6 @@ import Preloader from "../Preloader"
 export class Channels extends Component {
   static propTypes = {
     fetchChannels: PropTypes.func.isRequired,
-    channels: PropTypes.object,
     history: PropTypes.object.isRequired,
     toggleCreateChannelForm: PropTypes.func.isRequired,
     createChannelForm: PropTypes.bool.isRequired,
@@ -27,7 +26,6 @@ export class Channels extends Component {
   }
 
   static defaultProps = {
-    channels: {},
     successMessage: "Action was successful",
     isLoading: false,
   }
@@ -38,7 +36,7 @@ export class Channels extends Component {
 
   render() {
     const {
-      channels, toggleCreateChannelForm, createChannelForm,
+      toggleCreateChannelForm, createChannelForm,
       successMessage, isLoading,
     } = this.props
     return isLoading ? <Preloader /> : (
@@ -50,7 +48,7 @@ export class Channels extends Component {
         <FormDrawer open={createChannelForm} toggleDialog={toggleCreateChannelForm}>
           <CreateChannel />
         </FormDrawer>
-        <ChannelsList channels={channels} />
+        <ChannelsList />
       </Fragment>
     )
   }
@@ -59,7 +57,6 @@ export class Channels extends Component {
 const loadingSelector = createLoadingSelector(["FETCH_CHANNELS"])
 
 const mapStateToProps = ({ channelsEntities, view, preloader }) => ({
-  channels: channelsEntities.entities.channels,
   result: channelsEntities.result,
   createChannelForm: view.createChannelForm,
   successMessage: view.successMessage,

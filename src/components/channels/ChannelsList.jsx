@@ -3,6 +3,7 @@ import PropTypes from "prop-types"
 import { withStyles } from "@material-ui/core/styles"
 import { compose } from "redux"
 import Typography from "@material-ui/core/Typography"
+import { connect } from "react-redux"
 import ChannelCard from "./ChannelCard"
 
 const styles = ({ breakpoints }) => ({
@@ -39,12 +40,7 @@ const ChannelsList = ({ classes, channels }) => (
             </Typography>
           )}
 
-          <ChannelCard
-            channelId={channels[key].id}
-            appName={channels[key].name}
-            requests={channels[key].requests || 0}
-            connections={channels[key].connections || 0}
-          />
+          <ChannelCard channelId={channels[key].id} />
         </Fragment>
       )
     })}
@@ -56,6 +52,11 @@ ChannelsList.propTypes = {
   channels: PropTypes.object.isRequired,
 }
 
+const mapStateToProps = ({ channelsEntities }) => ({
+  channels: channelsEntities.entities.channels,
+})
+
 export default compose(
   withStyles(styles),
+  connect(mapStateToProps)
 )(ChannelsList)

@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 import React from "react"
 import PropTypes from "prop-types"
 import { withStyles } from "@material-ui/core/styles"
@@ -10,10 +11,13 @@ import Grid from "@material-ui/core/Grid"
 import Divider from "@material-ui/core/Divider"
 import SettingsOutlined from "@material-ui/icons/SettingsOutlined"
 import { Link } from "react-router-dom"
+import { connect } from "react-redux"
+import { compose } from "redux"
+// import Collaborators from "./Collaborators"
 
 const styles = ({ breakpoints }) => ({
   card: {
-    width: "270px",
+    width: "290px",
     minHeight: "197px",
     display: "inline-block",
     marginRight: "3%",
@@ -21,9 +25,9 @@ const styles = ({ breakpoints }) => ({
   },
 
   CardName: {
-    marginBottom: "40px",
+    marginBottom: "9px",
     color: "#192B7F",
-    fontWeight: "bold",
+    fontWeight: "500",
     fontSize: "14px",
 
     [breakpoints.down(425)]: {
@@ -32,10 +36,12 @@ const styles = ({ breakpoints }) => ({
   },
 
   stats: {
-
     color: "#192B7F",
     marginBottom: "27px",
   },
+
+  cardContent: { paddingBottom: "0 !important" },
+  statsTitle: { opacity: ".7" },
 
   collaboration: {
     paddingLeft: "16px",
@@ -54,42 +60,43 @@ const styles = ({ breakpoints }) => ({
 })
 
 const ChannelCard = ({
-  classes, appName, requests, connections, channelId,
+  classes, appName,
+  channelId, collaborators,
+  statistics,
 }) => (
   <Card className={classes.card}>
     <CardActionArea>
       <Link
-        to={{
-          pathname: `channels/${channelId}`,
-        }}
+        to={{ pathname: `channels/${channelId}` }}
         className={classes.linkWrap}
       >
-        <CardContent>
-          <Typography
-            gutterBottom
-            variant="h5"
-            component="h5"
-            className={classes.CardName}
-          >
+        <CardContent className={classes.cardContent}>
+          <Typography gutterBottom variant="h5" component="h5" className={classes.CardName}>
             { appName }
           </Typography>
           <Grid container>
 
-            <Grid xs item>
+            <Grid xs={6} item>
               <Typography className={classes.stats} component="p">
-                  Total requests:
-                {" "}
-                <br />
-                { requests }
+                <span className={classes.statsTitle}>Total requests:</span><br />{` ${statistics.total_requests} `}
               </Typography>
             </Grid>
 
-            <Grid xs item>
+            <Grid xs={6} item>
               <Typography className={classes.stats} component="p">
-                  Peak connections:
-                {" "}
-                <br />
-                { connections }
+                <span className={classes.statsTitle}>Peak connections:</span><br />{` ${statistics.peak_connections} `}
+              </Typography>
+            </Grid>
+
+            <Grid xs={6} item>
+              <Typography className={classes.stats} component="p">
+                <span className={classes.statsTitle}>Success requests:</span><br />{` ${statistics.total_requests} `}
+              </Typography>
+            </Grid>
+
+            <Grid xs={6} item>
+              <Typography className={classes.stats} component="p">
+                <span className={classes.statsTitle}>Failed connections:</span><br />{` ${statistics.peak_connections} `}
               </Typography>
             </Grid>
 
@@ -98,12 +105,12 @@ const ChannelCard = ({
       </Link>
     </CardActionArea>
 
-    <Divider variant="middle" />
+    <Divider variant="fullWidth" />
 
     <CardActions className={classes.collaboration}>
-      <Typography className={classes.collaborators}>
-          No collaborators
-      </Typography>
+      {collaborators.lenght
+        ? <Typography className={classes.collaborators}>No collaborators</Typography>
+        : ""}
       <SettingsOutlined />
     </CardActions>
   </Card>
@@ -111,9 +118,40 @@ const ChannelCard = ({
 
 ChannelCard.propTypes = {
   classes: PropTypes.object.isRequired,
-  requests: PropTypes.number.isRequired,
-  appName: PropTypes.string.isRequired,
-  connections: PropTypes.number.isRequired,
+  channelId: PropTypes.number.isRequired,
+  appName: PropTypes.string,
+  collaborators: PropTypes.arrayOf(PropTypes.string),
+  statistics: PropTypes.shape({
+    total_requests: PropTypes.number,
+    success_requests: PropTypes.number,
+    failed_requests: PropTypes.number,
+    peak_connections: PropTypes.number,
+  }),
 }
 
-export default withStyles(styles)(ChannelCard)
+ChannelCard.defaultProps = {
+  appName: "",
+  collaborators: [],
+  statistics: {
+    total_requests: 0,
+    success_requests: 0,
+    failed_requests: 0,
+    peak_connections: 0,
+  },
+}
+
+const mapStateToProps = ({ channelsEntities }, { channelId }) => {
+  const { name, collaborators, statistics } = channelsEntities.entities.channels[channelId]
+  return {
+    appName: name, collaborators, statistics, channelId,
+  }
+}
+
+const mapDispatchToProps = {
+
+}
+
+export default compose(
+  withStyles(styles),
+  connect(mapStateToProps, mapDispatchToProps)
+)(ChannelCard)
