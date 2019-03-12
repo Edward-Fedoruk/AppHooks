@@ -28,7 +28,7 @@ export default (state = initialState, action) => {
       },
       result: action.payload.result,
     }
-  case types.SET_STAGES: {
+  case types.CREATE_STAGE_SUCCESS: {
     const { entities, entities: { channels, stages } } = state
     const { id, payload } = action
     return {
@@ -43,6 +43,24 @@ export default (state = initialState, action) => {
             stages: [...channels[id].stages, payload.result],
           },
         },
+      },
+    }
+  }
+  case types.REMOVE_STAGE_SUCCESS: {
+    const { entities, entities: { stages, channels } } = state
+    const { channelId, stageId } = action
+    const filterStages = key => key !== stageId
+
+    return {
+      ...state,
+      entities: {
+        ...entities,
+        channels: {
+          [channelId]: {
+            stages: channels[channelId].stages.filter(filterStages),
+          },
+        },
+        stages: filterEntities(stages, filterStages),
       },
     }
   }
