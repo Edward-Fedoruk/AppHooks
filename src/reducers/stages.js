@@ -6,7 +6,7 @@ const initialState = {
 
 export default (state = initialState, { type, payload }) => {
   switch (type) {
-  case types.CREATE_STAGE_ERROR:
+  case types.CREATE_STAGE_FAILURE:
     return { ...state, ...payload }
   default:
     return state
