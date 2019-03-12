@@ -13,7 +13,7 @@ import SettingsOutlined from "@material-ui/icons/SettingsOutlined"
 import { Link } from "react-router-dom"
 import { connect } from "react-redux"
 import { compose } from "redux"
-// import Collaborators from "./Collaborators"
+import Collaborators from "./Collaborators"
 
 const styles = ({ breakpoints }) => ({
   card: {
@@ -44,7 +44,7 @@ const styles = ({ breakpoints }) => ({
   statsTitle: { opacity: ".7" },
 
   collaboration: {
-    paddingLeft: "16px",
+    paddingLeft: "5px",
     paddingRight: "16px",
     color: "rgba(25, 43, 127, 0.2)",
     justifyContent: "space-between",
@@ -52,6 +52,8 @@ const styles = ({ breakpoints }) => ({
 
   collaborators: {
     color: "rgba(25, 43, 127, 0.2)",
+    lineHeight: "34px",
+    paddingLeft: "11px",
   },
 
   linkWrap: {
@@ -90,13 +92,13 @@ const ChannelCard = ({
 
             <Grid xs={6} item>
               <Typography className={classes.stats} component="p">
-                <span className={classes.statsTitle}>Success requests:</span><br />{` ${statistics.total_requests} `}
+                <span className={classes.statsTitle}>Success requests:</span><br />{` ${statistics.success_requests} `}
               </Typography>
             </Grid>
 
             <Grid xs={6} item>
               <Typography className={classes.stats} component="p">
-                <span className={classes.statsTitle}>Failed connections:</span><br />{` ${statistics.peak_connections} `}
+                <span className={classes.statsTitle}>Failed connections:</span><br />{` ${statistics.failed_requests} `}
               </Typography>
             </Grid>
 
@@ -108,9 +110,9 @@ const ChannelCard = ({
     <Divider variant="fullWidth" />
 
     <CardActions className={classes.collaboration}>
-      {collaborators.lenght
+      {!collaborators.length
         ? <Typography className={classes.collaborators}>No collaborators</Typography>
-        : ""}
+        : <Collaborators collaborators={collaborators} />}
       <SettingsOutlined />
     </CardActions>
   </Card>
