@@ -25,25 +25,28 @@ const styles = ({ breakpoints }) => ({
 
 const ChannelsList = ({ classes, channels }) => (
   <div className={classes.contentWrap}>
-    {Object.keys(channels).map((key, i, arr) => {
-      let setRegion = true
-      if (arr[i - 1]) {
-        const channelIndex = arr[i - 1]
-        setRegion = channels[channelIndex].region !== channels[key].region
-      }
+    {Object
+      .keys(channels)
+      .sort((a, b) => (channels[a].region > channels[b].region ? 1 : -1))
+      .map((key, i, arr) => {
+        let setRegion = true
+        if (arr[i - 1]) {
+          const channelIndex = arr[i - 1]
+          setRegion = channels[channelIndex].region !== channels[key].region
+        }
 
-      return (
-        <Fragment key={key}>
-          {setRegion && (
+        return (
+          <Fragment key={key}>
+            {setRegion && (
             <Typography className={classes.region} variant="h3">
               {channels[key].region}
             </Typography>
-          )}
+            )}
 
-          <ChannelCard channelId={channels[key].id} />
-        </Fragment>
-      )
-    })}
+            <ChannelCard channelId={channels[key].id} />
+          </Fragment>
+        )
+      })}
   </div>
 )
 
