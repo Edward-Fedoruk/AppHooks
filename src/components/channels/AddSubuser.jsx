@@ -8,8 +8,9 @@ import Gravatar from "react-gravatar"
 import Menu from "@material-ui/core/Menu"
 import MenuItem from "@material-ui/core/MenuItem"
 import Typography from "@material-ui/core/Typography"
+import { addCollaborator } from "../../actions/channel"
 
-const styles = () => ({
+const styles = ({ palette }) => ({
   menuItem: {
     display: "flex",
     alignItems: "center",
@@ -21,6 +22,14 @@ const styles = () => ({
     borderRadius: "50%",
     marginRight: "10px",
   },
+
+  addIcon: {
+    color: "#828CB8",
+    cursor: "pointer",
+    transition: "color .3s",
+
+    "&:hover": { color: palette.primary.main },
+  },
 })
 
 export class AddSubuser extends Component {
@@ -31,12 +40,14 @@ export class AddSubuser extends Component {
 
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    allCollaborators: PropTypes.array,
     showAddButton: PropTypes.bool.isRequired,
+    addCollaborator: PropTypes.func.isRequired,
+    collaborators: PropTypes.array,
+    channelId: PropTypes.number.isRequired,
   }
 
   static defaultProps = {
-    allCollaborators: [],
+    collaborators: [],
   }
 
   handleClick = (event) => {
@@ -47,22 +58,28 @@ export class AddSubuser extends Component {
     this.setState({ anchorEl: null, open: false })
   }
 
+  addCollaborator = user => () => {
+    const { addCollaborator, channelId } = this.props
+    addCollaborator(channelId, user)
+  }
+
   render() {
-    const { allCollaborators, showAddButton, classes } = this.props
+    const { collaborators, showAddButton, classes } = this.props
     const { open, anchorEl } = this.state
+
     if (showAddButton) {
       return (
         <Fragment>
           <Menu anchorEl={anchorEl} open={open} onClose={this.handleClose}>
-            {allCollaborators.map(({ email, id }) => (
-              <MenuItem className={classes.menuItem} key={id}>
-                <Gravatar className={classes.userIcon} email={email} default="identicon" />
-                <Typography>{email}</Typography>
+            {collaborators.map(user => (
+              <MenuItem onClick={this.addCollaborator(user)} className={classes.menuItem} key={user.id}>
+                <Gravatar className={classes.userIcon} email={user.email} default="identicon" />
+                <Typography>{user.email}</Typography>
               </MenuItem>
             ))}
           </Menu>
 
-          <AddCircleOutline onClick={this.handleClick} />
+          <AddCircleOutline className={classes.addIcon} onClick={this.handleClick} />
         </Fragment>
       )
     }
@@ -70,13 +87,17 @@ export class AddSubuser extends Component {
   }
 }
 
-const mapStateToProps = ({ users }) => ({
-  allCollaborators: users.users,
-  showAddButton: Boolean(users.users.length),
-})
+const mapStateToProps = ({ users, channelsEntities }, { channelId }) => {
+  const addedCollaboratorsIds = channelsEntities.entities.channels[channelId].collaborators.map(user => user.id)
+  const collaborators = users.users.filter(user => !addedCollaboratorsIds.includes(user.id))
+  return {
+    collaborators,
+    showAddButton: Boolean(collaborators.length),
+  }
+}
 
 const mapDispatchToProps = {
-
+  addCollaborator,
 }
 
 export default compose(
