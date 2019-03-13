@@ -9,11 +9,11 @@ import CardContent from "@material-ui/core/CardContent"
 import Typography from "@material-ui/core/Typography"
 import Grid from "@material-ui/core/Grid"
 import Divider from "@material-ui/core/Divider"
-import SettingsOutlined from "@material-ui/icons/SettingsOutlined"
 import { Link } from "react-router-dom"
 import { connect } from "react-redux"
 import { compose } from "redux"
 import Collaborators from "./Collaborators"
+import AddSubuser from "./AddSubuser"
 
 const styles = ({ breakpoints }) => ({
   card: {
@@ -113,7 +113,7 @@ const ChannelCard = ({
       {!collaborators.length
         ? <Typography className={classes.collaborators}>No collaborators</Typography>
         : <Collaborators collaborators={collaborators} />}
-      <SettingsOutlined />
+      <AddSubuser channelId={channelId} />
     </CardActions>
   </Card>
 )
@@ -122,7 +122,7 @@ ChannelCard.propTypes = {
   classes: PropTypes.object.isRequired,
   channelId: PropTypes.number.isRequired,
   appName: PropTypes.string,
-  collaborators: PropTypes.arrayOf(PropTypes.string),
+  collaborators: PropTypes.arrayOf(PropTypes.object),
   statistics: PropTypes.shape({
     total_requests: PropTypes.number,
     success_requests: PropTypes.number,
