@@ -103,8 +103,8 @@ export class Collaborators extends Component {
   renderCollaborators = () => {
     const { collaborators, classes } = this.props
 
-    return collaborators.map(({ email }) => (
-      <Tooltip placement="top" classes={{ tooltip: classes.tooltip }} title={email}>
+    return collaborators.map(({ email, id }) => (
+      <Tooltip key={id} placement="top" classes={{ tooltip: classes.tooltip }} title={email}>
         <div className={classes.userWrap}>
           <Gravatar email={email} className={classes.user} default="identicon" />
           <Close className={classes.closeIcon} />
