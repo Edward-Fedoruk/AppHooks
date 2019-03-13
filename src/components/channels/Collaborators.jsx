@@ -1,5 +1,5 @@
 /* eslint-disable react/prefer-stateless-function */
-import React, { Component } from "react"
+import React, { Component, Fragment } from "react"
 import PropTypes from "prop-types"
 import Gravatar from "react-gravatar"
 import { withStyles } from "@material-ui/core/styles"
@@ -9,7 +9,7 @@ import NavigateBefore from "@material-ui/icons/NavigateBefore"
 import NavigateNext from "@material-ui/icons/NavigateNext"
 import Slider from "react-slick"
 
-const styles = () => ({
+const styles = ({ palette }) => ({
   userWrap: {
     display: "inline-flex !important",
     alignItems: "flex-start",
@@ -17,7 +17,7 @@ const styles = () => ({
     padding: "2px",
 
     "&:hover $user": {
-      boxShadow: "0 0 10px rgba(0, 0, 0, 0.24)"
+      boxShadow: "0 0 10px rgba(0, 0, 0, 0.24)",
     },
 
     "&:hover $closeIcon": {
@@ -28,9 +28,7 @@ const styles = () => ({
     "&:focus": { outline: "none" },
   },
 
-  tooltip: {
-    background: "#000"
-  },
+  tooltip: { background: "#000" },
 
   user: {
     height: "28px",
@@ -46,24 +44,35 @@ const styles = () => ({
     fontSize: "15px",
     color: "#828CB8",
     cursor: "pointer",
+
+    "&:hover": { color: palette.primary.main },
   },
 
   collaboratorsWrap: {
     width: "70%",
     display: "flex",
     alignItems: "center",
+
+    "& .slick-track": {
+      display: "flex",
+      overflow: "hidden",
+    },
   },
 
   slickSlider: { width: "100%" },
   prev: {
     color: "#D7DEF1",
     cursor: "pointer",
+
+    "&:hover": { color: palette.primary.main },
   },
 
   next: {
     color: "#D7DEF1",
     transform: "translateX(-30%)",
     cursor: "pointer",
+
+    "&:hover": { color: palette.primary.main },
   },
 })
 
@@ -87,82 +96,41 @@ export class Collaborators extends Component {
 
   slider = React.createRef()
 
-  slideNext = () => {
-    console.log(this.slider)
-    this.slider.current.slickNext()
-  }
+  slideNext = () => this.slider.current.slickNext()
 
-  slidePrev = () => {
-    console.log(this.slider)
-    this.slider.current.slickPrev()
+  slidePrev = () => this.slider.current.slickPrev()
+
+
+  renderCollaborators = () => {
+    const { collaborators, classes } = this.props
+
+    return collaborators.map(({ email }) => (
+      <Tooltip placement="top" classes={{ tooltip: classes.tooltip }} title={email}>
+        <div className={classes.userWrap}>
+          <Gravatar email={email} className={classes.user} default="identicon" />
+          <Close className={classes.closeIcon} />
+        </div>
+      </Tooltip>
+    ))
   }
 
   render() {
     const { collaborators, classes } = this.props
+    const renderedUsers = this.renderCollaborators()
     return (
       <div className={classes.collaboratorsWrap}>
-        <NavigateBefore className={classes.prev} onClick={this.slidePrev} />
+        {collaborators.length > 4
+          ? (
+            <Fragment>
+              <NavigateBefore className={classes.prev} onClick={this.slidePrev} />
 
-        <Slider className={classes.slickSlider} ref={this.slider} {...slickSettings}>
-          {collaborators.map(({ email }) => (
-            <Tooltip placement="top" classes={{ tooltip: classes.tooltip }} title={email}>
-              <div className={classes.userWrap}>
-                <Gravatar email={email} className={classes.user} default="identicon" />
-                <Close className={classes.closeIcon} />
-              </div>
-            </Tooltip>
-          ))}
-          {collaborators.map(({ email }) => (
-            <Tooltip placement="top" classes={{ tooltip: classes.tooltip }} title={email}>
-              <div className={classes.userWrap}>
-                <Gravatar email={email} className={classes.user} default="identicon" />
-                <Close className={classes.closeIcon} />
-              </div>
-            </Tooltip>
-          ))}
-          {collaborators.map(({ email }) => (
-            <Tooltip placement="top" classes={{ tooltip: classes.tooltip }} title={email}>
-              <div className={classes.userWrap}>
-                <Gravatar email={email} className={classes.user} default="identicon" />
-                <Close className={classes.closeIcon} />
-              </div>
-            </Tooltip>
-          ))}
-          {collaborators.map(({ email }) => (
-            <Tooltip placement="top" classes={{ tooltip: classes.tooltip }} title={email}>
-              <div className={classes.userWrap}>
-                <Gravatar email={email} className={classes.user} default="identicon" />
-                <Close className={classes.closeIcon} />
-              </div>
-            </Tooltip>
-          ))}
-          {collaborators.map(({ email }) => (
-            <Tooltip placement="top" classes={{ tooltip: classes.tooltip }} title={email}>
-              <div className={classes.userWrap}>
-                <Gravatar email={email} className={classes.user} default="identicon" />
-                <Close className={classes.closeIcon} />
-              </div>
-            </Tooltip>
-          ))}
-          {collaborators.map(({ email }) => (
-            <Tooltip placement="top" classes={{ tooltip: classes.tooltip }} title={email}>
-              <div className={classes.userWrap}>
-                <Gravatar email={email} className={classes.user} default="identicon" />
-                <Close className={classes.closeIcon} />
-              </div>
-            </Tooltip>
-          ))}
-          {collaborators.map(({ email }) => (
-            <Tooltip placement="top" classes={{ tooltip: classes.tooltip }} title={email}>
-              <div className={classes.userWrap}>
-                <Gravatar email={email} className={classes.user} default="identicon" />
-                <Close className={classes.closeIcon} />
-              </div>
-            </Tooltip>
-          ))}
-        </Slider>
+              <Slider className={classes.slickSlider} ref={this.slider} {...slickSettings}>
+                {renderedUsers}
+              </Slider>
 
-        <NavigateNext className={classes.next} onClick={this.slideNext} />
+              <NavigateNext className={classes.next} onClick={this.slideNext} />
+            </Fragment>
+          ) : renderedUsers}
       </div>
     )
   }

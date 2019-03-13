@@ -44,7 +44,7 @@ const styles = ({ breakpoints }) => ({
   statsTitle: { opacity: ".7" },
 
   collaboration: {
-    paddingLeft: "5px",
+    paddingLeft: "20px",
     paddingRight: "16px",
     color: "rgba(25, 43, 127, 0.2)",
     justifyContent: "space-between",
@@ -53,7 +53,7 @@ const styles = ({ breakpoints }) => ({
   collaborators: {
     color: "rgba(25, 43, 127, 0.2)",
     lineHeight: "34px",
-    paddingLeft: "11px",
+    paddingLeft: "0px",
   },
 
   linkWrap: {
