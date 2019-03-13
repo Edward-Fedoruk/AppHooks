@@ -101,6 +101,24 @@ export default (state = initialState, action) => {
       },
     }
   }
+  case types.ADD_COLLABORATOR_SUCCESS: {
+    const { channelId, user } = action
+    const { entities, entities: { channels } } = state
+
+    return {
+      ...state,
+      entities: {
+        ...entities,
+        channels: {
+          ...channels,
+          [channelId]: {
+            ...channels[channelId],
+            collaborators: channels[channelId].collaborators.concat([user]),
+          },
+        },
+      },
+    }
+  }
   case types.ADD_CHANNEL_SUCCESS: {
     const { entities, result } = state
     const { payload } = action

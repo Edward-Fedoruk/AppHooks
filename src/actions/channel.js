@@ -32,6 +32,12 @@ export const removeChannelFromStore = id => ({
   id,
 })
 
+export const addCollaboratorInStore = (channelId, user) => ({
+  type: types.ADD_COLLABORATOR_SUCCESS,
+  channelId,
+  user,
+})
+
 export const createChannel = channelData => (dispatch) => {
   axios.post("/apps", channelData)
     .then(({ data: { data } }) => {
@@ -81,4 +87,15 @@ export const deleteChannel = id => (dispatch) => {
       history.push("/channels")
     })
     .catch(() => history.push({ pathname: "/login" }))
+}
+
+export const addCollaborator = (channelId, user) => (dispatch) => {
+  axios.put(`/apps/${channelId}/collaborators/${user.id}`)
+    .then(() => {
+      dispatch(addCollaboratorInStore(channelId, user))
+    })
+    .catch(compose(
+      compose(dispatch, toggleSnackbar),
+      handleErrorResponse(dispatch, createError("ADD_COLLABORATOR"))
+    ))
 }
