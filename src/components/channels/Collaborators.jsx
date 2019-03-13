@@ -7,6 +7,9 @@ import Close from "@material-ui/icons/Close"
 import NavigateBefore from "@material-ui/icons/NavigateBefore"
 import NavigateNext from "@material-ui/icons/NavigateNext"
 import Slider from "react-slick"
+import { connect } from "react-redux"
+import { compose } from "redux"
+import { deleteCollaborator } from "../../actions/channel"
 
 const styles = ({ palette }) => ({
   userWrap: {
@@ -87,6 +90,8 @@ export class Collaborators extends Component {
   static propTypes = {
     collaborators: PropTypes.array,
     classes: PropTypes.object.isRequired,
+    channelId: PropTypes.number.isRequired,
+    deleteCollaborator: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
@@ -99,6 +104,10 @@ export class Collaborators extends Component {
 
   slidePrev = () => this.slider.current.slickPrev()
 
+  deleteUser = userId => () => {
+    const { deleteCollaborator, channelId } = this.props
+    deleteCollaborator(channelId, userId)
+  }
 
   renderCollaborators = () => {
     const { collaborators, classes } = this.props
@@ -107,7 +116,7 @@ export class Collaborators extends Component {
       <Tooltip key={id} placement="top" classes={{ tooltip: classes.tooltip }} title={email}>
         <div className={classes.userWrap}>
           <Gravatar email={email} className={classes.user} default="identicon" />
-          <Close className={classes.closeIcon} />
+          <Close onClick={this.deleteUser(id)} className={classes.closeIcon} />
         </div>
       </Tooltip>
     ))
@@ -135,4 +144,11 @@ export class Collaborators extends Component {
   }
 }
 
-export default withStyles(styles)(Collaborators)
+const mapDispatchToProps = dispatch => ({
+  deleteCollaborator: (channelId, userId) => dispatch(deleteCollaborator(channelId, userId)),
+})
+
+export default compose(
+  withStyles(styles),
+  connect(null, mapDispatchToProps)
+)(Collaborators)

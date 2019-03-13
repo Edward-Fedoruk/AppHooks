@@ -112,7 +112,7 @@ const ChannelCard = ({
     <CardActions className={classes.collaboration}>
       {!collaborators.length
         ? <Typography className={classes.collaborators}>No collaborators</Typography>
-        : <Collaborators collaborators={collaborators} />}
+        : <Collaborators channelId={channelId} collaborators={collaborators} />}
       <AddSubuser channelId={channelId} />
     </CardActions>
   </Card>

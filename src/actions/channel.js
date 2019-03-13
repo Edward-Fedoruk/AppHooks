@@ -38,6 +38,12 @@ export const addCollaboratorInStore = (channelId, user) => ({
   user,
 })
 
+export const deleteCollaboratorFromStore = (channelId, userId) => ({
+  type: types.DELETE_COLLABORATOR_SUCCESS,
+  channelId,
+  userId,
+})
+
 export const createChannel = channelData => (dispatch) => {
   axios.post("/apps", channelData)
     .then(({ data: { data } }) => {
@@ -97,5 +103,17 @@ export const addCollaborator = (channelId, user) => (dispatch) => {
     .catch(compose(
       compose(dispatch, toggleSnackbar),
       handleErrorResponse(dispatch, createError("ADD_COLLABORATOR"))
+    ))
+}
+
+export const deleteCollaborator = (channelId, userId) => (dispatch) => {
+  axios.delete(`/apps/${channelId}/collaborators/${userId}`)
+    .then(() => {
+      console.log("test")
+      dispatch(deleteCollaboratorFromStore(channelId, userId))
+    })
+    .catch(compose(
+      compose(dispatch, toggleSnackbar),
+      handleErrorResponse(dispatch, createError("DELTE_COLLABORATOR"))
     ))
 }
