@@ -61,6 +61,7 @@ export class AddSubuser extends Component {
   addCollaborator = user => () => {
     const { addCollaborator, channelId } = this.props
     addCollaborator(channelId, user)
+    if (this.props.collaborators.length === 1) this.setState({ open: false })
   }
 
   render() {

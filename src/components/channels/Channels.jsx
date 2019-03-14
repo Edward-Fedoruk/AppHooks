@@ -54,7 +54,7 @@ export class Channels extends Component {
   }
 }
 
-const loadingSelector = createLoadingSelector(["FETCH_CHANNELS"])
+const loadingSelector = createLoadingSelector(["FETCH_CHANNELS", "ADD_COLLABORATOR", "DELETE_COLLABORATOR"])
 
 const mapStateToProps = ({ channelsEntities, view, preloader }) => ({
   result: channelsEntities.result,

@@ -23,7 +23,9 @@ const styles = ({ breakpoints }) => ({
   },
 })
 
-const ChannelsList = ({ classes, channels }) => (
+const ChannelsList = ({
+  classes, channels,
+}) => (
   <div className={classes.contentWrap}>
     {Object
       .keys(channels)
@@ -54,6 +56,7 @@ ChannelsList.propTypes = {
   classes: PropTypes.object.isRequired,
   channels: PropTypes.object.isRequired,
 }
+
 
 const mapStateToProps = ({ channelsEntities }) => ({
   channels: channelsEntities.entities.channels,

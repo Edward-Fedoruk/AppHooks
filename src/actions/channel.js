@@ -99,6 +99,7 @@ export const addCollaborator = (channelId, user) => (dispatch) => {
   axios.put(`/apps/${channelId}/collaborators/${user.id}`)
     .then(() => {
       dispatch(addCollaboratorInStore(channelId, user))
+      dispatch(toggleSuccessSnackbar("Sub-user was added to the channel card"))
     })
     .catch(compose(
       compose(dispatch, toggleSnackbar),
@@ -109,8 +110,8 @@ export const addCollaborator = (channelId, user) => (dispatch) => {
 export const deleteCollaborator = (channelId, userId) => (dispatch) => {
   axios.delete(`/apps/${channelId}/collaborators/${userId}`)
     .then(() => {
-      console.log("test")
       dispatch(deleteCollaboratorFromStore(channelId, userId))
+      dispatch(toggleSuccessSnackbar("Sub-user was removed from the channel card"))
     })
     .catch(compose(
       compose(dispatch, toggleSnackbar),
