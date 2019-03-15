@@ -32,6 +32,15 @@ export default (state = initialState, action) => {
         stageIds: [...state.currentChannel.stageIds, action.id],
       },
     }
+  case types.REMOVE_STAGE_SUCCESS: {
+    return {
+      ...state,
+      currentChannel: {
+        ...state.currentChannel,
+        stageIds: state.currentChannel.stageIds.filter(stageId => stageId !== action.stageId),
+      },
+    }
+  }
   case types.REMOVE_CHANNEL:
     return {
       ...state,
