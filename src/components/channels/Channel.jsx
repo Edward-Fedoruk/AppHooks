@@ -10,7 +10,6 @@ import withNavigation from "../withNavigation"
 import Title from "../utils/Title"
 import { fetchChannel } from "../../actions/channel"
 import { toggleCreateStageForm } from "../../actions/ui"
-import ConfirmDialog from "../ConfirmDialog"
 import StageTopBar from "../stages/StageTopBar"
 import Endpoints from "../endpoints/Endpoints"
 import Placeholder from "../Placeholder"
@@ -49,25 +48,10 @@ export class Channel extends Component {
     stages: [],
   }
 
-  state = {
-    open: false,
-  }
-
-
   componentDidMount() {
     const { history, match } = this.props
     this.props.fetchChannel(match.params.id, history)
   }
-
-  handleCloseWithAction = () => {
-    this.setState({ open: false })
-    // this.props.deleteChannel(this.props.match.params.id, this.props.history)
-  }
-
-  handleClose = () => {
-    this.setState({ open: false })
-  }
-
 
   render() {
     const {
@@ -110,15 +94,6 @@ export class Channel extends Component {
                 className={classes.placeholder}
               />
             ) : null}
-
-
-          <ConfirmDialog
-            handleCloseWithAction={this.handleCloseWithAction}
-            handleClose={this.handleClose}
-            open={this.state.open}
-          >
-            sdf
-          </ConfirmDialog>
 
         </div>
       </Fragment>

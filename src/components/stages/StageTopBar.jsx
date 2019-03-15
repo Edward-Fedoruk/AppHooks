@@ -76,26 +76,30 @@ export class StageTopBar extends Component {
       classes, stages, channel, currentStage,
     } = this.props
     const { anchorEl } = this.state
-    const currentStageName = stages[currentStage] !== undefined && stages[currentStage].name
+    const currentStageName = stages[currentStage] !== undefined && stages[currentStage]
     return (
       <TopBar title={channel.name}>
-        <Select
-          value={currentStage}
-          onChange={this.handleChange}
-          displayEmpty
-          className={classes.select}
-        >
-          {stages.map((stage, i) => (
-            <MenuItem key={stage.id} value={i}>{stage.name}</MenuItem>
-          ))}
-        </Select>
+
+        {stages.length
+          && (
+            <Select
+              value={currentStage}
+              onChange={this.handleChange}
+              displayEmpty
+              className={classes.select}
+            >
+              {stages.map((stage, i) => (
+                <MenuItem key={stage.id} value={i}>{stage.name}</MenuItem>
+              ))}
+            </Select>
+          )}
 
         <ChannelMenu
           anchorEl={anchorEl}
           handleClick={this.handleClick}
           handleClose={this.handleClose}
-          currentStageName={currentStageName}
-          currentChannel={channel.name}
+          currentStage={currentStageName}
+          currentChannel={channel}
           deleteChannelAction={this.toggleDialog}
         />
 
@@ -103,6 +107,7 @@ export class StageTopBar extends Component {
           handleCloseWithAction={this.handleCloseWithAction}
           handleClose={this.toggleDialog}
           open={this.state.open}
+          title={`delete ${channel.name} channel`}
         >
           Are you sure you want to delete this channel? It can`t be undone
         </ConfirmDialog>
