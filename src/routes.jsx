@@ -13,6 +13,7 @@ import App from "./App"
 import LogInfo from "./components/logs/LogInfo"
 import withLazyLoading from "./components/withLazyLoading"
 import { fetchUserSettings } from "./actions/user"
+import { fetchUsers } from "./actions/subUsers"
 import { startTimer } from "./actions/refreshToken"
 import { createLoadingSelector } from "./actions/utils"
 import Preloader from "./components/Preloader"
@@ -42,6 +43,7 @@ const WithNavigation = () => (
 class Routes extends React.Component {
   static propTypes = {
     fetchUserSettings: PropTypes.func.isRequired,
+    fetchUsers: PropTypes.func.isRequired,
     isLoading: PropTypes.bool,
     isAuthenticated: PropTypes.bool,
   }
@@ -55,6 +57,7 @@ class Routes extends React.Component {
     // @TO DO - uncoment in production
     // loadReCaptcha("6Ld8qYcUAAAAADWP8M3N4MD7J_hfIHLvfqoY8nIH")
     this.props.fetchUserSettings()
+    this.props.fetchUsers()
     console.log("initial mount")
     startTimer()
   }
@@ -86,4 +89,4 @@ const mapStateToProps = ({ preloader, userSettings }) => ({
   isAuthenticated: userSettings.isAuthenticated,
 })
 
-export default connect(mapStateToProps, { fetchUserSettings })(Routes)
+export default connect(mapStateToProps, { fetchUserSettings, fetchUsers })(Routes)
