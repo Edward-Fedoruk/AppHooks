@@ -49,14 +49,14 @@ export default (state = initialState, action) => {
   case types.REMOVE_STAGE_SUCCESS: {
     const { entities, entities: { stages, channels } } = state
     const { channelId, stageId } = action
-    const filterStages = key => key !== stageId
-
+    const filterStages = key => `${key}` !== `${stageId}`
     return {
       ...state,
       entities: {
         ...entities,
         channels: {
           [channelId]: {
+            ...state.entities.channels[channelId],
             stages: channels[channelId].stages.filter(filterStages),
           },
         },
