@@ -9,13 +9,14 @@ import { compose } from "redux"
 import withNavigation from "../withNavigation"
 import Title from "../utils/Title"
 import { fetchChannel } from "../../actions/channel"
-import { toggleCreateStageForm } from "../../actions/ui"
+import { toggleCreateStageForm, toggleEditStageForm } from "../../actions/ui"
 import StageTopBar from "../stages/StageTopBar"
 import Endpoints from "../endpoints/Endpoints"
 import Placeholder from "../Placeholder"
 import stageImg from "../../assets/stages.png"
 import endpointImg from "../../assets/endpoints.png"
 import CreateStage from "../stages/CreateStage"
+import EditStageName from "../stages/EditStageName"
 import FormDrawer from "../FormDrawer"
 
 const styles = () => ({
@@ -36,10 +37,12 @@ export class Channel extends Component {
     endpoints: PropTypes.array,
     stages: PropTypes.array,
     toggleCreateStageForm: PropTypes.func.isRequired,
+    toggleEditStageForm: PropTypes.func.isRequired,
     fetchChannel: PropTypes.func.isRequired,
     match: PropTypes.object.isRequired,
     history: PropTypes.object.isRequired,
     createStageForm: PropTypes.bool.isRequired,
+    editStageNameForm: PropTypes.bool.isRequired,
   }
 
   static defaultProps = {
@@ -57,6 +60,7 @@ export class Channel extends Component {
     const {
       classes, currentStage, endpoints,
       stages, createStageForm, toggleCreateStageForm,
+      editStageNameForm, toggleEditStageForm,
     } = this.props
     return (
       <Fragment>
@@ -65,6 +69,9 @@ export class Channel extends Component {
 
           <FormDrawer open={createStageForm} toggleDialog={toggleCreateStageForm}>
             <CreateStage />
+          </FormDrawer>
+          <FormDrawer open={editStageNameForm} toggleDialog={toggleEditStageForm}>
+            <EditStageName stageId={currentStage.id} />
           </FormDrawer>
 
           {stages.length
@@ -112,12 +119,14 @@ const mapStateToProps = ({ channels, channelsEntities: { entities }, view }) => 
     endpoints,
     stages,
     createStageForm: view.createStageForm,
+    editStageNameForm: view.editStageNameForm,
   }
 }
 
 const mapDispatchToProps = dispatch => ({
-  fetchChannel: (id, routeHistory) => dispatch(fetchChannel(id, routeHistory)),
+  fetchChannel: id => dispatch(fetchChannel(id)),
   toggleCreateStageForm: () => dispatch(toggleCreateStageForm()),
+  toggleEditStageForm: () => dispatch(toggleEditStageForm()),
 })
 
 export default compose(
