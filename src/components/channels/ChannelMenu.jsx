@@ -15,7 +15,6 @@ import { connect } from "react-redux"
 import { compose } from "redux"
 import { withRouter } from "react-router-dom"
 import { toggleCreateStageForm } from "../../actions/ui"
-import { deleteStage } from "../../actions/stage"
 
 const styles = () => ({
   menu: {
@@ -43,7 +42,7 @@ const styles = () => ({
 const ChannelMenu = ({
   classes, anchorEl, handleClick,
   handleClose, currentStage, currentChannel,
-  deleteChannelAction, toggleCreateStageForm, deleteStage,
+  openDialog, toggleCreateStageForm,
 }) => (
   <div>
     <IconButton
@@ -72,14 +71,17 @@ const ChannelMenu = ({
         <Typography noWrap variant="inherit" color="primary">Add new stage</Typography>
       </MenuItem>
 
-      <MenuItem onClick={() => deleteStage(currentChannel.id, currentStage.id)}>
-        <ListItemIcon><AddCircle className={classes.deleteIcon} /></ListItemIcon>
-        <Typography className={classes.delete} noWrap variant="inherit">Delete {` ${currentStage.name} `} stage</Typography>
-      </MenuItem>
+      {currentStage.name !== undefined
+        && (
+          <MenuItem onClick={openDialog("stageDialog")}>
+            <ListItemIcon><AddCircle className={classes.deleteIcon} /></ListItemIcon>
+            <Typography className={classes.delete} noWrap variant="inherit">Delete {` ${currentStage.name} `} stage</Typography>
+          </MenuItem>
+        )}
 
-      <MenuItem onClick={deleteChannelAction}>
+      <MenuItem onClick={openDialog("channelDialog")}>
         <ListItemIcon><AddCircle className={classes.deleteIcon} /></ListItemIcon>
-        <Typography className={classes.delete} noWrap variant="inherit">Delete {` ${currentChannel.name} `} Channel App</Typography>
+        <Typography className={classes.delete} noWrap variant="inherit">Delete {` ${currentChannel.name} `} Channel</Typography>
       </MenuItem>
 
     </Menu>
@@ -90,25 +92,23 @@ ChannelMenu.propTypes = {
   classes: PropTypes.object.isRequired,
   anchorEl: PropTypes.bool.isRequired,
   toggleCreateStageForm: PropTypes.func.isRequired,
-  deleteStage: PropTypes.func.isRequired,
   handleClick: PropTypes.func,
   handleClose: PropTypes.func,
   currentStage: PropTypes.object,
   currentChannel: PropTypes.string,
-  deleteChannelAction: PropTypes.func,
+  openDialog: PropTypes.func,
 }
 
 ChannelMenu.defaultProps = {
   handleClick: () => {},
   handleClose: () => {},
-  deleteChannelAction: () => {},
+  openDialog: () => {},
   currentStage: { name: "this" },
   currentChannel: "this",
 }
 
 const mapDispatchToProps = dispatch => ({
   toggleCreateStageForm: () => dispatch(toggleCreateStageForm()),
-  deleteStage: (channelId, stageId) => dispatch(deleteStage(channelId, stageId)),
 })
 
 export default compose(
