@@ -28,7 +28,7 @@ export const setCurrentChannel = channel => ({
 })
 
 export const removeChannelFromStore = id => ({
-  type: types.REMOVE_CHANNEL,
+  type: types.REMOVE_CHANNEL_SUCCESS,
   id,
 })
 
@@ -90,9 +90,13 @@ export const deleteChannel = id => (dispatch) => {
   axios.delete(`/apps/${id}`)
     .then(() => {
       dispatch(removeChannelFromStore(id))
+      dispatch(toggleSuccessSnackbar("Channel was deleted"))
       history.push("/channels")
     })
-    .catch(() => history.push({ pathname: "/login" }))
+    .catch((err) => {
+      handleErrorResponse(dispatch, createError("REMOVE_CHANNEL"))(err)
+      history.push({ pathname: "/channels" })
+    })
 }
 
 export const addCollaborator = (channelId, user) => (dispatch) => {
@@ -115,6 +119,6 @@ export const deleteCollaborator = (channelId, userId) => (dispatch) => {
     })
     .catch(compose(
       compose(dispatch, toggleSnackbar),
-      handleErrorResponse(dispatch, createError("DELTE_COLLABORATOR"))
+      handleErrorResponse(dispatch, createError("DELETE_COLLABORATOR"))
     ))
 }
