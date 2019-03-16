@@ -12,6 +12,7 @@ import ChannelMenu from "../channels/ChannelMenu"
 import TopBar from "../utils/TopBar"
 import ConfirmDialog from "../ConfirmDialog"
 import { deleteChannel } from "../../actions/channel"
+import { deleteStage } from "../../actions/stage"
 
 const styles = () => ({
   menu: {
@@ -38,13 +39,14 @@ const styles = () => ({
 export class StageTopBar extends Component {
   state = {
     anchorEl: null,
-    open: false,
-
+    channelDialog: false,
+    stageDialog: false,
   }
 
   static propTypes = {
     classes: PropTypes.object.isRequired,
     changeStage: PropTypes.func.isRequired,
+    deleteStage: PropTypes.func.isRequired,
     currentStage: PropTypes.number.isRequired,
     match: PropTypes.object.isRequired,
     deleteChannel: PropTypes.func.isRequired,
@@ -63,12 +65,18 @@ export class StageTopBar extends Component {
 
   handleClose = () => this.setState({ anchorEl: null })
 
-  toggleDialog = () => this.setState(({ open }) => ({ open: !open }))
+  toggleDialog = dialog => () => this.setState(state => ({ [dialog]: !state[dialog] }))
 
-  handleCloseWithAction = () => {
+  deleteChannel = () => {
     const { match, deleteChannel } = this.props
     deleteChannel(match.params.id)
-    this.toggleDialog()
+    this.toggleDialog("channelDialog")
+  }
+
+  deleteStage = () => {
+    const { deleteStage, currentStage, channel } = this.props
+    deleteStage(channel.id, currentStage.id)
+    this.toggleDialog("stageDialog")
   }
 
   render() {
@@ -100,17 +108,27 @@ export class StageTopBar extends Component {
           handleClose={this.handleClose}
           currentStage={currentStageName}
           currentChannel={channel}
-          deleteChannelAction={this.toggleDialog}
+          openDialog={this.toggleDialog}
         />
 
         <ConfirmDialog
-          handleCloseWithAction={this.handleCloseWithAction}
-          handleClose={this.toggleDialog}
-          open={this.state.open}
+          handleCloseWithAction={this.deleteChannel}
+          handleClose={this.toggleDialog("channelDialog")}
+          open={this.state.channelDialog}
           title={`delete ${channel.name} channel`}
         >
           Are you sure you want to delete this channel? It can`t be undone
         </ConfirmDialog>
+
+        <ConfirmDialog
+          handleCloseWithAction={this.deleteStage}
+          handleClose={this.toggleDialog("stageDialog")}
+          open={this.state.stageDialog}
+          title={`delete ${currentStage.name} channel`}
+        >
+          Are you sure you want to delete this channel? It can`t be undone
+        </ConfirmDialog>
+
 
       </TopBar>
     )
@@ -126,6 +144,7 @@ const mapStateToProps = ({ channels: { currentChannel }, channelsEntities, view 
 const mapDispatchToProps = dispatch => ({
   changeStage: stage => dispatch(changeStage(stage)),
   deleteChannel: (id, routeHistory) => dispatch(deleteChannel(id, routeHistory)),
+  deleteStage: (channelId, StageId) => dispatch(deleteStage(channelId, StageId)),
 })
 
 export default compose(
