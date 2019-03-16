@@ -37,6 +37,9 @@ const styles = ({ breakpoints }) => ({
 
   formWrap: {
     padding: "20px 13vw",
+    height: "100%",
+    display: "flex",
+    alignItems: "center",
 
     [breakpoints.down(768)]: {
       padding: "20px 10vw",
@@ -65,7 +68,9 @@ export const FormDrawer = ({
       <Close />
     </IconButton>
     <div className={classes.formWrap}>
-      {children}
+      <div>
+        {children}
+      </div>
     </div>
   </Dialog>
 )
