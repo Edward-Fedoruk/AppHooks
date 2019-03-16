@@ -65,11 +65,7 @@ export class Settings extends Component {
 
         <TopBar title="Account Settings" />
         <div className={classes.contentWrap}>
-          <GeneralSettings
-            company={settings.company}
-            name={settings.name}
-            phone={settings.phone}
-          />
+          <GeneralSettings company={settings.company} name={settings.name} phone={settings.phone} />
           <ChangePassword />
           <ConnectedAccounts />
           <DeleteAccount openDialog={this.toggleDialog} />

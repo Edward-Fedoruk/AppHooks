@@ -2,7 +2,6 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import PropTypes from "prop-types"
-import { withStyles } from "@material-ui/core/styles"
 import OutlinedInput from "@material-ui/core/OutlinedInput"
 import InputLabel from "@material-ui/core/InputLabel"
 import MenuItem from "@material-ui/core/MenuItem"
@@ -10,15 +9,8 @@ import FormControl from "@material-ui/core/FormControl"
 import Select from "@material-ui/core/Select"
 import FormHelperText from "@material-ui/core/FormHelperText"
 
-const styles = () => ({
-  formControl: {
-    minWidth: "300px",
-  },
-})
-
 class SelectInput extends React.Component {
   static propTypes = {
-    classes: PropTypes.object.isRequired,
     name: PropTypes.string.isRequired,
     styles: PropTypes.object.isRequired,
     handleChange: PropTypes.func.isRequired,
@@ -44,8 +36,8 @@ class SelectInput extends React.Component {
 
   render() {
     const {
-      classes, name,
-      styles, handleChange, option,
+      name, styles,
+      handleChange, option,
       error, errText,
     } = this.props
 
@@ -60,7 +52,6 @@ class SelectInput extends React.Component {
     return (
       <FormControl
         variant="outlined"
-        className={classes.formControl}
         style={styles}
         error={error}
       >
@@ -99,4 +90,4 @@ class SelectInput extends React.Component {
   }
 }
 
-export default withStyles(styles)(SelectInput)
+export default SelectInput

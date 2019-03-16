@@ -93,8 +93,8 @@ export class StageTopBar extends Component {
             <Select
               value={currentStage}
               onChange={this.handleChange}
-              displayEmpty
               className={classes.select}
+              displayEmpty
             >
               {stages.map((stage, i) => (
                 <MenuItem key={stage.id} value={i}>{stage.name}</MenuItem>
