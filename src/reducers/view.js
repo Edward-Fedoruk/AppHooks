@@ -12,6 +12,7 @@ const initialState = {
   billingPrice: 0,
   shortcutPanel: false,
   createStageForm: false,
+  editStageNameForm: false,
 }
 
 export default (state = initialState, action) => {
@@ -26,6 +27,8 @@ export default (state = initialState, action) => {
     return { ...state, createRuleForm: !state.createRuleForm }
   case types.TOGGLE_CREATE_STAGE_FORM:
     return { ...state, createStageForm: !state.createStageForm }
+  case types.TOGGLE_EDIT_STAGE_NAME_FORM:
+    return { ...state, editStageNameForm: !state.editStageNameForm }
   case types.TOGGLE_SUCCESS_SNACKBAR:
     return {
       ...state,

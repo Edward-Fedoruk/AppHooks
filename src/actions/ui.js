@@ -38,6 +38,10 @@ export const toggleCreateChannelForm = () => ({
   type: types.TOGGLE_CREATE_CHANNEL_FORM,
 })
 
+export const toggleEditStageForm = () => ({
+  type: types.TOGGLE_EDIT_STAGE_NAME_FORM,
+})
+
 export const changeStage = stage => ({
   type: types.CHANGE_STAGE,
   stage,

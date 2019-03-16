@@ -1,9 +1,9 @@
 import { normalize } from "normalizr"
 import * as types from "./types"
 import { stageSchema } from "./schemas"
-import axios from "./utils"
+import axios, { handleErrorResponse, createError } from "./utils"
 import history from "../history"
-import { toggleCreateStageForm, changeStage } from "./ui"
+import { toggleCreateStageForm, changeStage, toggleSuccessSnackbar } from "./ui"
 
 export const setStagesData = (payload, id) => ({
   type: types.CREATE_STAGE_SUCCESS,
@@ -32,6 +32,13 @@ export const removeStage = (channelId, stageId) => ({
   stageId,
 })
 
+export const editStageNameInStore = (channelId, stageId, newName) => ({
+  type: types.EDIT_STAGE_NAME_SUCCESS,
+  channelId,
+  stageId,
+  newName,
+})
+
 export const createStage = (id, stageData) => (dispatch) => {
   axios.post(`/apps/${id}/stages`, stageData)
     .then(({ data: { data } }) => {
@@ -53,8 +60,16 @@ export const deleteStage = (channelId, stageId) => (dispatch) => {
     .then(() => {
       dispatch(removeStage(channelId, stageId))
       dispatch(changeStage(0))
+      dispatch(toggleSuccessSnackbar("Stage was deleted"))
     })
-    .catch((err) => {
-      console.log(err)
+    .catch(handleErrorResponse(dispatch, createError("REMOVE_STAGE")))
+}
+
+export const editStageName = (channelId, stageId, newName) => (dispatch) => {
+  axios.put(`/apps/${channelId}/stages/${stageId}`, newName)
+    .then(() => {
+      dispatch(editStageNameInStore(channelId, stageId, newName))
+      dispatch(toggleSuccessSnackbar("Stage name was edited"))
     })
+    .catch(() => {})
 }
