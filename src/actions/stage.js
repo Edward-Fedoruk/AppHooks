@@ -1,9 +1,15 @@
 import { normalize } from "normalizr"
+import { compose } from "redux"
 import * as types from "./types"
 import { stageSchema } from "./schemas"
 import axios, { handleErrorResponse, createError } from "./utils"
 import history from "../history"
-import { toggleCreateStageForm, changeStage, toggleSuccessSnackbar } from "./ui"
+import {
+  toggleCreateStageForm,
+  changeStage,
+  toggleSuccessSnackbar,
+  toggleSnackbar,
+} from "./ui"
 
 export const setStagesData = (payload, id) => ({
   type: types.CREATE_STAGE_SUCCESS,
@@ -49,10 +55,10 @@ export const createStage = (id, stageData) => (dispatch) => {
         dispatch(toggleCreateStageForm())
       }
     })
-    .catch((er) => {
-      console.log(er.response)
-      dispatch(throwStageCreationError(er.message))
-    })
+    .catch(compose(
+      compose(dispatch, toggleSnackbar),
+      handleErrorResponse(dispatch, createError("CREATE_STAGE"))
+    ))
 }
 
 export const deleteStage = (channelId, stageId) => (dispatch) => {
@@ -62,7 +68,10 @@ export const deleteStage = (channelId, stageId) => (dispatch) => {
       dispatch(changeStage(0))
       dispatch(toggleSuccessSnackbar("Stage was deleted"))
     })
-    .catch(handleErrorResponse(dispatch, createError("REMOVE_STAGE")))
+    .catch(compose(
+      compose(dispatch, toggleSnackbar),
+      handleErrorResponse(dispatch, createError("REMOVE_STAGE"))
+    ))
 }
 
 export const editStageName = (channelId, stageId, newName) => (dispatch) => {
@@ -71,5 +80,8 @@ export const editStageName = (channelId, stageId, newName) => (dispatch) => {
       dispatch(editStageNameInStore(channelId, stageId, newName))
       dispatch(toggleSuccessSnackbar("Stage name was edited"))
     })
-    .catch(() => {})
+    .catch(compose(
+      compose(dispatch, toggleSnackbar),
+      handleErrorResponse(dispatch, createError("EDIT_STAGE_NAME"))
+    ))
 }
