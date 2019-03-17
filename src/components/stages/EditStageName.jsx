@@ -7,8 +7,6 @@ import { compose } from "redux"
 import FormTitle from "../utils/FormTitle"
 import { editStageName } from "../../actions/stage"
 import MainButton from "../utils/MainButton"
-import ErrorSnackbar from "../utils/ErrorSnackbar"
-import { createErrorMessageSelector } from "../../actions/utils"
 import history from "../../history"
 
 const styles = () => ({
@@ -50,11 +48,7 @@ export class CreateStage extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
     editStageName: PropTypes.func.isRequired,
-    errorMessage: PropTypes.string,
-  }
-
-  static defaultProps = {
-    errorMessage: "Something went wrong",
+    stageId: PropTypes.number.isRequired,
   }
 
   onSubmit = (e) => {
@@ -62,7 +56,7 @@ export class CreateStage extends Component {
     const { editStageName, stageId } = this.props
     const channelId = history.location.pathname.split("/").reverse()[0]
 
-    editStageName(channelId, stageId)
+    editStageName(channelId, stageId, this.state.name)
   }
 
   handleChange = event => this.setState({ [event.target.name]: event.target.value })
@@ -70,11 +64,10 @@ export class CreateStage extends Component {
   onChange = input => e => this.setState({ [input]: e.target.value })
 
   render() {
-    const { classes, errorMessage } = this.props
+    const { classes } = this.props
     const { name } = this.state
     return (
       <Fragment>
-        <ErrorSnackbar message={errorMessage} />
         <FormTitle title="Edit Stage" />
 
         <ValidatorForm onSubmit={this.onSubmit}>
@@ -100,17 +93,11 @@ export class CreateStage extends Component {
   }
 }
 
-const errorSelector = createErrorMessageSelector(["CREATE_ENDPOINT"])
-
-const mapStateToProps = ({ errorHandler }) => ({
-  errorMessage: errorSelector(errorHandler),
-})
-
 const mapDispatchToProps = dispatch => ({
   editStageName: (channelId, stageId, newName) => dispatch(editStageName(channelId, stageId, newName)),
 })
 
 export default compose(
   withStyles(styles),
-  connect(mapStateToProps, mapDispatchToProps)
+  connect(null, mapDispatchToProps)
 )(CreateStage)

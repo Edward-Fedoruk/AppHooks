@@ -18,6 +18,9 @@ import endpointImg from "../../assets/endpoints.png"
 import CreateStage from "../stages/CreateStage"
 import EditStageName from "../stages/EditStageName"
 import FormDrawer from "../FormDrawer"
+import ErrorSnackbar from "../utils/ErrorSnackbar"
+import { createErrorMessageSelector } from "../../actions/utils"
+import SuccessSnackbar from "../utils/SuccessSnackbar"
 
 const styles = () => ({
   contentWrap: {
@@ -43,6 +46,8 @@ export class Channel extends Component {
     history: PropTypes.object.isRequired,
     createStageForm: PropTypes.bool.isRequired,
     editStageNameForm: PropTypes.bool.isRequired,
+    errorMessage: PropTypes.string.isRequired,
+    successMessage: PropTypes.string.isRequired,
   }
 
   static defaultProps = {
@@ -60,11 +65,15 @@ export class Channel extends Component {
     const {
       classes, currentStage, endpoints,
       stages, createStageForm, toggleCreateStageForm,
-      editStageNameForm, toggleEditStageForm,
+      editStageNameForm, toggleEditStageForm, errorMessage,
+      successMessage,
     } = this.props
     return (
       <Fragment>
         <StageTopBar />
+        <ErrorSnackbar message={errorMessage} />
+        <SuccessSnackbar message={successMessage} />
+
         <div className={classes.contentWrap}>
 
           <FormDrawer open={createStageForm} toggleDialog={toggleCreateStageForm}>
@@ -108,11 +117,15 @@ export class Channel extends Component {
   }
 }
 
-const mapStateToProps = ({ channels, channelsEntities: { entities }, view }) => {
+const errorSelector = createErrorMessageSelector(["CREATE_STAGE", "REMOVE_STAGE", "CREATE_ENDPOINT"])
+
+const mapStateToProps = ({
+  errorHandler, channels, channelsEntities: { entities }, view,
+}) => {
   const stages = channels.currentChannel.stageIds.map(id => entities.stages[id])
   const currentStage = stages[view.currentStage]
   let endpoints = []
-  if (currentStage !== undefined) { endpoints = currentStage.endpoints.map(id => entities.endpoints[id]) }
+  if (currentStage !== undefined) endpoints = currentStage.endpoints.map(id => entities.endpoints[id])
 
   return {
     currentStage,
@@ -120,6 +133,8 @@ const mapStateToProps = ({ channels, channelsEntities: { entities }, view }) => 
     stages,
     createStageForm: view.createStageForm,
     editStageNameForm: view.editStageNameForm,
+    errorMessage: errorSelector(errorHandler),
+    successMessage: view.successMessage,
   }
 }
 

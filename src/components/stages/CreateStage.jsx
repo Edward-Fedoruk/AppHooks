@@ -7,8 +7,6 @@ import { compose } from "redux"
 import FormTitle from "../utils/FormTitle"
 import { createStage } from "../../actions/stage"
 import MainButton from "../utils/MainButton"
-import ErrorSnackbar from "../utils/ErrorSnackbar"
-import { createErrorMessageSelector } from "../../actions/utils"
 import history from "../../history"
 
 const styles = () => ({
@@ -50,11 +48,6 @@ export class CreateStage extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
     createStage: PropTypes.func.isRequired,
-    errorMessage: PropTypes.string,
-  }
-
-  static defaultProps = {
-    errorMessage: "Something went wrong",
   }
 
   onSubmit = (e) => {
@@ -71,11 +64,10 @@ export class CreateStage extends Component {
   onChange = input => e => this.setState({ [input]: e.target.value })
 
   render() {
-    const { classes, errorMessage } = this.props
+    const { classes } = this.props
     const { name } = this.state
     return (
       <Fragment>
-        <ErrorSnackbar message={errorMessage} />
         <FormTitle
           paragraph="Use the below to create a new input destination for you webhooks. Once completed, you will be given an endpoint URL for your webhook provider."
           title="Create Stage"
@@ -104,17 +96,11 @@ export class CreateStage extends Component {
   }
 }
 
-const errorSelector = createErrorMessageSelector(["CREATE_ENDPOINT"])
-
-const mapStateToProps = ({ errorHandler }) => ({
-  errorMessage: errorSelector(errorHandler),
-})
-
 const mapDispatchToProps = dispatch => ({
   createStage: (id, stageData) => dispatch(createStage(id, stageData)),
 })
 
 export default compose(
   withStyles(styles),
-  connect(mapStateToProps, mapDispatchToProps)
+  connect(null, mapDispatchToProps)
 )(CreateStage)
