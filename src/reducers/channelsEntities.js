@@ -83,7 +83,7 @@ export default (state = initialState, action) => {
   }
   case types.EDIT_STAGE_NAME_SUCCESS: {
     const { entities, entities: { stages } } = state
-    const { stageId, newName } = action
+    const { newStageData: { id: stageId, name, slug } } = action
     return {
       ...state,
       entities: {
@@ -92,8 +92,8 @@ export default (state = initialState, action) => {
           ...stages,
           [stageId]: {
             ...stages[stageId],
-            name: newName,
-            slug: newName,
+            name,
+            slug,
           },
         },
       },

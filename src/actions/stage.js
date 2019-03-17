@@ -2,13 +2,14 @@ import { normalize } from "normalizr"
 import { compose } from "redux"
 import * as types from "./types"
 import { stageSchema } from "./schemas"
-import axios, { handleErrorResponse, createError } from "./utils"
+import axios, { handleErrorResponse, handleResponse, createError } from "./utils"
 import history from "../history"
 import {
   toggleCreateStageForm,
   changeStage,
   toggleSuccessSnackbar,
   toggleSnackbar,
+  toggleEditStageForm,
 } from "./ui"
 
 export const setStagesData = (payload, id) => ({
@@ -38,11 +39,9 @@ export const removeStage = (channelId, stageId) => ({
   stageId,
 })
 
-export const editStageNameInStore = (channelId, stageId, newName) => ({
+export const editStageNameInStore = newStageData => ({
   type: types.EDIT_STAGE_NAME_SUCCESS,
-  channelId,
-  stageId,
-  newName,
+  newStageData,
 })
 
 export const createStage = (id, stageData) => (dispatch) => {
@@ -75,9 +74,10 @@ export const deleteStage = (channelId, stageId) => (dispatch) => {
 }
 
 export const editStageName = (channelId, stageId, newName) => (dispatch) => {
-  axios.put(`/apps/${channelId}/stages/${stageId}`, newName)
-    .then(() => {
-      dispatch(editStageNameInStore(channelId, stageId, newName))
+  axios.put(`/apps/${channelId}/stages/${stageId}`, { name: newName })
+    .then((response) => {
+      handleResponse(dispatch, editStageNameInStore)(response)
+      dispatch(toggleEditStageForm())
       dispatch(toggleSuccessSnackbar("Stage name was edited"))
     })
     .catch(compose(
