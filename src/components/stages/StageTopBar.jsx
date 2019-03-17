@@ -70,13 +70,16 @@ export class StageTopBar extends Component {
   deleteChannel = () => {
     const { match, deleteChannel } = this.props
     deleteChannel(match.params.id)
-    this.toggleDialog("channelDialog")
+    this.toggleDialog("channelDialog")()
   }
 
   deleteStage = () => {
-    const { deleteStage, currentStage, channel } = this.props
-    deleteStage(channel.id, currentStage.id)
-    this.toggleDialog("stageDialog")
+    const {
+      deleteStage, currentStage, channel, stages,
+    } = this.props
+
+    deleteStage(channel.id, stages[currentStage].id)
+    this.toggleDialog("stageDialog")()
   }
 
   render() {
@@ -84,7 +87,7 @@ export class StageTopBar extends Component {
       classes, stages, channel, currentStage,
     } = this.props
     const { anchorEl } = this.state
-    const currentStageName = stages[currentStage] !== undefined && stages[currentStage]
+    const currentStageName = stages[currentStage]
     return (
       <TopBar title={channel.name}>
 

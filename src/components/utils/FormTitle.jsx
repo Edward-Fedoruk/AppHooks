@@ -43,6 +43,7 @@ const FormTitle = ({
 FormTitle.defaultProps = {
   titleStyle: {},
   pStyle: {},
+  paragraph: "",
 }
 
 FormTitle.propTypes = {
@@ -50,7 +51,7 @@ FormTitle.propTypes = {
   titleStyle: PropTypes.object,
   pStyle: PropTypes.object,
   title: PropTypes.string.isRequired,
-  paragraph: PropTypes.string.isRequired,
+  paragraph: PropTypes.string,
 }
 
 export default withStyles(styles)(FormTitle)
