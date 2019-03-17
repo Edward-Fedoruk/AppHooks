@@ -81,7 +81,25 @@ export default (state = initialState, action) => {
       },
     }
   }
-  case types.REMOVE_CHANNEL: {
+  case types.EDIT_STAGE_NAME_SUCCESS: {
+    const { entities, entities: { stages } } = state
+    const { stageId, newName } = action
+    return {
+      ...state,
+      entities: {
+        ...entities,
+        stages: {
+          ...stages,
+          [stageId]: {
+            ...stages[stageId],
+            name: newName,
+            slug: newName,
+          },
+        },
+      },
+    }
+  }
+  case types.REMOVE_CHANNEL_SUCCESS: {
     const { channels, stages, endpoints } = state.entities
 
     const filterStages = key => !channels[action.id].stages.includes(parseInt(key, 10))
