@@ -41,7 +41,7 @@ export default (state = initialState, action) => {
       },
     }
   }
-  case types.REMOVE_CHANNEL:
+  case types.REMOVE_CHANNEL_SUCCESS:
     return {
       ...state,
       currentChannel: {
