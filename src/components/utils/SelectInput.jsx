@@ -15,6 +15,7 @@ class SelectInput extends React.Component {
     styles: PropTypes.object.isRequired,
     handleChange: PropTypes.func.isRequired,
     option: PropTypes.string.isRequired,
+    options: PropTypes.array.isRequired,
     error: PropTypes.bool,
     errText: PropTypes.string,
   }
@@ -36,29 +37,15 @@ class SelectInput extends React.Component {
 
   render() {
     const {
-      name, styles,
+      name, styles, options,
       handleChange, option,
       error, errText,
     } = this.props
 
-    const regions = [
-      "us-east-1",
-      "us-west-1",
-      "ap-northeast-1",
-      "eu-central-1",
-      "sa-east-1",
-    ]
-
     return (
-      <FormControl
-        variant="outlined"
-        style={styles}
-        error={error}
-      >
+      <FormControl variant="outlined" style={styles} error={error}>
         <InputLabel
-          ref={(ref) => {
-            this.InputLabelRef = ref
-          }}
+          ref={(ref) => { this.InputLabelRef = ref }}
           htmlFor={`outlined-${name}`}
         >
           {name}
@@ -77,10 +64,8 @@ class SelectInput extends React.Component {
           <MenuItem value="">
             <em>None</em>
           </MenuItem>
-          {regions.map(option => (
-            <MenuItem key={option} value={option}>
-              {option}
-            </MenuItem>
+          {options.map(option => (
+            <MenuItem key={option} value={option}>{option}</MenuItem>
           ))}
         </Select>
         {error

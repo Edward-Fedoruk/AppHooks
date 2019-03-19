@@ -5,7 +5,7 @@ import { withStyles } from "@material-ui/core/styles"
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator"
 import { compose } from "redux"
 import { withRouter } from "react-router-dom"
-import SelectInput from "./SelectInput"
+import SelectInput from "../utils/SelectInput"
 import FormTitle from "../utils/FormTitle"
 import { createChannel } from "../../actions/channel"
 import MainButton from "../utils/MainButton"
@@ -77,17 +77,23 @@ export class CreateChannel extends Component {
   render() {
     const { classes, errorMessage } = this.props
     const { name, region } = this.state
+    const options = [
+      "us-east-1",
+      "us-west-1",
+      "ap-northeast-1",
+      "eu-central-1",
+      "sa-east-1",
+    ]
     return (
       <Fragment>
         <ErrorSnackbar message={errorMessage} />
         <FormTitle
           paragraph="Create a Channels app to generate your unique credentials. You can create as manyapps as you need."
-          title="Create your Channels App"
+          title="Create Channel"
         />
 
         <ValidatorForm onSubmit={this.onSubmit}>
           <TextValidator
-            // error={error}
             label="Name your app (required)"
             name="name"
             autoFocus
@@ -104,6 +110,7 @@ export class CreateChannel extends Component {
           <SelectInput
             name="region"
             option={region}
+            options={options}
             handleChange={this.handleChange}
             styles={{ width: "100%", marginTop: "35px" }}
           />
