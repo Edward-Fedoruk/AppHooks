@@ -42,6 +42,10 @@ export const toggleEditStageForm = () => ({
   type: types.TOGGLE_EDIT_STAGE_NAME_FORM,
 })
 
+export const toggleCreateEndpointForm = () => ({
+  type: types.TOGGLE_CREATE_ENDPOINT_FORM,
+})
+
 export const changeStage = stage => ({
   type: types.CHANGE_STAGE,
   stage,
