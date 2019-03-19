@@ -12,11 +12,6 @@ export const setChannelsData = payload => ({
   payload,
 })
 
-export const throwChannelCreationError = errorMessage => ({
-  type: types.CREATE_CHANNEL_FAILURE,
-  errorMessage,
-})
-
 export const addChannel = payload => ({
   type: types.ADD_CHANNEL_SUCCESS,
   payload,

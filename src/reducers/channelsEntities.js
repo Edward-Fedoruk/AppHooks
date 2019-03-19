@@ -20,6 +20,7 @@ const filterEntities = (entity, filter) => Object.keys(entity)
 export default (state = initialState, action) => {
   switch (action.type) {
   case types.FETCH_CHANNELS_SUCCESS:
+    console.log(action)
     return {
       ...state,
       entities: {
@@ -157,26 +158,24 @@ export default (state = initialState, action) => {
   }
   case types.ADD_CHANNEL_SUCCESS: {
     const { entities, result } = state
-    const { payload } = action
-    const stages = payload.entities.channels[payload.result].stages === undefined
-      ? [] : payload.entities.channels[payload.result].stages
+    const { payload, payload: { entities: { endpoints, channels } } } = action
+    const stages = channels[payload.result].stages === undefined
+      ? [] : channels[payload.result].stages
     return {
       ...state,
       entities: {
         ...entities,
-        stages: {
-          ...payload.entities.stages,
-          ...entities.stages,
-        },
+        endpoints: { ...entities.endpoints, ...endpoints },
+        stages: { ...payload.entities.stages, ...entities.stages },
         channels: {
           ...entities.channels,
           [payload.result]: {
-            ...payload.entities.channels[payload.result],
+            ...channels[payload.result],
             stages: [...stages],
           },
         },
       },
-      result: [...result, payload.result],
+      result: result.includes(payload.result) ? result : [...result, payload.result],
     }
   }
   case types.CREATE_ENDPOINT_SUCCESS: {
