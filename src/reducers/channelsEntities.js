@@ -179,6 +179,26 @@ export default (state = initialState, action) => {
       result: [...result, payload.result],
     }
   }
+  case types.CREATE_ENDPOINT_SUCCESS: {
+    const { entities, entities: { endpoints, stages } } = state
+    const { endpoint, endpoint: { application_stage_id: stageId } } = action
+    return {
+      ...state,
+      entities: {
+        ...entities,
+        endpoints: {
+          ...endpoints,
+          [endpoint.id]: { ...endpoint },
+        },
+        stages: {
+          ...stages,
+          [stageId]: {
+            endpoints: stages[stageId].endpoints.concat([endpoint.id]),
+          },
+        },
+      },
+    }
+  }
   default:
     return state
   }
