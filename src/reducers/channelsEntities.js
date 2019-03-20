@@ -20,7 +20,6 @@ const filterEntities = (entity, filter) => Object.keys(entity)
 export default (state = initialState, action) => {
   switch (action.type) {
   case types.FETCH_CHANNELS_SUCCESS:
-    console.log(action)
     return {
       ...state,
       entities: {
@@ -192,6 +191,7 @@ export default (state = initialState, action) => {
         stages: {
           ...stages,
           [stageId]: {
+            ...stages[stageId],
             endpoints: stages[stageId].endpoints.concat([endpoint.id]),
           },
         },

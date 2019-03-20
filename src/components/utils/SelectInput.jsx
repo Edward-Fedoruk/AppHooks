@@ -12,17 +12,20 @@ import FormHelperText from "@material-ui/core/FormHelperText"
 class SelectInput extends React.Component {
   static propTypes = {
     name: PropTypes.string.isRequired,
-    styles: PropTypes.object.isRequired,
+    styles: PropTypes.object,
     handleChange: PropTypes.func.isRequired,
     option: PropTypes.string.isRequired,
     options: PropTypes.array.isRequired,
     error: PropTypes.bool,
     errText: PropTypes.string,
+    className: PropTypes.string,
   }
 
   static defaultProps = {
     error: false,
     errText: "field is required",
+    className: "",
+    styles: {},
   }
 
   state = {
@@ -39,11 +42,11 @@ class SelectInput extends React.Component {
     const {
       name, styles, options,
       handleChange, option,
-      error, errText,
+      error, errText, className,
     } = this.props
 
     return (
-      <FormControl variant="outlined" style={styles} error={error}>
+      <FormControl className={className} variant="outlined" style={styles} error={error}>
         <InputLabel
           ref={(ref) => { this.InputLabelRef = ref }}
           htmlFor={`outlined-${name}`}
@@ -61,9 +64,9 @@ class SelectInput extends React.Component {
             />
           )}
         >
-          <MenuItem value="">
+          {/* <MenuItem value="">
             <em>None</em>
-          </MenuItem>
+          </MenuItem> */}
           {options.map(option => (
             <MenuItem key={option} value={option}>{option}</MenuItem>
           ))}

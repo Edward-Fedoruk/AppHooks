@@ -26,6 +26,8 @@ export const changeEndpointFromStore = endpoint => ({
 export const createEndpoint = (channelId, stageId, endpointData) => (dispatch) => {
   axios.post(`/apps/${channelId}/${stageId}/endpoints`, endpointData)
     .then((response) => {
+      console.log(channelId, stageId, endpointData, response.data)
+
       handleResponse(dispatch, setEndpointInStore)(response)
       dispatch(toggleCreateEndpointForm())
       dispatch(toggleSuccessSnackbar("Endpoint was created"))

@@ -68,14 +68,14 @@ const ChannelMenu = ({
         <Typography noWrap variant="inherit" color="primary">Add stage</Typography>
       </MenuItem>
 
-      <MenuItem onClick={toggleCreateEndpointForm}>
-        <ListItemIcon><Add /></ListItemIcon>
-        <Typography noWrap variant="inherit" color="primary">Add endpoint</Typography>
-      </MenuItem>
-
       {currentStage.name !== undefined
         && (
           <div>
+            <MenuItem onClick={toggleCreateEndpointForm}>
+              <ListItemIcon><Add /></ListItemIcon>
+              <Typography noWrap variant="inherit" color="primary">Add endpoint</Typography>
+            </MenuItem>
+
             <MenuItem onClick={toggleEditStageForm}>
               <ListItemIcon><Edit /></ListItemIcon>
               <Typography noWrap variant="inherit" color="primary">Edit stage name</Typography>
