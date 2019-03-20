@@ -1,7 +1,7 @@
 import React, { Fragment } from "react"
 import PropTypes from "prop-types"
 import { withStyles } from "@material-ui/core"
-import AddCircle from "@material-ui/icons/AddCircle"
+// import AddCircle from "@material-ui/icons/AddCircle"
 import { compose } from "redux"
 import Title from "../utils/Title"
 import EndpointCard from "./EndpointCard"
@@ -32,18 +32,10 @@ const styles = () => ({
 const Endpoints = ({ classes, endpoints }) => (
   <Fragment>
     <div className={classes.endpointsTitle}>
-      <Title styles={{ fontSize: "20px" }}>
-        Endpoints
-      </Title>
-      <AddCircle className={classes.addIcon} />
+      <Title styles={{ fontSize: "20px" }}>Endpoints</Title>
     </div>
-
-    {endpoints.map(({ url, name }, i) => (
-      <EndpointCard
-        key={i}
-        link={url}
-        endpointName={name}
-      />
+    {endpoints.map(endpoint => (
+      <EndpointCard key={endpoint.id} endpointInfo={endpoint} />
     ))}
   </Fragment>
 )
@@ -51,6 +43,7 @@ const Endpoints = ({ classes, endpoints }) => (
 
 Endpoints.propTypes = {
   endpoints: PropTypes.array.isRequired,
+  classes: PropTypes.object.isRequired,
 }
 
 

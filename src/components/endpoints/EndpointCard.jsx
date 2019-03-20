@@ -1,10 +1,11 @@
 import React from "react"
 import PropTypes from "prop-types"
 import Paper from "@material-ui/core/Paper"
+import Typography from "@material-ui/core/Typography"
 import { withStyles } from "@material-ui/core"
-import Title from "../utils/Title"
+import EndpointCardStats from "./EndpointCardStats"
 
-const styles = () => ({
+const styles = ({ palette }) => ({
   paper: {
     width: "100%",
     maxWidth: "870px",
@@ -12,47 +13,47 @@ const styles = () => ({
     marginTop: "13px",
   },
 
-  stats: {
+  link: {
+    color: "#192B7F",
+    fontSize: "14px",
+    display: "block",
+  },
+
+  endpointHeader: {
     display: "flex",
-    justifyContent: "space-between",
+    marginBottom: "40px",
   },
 
   name: {
-    display: "block",
     fontSize: "14px",
+    fontWeight: "500",
+    color: palette.primary.main,
+    marginRight: "20px",
   },
 
-  link: {
-    color: "#192B7F",
-    fontFamily: "Lato",
-    fontSize: "14px",
-    margin: "12px 0 27px 0",
-    display: "block",
-  },
 })
 
-const EndpointCard = ({ endpointName, link, classes }) => (
-  <Paper className={classes.paper}>
-    <Title styles={{ fontSize: "14px" }}>
-      {endpointName}
-    </Title>
+const EndpointCard = ({ endpointInfo, classes }) => {
+  const statistics = endpointInfo.statistics !== undefined ? endpointInfo.statistics : {}
+  return (
+    <Paper className={classes.paper}>
+      <div className={classes.endpointHeader}>
+        <Typography variant="h6" className={classes.name}>{ endpointInfo.name }</Typography>
+        <Typography variant="body1" component="a" className={classes.link} target="_black" href={endpointInfo.url}>{ endpointInfo.url }</Typography>
+      </div>
 
-    <a className={classes.link} href={link}>{link}</a>
-
-    <div className={classes.stats}>
-      <span>0000</span>
-      <span>0000</span>
-      <span>0000</span>
-      <span>0000</span>
-    </div>
-
-  </Paper>
-)
+      <EndpointCardStats statistics={statistics} />
+    </Paper>
+  )
+}
 
 EndpointCard.propTypes = {
-  endpointName: PropTypes.string.isRequired,
-  link: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired,
+  endpointInfo: PropTypes.object,
+}
+
+EndpointCard.defaultProps = {
+  endpointInfo: {},
 }
 
 export default withStyles(styles)(EndpointCard)
