@@ -14,6 +14,9 @@ const initialState = {
   createStageForm: false,
   editStageNameForm: false,
   createEndpointForm: false,
+  editEndpointForm: false,
+  endpointInfo: {},
+  endpointDeleteDialog: false,
 }
 
 export default (state = initialState, action) => {
@@ -43,6 +46,10 @@ export default (state = initialState, action) => {
       ...state,
       shortcutPanel: !state.shortcutPanel,
     }
+  case types.TOGGLE_EDIT_ENDPOINT_FORM:
+    return { ...state, editEndpointForm: !state.editEndpointForm, endpointInfo: action.endpointInfo }
+  case types.TOGGLE_DELETE_ENDPOINT_DIALOG:
+    return { ...state, endpointInfo: action.endpointInfo, endpointDeleteDialog: !state.endpointDeleteDialog }
   case types.CHANGE_STAGE:
     return { ...state, currentStage: action.stage }
   case types.TOGGLE_EDIT_RULE_FORM:

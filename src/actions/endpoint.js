@@ -13,21 +13,20 @@ export const setEndpointInStore = endpoint => ({
   endpoint,
 })
 
-export const deleteEndpointFromStore = endpoint => ({
+export const deleteEndpointFromStore = (stageId, endpointId) => ({
   type: types.DELETE_ENDPOINT_SUCCESS,
-  endpoint,
+  stageId,
+  endpointId,
 })
 
-export const changeEndpointFromStore = endpoint => ({
-  type: types.CHANGE_ENDPOINT_SUCCESS,
+export const changeEndpointInStore = endpoint => ({
+  type: types.EDIT_ENDPOINT_SUCCESS,
   endpoint,
 })
 
 export const createEndpoint = (channelId, stageId, endpointData) => (dispatch) => {
   axios.post(`/apps/${channelId}/${stageId}/endpoints`, endpointData)
     .then((response) => {
-      console.log(channelId, stageId, endpointData, response.data)
-
       handleResponse(dispatch, setEndpointInStore)(response)
       dispatch(toggleCreateEndpointForm())
       dispatch(toggleSuccessSnackbar("Endpoint was created"))
@@ -41,7 +40,7 @@ export const createEndpoint = (channelId, stageId, endpointData) => (dispatch) =
 export const deleteEndpoint = (channelId, stageId, endpointId) => (dispatch) => {
   axios.delete(`/apps/${channelId}/${stageId}/endpoints/${endpointId}`)
     .then(() => {
-      dispatch(deleteEndpointFromStore())
+      dispatch(deleteEndpointFromStore(stageId, endpointId))
       dispatch(toggleSuccessSnackbar("Endpoint was deleted"))
     })
     .catch(compose(
@@ -52,9 +51,9 @@ export const deleteEndpoint = (channelId, stageId, endpointId) => (dispatch) => 
 
 export const editEndpointName = (channelId, stageId, endpointId, endpointData) => (dispatch) => {
   axios.put(`/apps/${channelId}/${stageId}/endpoints/${endpointId}`, endpointData)
-    .then(() => {
-      dispatch(changeEndpointFromStore())
-      dispatch(toggleSuccessSnackbar("Endpoint was deleted"))
+    .then((response) => {
+      handleResponse(dispatch, changeEndpointInStore)(response)
+      dispatch(toggleSuccessSnackbar("Endpoint name was edited"))
     })
     .catch(compose(
       compose(dispatch, toggleSnackbar),
