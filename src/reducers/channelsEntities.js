@@ -99,6 +99,20 @@ export default (state = initialState, action) => {
       },
     }
   }
+  case types.EDIT_ENDPOINT_SUCCESS: {
+    const { entities, entities: { endpoints } } = state
+    const { endpoint } = action
+    return {
+      ...state,
+      entities: {
+        ...entities,
+        endpoints: {
+          ...endpoints,
+          [endpoint.id]: { ...endpoint },
+        },
+      },
+    }
+  }
   case types.REMOVE_CHANNEL_SUCCESS: {
     const { channels, stages, endpoints } = state.entities
 
@@ -193,6 +207,29 @@ export default (state = initialState, action) => {
           [stageId]: {
             ...stages[stageId],
             endpoints: stages[stageId].endpoints.concat([endpoint.id]),
+          },
+        },
+      },
+    }
+  }
+  case types.DELETE_ENDPOINT_SUCCESS: {
+    const { entities, entities: { endpoints, stages } } = state
+    const { stageId, endpointId } = action
+    const filterEndpoint = endpoint => endpoint !== endpointId
+
+    return {
+      ...state,
+      entities: {
+        ...entities,
+        endpoints: {
+          ...endpoints,
+          [endpointId]: filterEntities(endpoints, filterEndpoint),
+        },
+        stages: {
+          ...stages,
+          [stageId]: {
+            ...stages[stageId],
+            endpoints: stages[stageId].endpoints.filter(filterEndpoint),
           },
         },
       },
