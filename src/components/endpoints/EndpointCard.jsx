@@ -4,6 +4,7 @@ import Paper from "@material-ui/core/Paper"
 import Typography from "@material-ui/core/Typography"
 import { withStyles } from "@material-ui/core"
 import EndpointCardStats from "./EndpointCardStats"
+import EndpointCardMenu from "./EndpointCardMenu"
 
 const styles = ({ palette }) => ({
   paper: {
@@ -17,11 +18,13 @@ const styles = ({ palette }) => ({
     color: "#192B7F",
     fontSize: "14px",
     display: "block",
+    maxWidth: "70%",
   },
 
   endpointHeader: {
     display: "flex",
     marginBottom: "40px",
+    alignItems: "center",
   },
 
   name: {
@@ -40,6 +43,7 @@ const EndpointCard = ({ endpointInfo, classes }) => {
       <div className={classes.endpointHeader}>
         <Typography variant="h6" className={classes.name}>{ endpointInfo.name }</Typography>
         <Typography variant="body1" component="a" className={classes.link} target="_black" href={endpointInfo.url}>{ endpointInfo.url }</Typography>
+        <EndpointCardMenu endpointInfo={endpointInfo} />
       </div>
 
       <EndpointCardStats statistics={statistics} />
