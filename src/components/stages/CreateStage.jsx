@@ -4,10 +4,10 @@ import { connect } from "react-redux"
 import { withStyles } from "@material-ui/core/styles"
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator"
 import { compose } from "redux"
+import { withRouter } from "react-router-dom"
 import FormTitle from "../utils/FormTitle"
 import { createStage } from "../../actions/stage"
 import MainButton from "../utils/MainButton"
-import history from "../../history"
 
 const styles = () => ({
   formWrap: {
@@ -48,14 +48,14 @@ export class CreateStage extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
     createStage: PropTypes.func.isRequired,
+    match: PropTypes.object.isRequired,
   }
 
   onSubmit = (e) => {
     e.preventDefault()
-    const { createStage } = this.props
-    const channelId = history.location.pathname.split("/").reverse()[0]
+    const { createStage, match } = this.props
 
-    createStage(channelId, this.state)
+    createStage(match.params.channelId, this.state, true)
   }
 
   handleChange = event => this.setState({ [event.target.name]: event.target.value })
@@ -97,10 +97,11 @@ export class CreateStage extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  createStage: (id, stageData) => dispatch(createStage(id, stageData)),
+  createStage: (id, stageData, toggleForm) => dispatch(createStage(id, stageData, toggleForm)),
 })
 
 export default compose(
   withStyles(styles),
+  withRouter,
   connect(null, mapDispatchToProps)
 )(CreateStage)

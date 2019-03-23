@@ -56,7 +56,7 @@ export const createChannel = channelData => (dispatch) => {
     ))
 }
 
-export const fetchChannels = routeHistory => (dispatch) => {
+export const fetchChannels = () => (dispatch) => {
   dispatch(initiateLoading("FETCH_CHANNELS"))
 
   axios.get("/apps")
@@ -64,7 +64,7 @@ export const fetchChannels = routeHistory => (dispatch) => {
       const normalizedData = normalize(data, [channelSchema])
       dispatch(setChannelsData(normalizedData))
     })
-    .catch(() => routeHistory.push({ pathname: "/login" }))
+    .catch(() => history.push({ pathname: "/login" }))
 }
 
 export const fetchChannel = id => (dispatch) => {

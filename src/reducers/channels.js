@@ -37,7 +37,7 @@ export default (state = initialState, action) => {
       ...state,
       currentChannel: {
         ...state.currentChannel,
-        stageIds: state.currentChannel.stageIds.filter(stageId => stageId !== action.stageId),
+        stageIds: state.currentChannel.stageIds.filter(stageId => `${stageId}` !== `${action.stageId}`),
       },
     }
   }

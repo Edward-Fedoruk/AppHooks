@@ -35,7 +35,6 @@ export class Channel extends Component {
     stages: PropTypes.array,
     fetchChannel: PropTypes.func.isRequired,
     match: PropTypes.object.isRequired,
-    history: PropTypes.object.isRequired,
     errorMessage: PropTypes.string.isRequired,
     successMessage: PropTypes.string.isRequired,
   }
@@ -46,8 +45,8 @@ export class Channel extends Component {
   }
 
   componentDidMount() {
-    const { history, match, fetchChannel } = this.props
-    fetchChannel(match.params.id, history)
+    const { match, fetchChannel } = this.props
+    fetchChannel(match.params.channelId)
   }
 
   render() {
@@ -84,13 +83,18 @@ export class Channel extends Component {
   }
 }
 
-const errorSelector = createErrorMessageSelector(["EDIT_STAGE_NAME", "CREATE_STAGE", "REMOVE_STAGE", "CREATE_ENDPOINT_SUCCESS"])
+const errorSelector = createErrorMessageSelector([
+  "EDIT_STAGE_NAME",
+  "CREATE_STAGE",
+  "REMOVE_STAGE",
+  "CREATE_ENDPOINT_SUCCESS",
+])
 
 const mapStateToProps = ({
   errorHandler, channels, channelsEntities: { entities }, view,
-}) => {
+}, { match }) => {
   const stages = channels.currentChannel.stageIds.map(id => entities.stages[id])
-  const currentStage = stages[view.currentStage]
+  const currentStage = stages.find(stage => `${stage.id}` === `${match.params.stageId}`)
   let endpoints = []
   if (currentStage !== undefined) endpoints = currentStage.endpoints.map(id => entities.endpoints[id])
 

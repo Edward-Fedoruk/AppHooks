@@ -41,9 +41,9 @@ const styles = () => ({
 
 const ChannelMenu = ({
   classes, anchorEl, handleClick,
-  handleClose, currentStage, currentChannel,
+  handleClose, currentChannel,
   openDialog, toggleCreateStageForm, toggleEditStageForm,
-  toggleCreateEndpointForm,
+  toggleCreateEndpointForm, showDelete,
 }) => (
   <div>
     <IconButton
@@ -68,24 +68,22 @@ const ChannelMenu = ({
         <Typography noWrap variant="inherit" color="primary">Add stage</Typography>
       </MenuItem>
 
-      {currentStage.name !== undefined
+      <MenuItem onClick={toggleCreateEndpointForm}>
+        <ListItemIcon><Add /></ListItemIcon>
+        <Typography noWrap variant="inherit" color="primary">Add endpoint</Typography>
+      </MenuItem>
+
+      <MenuItem onClick={toggleEditStageForm}>
+        <ListItemIcon><Edit /></ListItemIcon>
+        <Typography noWrap variant="inherit" color="primary">Edit stage name</Typography>
+      </MenuItem>
+
+      {showDelete
         && (
-          <div>
-            <MenuItem onClick={toggleCreateEndpointForm}>
-              <ListItemIcon><Add /></ListItemIcon>
-              <Typography noWrap variant="inherit" color="primary">Add endpoint</Typography>
-            </MenuItem>
-
-            <MenuItem onClick={toggleEditStageForm}>
-              <ListItemIcon><Edit /></ListItemIcon>
-              <Typography noWrap variant="inherit" color="primary">Edit stage name</Typography>
-            </MenuItem>
-
-            <MenuItem onClick={openDialog("stageDialog")}>
-              <ListItemIcon><AddCircle className={classes.deleteIcon} /></ListItemIcon>
-              <Typography className={classes.delete} noWrap variant="inherit">Delete {` ${currentStage.name} `} stage</Typography>
-            </MenuItem>
-          </div>
+          <MenuItem onClick={openDialog("stageDialog")}>
+            <ListItemIcon><AddCircle className={classes.deleteIcon} /></ListItemIcon>
+            <Typography className={classes.delete} noWrap variant="inherit">Delete current stage</Typography>
+          </MenuItem>
         )}
 
       <MenuItem onClick={openDialog("channelDialog")}>
@@ -103,9 +101,9 @@ ChannelMenu.propTypes = {
   toggleCreateStageForm: PropTypes.func.isRequired,
   toggleCreateEndpointForm: PropTypes.func.isRequired,
   toggleEditStageForm: PropTypes.func.isRequired,
+  showDelete: PropTypes.bool.isRequired,
   handleClick: PropTypes.func,
   handleClose: PropTypes.func,
-  currentStage: PropTypes.object,
   currentChannel: PropTypes.object,
   openDialog: PropTypes.func,
 }
@@ -114,7 +112,6 @@ ChannelMenu.defaultProps = {
   handleClick: () => {},
   handleClose: () => {},
   openDialog: () => {},
-  currentStage: {},
   currentChannel: { name: "this" },
   anchorEl: null,
 }
@@ -124,6 +121,7 @@ const mapDispatchToProps = dispatch => ({
   toggleEditStageForm: () => dispatch(toggleEditStageForm()),
   toggleCreateEndpointForm: () => dispatch(toggleCreateEndpointForm()),
 })
+
 
 export default compose(
   withStyles(styles),

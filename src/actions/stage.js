@@ -3,10 +3,8 @@ import { compose } from "redux"
 import * as types from "./types"
 import { stageSchema } from "./schemas"
 import axios, { handleErrorResponse, handleResponse, createError } from "./utils"
-import history from "../history"
 import {
   toggleCreateStageForm,
-  changeStage,
   toggleSuccessSnackbar,
   toggleSnackbar,
   toggleEditStageForm,
@@ -44,12 +42,12 @@ export const editStageNameInStore = newStageData => ({
   newStageData,
 })
 
-export const createStage = (id, stageData) => (dispatch) => {
+export const createStage = (id, stageData, toggleForm) => (dispatch) => {
   axios.post(`/apps/${id}/stages`, stageData)
     .then(({ data: { data } }) => {
       const normalizedData = normalize(data, stageSchema)
       dispatch(setStagesData(normalizedData, id, data.id))
-      if (history.location.pathname.split("/").reverse()[0] === `${id}`) {
+      if (toggleForm) {
         dispatch(addStageId(data.id))
         dispatch(toggleCreateStageForm())
       }
@@ -64,7 +62,6 @@ export const deleteStage = (channelId, stageId) => (dispatch) => {
   axios.delete(`/apps/${channelId}/stages/${stageId}`)
     .then(() => {
       dispatch(removeStage(channelId, stageId))
-      dispatch(changeStage(0))
       dispatch(toggleSuccessSnackbar("Stage was deleted"))
     })
     .catch(compose(

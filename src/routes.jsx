@@ -19,6 +19,7 @@ import { createLoadingSelector } from "./actions/utils"
 import Preloader from "./components/Preloader"
 
 const Channel = lazy(() => import("./components/channels/Channel"))
+const Endpoint = lazy(() => import("./components/endpoints/Endpoint"))
 const AccessLogs = lazy(() => import("./components/logs/AccessLogs"))
 const Billing = lazy(() => import("./components/billing/Billing"))
 const Settings = lazy(() => import("./components/settings/Settings"))
@@ -30,7 +31,8 @@ const WithNavigation = () => (
     <Route component={AppNavigation} />
     <Route path="/" exact component={App} />
     <Route path="/channels" exact component={Channels} />
-    <Route path="/channels/:id" exact component={withLazyLoading(Channel)} />
+    <Route path="/channels/:channelId/:stageId" exact component={withLazyLoading(Channel)} />
+    <Route path="/channels/:channelId/:stageId/:endpointId" exact component={withLazyLoading(Endpoint)} />
     <Route path="/logs" exact component={withLazyLoading(AccessLogs)} />
     <Route path="/logs/:id" exact component={LogInfo} />
     <Route path="/webhooks" exact component={withLazyLoading(WebhooksRules)} />

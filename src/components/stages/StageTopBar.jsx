@@ -7,12 +7,12 @@ import MenuItem from "@material-ui/core/MenuItem"
 import { withStyles } from "@material-ui/core"
 import { compose } from "redux"
 import { withRouter } from "react-router-dom"
-import { changeStage } from "../../actions/ui"
 import ChannelMenu from "../channels/ChannelMenu"
 import TopBar from "../utils/TopBar"
 import ConfirmDialog from "../ConfirmDialog"
 import { deleteChannel } from "../../actions/channel"
 import { deleteStage } from "../../actions/stage"
+import history from "../../history"
 
 const styles = () => ({
   menu: {
@@ -45,21 +45,21 @@ export class StageTopBar extends Component {
 
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    changeStage: PropTypes.func.isRequired,
     deleteStage: PropTypes.func.isRequired,
-    currentStage: PropTypes.number.isRequired,
     match: PropTypes.object.isRequired,
     deleteChannel: PropTypes.func.isRequired,
     stages: PropTypes.array,
     channel: PropTypes.object,
+    currentStage: PropTypes.object,
   }
 
   static defaultProps = {
     stages: [],
     channel: { name: "" },
+    currentStage: { name: "current" },
   }
 
-  handleChange = event => this.props.changeStage(event.target.value)
+  handleChange = event => history.push({ pathname: event.target.value })
 
   handleClick = event => this.setState({ anchorEl: event.currentTarget })
 
@@ -69,38 +69,38 @@ export class StageTopBar extends Component {
 
   deleteChannel = () => {
     const { match, deleteChannel } = this.props
-    deleteChannel(match.params.id)
+    deleteChannel(match.params.channelId)
     this.toggleDialog("channelDialog")()
   }
 
   deleteStage = () => {
-    const {
-      deleteStage, currentStage, channel, stages,
-    } = this.props
+    const { deleteStage, match, stages } = this.props
 
-    deleteStage(channel.id, stages[currentStage].id)
+    const secondStageId = stages.find(stage => `${stage.id}` !== `${match.params.stageId}`).id
+    history.push({ pathname: `${secondStageId}` })
+    deleteStage(match.params.channelId, match.params.stageId)
     this.toggleDialog("stageDialog")()
   }
 
   render() {
     const {
-      classes, stages, channel, currentStage,
+      classes, stages, channel, match, currentStage,
     } = this.props
     const { anchorEl } = this.state
-    const currentStageName = stages[currentStage]
+
     return (
       <TopBar title={channel.name}>
 
         {stages.length
           && (
             <Select
-              value={currentStage}
+              value={match.params.stageId}
               onChange={this.handleChange}
               className={classes.select}
               displayEmpty
             >
-              {stages.map((stage, i) => (
-                <MenuItem key={stage.id} value={i}>{stage.name}</MenuItem>
+              {stages.map(stage => (
+                <MenuItem key={stage.id} value={stage.id}>{stage.name}</MenuItem>
               ))}
             </Select>
           )}
@@ -109,9 +109,10 @@ export class StageTopBar extends Component {
           anchorEl={anchorEl}
           handleClick={this.handleClick}
           handleClose={this.handleClose}
-          currentStage={currentStageName}
+          currentStage={currentStage}
           currentChannel={channel}
           openDialog={this.toggleDialog}
+          showDelete={stages.length > 1}
         />
 
         <ConfirmDialog
@@ -138,14 +139,16 @@ export class StageTopBar extends Component {
   }
 }
 
-const mapStateToProps = ({ channels: { currentChannel }, channelsEntities, view }) => ({
-  currentStage: view.currentStage,
-  stages: currentChannel.stageIds.map(id => channelsEntities.entities.stages[id]),
-  channel: channelsEntities.entities.channels[currentChannel.channelId],
-})
+const mapStateToProps = ({ channels: { currentChannel }, channelsEntities }, { match }) => {
+  const stages = currentChannel.stageIds.map(id => channelsEntities.entities.stages[id])
+  return {
+    channel: channelsEntities.entities.channels[match.params.channelId],
+    currentStage: stages.find(stage => stage.id === match.params.id),
+    stages,
+  }
+}
 
 const mapDispatchToProps = dispatch => ({
-  changeStage: stage => dispatch(changeStage(stage)),
   deleteChannel: (id, routeHistory) => dispatch(deleteChannel(id, routeHistory)),
   deleteStage: (channelId, StageId) => dispatch(deleteStage(channelId, StageId)),
 })
