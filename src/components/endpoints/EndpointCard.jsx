@@ -3,7 +3,9 @@ import PropTypes from "prop-types"
 import Paper from "@material-ui/core/Paper"
 import Typography from "@material-ui/core/Typography"
 import { withStyles } from "@material-ui/core"
-import EndpointCardStats from "./EndpointCardStats"
+import { Link } from "react-router-dom"
+import { compose } from "redux"
+import CardStats from "../CardStats"
 import EndpointCardMenu from "./EndpointCardMenu"
 
 const styles = ({ palette }) => ({
@@ -32,32 +34,40 @@ const styles = ({ palette }) => ({
     fontWeight: "500",
     color: palette.primary.main,
     marginRight: "20px",
+    cursor: "pointer",
   },
 
 })
 
 const EndpointCard = ({ endpointInfo, classes }) => {
   const statistics = endpointInfo.statistics !== undefined ? endpointInfo.statistics : {}
+  const pathToEndpoint = `/channels/${endpointInfo.application_id}/${endpointInfo.application_stage_id}/${endpointInfo.id}`
   return (
     <Paper className={classes.paper}>
       <div className={classes.endpointHeader}>
-        <Typography variant="h6" className={classes.name}>{ endpointInfo.name }</Typography>
+        <Typography component={Link} to={pathToEndpoint} variant="h6" className={classes.name}>{ endpointInfo.name }</Typography>
         <Typography variant="body1" component="a" className={classes.link} target="_black" href={endpointInfo.url}>{ endpointInfo.url }</Typography>
         <EndpointCardMenu endpointInfo={endpointInfo} />
       </div>
 
-      <EndpointCardStats statistics={statistics} />
+      <CardStats statistics={statistics} />
     </Paper>
   )
 }
 
 EndpointCard.propTypes = {
   classes: PropTypes.object.isRequired,
-  endpointInfo: PropTypes.object,
+  endpointInfo: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    application_id: PropTypes.number.isRequired,
+    application_stage_id: PropTypes.number.isRequired,
+  }),
 }
 
 EndpointCard.defaultProps = {
   endpointInfo: {},
 }
 
-export default withStyles(styles)(EndpointCard)
+export default compose(
+  withStyles(styles),
+)(EndpointCard)
