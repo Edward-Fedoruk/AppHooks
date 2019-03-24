@@ -12,6 +12,7 @@ import { withStyles } from "@material-ui/core"
 import MenuItem from "@material-ui/core/MenuItem"
 import { connect } from "react-redux"
 import { compose } from "redux"
+import { toggleCreateDestinationForm } from "../../actions/ui"
 
 const styles = () => ({
   deleteIcon: {
@@ -28,7 +29,7 @@ const styles = () => ({
 })
 
 const EndpointMenu = ({
-  openMenu, anchorEl, handleMenuClose, classes,
+  openMenu, anchorEl, handleMenuClose, classes, toggleCreateDestinationForm,
 }) => (
   <Menu
     id="simple-menu"
@@ -39,7 +40,7 @@ const EndpointMenu = ({
     elevation={4}
   >
 
-    <MenuItem onClick={() => {}}>
+    <MenuItem onClick={toggleCreateDestinationForm}>
       <ListItemIcon><Add /></ListItemIcon>
       <Typography noWrap variant="inherit" color="primary">Add Destination</Typography>
     </MenuItem>
@@ -55,9 +56,15 @@ const EndpointMenu = ({
 EndpointMenu.propTypes = {
   openMenu: PropTypes.bool.isRequired,
   handleMenuClose: PropTypes.func.isRequired,
+  toggleCreateDestinationForm: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
 }
 
+const mapDispatchToProps = {
+  toggleCreateDestinationForm,
+}
+
 export default compose(
-  withStyles(styles)
+  withStyles(styles),
+  connect(null, mapDispatchToProps)
 )(EndpointMenu)

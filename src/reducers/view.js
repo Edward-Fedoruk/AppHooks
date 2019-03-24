@@ -17,6 +17,7 @@ const initialState = {
   editEndpointForm: false,
   endpointInfo: {},
   endpointDeleteDialog: false,
+  createDestinationForm: false,
 }
 
 export default (state = initialState, action) => {
@@ -35,6 +36,8 @@ export default (state = initialState, action) => {
     return { ...state, editStageNameForm: !state.editStageNameForm }
   case types.TOGGLE_CREATE_ENDPOINT_FORM:
     return { ...state, createEndpointForm: !state.createEndpointForm }
+  case types.TOGGLE_CREATE_DESTINATION_FORM:
+    return { ...state, createDestinationForm: !state.createDestinationForm }
   case types.TOGGLE_SUCCESS_SNACKBAR:
     return {
       ...state,
