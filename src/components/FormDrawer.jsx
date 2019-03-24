@@ -68,7 +68,7 @@ export const FormDrawer = ({
       <Close />
     </IconButton>
     <div className={classes.formWrap}>
-      <div style={{ width: "100%" }}>
+      <div style={{ width: "100%", height: "100%" }}>
         {children}
       </div>
     </div>

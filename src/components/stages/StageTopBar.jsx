@@ -143,7 +143,7 @@ const mapStateToProps = ({ channels: { currentChannel }, channelsEntities }, { m
   const stages = currentChannel.stageIds.map(id => channelsEntities.entities.stages[id])
   return {
     channel: channelsEntities.entities.channels[match.params.channelId],
-    currentStage: stages.find(stage => stage.id === match.params.id),
+    currentStage: stages.find(stage => `${stage.id}` === `${match.params.id}`),
     stages,
   }
 }

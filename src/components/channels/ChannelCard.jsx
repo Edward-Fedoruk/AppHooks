@@ -64,12 +64,12 @@ const styles = ({ breakpoints }) => ({
 const ChannelCard = ({
   classes, appName,
   channelId, collaborators,
-  statistics,
+  statistics, firstStageId,
 }) => (
   <Card className={classes.card}>
     <CardActionArea>
       <Link
-        to={{ pathname: `channels/${channelId}` }}
+        to={{ pathname: `channels/${channelId}/${firstStageId}` }}
         className={classes.linkWrap}
       >
         <CardContent className={classes.cardContent}>
@@ -122,6 +122,7 @@ ChannelCard.propTypes = {
   classes: PropTypes.object.isRequired,
   channelId: PropTypes.number.isRequired,
   appName: PropTypes.string,
+  firstStageId: PropTypes.number.isRequired,
   collaborators: PropTypes.arrayOf(PropTypes.object),
   statistics: PropTypes.shape({
     total_requests: PropTypes.number,
@@ -143,9 +144,13 @@ ChannelCard.defaultProps = {
 }
 
 const mapStateToProps = ({ channelsEntities }, { channelId }) => {
-  const { name, collaborators, statistics } = channelsEntities.entities.channels[channelId]
+  const {
+    name, collaborators, statistics, stages,
+  } = channelsEntities.entities.channels[channelId]
+
+  const firstStageId = stages[0]
   return {
-    appName: name, collaborators, statistics, channelId,
+    appName: name, collaborators, statistics, channelId, firstStageId,
   }
 }
 

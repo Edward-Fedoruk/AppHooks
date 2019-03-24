@@ -36,12 +36,13 @@ export class Channel extends Component {
     fetchChannel: PropTypes.func.isRequired,
     match: PropTypes.object.isRequired,
     errorMessage: PropTypes.string.isRequired,
-    successMessage: PropTypes.string.isRequired,
+    successMessage: PropTypes.string,
   }
 
   static defaultProps = {
     endpoints: [],
     stages: [],
+    successMessage: "Action in channel was successful",
   }
 
   componentDidMount() {
@@ -87,7 +88,7 @@ const errorSelector = createErrorMessageSelector([
   "EDIT_STAGE_NAME",
   "CREATE_STAGE",
   "REMOVE_STAGE",
-  "CREATE_ENDPOINT_SUCCESS",
+  "CREATE_ENDPOINT",
 ])
 
 const mapStateToProps = ({

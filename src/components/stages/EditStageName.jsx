@@ -48,15 +48,15 @@ export class CreateStage extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
     editStageName: PropTypes.func.isRequired,
-    stageId: PropTypes.number.isRequired,
+    currentStage: PropTypes.number.isRequired,
   }
 
   onSubmit = (e) => {
     e.preventDefault()
-    const { editStageName, stageId } = this.props
+    const { editStageName, currentStage } = this.props
     const channelId = history.location.pathname.split("/").reverse()[0]
 
-    editStageName(channelId, stageId, this.state.name)
+    editStageName(channelId, currentStage, this.state.name)
   }
 
   handleChange = event => this.setState({ [event.target.name]: event.target.value })
@@ -93,11 +93,18 @@ export class CreateStage extends Component {
   }
 }
 
+const mapStateToProps = ({ channels, channelsEntities: { entities }, view }) => {
+  const stages = channels.currentChannel.stageIds.map(id => entities.stages[id])
+
+  return {
+    currentStage: stages[view.currentStage].id || 0,
+  }
+}
 const mapDispatchToProps = dispatch => ({
   editStageName: (channelId, stageId, newName) => dispatch(editStageName(channelId, stageId, newName)),
 })
 
 export default compose(
   withStyles(styles),
-  connect(null, mapDispatchToProps)
+  connect(mapStateToProps, mapDispatchToProps)
 )(CreateStage)
