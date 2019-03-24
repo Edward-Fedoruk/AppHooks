@@ -4,12 +4,18 @@ import axios, {
   handleErrorResponse,
   createError,
   handleResponse,
+  initiateLoading,
 } from "./utils"
 import { toggleCreateEndpointForm, toggleSnackbar, toggleSuccessSnackbar } from "./ui"
 
 
 export const setEndpointInStore = endpoint => ({
   type: types.CREATE_ENDPOINT_SUCCESS,
+  endpoint,
+})
+
+export const fetchEndpointToStore = endpoint => ({
+  type: types.FETCH_ENDPOINT_SUCCESS,
   endpoint,
 })
 
@@ -59,4 +65,13 @@ export const editEndpointName = (channelId, stageId, endpointId, endpointData) =
       compose(dispatch, toggleSnackbar),
       handleErrorResponse(dispatch, createError("CHANGE_ENDPOINT"))
     ))
+}
+
+export const fetchEndpoint = (channelId, stageId, endpointId) => (dispatch) => {
+  dispatch(initiateLoading("FETCH_ENDPOINT"))
+  axios.get(`/apps/${channelId}/${stageId}/endpoints/${endpointId}`)
+    .then((response) => {
+      handleResponse(dispatch, fetchEndpointToStore)(response)
+    })
+    .catch()
 }

@@ -212,6 +212,20 @@ export default (state = initialState, action) => {
       },
     }
   }
+  case types.FETCH_ENDPOINT_SUCCESS: {
+    const { entities, entities: { endpoints } } = state
+    const { endpoint } = action
+    return {
+      ...state,
+      entities: {
+        ...entities,
+        endpoints: {
+          ...endpoints,
+          [endpoint.id]: { ...endpoint },
+        },
+      },
+    }
+  }
   case types.DELETE_ENDPOINT_SUCCESS: {
     const { entities, entities: { endpoints, stages } } = state
     const { stageId, endpointId } = action

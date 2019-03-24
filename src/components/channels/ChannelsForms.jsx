@@ -5,11 +5,13 @@ import { connect } from "react-redux"
 import CreateStage from "../stages/CreateStage"
 import EditStageName from "../stages/EditStageName"
 import FormDrawer from "../FormDrawer"
-import { toggleCreateStageForm, toggleEditStageForm, toggleCreateEndpointForm } from "../../actions/ui"
+import { toggleCreateStageForm, toggleEditStageForm } from "../../actions/ui"
+import CreateEndpoint from "../endpoints/CreateEndpoint"
+import EditEndpoint from "../endpoints/EditEndpoint"
 
 const ChannelsForms = ({
-  toggleCreateStageForm, toggleEditStageForm, toggleCreateEndpointForm,
-  createStageForm, editStageNameForm, createEndpointForm,
+  toggleCreateStageForm, toggleEditStageForm,
+  createStageForm, editStageNameForm,
 }) => (
   <Fragment>
     <FormDrawer open={createStageForm} toggleDialog={toggleCreateStageForm}>
@@ -20,31 +22,27 @@ const ChannelsForms = ({
       <EditStageName />
     </FormDrawer>
 
-    <FormDrawer open={createEndpointForm} toggleDialog={toggleCreateEndpointForm}>
-      <EditStageName />
-    </FormDrawer>
+    <CreateEndpoint />
+
+    <EditEndpoint />
   </Fragment>
 )
 
 ChannelsForms.propTypes = {
   toggleCreateStageForm: PropTypes.func.isRequired,
   toggleEditStageForm: PropTypes.func.isRequired,
-  toggleCreateEndpointForm: PropTypes.func.isRequired,
   createStageForm: PropTypes.bool.isRequired,
   editStageNameForm: PropTypes.bool.isRequired,
-  createEndpointForm: PropTypes.bool.isRequired,
 }
 
 const mapStateToProps = ({ view }) => ({
   createStageForm: view.createStageForm,
   editStageNameForm: view.editStageNameForm,
-  createEndpointForm: view.createEndpointForm,
 })
 
 const mapDispatchToProps = dispatch => ({
   toggleCreateStageForm: () => dispatch(toggleCreateStageForm()),
   toggleEditStageForm: () => dispatch(toggleEditStageForm()),
-  toggleCreateEndpointForm: () => dispatch(toggleCreateEndpointForm()),
 })
 
 export default compose(
