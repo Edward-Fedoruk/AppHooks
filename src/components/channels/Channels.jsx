@@ -2,7 +2,6 @@ import React, { Component, Fragment } from "react"
 import PropTypes from "prop-types"
 import { connect } from "react-redux"
 import { compose } from "redux"
-import { withRouter } from "react-router-dom"
 import withNavigation from "../withNavigation"
 import ChannelsList from "./ChannelsList"
 import { fetchChannels } from "../../actions/channel"
@@ -18,7 +17,6 @@ import Preloader from "../Preloader"
 export class Channels extends Component {
   static propTypes = {
     fetchChannels: PropTypes.func.isRequired,
-    history: PropTypes.object.isRequired,
     toggleCreateChannelForm: PropTypes.func.isRequired,
     createChannelForm: PropTypes.bool.isRequired,
     successMessage: PropTypes.string,
@@ -31,7 +29,7 @@ export class Channels extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchChannels(this.props.history)
+    this.props.fetchChannels()
   }
 
   render() {
@@ -54,7 +52,7 @@ export class Channels extends Component {
   }
 }
 
-const loadingSelector = createLoadingSelector(["REMOVE_CHANNEL", "FETCH_CHANNELS", "ADD_COLLABORATOR", "DELETE_COLLABORATOR", "REMOVE_STAGE"])
+const loadingSelector = createLoadingSelector(["FETCH_CHANNELS"])
 
 const mapStateToProps = ({ channelsEntities, view, preloader }) => ({
   result: channelsEntities.result,
@@ -70,6 +68,5 @@ const mapDispatchToProps = {
 
 export default compose(
   withNavigation,
-  withRouter,
   connect(mapStateToProps, mapDispatchToProps)
 )(Channels)
