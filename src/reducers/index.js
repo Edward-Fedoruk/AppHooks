@@ -10,6 +10,7 @@ import rules from "./rules"
 import userSettings from "./userSettings"
 import preloader from "./preloader"
 import errorHandler from "./errorHandler"
+import destinations from "./destinations"
 
 export default combineReducers({
   view,
@@ -17,6 +18,7 @@ export default combineReducers({
   channels,
   stages,
   channelsEntities,
+  destinations,
   requestLogs,
   users,
   rules,
