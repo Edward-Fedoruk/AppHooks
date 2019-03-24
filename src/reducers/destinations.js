@@ -11,7 +11,16 @@ export default (state = initialState, action) => {
       ...state,
       allDestinations: [...state.allDestinations, action.destination],
     }
-  default:
-    return state
+  case types.DELETE_DESTINATION_SUCCESS:
+    return {
+      ...state,
+      allDestinations: state.allDestinations.filter(dest => dest.id !== action.id)
+    }
+  case types.FETCH_CHANNELS_SUCCESS:
+    return {
+      ...state,
+      allDestinations: action.destinations,
+    }
+  default: return state
   }
 }
