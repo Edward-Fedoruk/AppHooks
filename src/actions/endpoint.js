@@ -7,7 +7,7 @@ import axios, {
   initiateLoading,
 } from "./utils"
 import { toggleCreateEndpointForm, toggleSnackbar, toggleSuccessSnackbar } from "./ui"
-
+import history from "../history"
 
 export const setEndpointInStore = endpoint => ({
   type: types.CREATE_ENDPOINT_SUCCESS,
@@ -44,10 +44,12 @@ export const createEndpoint = (channelId, stageId, endpointData) => (dispatch) =
 }
 
 export const deleteEndpoint = (channelId, stageId, endpointId) => (dispatch) => {
+  console.log(`/apps/${channelId}/${stageId}/endpoints/${endpointId}`)
   axios.delete(`/apps/${channelId}/${stageId}/endpoints/${endpointId}`)
     .then(() => {
       dispatch(deleteEndpointFromStore(stageId, endpointId))
       dispatch(toggleSuccessSnackbar("Endpoint was deleted"))
+      history.push({ pathname: `/channels/${channelId}/${stageId}` })
     })
     .catch(compose(
       compose(dispatch, toggleSnackbar),
@@ -73,5 +75,8 @@ export const fetchEndpoint = (channelId, stageId, endpointId) => (dispatch) => {
     .then((response) => {
       handleResponse(dispatch, fetchEndpointToStore)(response)
     })
-    .catch()
+    .catch(compose(
+      compose(dispatch, toggleSnackbar),
+      handleErrorResponse(dispatch, createError("FETCH_ENDPOINT"))
+    ))
 }
