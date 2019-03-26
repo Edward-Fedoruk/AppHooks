@@ -3,20 +3,17 @@ import { compose } from "redux"
 import * as types from "./types"
 import { createStage } from "./stage"
 import { channelSchema } from "./schemas"
-import { domain, setFetchSettings } from "./utils"
+import axios, { handleErrorResponse, createError, initiateLoading } from "./utils"
+import { toggleCreateChannelForm, toggleSnackbar, toggleSuccessSnackbar } from "./ui"
+import history from "../history"
 
 export const setChannelsData = payload => ({
-  type: types.SET_CHANNELS,
+  type: types.FETCH_CHANNELS_SUCCESS,
   payload,
 })
 
-export const throwChannelCreationError = errorMessage => ({
-  type: types.CREATE_CHANNEL_ERROR,
-  errorMessage,
-})
-
 export const addChannel = payload => ({
-  type: types.ADD_CHANNEL,
+  type: types.ADD_CHANNEL_SUCCESS,
   payload,
 })
 
@@ -26,136 +23,97 @@ export const setCurrentChannel = channel => ({
 })
 
 export const removeChannelFromStore = id => ({
-  type: types.REMOVE_CHANNEL,
+  type: types.REMOVE_CHANNEL_SUCCESS,
   id,
 })
 
-export const createChannel = (channelData, routeHistory) => (dispatch) => {
-  const accessToken = localStorage.getItem("JWT")
+export const addCollaboratorInStore = (channelId, user) => ({
+  type: types.ADD_COLLABORATOR_SUCCESS,
+  channelId,
+  user,
+})
 
-  if (accessToken === null) {
-    routeHistory.push({
-      pathname: "/login",
-    })
+export const deleteCollaboratorFromStore = (channelId, userId) => ({
+  type: types.DELETE_COLLABORATOR_SUCCESS,
+  channelId,
+  userId,
+})
 
-    return
-  }
-
-  const stringifiedData = JSON.stringify(channelData)
-  const settings = setFetchSettings("POST", accessToken, stringifiedData)
-
-  fetch(`${domain}/apps`, settings)
-    .then(response => response.json()
-      .then((json) => {
-        if (response.ok) {
-          return Promise.resolve(json)
-        }
-        return Promise.reject(json)
-      }))
-    .then(({ data }) => {
+export const createChannel = channelData => (dispatch) => {
+  axios.post("/apps", channelData)
+    .then(({ data: { data } }) => {
       const stageData = { name: `${data.name.trim()}-default` }
-
-      compose(
-        dispatch,
-        addChannel
-      )(normalize(data, channelSchema))
-
-      dispatch(createStage(data.id, stageData, routeHistory))
-    })
-    .catch((er) => {
-      console.log(er)
-      dispatch(throwChannelCreationError(er.message))
-    })
-}
-
-export const fetchChannels = routeHistory => (dispatch) => {
-  const accessToken = localStorage.getItem("JWT")
-
-  if (accessToken === null) {
-    routeHistory.push({
-      pathname: "/login",
-    })
-    return
-  }
-
-  const settings = setFetchSettings("GET", accessToken, null)
-
-  fetch(`${domain}/apps`, settings)
-    .then(response => response.json()
-      .then((json) => {
-        if (response.ok) {
-          return Promise.resolve(json)
-        }
-        return Promise.reject(json)
-      }))
-    .then(data => compose(
-      dispatch,
-      setChannelsData,
-    )(normalize(data.data, [channelSchema])))
-    .catch((er) => {
-      console.log(er)
-      routeHistory.push({
-        pathname: "/login",
-      })
-    })
-}
-
-export const fetchChannel = (id, routeHistory) => (dispatch) => {
-  const accessToken = localStorage.getItem("JWT")
-
-  const settings = setFetchSettings("GET", accessToken, null)
-
-  fetch(`${domain}/apps/${id}`, settings)
-    .then(response => response.json()
-      .then((json) => {
-        if (response.ok) {
-          return Promise.resolve(json)
-        }
-        return Promise.reject(json)
-      }))
-    .then(({ data }) => {
-      console.log(data)
       const normalizedData = normalize(data, channelSchema)
 
-      compose(
-        dispatch,
-        addChannel,
-      )(normalizedData)
+      dispatch(addChannel(normalizedData))
+      dispatch(createStage(data.id, stageData))
+      dispatch(toggleSuccessSnackbar("Channel was created"))
+      dispatch(toggleCreateChannelForm())
+    })
+    .catch(compose(
+      compose(dispatch, toggleSnackbar),
+      handleErrorResponse(dispatch, createError("CREATE_CHANNEL"))
+    ))
+}
 
+export const fetchChannels = () => (dispatch) => {
+  dispatch(initiateLoading("FETCH_CHANNELS"))
+
+  axios.get("/apps")
+    .then(({ data: { data } }) => {
+      const normalizedData = normalize(data, [channelSchema])
+      dispatch(setChannelsData(normalizedData))
+    })
+    .catch(() => history.push({ pathname: "/login" }))
+}
+
+export const fetchChannel = id => (dispatch) => {
+  axios.get(`/apps/${id}`)
+    .then(({ data: { data } }) => {
+      const normalizedData = normalize(data, channelSchema)
+
+      dispatch(addChannel(normalizedData))
       compose(dispatch, setCurrentChannel)({
         channelId: id,
         stageIds: normalizedData.entities.channels[id].stages,
       })
     })
-    .catch((er) => {
-      console.log(er)
-      routeHistory.push({
-        pathname: "/login",
-      })
+    .catch(() => history.push({ pathname: "/login" }))
+}
+
+export const deleteChannel = id => (dispatch) => {
+  axios.delete(`/apps/${id}`)
+    .then(() => {
+      dispatch(removeChannelFromStore(id))
+      dispatch(toggleSuccessSnackbar("Channel was deleted"))
+      history.push("/channels")
+    })
+    .catch((err) => {
+      handleErrorResponse(dispatch, createError("REMOVE_CHANNEL"))(err)
+      history.push({ pathname: "/channels" })
     })
 }
 
-export const deleteChannel = (id, routeHistory) => (dispatch) => {
-  const accessToken = localStorage.getItem("JWT")
+export const addCollaborator = (channelId, user) => (dispatch) => {
+  axios.put(`/apps/${channelId}/collaborators/${user.id}`)
+    .then(() => {
+      dispatch(addCollaboratorInStore(channelId, user))
+      dispatch(toggleSuccessSnackbar("Sub-user was added to the channel card"))
+    })
+    .catch(compose(
+      compose(dispatch, toggleSnackbar),
+      handleErrorResponse(dispatch, createError("ADD_COLLABORATOR"))
+    ))
+}
 
-  const settings = setFetchSettings("DELETE", accessToken, null)
-
-  fetch(`${domain}/apps/${id}`, settings)
-    .then((response) => {
-      if (response.ok) {
-        return Promise.resolve(response)
-      }
-      return Promise.reject(response)
+export const deleteCollaborator = (channelId, userId) => (dispatch) => {
+  axios.delete(`/apps/${channelId}/collaborators/${userId}`)
+    .then(() => {
+      dispatch(deleteCollaboratorFromStore(channelId, userId))
+      dispatch(toggleSuccessSnackbar("Sub-user was removed from the channel card"))
     })
-    .then((data) => {
-      console.log(data)
-      dispatch(removeChannelFromStore(id))
-      routeHistory.push("/channels")
-    })
-    .catch((er) => {
-      console.log(er)
-      routeHistory.push({
-        pathname: "/login",
-      })
-    })
+    .catch(compose(
+      compose(dispatch, toggleSnackbar),
+      handleErrorResponse(dispatch, createError("DELETE_COLLABORATOR"))
+    ))
 }

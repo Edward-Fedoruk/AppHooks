@@ -1,7 +1,7 @@
+/* eslint-disable react/no-find-dom-node */
 import React from "react"
 import ReactDOM from "react-dom"
 import PropTypes from "prop-types"
-import { withStyles } from "@material-ui/core/styles"
 import OutlinedInput from "@material-ui/core/OutlinedInput"
 import InputLabel from "@material-ui/core/InputLabel"
 import MenuItem from "@material-ui/core/MenuItem"
@@ -9,14 +9,25 @@ import FormControl from "@material-ui/core/FormControl"
 import Select from "@material-ui/core/Select"
 import FormHelperText from "@material-ui/core/FormHelperText"
 
-const styles = theme => ({
-  formControl: {
-    minWidth: "300px",
-  },
-
-})
-
 class SelectInput extends React.Component {
+  static propTypes = {
+    name: PropTypes.string.isRequired,
+    styles: PropTypes.object,
+    handleChange: PropTypes.func.isRequired,
+    option: PropTypes.string.isRequired,
+    options: PropTypes.array.isRequired,
+    error: PropTypes.bool,
+    errText: PropTypes.string,
+    className: PropTypes.string,
+  }
+
+  static defaultProps = {
+    error: false,
+    errText: "field is required",
+    className: "",
+    styles: {},
+  }
+
   state = {
     labelWidth: 0,
   }
@@ -29,22 +40,15 @@ class SelectInput extends React.Component {
 
   render() {
     const {
-      classes, options, name,
-      styles, handleChange, option,
-      error, errText,
+      name, styles, options,
+      handleChange, option,
+      error, errText, className,
     } = this.props
 
     return (
-      <FormControl
-        variant="outlined"
-        className={classes.formControl}
-        style={styles}
-        error={error}
-      >
+      <FormControl className={className} variant="outlined" style={styles} error={error}>
         <InputLabel
-          ref={(ref) => {
-            this.InputLabelRef = ref
-          }}
+          ref={(ref) => { this.InputLabelRef = ref }}
           htmlFor={`outlined-${name}`}
         >
           {name}
@@ -60,13 +64,11 @@ class SelectInput extends React.Component {
             />
           )}
         >
-          <MenuItem value="">
+          {/* <MenuItem value="">
             <em>None</em>
-          </MenuItem>
-          {options.map((option, index) => (
-            <MenuItem key={index} value={option}>
-              {option[0]}
-            </MenuItem>
+          </MenuItem> */}
+          {options.map(option => (
+            <MenuItem key={option} value={option}>{option}</MenuItem>
           ))}
         </Select>
         {error
@@ -76,11 +78,4 @@ class SelectInput extends React.Component {
   }
 }
 
-SelectInput.propTypes = {
-  classes: PropTypes.object.isRequired,
-  name: PropTypes.string.isRequired,
-  styles: PropTypes.object.isRequired,
-  options: PropTypes.array,
-}
-
-export default withStyles(styles)(SelectInput)
+export default SelectInput

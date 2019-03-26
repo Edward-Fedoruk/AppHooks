@@ -3,10 +3,9 @@ import PropTypes from "prop-types"
 import Paper from "@material-ui/core/Paper"
 import Typography from "@material-ui/core/Typography"
 import { withStyles } from "@material-ui/core"
-import { Link } from "react-router-dom"
 import { compose } from "redux"
 import CardStats from "../CardStats"
-import EndpointCardMenu from "./EndpointCardMenu"
+import DestinationCardMenu from "./DestinationCardMenu"
 
 const styles = ({ palette }) => ({
   paper: {
@@ -39,15 +38,14 @@ const styles = ({ palette }) => ({
 
 })
 
-const EndpointCard = ({ endpointInfo, classes }) => {
-  const statistics = endpointInfo.statistics !== undefined ? endpointInfo.statistics : {}
-  const pathToEndpoint = `/channels/${endpointInfo.application_id}/${endpointInfo.application_stage_id}/${endpointInfo.id}`
+const DestinationCard = ({ destInfo, classes }) => {
+  const statistics = destInfo.statistics !== undefined ? destInfo.statistics : {}
   return (
     <Paper className={classes.paper}>
       <div className={classes.endpointHeader}>
-        <Typography component={Link} to={pathToEndpoint} variant="h6" className={classes.name}>{ endpointInfo.name }</Typography>
-        <Typography variant="body1" component="a" className={classes.link} target="_black" href={endpointInfo.url}>{ endpointInfo.url }</Typography>
-        <EndpointCardMenu endpointInfo={endpointInfo} />
+        <Typography variant="h6" className={classes.name}>{ destInfo.name }</Typography>
+        <Typography variant="body1" component="a" className={classes.link} target="_black" href={destInfo.url}>{ destInfo.url }</Typography>
+        <DestinationCardMenu destInfo={destInfo} />
       </div>
 
       <CardStats statistics={statistics} />
@@ -55,19 +53,19 @@ const EndpointCard = ({ endpointInfo, classes }) => {
   )
 }
 
-EndpointCard.propTypes = {
+DestinationCard.propTypes = {
   classes: PropTypes.object.isRequired,
-  endpointInfo: PropTypes.shape({
+  destInfo: PropTypes.shape({
     id: PropTypes.number.isRequired,
     application_id: PropTypes.number.isRequired,
     application_stage_id: PropTypes.number.isRequired,
   }),
 }
 
-EndpointCard.defaultProps = {
-  endpointInfo: {},
+DestinationCard.defaultProps = {
+  destInfo: {},
 }
 
 export default compose(
   withStyles(styles),
-)(EndpointCard)
+)(DestinationCard)

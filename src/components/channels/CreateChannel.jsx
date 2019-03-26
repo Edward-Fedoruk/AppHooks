@@ -4,13 +4,13 @@ import { connect } from "react-redux"
 import { withStyles } from "@material-ui/core/styles"
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator"
 import { compose } from "redux"
-import { CountryRegionData } from "react-country-region-selector"
-import { withRouter } from "react-router"
-import SubmitButton from "../Authentication/SubmitButton"
-import SelectInput from "./SelectInput"
+import { withRouter } from "react-router-dom"
+import SelectInput from "../utils/SelectInput"
 import FormTitle from "../utils/FormTitle"
 import { createChannel } from "../../actions/channel"
-import TopBar from "../utils/TopBar"
+import MainButton from "../utils/MainButton"
+import ErrorSnackbar from "../utils/ErrorSnackbar"
+import { createErrorMessageSelector } from "../../actions/utils"
 
 const styles = () => ({
   formWrap: {
@@ -22,6 +22,11 @@ const styles = () => ({
   textField: {
     width: "100%",
     marginTop: "70px",
+  },
+
+  submitButton: {
+    margin: "25px auto",
+    display: "flex",
   },
 
   title: {
@@ -46,16 +51,21 @@ export class CreateChannel extends Component {
 
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    errorMessage: PropTypes.string.isRequired,
-    error: PropTypes.bool.isRequired,
+    createChannel: PropTypes.func.isRequired,
+    history: PropTypes.object.isRequired,
+    errorMessage: PropTypes.string,
+  }
+
+  static defaultProps = {
+    errorMessage: "Something went wrong",
   }
 
   onSubmit = (e) => {
     e.preventDefault()
-    if (!this.state.region) this.setState({ error: true })
-    console.log({ name: this.state.name, region: this.state.region[0] })
+    const { region, name } = this.state
+    const { history, createChannel } = this.props
 
-    this.props.createChannel({ name: this.state.name, region: this.state.region[0] }, this.props.history)
+    createChannel({ name, region }, history)
   }
 
   handleChange = (event) => {
@@ -65,60 +75,58 @@ export class CreateChannel extends Component {
   onChange = input => e => this.setState({ [input]: e.target.value })
 
   render() {
-    const { classes, error } = this.props
+    const { classes, errorMessage } = this.props
     const { name, region } = this.state
+    const options = [
+      "us-east-1",
+      "us-west-1",
+      "ap-northeast-1",
+      "eu-central-1",
+      "sa-east-1",
+    ]
     return (
       <Fragment>
-        <TopBar
-          buttonText="Create New App"
-          title="Your Channels Apps"
+        <ErrorSnackbar message={errorMessage} />
+        <FormTitle
+          paragraph="Create a Channels app to generate your unique credentials. You can create as manyapps as you need."
+          title="Create Channel"
         />
-        <div className={classes.formWrap}>
-          <FormTitle
-            paragraph="Create a Channels app to generate your unique credentials. You can create as many apps as you need."
-            title="Create your Channels App"
+
+        <ValidatorForm onSubmit={this.onSubmit}>
+          <TextValidator
+            label="Name your app (required)"
+            name="name"
+            autoFocus
+            variant="outlined"
+            placeholder="MyApp"
+            onChange={this.onChange("name")}
+            className={classes.textField}
+            value={name}
+            margin="normal"
+            validators={["required"]}
+            errorMessages={["this field is required"]}
           />
 
-          <ValidatorForm onSubmit={this.onSubmit}>
-            <TextValidator
-              error={error}
-              label="Name your app (required)"
-              name="name"
-              autoFocus
-              variant="outlined"
-              placeholder="MyApp"
-              onChange={this.onChange("name")}
-              className={classes.textField}
-              value={name}
-              margin="normal"
-              validators={["required"]}
-              errorMessages={["this field is required"]}
-            />
+          <SelectInput
+            name="region"
+            option={region}
+            options={options}
+            handleChange={this.handleChange}
+            styles={{ width: "100%", marginTop: "35px" }}
+          />
 
-            <SelectInput
-              options={CountryRegionData}
-              name="region"
-              option={region}
-              handleChange={this.handleChange}
-              styles={{ width: "100%", marginTop: "35px" }}
-              error={this.state.error || error}
-              errText={error ? "" : "required field"}
-            />
+          <MainButton className={classes.submitButton} type="submit">Create Application</MainButton>
 
-            <SubmitButton
-              text="Create Application"
-              styles={{ width: "250px", display: "block", margin: "84px auto 20px auto" }}
-            />
-          </ValidatorForm>
-        </div>
+        </ValidatorForm>
       </Fragment>
     )
   }
 }
 
-const mapStateToProps = ({ channels }) => ({
-  error: channels.error,
-  errorMessage: channels.errorMessage,
+const errorSelector = createErrorMessageSelector(["CREATE_CHANNEL"])
+
+const mapStateToProps = ({ errorHandler }) => ({
+  errorMessage: errorSelector(errorHandler),
 })
 
 const mapDispatchToProps = dispatch => ({

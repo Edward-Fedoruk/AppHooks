@@ -4,10 +4,10 @@ import { connect } from "react-redux"
 import { withStyles } from "@material-ui/core/styles"
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator"
 import { compose } from "redux"
-import { withRouter } from "react-router-dom"
 import FormTitle from "../utils/FormTitle"
-import { createStage } from "../../actions/stage"
+import { editStageName } from "../../actions/stage"
 import MainButton from "../utils/MainButton"
+import history from "../../history"
 
 const styles = () => ({
   formWrap: {
@@ -47,19 +47,19 @@ export class CreateStage extends Component {
 
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    createStage: PropTypes.func.isRequired,
-    match: PropTypes.object.isRequired,
+    editStageName: PropTypes.func.isRequired,
+    currentStage: PropTypes.number.isRequired,
   }
 
   onSubmit = (e) => {
     e.preventDefault()
-    const { createStage, match } = this.props
+    const { editStageName, currentStage } = this.props
+    const channelId = history.location.pathname.split("/").reverse()[0]
 
-    createStage(match.params.channelId, this.state, true)
+    editStageName(channelId, currentStage, this.state.name)
   }
 
   handleChange = event => this.setState({ [event.target.name]: event.target.value })
-
 
   onChange = input => e => this.setState({ [input]: e.target.value })
 
@@ -68,10 +68,7 @@ export class CreateStage extends Component {
     const { name } = this.state
     return (
       <Fragment>
-        <FormTitle
-          paragraph="Use the below to create a new input destination for you webhooks. Once completed, you will be given an endpoint URL for your webhook provider."
-          title="Create Stage"
-        />
+        <FormTitle title="Edit Stage" />
 
         <ValidatorForm onSubmit={this.onSubmit}>
           <TextValidator
@@ -88,7 +85,7 @@ export class CreateStage extends Component {
             errorMessages={["this field is required"]}
           />
 
-          <MainButton className={classes.submitButton} type="submit">Create Stage</MainButton>
+          <MainButton className={classes.submitButton} type="submit">Confirm</MainButton>
 
         </ValidatorForm>
       </Fragment>
@@ -96,12 +93,18 @@ export class CreateStage extends Component {
   }
 }
 
+const mapStateToProps = ({ channels, channelsEntities: { entities }, view }) => {
+  const stages = channels.currentChannel.stageIds.map(id => entities.stages[id])
+
+  return {
+    currentStage: stages[view.currentStage].id || 0,
+  }
+}
 const mapDispatchToProps = dispatch => ({
-  createStage: (id, stageData, toggleForm) => dispatch(createStage(id, stageData, toggleForm)),
+  editStageName: (channelId, stageId, newName) => dispatch(editStageName(channelId, stageId, newName)),
 })
 
 export default compose(
   withStyles(styles),
-  withRouter,
-  connect(null, mapDispatchToProps)
+  connect(mapStateToProps, mapDispatchToProps)
 )(CreateStage)

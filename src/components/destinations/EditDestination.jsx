@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react"
+import React, { Component } from "react"
 import PropTypes from "prop-types"
 import { connect } from "react-redux"
 import { withStyles } from "@material-ui/core/styles"
@@ -6,8 +6,11 @@ import { ValidatorForm, TextValidator } from "react-material-ui-form-validator"
 import { compose } from "redux"
 import { withRouter } from "react-router-dom"
 import FormTitle from "../utils/FormTitle"
-import { createStage } from "../../actions/stage"
+import { editDestination } from "../../actions/destination"
 import MainButton from "../utils/MainButton"
+import FormDrawer from "../FormDrawer"
+import { toggleEditDestinationForm } from "../../actions/ui"
+
 
 const styles = () => ({
   formWrap: {
@@ -40,46 +43,52 @@ const styles = () => ({
 
 })
 
-export class CreateStage extends Component {
+export class EditEndpoint extends Component {
   state = {
     name: "",
   }
 
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    createStage: PropTypes.func.isRequired,
     match: PropTypes.object.isRequired,
+    editDestination: PropTypes.func.isRequired,
+    toggleEditDestinationForm: PropTypes.func.isRequired,
+    editDestinationForm: PropTypes.bool.isRequired,
+    currentDestination: PropTypes.object,
+  }
+
+  static defaultProps = {
+    currentDestination: {},
   }
 
   onSubmit = (e) => {
     e.preventDefault()
-    const { createStage, match } = this.props
+    const {
+      editDestination, toggleEditDestinationForm, currentDestination, match,
+    } = this.props
 
-    createStage(match.params.channelId, this.state, true)
+    editDestination(match.params.endpointId, currentDestination.id, this.state)
+    toggleEditDestinationForm()
   }
 
   handleChange = event => this.setState({ [event.target.name]: event.target.value })
 
-
   onChange = input => e => this.setState({ [input]: e.target.value })
 
   render() {
-    const { classes } = this.props
+    const { classes, editDestinationForm, toggleEditDestinationForm } = this.props
     const { name } = this.state
     return (
-      <Fragment>
-        <FormTitle
-          paragraph="Use the below to create a new input destination for you webhooks. Once completed, you will be given an endpoint URL for your webhook provider."
-          title="Create Stage"
-        />
+      <FormDrawer open={editDestinationForm} toggleDialog={toggleEditDestinationForm}>
+        <FormTitle title="Edit Destination" />
 
         <ValidatorForm onSubmit={this.onSubmit}>
           <TextValidator
-            label="Stage name"
+            label="Destination name"
             name="name"
             autoFocus
             variant="outlined"
-            placeholder="MyStage"
+            placeholder="MyNewEndpoint"
             onChange={this.onChange("name")}
             className={classes.textField}
             value={name}
@@ -88,20 +97,29 @@ export class CreateStage extends Component {
             errorMessages={["this field is required"]}
           />
 
-          <MainButton className={classes.submitButton} type="submit">Create Stage</MainButton>
+          <MainButton className={classes.submitButton} type="submit">Confirm</MainButton>
 
         </ValidatorForm>
-      </Fragment>
+      </FormDrawer>
     )
   }
 }
 
+const mapStateToProps = ({ view }) => ({
+  currentDestination: view.destinationInfo,
+  editDestinationForm: view.editDestinationForm,
+})
+
+
 const mapDispatchToProps = dispatch => ({
-  createStage: (id, stageData, toggleForm) => dispatch(createStage(id, stageData, toggleForm)),
+  editDestination: (endpointId, destinationData) => {
+    dispatch(editDestination(endpointId, destinationData))
+  },
+  toggleEditDestinationForm: () => dispatch(toggleEditDestinationForm({})),
 })
 
 export default compose(
   withStyles(styles),
   withRouter,
-  connect(null, mapDispatchToProps)
-)(CreateStage)
+  connect(mapStateToProps, mapDispatchToProps)
+)(EditEndpoint)

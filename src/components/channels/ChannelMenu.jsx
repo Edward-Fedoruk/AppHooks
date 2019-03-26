@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 import React from "react"
 import PropTypes from "prop-types"
 import Menu from "@material-ui/core/Menu"
@@ -10,6 +11,10 @@ import Edit from "@material-ui/icons/Edit"
 import Add from "@material-ui/icons/Add"
 import { withStyles } from "@material-ui/core"
 import MenuItem from "@material-ui/core/MenuItem"
+import { connect } from "react-redux"
+import { compose } from "redux"
+import { withRouter } from "react-router-dom"
+import { toggleCreateStageForm, toggleEditStageForm, toggleCreateEndpointForm } from "../../actions/ui"
 
 const styles = () => ({
   menu: {
@@ -36,8 +41,9 @@ const styles = () => ({
 
 const ChannelMenu = ({
   classes, anchorEl, handleClick,
-  handleClose, currentStageName, currentChannel,
-  deleteChannel,
+  handleClose, currentChannel,
+  openDialog, toggleCreateStageForm, toggleEditStageForm,
+  toggleCreateEndpointForm, showDelete,
 }) => (
   <div>
     <IconButton
@@ -56,64 +62,33 @@ const ChannelMenu = ({
       className={classes.menu}
       elevation={4}
     >
-      <MenuItem onClick={handleClose}>
-        <ListItemIcon>
-          <Edit />
-        </ListItemIcon>
-        <Typography
-          noWrap
-          variant="inherit"
-          color="primary"
-        >
-            Edit stage name
-        </Typography>
+
+      <MenuItem onClick={toggleCreateStageForm}>
+        <ListItemIcon><Add /></ListItemIcon>
+        <Typography noWrap variant="inherit" color="primary">Add stage</Typography>
       </MenuItem>
 
-      <MenuItem onClick={handleClose}>
-        <ListItemIcon>
-          <Add />
-        </ListItemIcon>
-        <Typography
-          noWrap
-          variant="inherit"
-          color="primary"
-        >
-            Add new stage
-        </Typography>
+      <MenuItem onClick={toggleCreateEndpointForm}>
+        <ListItemIcon><Add /></ListItemIcon>
+        <Typography noWrap variant="inherit" color="primary">Add endpoint</Typography>
       </MenuItem>
 
-      <MenuItem onClick={handleClose}>
-        <ListItemIcon>
-          <AddCircle className={classes.deleteIcon} />
-        </ListItemIcon>
-        <Typography
-          className={classes.delete}
-          noWrap
-          variant="inherit"
-        >
-            Delete
-          {" "}
-          {currentStageName}
-          {" "}
-stage
-        </Typography>
+      <MenuItem onClick={toggleEditStageForm}>
+        <ListItemIcon><Edit /></ListItemIcon>
+        <Typography noWrap variant="inherit" color="primary">Edit stage name</Typography>
       </MenuItem>
 
-      <MenuItem onClick={deleteChannel}>
-        <ListItemIcon>
-          <AddCircle className={classes.deleteIcon} />
-        </ListItemIcon>
-        <Typography
-          className={classes.delete}
-          noWrap
-          variant="inherit"
-        >
-            Delete
-          {" "}
-          {currentChannel}
-          {" "}
-Channel App
-        </Typography>
+      {showDelete
+        && (
+          <MenuItem onClick={openDialog("stageDialog")}>
+            <ListItemIcon><AddCircle className={classes.deleteIcon} /></ListItemIcon>
+            <Typography className={classes.delete} noWrap variant="inherit">Delete current stage</Typography>
+          </MenuItem>
+        )}
+
+      <MenuItem onClick={openDialog("channelDialog")}>
+        <ListItemIcon><AddCircle className={classes.deleteIcon} /></ListItemIcon>
+        <Typography className={classes.delete} noWrap variant="inherit">Delete {` ${currentChannel.name} `} Channel</Typography>
       </MenuItem>
 
     </Menu>
@@ -122,12 +97,34 @@ Channel App
 
 ChannelMenu.propTypes = {
   classes: PropTypes.object.isRequired,
-  anchorEl: PropTypes.bool.isRequired,
+  anchorEl: PropTypes.node,
+  toggleCreateStageForm: PropTypes.func.isRequired,
+  toggleCreateEndpointForm: PropTypes.func.isRequired,
+  toggleEditStageForm: PropTypes.func.isRequired,
+  showDelete: PropTypes.bool.isRequired,
   handleClick: PropTypes.func,
   handleClose: PropTypes.func,
-  currentStageName: PropTypes.string,
-  currentChannel: PropTypes.string,
-  deleteChannel: PropTypes.func,
+  currentChannel: PropTypes.object,
+  openDialog: PropTypes.func,
 }
 
-export default withStyles(styles)(ChannelMenu)
+ChannelMenu.defaultProps = {
+  handleClick: () => {},
+  handleClose: () => {},
+  openDialog: () => {},
+  currentChannel: { name: "this" },
+  anchorEl: null,
+}
+
+const mapDispatchToProps = dispatch => ({
+  toggleCreateStageForm: () => dispatch(toggleCreateStageForm()),
+  toggleEditStageForm: () => dispatch(toggleEditStageForm()),
+  toggleCreateEndpointForm: () => dispatch(toggleCreateEndpointForm()),
+})
+
+
+export default compose(
+  withStyles(styles),
+  withRouter,
+  connect(null, mapDispatchToProps)
+)(ChannelMenu)
