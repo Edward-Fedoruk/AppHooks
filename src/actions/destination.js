@@ -34,7 +34,6 @@ export const fetchDestinations = endpointId => (dispatch) => {
   axios.get(`/endpoints/${endpointId}/destinations`)
     .then((response) => {
       handleResponse(dispatch, setDestinationsInStore)(response)
-      dispatch(toggleSuccessSnackbar("FETCH_DESTINATIONS"))
     })
     .catch((response) => {
       handleErrorResponse(dispatch, createError("FETCH_DESTINATIONS"))(response)
@@ -57,7 +56,6 @@ export const editDestination = (endpointId, destinationId, destData) => (dispatc
 export const createDestination = (endpointId, destinationData) => (dispatch) => {
   axios.post(`/endpoints/${endpointId}/destinations`, destinationData)
     .then((response) => {
-      console.log(response)
       handleResponse(dispatch, setDestinationInStore)(response)
       dispatch(toggleSuccessSnackbar("Destination was created"))
       dispatch(toggleCreateDestinationForm())
@@ -66,6 +64,7 @@ export const createDestination = (endpointId, destinationData) => (dispatch) => 
 }
 
 export const deleteDestination = (endpointId, destinationId) => (dispatch) => {
+  console.log(endpointId, destinationId)
   axios.delete(`/endpoints/${endpointId}/destinations/${destinationId}`)
     .then(() => {
       dispatch(deleteDestinationFromStore(destinationId))

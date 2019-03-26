@@ -51,9 +51,19 @@ export const toggleEditEndpointForm = endpointInfo => ({
   endpointInfo,
 })
 
+export const toggleEditDestinationForm = destinationInfo => ({
+  type: types.TOGGLE_EDIT_DESTINATION_FORM,
+  destinationInfo,
+})
+
 export const toggleEndpointDeleteDialog = endpointInfo => ({
   type: types.TOGGLE_DELETE_ENDPOINT_DIALOG,
   endpointInfo,
+})
+
+export const toggleDestinationDeleteDialog = destinationInfo => ({
+  type: types.TOGGLE_DELETE_DESTINATION_DIALOG,
+  destinationInfo,
 })
 
 export const toggleCreateDestinationForm = () => ({
