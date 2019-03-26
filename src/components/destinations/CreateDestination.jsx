@@ -76,7 +76,7 @@ const styles = () => ({
 export class CreateDestination extends Component {
   state = {
     name: "",
-    urlName: "",
+    url: "",
     retryPolicy: "No auto retries",
     retryInterval: "",
     retryAttempts: "",
@@ -95,7 +95,6 @@ export class CreateDestination extends Component {
     createDestinationForm: PropTypes.bool.isRequired,
     toggleCreateDestinationForm: PropTypes.func.isRequired,
     createDestination: PropTypes.func.isRequired,
-    currentStageId: PropTypes.number.isRequired,
   }
 
   authTypes = ["No Authentication", "Basic Authentication", "Token"]
@@ -108,7 +107,9 @@ export class CreateDestination extends Component {
     e.preventDefault()
     // Map names from local state to request fields
     const {
-      name, authType: auth_type,
+      name,
+      url,
+      authType: auth_type,
       contentType: response_content_type,
       tokenLocation: token_location,
       tokenVar: token_variable,
@@ -132,20 +133,20 @@ export class CreateDestination extends Component {
       auth_settings,
       auth_type,
       name,
+      url,
     }
 
     createDestination(match.params.endpointId, destinationData)
   }
 
   handleChange = field => (event) => {
-    console.log(field)
     this.setState({ [field]: event.target.value })
   }
 
   render() {
     const { classes, createDestinationForm, toggleCreateDestinationForm } = this.props
     const {
-      name, authType, contentType, urlName, retryPolicy,
+      name, authType, contentType, url, retryPolicy,
       tokenLocation, username, password, tokenVar, tokenValue,
       retryAttempts, retryInterval,
     } = this.state
@@ -188,12 +189,12 @@ export class CreateDestination extends Component {
 
           <TextValidator
             label="destination url"
-            name="urlName"
+            name="url"
             variant="outlined"
             placeholder="http://apphookss"
-            onChange={this.handleChange("urlName")}
+            onChange={this.handleChange("url")}
             className={classes.textField}
-            value={urlName}
+            value={url}
             margin="normal"
             validators={["required"]}
             errorMessages={["this field is required"]}

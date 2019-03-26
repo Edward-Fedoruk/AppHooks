@@ -92,7 +92,6 @@ export class CreateEndpoint extends Component {
     createEndpointForm: PropTypes.bool.isRequired,
     toggleCreateEndpointForm: PropTypes.func.isRequired,
     createEndpoint: PropTypes.func.isRequired,
-    currentStageId: PropTypes.number.isRequired,
   }
 
   authTypes = ["No Authentication", "Basic Authentication", "Token"]
@@ -115,7 +114,7 @@ export class CreateEndpoint extends Component {
       username,
       password,
     } = this.state
-    const { createEndpoint, match, currentStageId } = this.props
+    const { createEndpoint, match } = this.props
 
     let auth_settings = {}
 
@@ -135,7 +134,7 @@ export class CreateEndpoint extends Component {
       name,
     }
 
-    createEndpoint(match.params.id, currentStageId, endpointData)
+    createEndpoint(match.params.channelId, match.params.stageId, endpointData)
   }
 
   handleChange = (event) => {
@@ -332,13 +331,9 @@ const mapDispatchToProps = dispatch => ({
   toggleCreateEndpointForm: () => dispatch(toggleCreateEndpointForm()),
 })
 
-const mapStateToProps = ({ channels, channelsEntities: { entities }, view }) => {
-  const stages = channels.currentChannel.stageIds.map(id => entities.stages[id])
-  return {
-    currentStageId: stages[view.currentStage] ? stages[view.currentStage].id : 0,
-    createEndpointForm: view.createEndpointForm,
-  }
-}
+const mapStateToProps = ({ view }) => ({
+  createEndpointForm: view.createEndpointForm,
+})
 
 export default compose(
   withStyles(styles),
