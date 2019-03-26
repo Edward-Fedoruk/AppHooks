@@ -74,12 +74,12 @@ export class DestinationCardMenu extends Component {
         >
           <MenuItem onClick={() => toggleEditDestinationForm(destInfo)}>
             <ListItemIcon><Edit /></ListItemIcon>
-            <Typography noWrap variant="inherit" color="primary">Edit endpoint name</Typography>
+            <Typography noWrap variant="inherit" color="primary">Edit Destination name</Typography>
           </MenuItem>
 
           <MenuItem onClick={() => toggleDestinationDeleteDialog(destInfo)}>
             <ListItemIcon><AddCircle className={classes.deleteIcon} /></ListItemIcon>
-            <Typography className={classes.delete} noWrap variant="inherit" color="primary">Delete Endpoint</Typography>
+            <Typography className={classes.delete} noWrap variant="inherit" color="primary">Delete Destination</Typography>
           </MenuItem>
         </Menu>
 
