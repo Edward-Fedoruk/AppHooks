@@ -5,7 +5,7 @@ import Typography from "@material-ui/core/Typography"
 import { withStyles } from "@material-ui/core"
 import { compose } from "redux"
 import CardStats from "../CardStats"
-// import DestinationCardMenu from "./DestinationCardMenu"
+import DestinationCardMenu from "./DestinationCardMenu"
 
 const styles = ({ palette }) => ({
   paper: {
@@ -45,7 +45,7 @@ const DestinationCard = ({ destInfo, classes }) => {
       <div className={classes.endpointHeader}>
         <Typography variant="h6" className={classes.name}>{ destInfo.name }</Typography>
         <Typography variant="body1" component="a" className={classes.link} target="_black" href={destInfo.url}>{ destInfo.url }</Typography>
-        {/* <DestinationCardMenu destInfo={destInfo} /> */}
+        <DestinationCardMenu destInfo={destInfo} />
       </div>
 
       <CardStats statistics={statistics} />
