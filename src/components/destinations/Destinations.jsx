@@ -45,7 +45,7 @@ export class Destinations extends Component {
       <div>
         {destinations.map(dest => (
           <div>
-            <DestinationCard destInfo={dest} />
+            <DestinationCard key={dest.id} destInfo={dest} />
           </div>
         ))}
 
@@ -55,7 +55,7 @@ export class Destinations extends Component {
           open={destinationDeleteDialog}
           title="delete destination"
         >
-          Are you sure you want to delete this endpoint? It can`t be undone
+          Are you sure you want to delete this destination? It can`t be undone
         </ConfirmDialog>
       </div>
     )
