@@ -86,7 +86,7 @@ const mapStateToProps = ({ view }) => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  toggleEndpointDeleteDialog: () => dispatch(toggleEndpointDeleteDialog(false)),
+  toggleEndpointDeleteDialog: () => dispatch(toggleEndpointDeleteDialog({})),
   deleteEndpointAction: (channelId, stageId, endpointId) => dispatch(deleteEndpoint(channelId, stageId, endpointId)),
 })
 
