@@ -23,9 +23,9 @@ export const setDestinationsInStore = destinations => ({
   destinations,
 })
 
-export const editDestinationInStore = id => ({
+export const editDestinationInStore = destination => ({
   type: types.EDIT_DESTINATION_SUCCESS,
-  id,
+  destination,
 })
 
 export const fetchDestinations = endpointId => (dispatch) => {
@@ -44,7 +44,7 @@ export const fetchDestinations = endpointId => (dispatch) => {
 export const editDestination = (endpointId, destinationId, destData) => (dispatch) => {
   axios.put(`/endpoints/${endpointId}/destinations/${destinationId}`, destData)
     .then((response) => {
-      handleResponse(dispatch, setDestinationsInStore)(response)
+      handleResponse(dispatch, editDestinationInStore)(response)
       dispatch(toggleSuccessSnackbar("Destination was edited"))
     })
     .catch((response) => {

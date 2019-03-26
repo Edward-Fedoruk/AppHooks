@@ -15,6 +15,7 @@ import SuccessSnackbar from "../utils/SuccessSnackbar"
 import EndpointTopBar from "./EndpointTopBar"
 import CreateDestination from "../destinations/CreateDestination"
 import Destinations from "../destinations/Destinations"
+import EditDestination from "../destinations/EditDestination"
 
 const styles = () => ({
   contentWrap: {
@@ -60,6 +61,7 @@ export class Endpoint extends Component {
         <EndpointTopBar />
 
         <CreateDestination />
+        <EditDestination />
 
         <ErrorSnackbar message={errorMessage} />
         <SuccessSnackbar message={successMessage} />

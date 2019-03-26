@@ -21,6 +21,15 @@ export default (state = initialState, action) => {
       ...state,
       allDestinations: action.destinations,
     }
+  case types.EDIT_DESTINATION_SUCCESS:
+    console.log(action.destination)
+    return {
+      ...state,
+      allDestinations: state.allDestinations.map(dest => (
+        dest.id === action.destination.id
+          ? action.destination : dest
+      )),
+    }
   default:
     return state
   }
