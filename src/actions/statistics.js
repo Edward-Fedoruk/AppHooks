@@ -1,12 +1,12 @@
-import { compose } from "redux"
-import {
-  handleResponse,
-  handleErrorResponse,
-} from "./utils"
-import * as types from "./types"
+// import { compose } from "redux"
+// import {
+//   handleResponse,
+//   handleErrorResponse,
+// } from "./utils"
+// import * as types from "./types"
 import axios from "./utils"
 
-const stageBreakedown = (channelId, stageId) => (dispatch) => {
+export const stageBreakedown = (channelId, stageId) => () => {
   axios.get(`apps/${channelId}/${stageId}/statistics/deliverability/breakdown`)
     .then((response) => {
       console.log(response)
@@ -14,7 +14,7 @@ const stageBreakedown = (channelId, stageId) => (dispatch) => {
     .catch(() => {})
 }
 
-const stageSummary = (channelId, stageId) => (dispatch) => {
+export const stageSummary = (channelId, stageId) => () => {
   axios.get(`apps/${channelId}/${stageId}/statistics/deliverability/summary`)
     .then((response) => {
       console.log(response)
@@ -22,7 +22,7 @@ const stageSummary = (channelId, stageId) => (dispatch) => {
     .catch(() => {})
 }
 
-const stageTotal = (channelId, stageId) => (dispatch) => {
+export const stageTotal = (channelId, stageId) => () => {
   axios.get(`apps/${channelId}/${stageId}/statistics/total`)
     .then((response) => {
       console.log(response)
@@ -30,7 +30,7 @@ const stageTotal = (channelId, stageId) => (dispatch) => {
     .catch(() => {})
 }
 
-const endpointsBreakedown = endpointId => (dispatch) => {
+export const endpointsBreakedown = endpointId => () => {
   axios.get(`endpoints/${endpointId}/statistics/deliverability/breakdown`)
     .then((response) => {
       console.log(response)
@@ -38,7 +38,7 @@ const endpointsBreakedown = endpointId => (dispatch) => {
     .catch(() => {})
 }
 
-const endpointsSummary = endpointId => (dispatch) => {
+export const endpointsSummary = endpointId => () => {
   axios.get(`endpoints/${endpointId}/statistics/deliverability/summary`)
     .then((response) => {
       console.log(response)
@@ -46,7 +46,7 @@ const endpointsSummary = endpointId => (dispatch) => {
     .catch(() => {})
 }
 
-const endpointsTotal = endpointId => (dispatch) => {
+export const endpointsTotal = endpointId => () => {
   axios.get(`endpoints/${endpointId}/statistics/total`)
     .then((response) => {
       console.log(response)
@@ -54,7 +54,7 @@ const endpointsTotal = endpointId => (dispatch) => {
     .catch(() => {})
 }
 
-const generalBreackdow = () => (dispatch) => {
+export const generalBreackdow = () => () => {
   axios.get("/statistics/deliverability/breakdown")
     .then((response) => {
       console.log(response)
@@ -62,7 +62,7 @@ const generalBreackdow = () => (dispatch) => {
     .catch(() => {})
 }
 
-const generalSummary = () => (dispatch) => {
+export const generalSummary = () => () => {
   axios.get("/statistics/deliverability/summary")
     .then((response) => {
       console.log(response)
@@ -70,7 +70,7 @@ const generalSummary = () => (dispatch) => {
     .catch(() => {})
 }
 
-const generalInProcess = () => (dispatch) => {
+export const generalInProcess = () => () => {
   axios.get("/statistics/hooks/in-process")
     .then((response) => {
       console.log(response)

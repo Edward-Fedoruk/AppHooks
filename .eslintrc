@@ -39,6 +39,7 @@
     "no-shadow": "off",
     "react/destructuring-assignment": ["always", { "ignoreClassFields": true }],
     "linebreak-style": 0,
-    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/jsx-one-expression-per-line": ["disabled", { "allow": "literal" }]
   }
 }

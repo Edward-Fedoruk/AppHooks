@@ -1,3 +1,4 @@
+/* eslint-disable react/no-string-refs */
 import React, { Component } from "react"
 import PropTypes from "prop-types"
 import { withStyles } from "@material-ui/core"
@@ -51,6 +52,7 @@ class ChangePassword extends Component {
 
   static propTypes = {
     classes: PropTypes.object.isRequired,
+    changeUserPassword: PropTypes.func.isRequired,
   }
 
   toggleForm = () => this.setState(

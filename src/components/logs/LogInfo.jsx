@@ -48,23 +48,26 @@ export class LogInfo extends Component {
 
   static propTypes = {
     classes: PropTypes.object.isRequired,
+    match: PropTypes.object.isRequired,
+    fetchRequest: PropTypes.func.isRequired,
+    openedLog: PropTypes.object.isRequired,
   }
 
-  handleChange = (event, value) => {
-    this.setState({ value })
+
+  componentDidMount() {
+    this.props.fetchRequest(this.props.match.params.id)
   }
 
   handleChangeIndex = (index) => {
     this.setState({ value: index })
   }
 
-  componentDidMount() {
-    this.props.fetchRequest(this.props.match.params.id)
+  handleChange = (event, value) => {
+    this.setState({ value })
   }
 
   render() {
     const { classes, openedLog } = this.props
-    console.log(openedLog)
     return (
       <Fragment>
         <TopBar title="Request Log Info" />

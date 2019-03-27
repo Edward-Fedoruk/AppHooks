@@ -24,15 +24,16 @@ export class ChannelChartCard extends Component {
   }
 
   render() {
+    const { classes } = this.props
     return (
-      <div>
+      <div className={classes.cardWrap}>
         <Card />
       </div>
     )
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = () => ({
 
 })
 

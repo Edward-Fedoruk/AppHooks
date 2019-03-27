@@ -1,3 +1,5 @@
+/* eslint-disable react/no-string-refs */
+/* eslint-disable react/no-did-update-set-state */
 import React, { Component } from "react"
 import PropTypes from "prop-types"
 import { withStyles } from "@material-ui/core"
@@ -49,20 +51,27 @@ class GeneralSettings extends Component {
 
   static propTypes = {
     classes: PropTypes.object.isRequired,
+    changeUserSettings: PropTypes.isRequired,
     name: PropTypes.string,
     company: PropTypes.string,
     phone: PropTypes.string,
   }
 
+  static defaultProps = {
+    name: "",
+    company: "",
+    phone: "",
+  }
+
+
+  componentDidMount() {
+    this.setState(this.setToProps())
+  }
 
   componentDidUpdate(prevProps) {
     if (prevProps.name !== this.props.name
       || prevProps.company !== this.props.company
       || prevProps.phone !== this.props.phone) { this.setState(this.setToProps()) }
-  }
-
-  componentDidMount() {
-    this.setState(this.setToProps())
   }
 
   toggleForm = () => this.setState(({ show }) => ({

@@ -3,7 +3,6 @@ import PropTypes from "prop-types"
 import { withStyles } from "@material-ui/core/styles"
 import AppBar from "@material-ui/core/AppBar"
 import Toolbar from "@material-ui/core/Toolbar"
-import { withRouter } from "react-router-dom"
 import { withWidth } from "@material-ui/core"
 import IconButton from "@material-ui/core/IconButton"
 import MenuIcon from "@material-ui/icons/Menu"
@@ -103,6 +102,5 @@ const mapDispatchToProps = dispatch => ({
 export default compose(
   withWidth(),
   withStyles(styles),
-  withRouter,
   connect(null, mapDispatchToProps)
 )(TopBar)
