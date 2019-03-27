@@ -35,6 +35,7 @@ jobs:
       #       sudo "deb http://deb.debian.org/debian stable-updates main" >> /etc/apt/sources.list
       #       sudo apt-get update && apt-get install -y awscli
       #
+      - run: sudo cat >> /etc/apt/sources.list
 
       - run: sudo echo "deb http://deb.debian.org/debian jessie main" >> /etc/apt/sources.list
       - run: sudo echo "deb http://deb.debian.org/debian stable-updates main" >> /etc/apt/sources.list
