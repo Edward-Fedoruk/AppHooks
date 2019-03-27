@@ -44,8 +44,7 @@
     "test": "npm run jest && npm run lint",
     "lint": "eslint ./src --ext .js --ext .jsx",
     "eject": "react-scripts eject",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "predeploy": "npm run build"
   },
   "eslintConfig": {
     "extends": "react-app"
