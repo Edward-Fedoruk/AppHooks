@@ -3,6 +3,7 @@ import PropTypes from "prop-types"
 import { withStyles } from "@material-ui/core"
 import classNames from "classnames"
 import Typography from "@material-ui/core/Typography"
+import CardStatsBlock from "./CardStatsBlock"
 
 const styles = ({ palette }) => ({
   statsBlock: {
@@ -12,7 +13,6 @@ const styles = ({ palette }) => ({
     alignItems: "center",
     height: "65px",
     padding: "0 12px",
-    // borderRight: "1px solid #828CB8",
   },
 
   deliverPercent: {
@@ -30,24 +30,6 @@ const styles = ({ palette }) => ({
     color: palette.primary.main,
   },
 
-  deliverWrap: {
-    // borderLeft: "1px solid #828CB8",
-  },
-
-  category: {
-    fontSize: "14px",
-    fontWeight: "normal",
-    color: palette.primary.main,
-    textAlign: "center",
-  },
-
-  categoryCount: {
-    fontSize: "20px",
-    fontWeight: "normal",
-    color: palette.primary.main,
-    textAlign: "center",
-  },
-
   stats: {
     display: "flex",
     justifyContent: "space-between",
@@ -62,6 +44,7 @@ const styles = ({ palette }) => ({
 
 const CardStats = ({ classes, statistics }) => (
   <div className={classes.stats}>
+
     <div className={classes.divider} />
 
     <div className={classNames(classes.statsBlock, classes.deliverWrap)}>
@@ -71,52 +54,12 @@ const CardStats = ({ classes, statistics }) => (
       </div>
     </div>
 
-    <div className={classes.divider} />
+    <CardStatsBlock leftDivider name="Successful Requests" amount={statistics.successful} />
+    <CardStatsBlock name="Failed Requests" amount={statistics.failed} />
+    <CardStatsBlock name="Queued Requests" amount={statistics.queued} />
+    <CardStatsBlock name="Pending" amount={statistics.pending} />
+    <CardStatsBlock name="Filtered" amount={statistics.filtered} />
 
-    <div className={classes.statsBlock}>
-      <div>
-        <Typography variant="body1" className={classes.categoryCount}>{ statistics.successful }</Typography>
-        <Typography variant="caption" className={classes.category}>Successful Requests</Typography>
-      </div>
-    </div>
-
-    <div className={classes.divider} />
-
-    <div className={classes.statsBlock}>
-      <div>
-        <Typography variant="body1" className={classes.categoryCount}>{ statistics.failed }</Typography>
-        <Typography variant="caption" className={classes.category}>Failed Requests</Typography>
-      </div>
-    </div>
-
-    <div className={classes.divider} />
-
-    <div className={classes.statsBlock}>
-      <div>
-        <Typography variant="body1" className={classes.categoryCount}>{ statistics.queued }</Typography>
-        <Typography variant="caption" className={classes.category}>Queued Requests</Typography>
-      </div>
-    </div>
-
-    <div className={classes.divider} />
-
-    <div className={classes.statsBlock}>
-      <div>
-        <Typography variant="body1" className={classes.categoryCount}>{ statistics.pending }</Typography>
-        <Typography variant="caption" className={classes.category}>Pending</Typography>
-      </div>
-    </div>
-
-    <div className={classes.divider} />
-
-    <div className={classes.statsBlock}>
-      <div>
-        <Typography variant="body1" className={classes.categoryCount}>{ statistics.filtered }</Typography>
-        <Typography variant="caption" className={classes.category}>Filtered</Typography>
-      </div>
-    </div>
-
-    <div className={classes.divider} />
   </div>
 )
 
