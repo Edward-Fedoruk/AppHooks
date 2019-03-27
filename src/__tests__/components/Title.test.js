@@ -1,7 +1,7 @@
 import "jsdom-global/register"
 import React from "react"
 import { shallow, mount } from "enzyme"
-import Title from "../../components/Title"
+import Title from "../../components/utils/Title"
 
 describe("Title", () => {
   it("should match snapshot", () => {

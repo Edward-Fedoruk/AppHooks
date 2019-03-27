@@ -1,7 +1,7 @@
 import "jsdom-global/register"
 import React from "react"
 import { shallow, mount } from "enzyme"
-import MainButton from "../../components/MainButton"
+import MainButton from "../../components/utils/MainButton"
 
 describe("MainButton", () => {
   it("should match snapshot", () => {

@@ -1,7 +1,7 @@
 import "jsdom-global/register"
 import React from "react"
 import { shallow } from "enzyme"
-import TopBar from "../../components/TopBar"
+import TopBar from "../../components/utils/TopBar"
 
 describe("TopBar", () => {
   it("should match snapshot", () => {
