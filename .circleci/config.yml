@@ -28,19 +28,6 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-      # - run:
-      #     name: update /etc/apt/sources.list for apt-get update
-      #     command: |
-      #       sudo "deb http://deb.debian.org/debian jessie main" >> /etc/apt/sources.list
-      #       sudo "deb http://deb.debian.org/debian stable-updates main" >> /etc/apt/sources.list
-      #       sudo apt-get update && apt-get install -y awscli
-      #
-
-      # - run: sudo echo "deb http://deb.debian.org/debian jessie main" >> /etc/apt/sources.list
-      # - run: sudo echo "deb http://deb.debian.org/debian stable-updates main" >> /etc/apt/sources.list
-      # - run: sudo apt-get -o Acquire::Check-Valid-Until=false update
-
-
       - run: |
              sudo rm /etc/apt/sources.list
              echo "deb http://archive.debian.org/debian/ jessie-backports main" | sudo tee -a /etc/apt/sources.list
@@ -49,7 +36,7 @@ jobs:
              echo 'Package: *\nPin: origin "archive.debian.org"\nPin-Priority: 500' | sudo tee -a /etc/apt/preferences.d/10-archive-pin
              sudo apt-get update
 
-      - run: sudo apt-get update && sudo apt-get install -y python-dev
+      - run: sudo apt-get update && sudo apt-get install -y python2.7-dev
       - run: sudo curl -O https://bootstrap.pypa.io/get-pip.py
       - run: sudo python get-pip.py
       - run: sudo pip install awscli --upgrade
