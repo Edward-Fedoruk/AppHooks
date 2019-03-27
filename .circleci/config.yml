@@ -7,7 +7,7 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: circleci/node:10.0
+      - image: circleci/node:10.6
 
     working_directory: ~/repo
 
@@ -28,17 +28,20 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-      - run: sudo rm /etc/apt/sources.list
-      - run: echo "deb http://archive.debian.org/debian/ jessie-backports main" | sudo tee -a /etc/apt/sources.list
-      - run: echo "deb-src http://archive.debian.org/debian/ jessie-backports main" | sudo tee -a /etc/apt/sources.list
-      - run: echo "Acquire::Check-Valid-Until false;" | sudo tee -a /etc/apt/apt.conf.d/10-nocheckvalid
-      # - run: echo "Package: *\nPin: origin 'archive.debian.org'\nPin-Priority: 500" | sudo tee -a /etc/apt/preferences.d/10-archive-pin
-      #
+      - run:
+          name: Install dependencies
+          working_directory: /
+          command: |
+            apt-get -y -qq update
+            apt-get -y -qq install python3.4-dev
+            curl -O https://bootstrap.pypa.io/get-pip.py
+            python3.4 get-pip.py --user
+            pip install awscli --upgrade --user
 
-      - run: sudo apt-get update && sudo apt-get install -y python-dev
-      - run: sudo curl -O https://bootstrap.pypa.io/get-pip.py
-      - run: sudo python get-pip.py
-      - run: sudo pip install awscli --upgrade
+      # - run: sudo apt-get update && sudo apt-get install -y python-dev
+      # - run: sudo curl -O https://bootstrap.pypa.io/get-pip.py
+      # - run: sudo python get-pip.py
+      # - run: sudo pip install awscli --upgrade
       - run: aws --version
       - run: aws s3 ls
       - run: CI=false OAUTH2_GOOGLE_CLIENT_ID=73206489358-hq2cbrum1dq3pt6b6fovpr9nij68t708.apps.googleusercontent.com OAUTH2_GITHUB_CLIENT_ID=ed52156c43808882014a STRIPE_KEY=pk_test_qMst2t2l3YbB2OQJh40wE3eq npm run build
