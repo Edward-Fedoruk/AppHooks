@@ -7,7 +7,7 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: circleci/node:10.6
+      - image: circleci/node:10.11.0
 
     working_directory: ~/repo
 
@@ -28,16 +28,22 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-      - run: |
-          sudo echo "deb [check-valid-until=no] http://archive.debian.org/debian jessie-backports main" > /etc/apt/sources.list.d/jessie-backports.list
-          sudo sed -i '/deb http:\/\/deb.debian.org\/debian jessie-updates main/d' /etc/apt/sources.list
-          sudo apt-get -o Acquire::Check-Valid-Until=false update
+      - run:
+          name: update /etc/apt/sources.list for apt-get update
+          command: |
+              echo "deb http://deb.debian.org/debian jessie main" > /etc/apt/sources.list
+              echo "deb http://deb.debian.org/debian stable-updates main" >> /etc/apt/sources.list
+              apt-get update && apt-get install -y awscli
+      # - run: |
+#           sudo echo "deb [check-valid-until=no] http://archive.debian.org/debian jessie-backports main" > /etc/apt/sources.list.d/jessie-backports.list
+#           sudo sed -i '/deb http:\/\/deb.debian.org\/debian jessie-updates main/d' /etc/apt/sources.list
+#           sudo apt-get -o Acquire::Check-Valid-Until=false update
 
       # - run: sudo apt-get update && sudo apt-get install -y python-dev
       # - run: sudo curl -O https://bootstrap.pypa.io/get-pip.py
       # - run: sudo python get-pip.py
       # - run: sudo pip install awscli --upgrade
-      - run: apt-get update && apt-get install -y awscli
+      # - run:
 
       - run: aws --version
       - run: aws s3 ls
