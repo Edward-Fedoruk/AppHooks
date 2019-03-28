@@ -63,9 +63,6 @@
     "redux-devtools": "^3.5.0",
     "redux-devtools-extension": "^2.13.7"
   },
-  "pre-push": [
-    "test"
-  ],
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.{js,jsx}",
