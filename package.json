@@ -42,11 +42,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "jest": "react-scripts test --env=node --coverage",
-    "test": "npm run jest && npm run lint",
-    "lint": "eslint ./src --ext .js --ext .jsx",
+    "test": "npm run jest",
     "eject": "react-scripts eject",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "predeploy": "npm run build"
   },
   "browserslist": [
     ">0.2%",
