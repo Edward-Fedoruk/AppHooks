@@ -13,10 +13,12 @@ import TopBar from "../utils/TopBar"
 import SuccessSnackbar from "../utils/SuccessSnackbar"
 import { createLoadingSelector } from "../../actions/utils"
 import Preloader from "../Preloader"
+import { fetchUsers } from "../../actions/subUsers"
 
 export class Channels extends Component {
   static propTypes = {
     fetchChannels: PropTypes.func.isRequired,
+    fetchUsers: PropTypes.func.isRequired,
     toggleCreateChannelForm: PropTypes.func.isRequired,
     createChannelForm: PropTypes.bool.isRequired,
     successMessage: PropTypes.string,
@@ -30,6 +32,7 @@ export class Channels extends Component {
 
   componentDidMount() {
     this.props.fetchChannels()
+    this.props.fetchUsers()
   }
 
   render() {
@@ -64,6 +67,7 @@ const mapStateToProps = ({ channelsEntities, view, preloader }) => ({
 const mapDispatchToProps = {
   fetchChannels,
   toggleCreateChannelForm,
+  fetchUsers,
 }
 
 export default compose(
