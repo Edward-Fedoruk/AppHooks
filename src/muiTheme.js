@@ -26,6 +26,11 @@ const theme = createMuiTheme({
         color: "#828CB8", // Some CSS
       },
     },
+    MuiTypography: {
+      h5: { color: "#192b7f" },
+      body2: { color: "#192b7f" },
+      subtitle1: { color: "#192b7f" },
+    },
     MuiTablePagination: {
       caption: {
         color: "#192B81",
