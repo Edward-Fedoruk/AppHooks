@@ -56,8 +56,8 @@ const CardStatsBlock = ({
 
 CardStatsBlock.propTypes = {
   classes: PropTypes.object.isRequired,
-  name: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-  amount: PropTypes.string,
+  amount: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  name: PropTypes.string,
   leftDivider: PropTypes.bool,
   RightDivider: PropTypes.bool,
   className: PropTypes.string,
@@ -65,6 +65,7 @@ CardStatsBlock.propTypes = {
 
 CardStatsBlock.defaultProps = {
   amount: 0,
+  name: "",
   leftDivider: false,
   RightDivider: true,
   className: "",
