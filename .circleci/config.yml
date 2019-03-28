@@ -7,7 +7,7 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: circleci/node:10.0
+      - image: circleci/node:10.12.0-stretch
 
     working_directory: ~/repo
 
@@ -28,14 +28,13 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-      # - run: yarn test
       - run: sudo apt-get update && sudo apt-get install -y python-dev
       - run: sudo curl -O https://bootstrap.pypa.io/get-pip.py
       - run: sudo python get-pip.py
       - run: sudo pip install awscli --upgrade
       - run: aws --version
       - run: aws s3 ls
-      - run: CI=false OAUTH2_GOOGLE_CLIENT_ID=73206489358-hq2cbrum1dq3pt6b6fovpr9nij68t708.apps.googleusercontent.com OAUTH2_GITHUB_CLIENT_ID=ed52156c43808882014a STRIPE_KEY=pk_test_qMst2t2l3YbB2OQJh40wE3eq npm run build
+      - run: CI=false NODE_ENV=production OAUTH2_GOOGLE_CLIENT_ID=73206489358-hq2cbrum1dq3pt6b6fovpr9nij68t708.apps.googleusercontent.com OAUTH2_GITHUB_CLIENT_ID=ed52156c43808882014a STRIPE_KEY=pk_test_qMst2t2l3YbB2OQJh40wE3eq npm run build
       - run: aws s3 sync build/ s3://apphooks-frontend --delete
       - run: aws cloudfront create-invalidation --distribution-id E1K5SM215FMFYB --paths /*
 
