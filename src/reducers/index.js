@@ -11,6 +11,7 @@ import userSettings from "./userSettings"
 import preloader from "./preloader"
 import errorHandler from "./errorHandler"
 import destinations from "./destinations"
+import statistics from "./statistics"
 
 export default combineReducers({
   view,
@@ -25,4 +26,5 @@ export default combineReducers({
   userSettings,
   preloader,
   errorHandler,
+  statistics
 })

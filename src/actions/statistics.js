@@ -1,36 +1,45 @@
 // import { compose } from "redux"
-// import {
-//   handleResponse,
-//   handleErrorResponse,
-// } from "./utils"
-// import * as types from "./types"
+import {
+  handleResponse,
+  // handleErrorResponse,
+} from "./utils"
+import * as types from "./types"
 import axios from "./utils"
 
-export const stageBreakedown = (channelId, stageId) => () => {
+const createStatsAction = entityType => entityStatsType => payload => ({
+  type: types[`${entityType}_${entityStatsType}_STATS`],
+  payload,
+})
+
+// const setEndpointStats = createStatsAction("ENDPOINT")
+const setStageStats = createStatsAction("STAGE")
+
+export const stageBreakdown = (channelId, stageId) => (dispatch) => {
   axios.get(`apps/${channelId}/${stageId}/statistics/deliverability/breakdown`)
-    .then((response) => {
-      console.log(response)
+    .then(({ data }) => {
+      dispatch(setStageStats("BREAKDOWN")(data))
     })
-    .catch(() => {})
+    .catch(response => console.log(response))
 }
 
-export const stageSummary = (channelId, stageId) => () => {
+export const stageSummary = (channelId, stageId) => (dispatch) => {
   axios.get(`apps/${channelId}/${stageId}/statistics/deliverability/summary`)
-    .then((response) => {
-      console.log(response)
+    .then(({ data }) => {
+      const getSummary = setStageStats("SUMMARY")
+      dispatch(getSummary(data))
     })
     .catch(() => {})
 }
 
-export const stageTotal = (channelId, stageId) => () => {
+export const stageTotal = (channelId, stageId) => (dispatch) => {
   axios.get(`apps/${channelId}/${stageId}/statistics/total`)
-    .then((response) => {
-      console.log(response)
+    .then(({ data }) => {
+      dispatch(setStageStats("TOTAL")(data))
     })
     .catch(() => {})
 }
 
-export const endpointsBreakedown = endpointId => () => {
+export const endpointsBreakdown = endpointId => () => {
   axios.get(`endpoints/${endpointId}/statistics/deliverability/breakdown`)
     .then((response) => {
       console.log(response)
