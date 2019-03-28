@@ -6,7 +6,17 @@ import Card from "@material-ui/core/Card"
 import Typography from "@material-ui/core/Typography"
 import { withStyles } from "@material-ui/core"
 import { withRouter } from "react-router-dom"
-import { RadialChart } from "react-vis"
+import {
+  RadialChart,
+  XYPlot,
+  XAxis,
+  YAxis,
+  ChartLabel,
+  HorizontalGridLines,
+  VerticalGridLines,
+  LineSeries,
+  LineMarkSeries,
+} from "react-vis"
 import { stageSummary, stageBreakdown, stageTotal } from "../../actions/statistics"
 import CardStatsBlock from "../CardStatsBlock"
 
@@ -70,6 +80,8 @@ const styles = () => ({
   radialChartWrap: { position: "relative" },
   generalInfo: { width: "50%" },
   radialChart: { position: "relative" },
+  timeChart: { width: "100%", height: "200px" },
+  timeChartWrap: { width: "50%" },
 })
 
 export class ChannelChartCard extends Component {
@@ -81,6 +93,7 @@ export class ChannelChartCard extends Component {
     match: PropTypes.object.isRequired,
     total: PropTypes.object.isRequired,
     summary: PropTypes.object.isRequired,
+    breakdown: PropTypes.object.isRequired,
   }
 
   componentDidMount() {
@@ -104,11 +117,19 @@ export class ChannelChartCard extends Component {
   renderChartFields = (chartData) => {
     const { classes } = this.props
 
-    return chartData.map(({ name, color }) => (
-      <Typography component="li" className={classes.statsListItem}>
-        <span style={{ backgroundColor: color }} className={classes.dot} />{ name }
+    return chartData.map(({ name, color, angle }) => (
+      <Typography key={color} component="li" className={classes.statsListItem}>
+        <span style={{ backgroundColor: color }} className={classes.dot} />{ name }: { angle }
       </Typography>
     ))
+  }
+
+  transformTimeChartData = () => {
+    const { breakdown } = this.props
+
+    const key = Object.keys(breakdown)[0]
+
+    // Object.entries(breakdown[key]).
   }
 
   render() {
@@ -146,7 +167,27 @@ export class ChannelChartCard extends Component {
           </div>
         </div>
 
-        <div className={classes.timeChart} />
+        <div className={classes.timeChartWrap}>
+          <XYPlot xType="time" width={300} height={300}>
+            <HorizontalGridLines />
+            <XAxis />
+            <YAxis />
+            <LineMarkSeries
+              className="linemark-series-example"
+              style={{
+                strokeWidth: "3px",
+              }}
+              lineStyle={{ stroke: "red" }}
+              markStyle={{ stroke: "blue" }}
+              data={[{ x: "", y: 10 }, { x: 2, y: 5 }, { x: 3, y: 10 }]}
+            />
+            <LineMarkSeries
+              className="linemark-series-example-2"
+              curve="curveMonotoneX"
+              data={[{ x: 1, y: 11 }, { x: 1.5, y: 10 }, { x: 3, y: 7 }]}
+            />
+          </XYPlot>
+        </div>
       </Card>
     )
   }
@@ -155,6 +196,7 @@ export class ChannelChartCard extends Component {
 const mapStateToProps = ({ statistics }) => ({
   total: statistics.stage.total,
   summary: statistics.stage.summary,
+  breakdown: statistics.stage.breakdown,
 })
 
 const mapDispatchToProps = dispatch => ({
