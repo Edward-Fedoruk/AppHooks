@@ -16,6 +16,7 @@ import ErrorSnackbar from "../utils/ErrorSnackbar"
 import { createErrorMessageSelector } from "../../actions/utils"
 import SuccessSnackbar from "../utils/SuccessSnackbar"
 import ChannelsForms from "./ChannelsForms"
+import ChannelChartCard from "../statistics/ChannelChartCard"
 
 const styles = () => ({
   contentWrap: {
@@ -61,10 +62,10 @@ export class Channel extends Component {
         <StageTopBar />
         <ErrorSnackbar message={errorMessage} />
         <SuccessSnackbar message={successMessage} />
+        <ChannelsForms />
 
         <div className={classes.contentWrap}>
-
-          <ChannelsForms />
+          <ChannelChartCard />
 
           {endpoints.length
             ? <Endpoints endpoints={endpoints} />
