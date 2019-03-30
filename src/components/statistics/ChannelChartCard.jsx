@@ -40,29 +40,13 @@ export class ChannelChartCard extends Component {
     stageBreakdown(params.channelId, params.stageId)
   }
 
-  transformTimeChartData = () => {
-    const { breakdown } = this.props
-
-    const date = Object.keys(breakdown)[0]
-    if (date !== undefined) {
-      return Object.entries(breakdown[date]).map(([time, axis]) => ([
-        Date.parse(`${date} ${time}`),
-        axis["5xx"]
-      ]))
-    }
-
-    return [[Date.parse(new Date()), 0]]
-  }
-
-
   render() {
-    const { classes, total, summary } = this.props
-    const XYChartData = this.transformTimeChartData()
+    const { classes, total, summary, breakdown } = this.props
 
     return (
       <Card className={classes.card}>
         <GeneralStats total={total} summary={summary} />
-        <DynamicTimeChart XYChartData={XYChartData} />
+        <DynamicTimeChart XYChartData={breakdown} />
       </Card>
     )
   }
