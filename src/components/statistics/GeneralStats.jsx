@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 import { RadialChart } from "react-vis"
 import { withStyles } from "@material-ui/core"
 import { compose } from "redux"
-import CardStatsBlock from "../CardStatsBlock"
+import CardStatsBlock from "./CardStatsBlock"
 import Typography from "@material-ui/core/Typography"
 
 const style = () => ({

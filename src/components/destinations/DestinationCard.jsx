@@ -4,7 +4,7 @@ import Paper from "@material-ui/core/Paper"
 import Typography from "@material-ui/core/Typography"
 import { withStyles } from "@material-ui/core"
 import { compose } from "redux"
-import CardStats from "../CardStats"
+import CardStats from "../statistics/CardStats"
 import DestinationCardMenu from "./DestinationCardMenu"
 
 const styles = ({ palette }) => ({
