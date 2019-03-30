@@ -40,7 +40,7 @@ export const startTimer = () => {
       history.push("/login")
       return
     }
-    console.log(expirationTime, currentTimestamp, `expired? - ${currentTimestamp > expirationTime}`)
+    // console.log(expirationTime, currentTimestamp, `expired? - ${currentTimestamp > expirationTime}`)
     if (currentTimestamp < expirationTime && currentTimestamp > expirationTime - 120000) {
       console.log("start refresh")
       // clearInterval(timer)
