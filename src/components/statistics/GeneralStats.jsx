@@ -54,7 +54,7 @@ const style = () => ({
 
 })
 
-const GeneralStats = ({ classes, chartData, total, summary, radialChartData }) => (
+const GeneralStats = ({ classes, total, summary }) => (
   <div className={classes.root}>
     <div className={classes.summaryStats}>
       <CardStatsBlock leftDivider name="Inputs" amount={total.inputs} />
@@ -66,7 +66,7 @@ const GeneralStats = ({ classes, chartData, total, summary, radialChartData }) =
         <RadialChart
           className={classes.radialChart}
           colorType="literal"
-          data={radialChartData}
+          data={summary.requestStats}
           width={200}
           height={200}
           innerRadius={65}
@@ -79,7 +79,7 @@ const GeneralStats = ({ classes, chartData, total, summary, radialChartData }) =
         </div>
       </div>
       <ul className={classes.statsList}>
-        {chartData.map(({ name, color, angle }) => (
+        {summary.requestStats.map(({ name, color, angle }) => (
           <Typography key={color} component="li" className={classes.statsListItem}>
             <span style={{ backgroundColor: color }} className={classes.dot} />{ name }: { angle }
           </Typography>
@@ -91,10 +91,8 @@ const GeneralStats = ({ classes, chartData, total, summary, radialChartData }) =
 
 GeneralStats.propTypes = {
   classes: PropTypes.object.isRequired,
-  chartData: PropTypes.array, 
   total: PropTypes.object, 
   summary: PropTypes.object,
-  radialChartData: PropTypes.array,
 }
 
 GeneralStats.defaultProps = {

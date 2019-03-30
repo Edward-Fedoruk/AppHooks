@@ -1,6 +1,6 @@
 const initialState = {
   stage: {
-    summary: {},
+    summary: { requestStats: [], deliverability: "" },
     breakdown: {},
     total: {},
   },
@@ -17,7 +17,6 @@ export default (state = initialState, action) => {
   if (matches !== null) {
     const entityType = matches[1].toLowerCase()
     const entityStatsType = matches[2].toLowerCase()
-    console.log(action.payload)
 
     return {
       ...state,

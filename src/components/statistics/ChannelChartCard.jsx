@@ -40,15 +40,6 @@ export class ChannelChartCard extends Component {
     stageBreakdown(params.channelId, params.stageId)
   }
 
-  transformRadialChartData = () => {
-    const { summary } = this.props
-    const colors = ["#4ED8DA", "#F25252", "#C04DD8", "#828CB8", "#D7DEF1"]
-
-    return Object.entries(summary)
-      .filter(([name]) => name !== "deliverability")
-      .map(([name, value], i) => ({ name, angle: value, color: colors[i] }))
-  }
-
   transformTimeChartData = () => {
     const { breakdown } = this.props
 
@@ -66,17 +57,11 @@ export class ChannelChartCard extends Component {
 
   render() {
     const { classes, total, summary } = this.props
-    const radialChartData = this.transformRadialChartData()
     const XYChartData = this.transformTimeChartData()
 
     return (
       <Card className={classes.card}>
-        <GeneralStats 
-          radialChartData={radialChartData} 
-          total={total} 
-          summary={summary} 
-          chartData={radialChartData} 
-        />
+        <GeneralStats total={total} summary={summary} />
         <DynamicTimeChart XYChartData={XYChartData} />
       </Card>
     )
@@ -85,7 +70,7 @@ export class ChannelChartCard extends Component {
 
 const mapStateToProps = ({ statistics }) => ({
   total: statistics.stage.total,
-  summary: {},
+  summary: statistics.stage.summary,
   breakdown: statistics.stage.breakdown,
 })
 

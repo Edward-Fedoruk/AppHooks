@@ -26,7 +26,14 @@ export const stageSummary = (channelId, stageId) => (dispatch) => {
   axios.get(`apps/${channelId}/${stageId}/statistics/deliverability/summary`)
     .then(({ data }) => {
       const getSummary = setStageStats("SUMMARY")
-      dispatch(getSummary(data))
+
+      const colors = ["#4ED8DA", "#F25252", "#C04DD8", "#828CB8", "#D7DEF1"]
+      const requestStats = Object.entries(data)
+        .filter(([name]) => name !== "deliverability")
+        .map(([name, value], i) => ({ name, angle: value, color: colors[i] }))
+      const summary = { requestStats, deliverability: data.deliverability }
+      console.log(summary)
+      dispatch(getSummary(summary))
     })
     .catch(() => {})
 }
