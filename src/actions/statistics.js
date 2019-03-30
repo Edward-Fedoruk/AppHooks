@@ -5,6 +5,7 @@ import {
 } from "./utils"
 import * as types from "./types"
 import axios from "./utils"
+import { TimeSeries, TimeRange } from "pondjs"
 
 const createStatsAction = entityType => entityStatsType => payload => ({
   type: types[`${entityType}_${entityStatsType}_STATS`],
@@ -17,7 +18,47 @@ const setStageStats = createStatsAction("STAGE")
 export const stageBreakdown = (channelId, stageId) => (dispatch) => {
   axios.get(`apps/${channelId}/${stageId}/statistics/deliverability/breakdown`)
     .then(({ data }) => {
-      dispatch(setStageStats("BREAKDOWN")(data))
+      // getting obj key name because of bad name format(2019-21-20) in response
+      const date = Object.keys(data)[0]
+      const serverErrors = []
+      const clientErrors = []
+      const successes = []
+
+      Object.entries(data[date]).forEach(([time, axis]) => {
+        const milliseconds = Date.parse(`${date} ${time}`)
+        serverErrors.push([milliseconds, axis["5xx"]])
+        clientErrors.push([milliseconds, axis["4xx"]])
+        successes.push([milliseconds, axis["2xx"]])
+      })
+      
+      const timeSteps = Object.keys(data[date])
+      const startTime = Date.parse(`${date} ${timeSteps[0]}`)
+      const endTime = Date.parse(`${date} ${timeSteps.reverse()[0]}`)
+      const chartRange = new TimeRange([startTime, endTime])
+
+      const requestStats = { 
+        chartRange,
+        serverErrors: new TimeSeries({ 
+          name: "serverErrors", 
+          columns: ["time", "value"], 
+          points: serverErrors 
+        }), 
+        clientErrors: new TimeSeries({ 
+          name: "clientErrors", 
+          columns: ["time", "value"], 
+          points: clientErrors 
+        }), 
+        successes: new TimeSeries({ 
+          name: "successes", 
+          columns: ["time", "value"], 
+          points: successes 
+        }) 
+      }
+
+
+      console.log(requestStats)
+
+      dispatch(setStageStats("BREAKDOWN")(requestStats))
     })
     .catch(response => console.log(response))
 }
