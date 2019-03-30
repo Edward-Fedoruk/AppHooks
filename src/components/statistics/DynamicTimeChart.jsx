@@ -65,7 +65,7 @@ const timeAxisStyle  = {
 
 export class DynamicTimeChart extends Component {
   state = {
-    timeRange: new TimeRange([Date.parse("2019-03-19 00:00"), Date.parse("2019-03-19 00:25")]),
+    timeRange: this.props.XYChartData.chartRange,
   }
 
   static propTypes = {

@@ -31,9 +31,9 @@ export const stageBreakdown = (channelId, stageId) => (dispatch) => {
         successes.push([milliseconds, axis["2xx"]])
       })
       
-      const timeSteps = Object.keys(data[date])
-      const startTime = Date.parse(`${date} ${timeSteps[0]}`)
-      const endTime = Date.parse(`${date} ${timeSteps.reverse()[0]}`)
+      const timeSteps = Object.keys(data[date]).reverse()
+      const startTime = Date.parse(`${date} ${timeSteps[5]}`)
+      const endTime = Date.parse(`${date} ${timeSteps[0]}`)
       const chartRange = new TimeRange([startTime, endTime])
 
       const requestStats = { 

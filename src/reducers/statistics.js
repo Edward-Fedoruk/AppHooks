@@ -1,13 +1,15 @@
 import { TimeSeries, TimeRange } from "pondjs"
 
+
+
 const initialBreakdownState = {
-  chartRange: new TimeRange([Date.parse(new Date()), Date.parse(new Date())]),
+  chartRange: new TimeRange([(Date.parse(new Date()) - 60000 * 5 * 5), Date.parse(new Date())]),
   serverErrors: new TimeSeries({ 
     name: "serverErrors", 
     columns: ["time", "value"], 
     points: [[Date.parse(new Date()), 0]] 
   }), 
-  clientErrors: new TimeSeries({ 
+  clientErrors: new TimeSeries({
     name: "clientErrors", 
     columns: ["time", "value"], 
     points: [[Date.parse(new Date()), 0]] 
