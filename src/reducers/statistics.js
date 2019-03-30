@@ -1,12 +1,33 @@
+import { TimeSeries, TimeRange } from "pondjs"
+
+const initialBreakdownState = {
+  chartRange: new TimeRange([Date.parse(new Date()), Date.parse(new Date())]),
+  serverErrors: new TimeSeries({ 
+    name: "serverErrors", 
+    columns: ["time", "value"], 
+    points: [[Date.parse(new Date()), 0]] 
+  }), 
+  clientErrors: new TimeSeries({ 
+    name: "clientErrors", 
+    columns: ["time", "value"], 
+    points: [[Date.parse(new Date()), 0]] 
+  }),
+  successes: new TimeSeries({ 
+    name: "successes", 
+    columns: ["time", "value"],
+    points: [[Date.parse(new Date()), 0]] 
+  }),
+}
+
 const initialState = {
   stage: {
     summary: { requestStats: [], deliverability: "" },
-    breakdown: {},
+    breakdown: initialBreakdownState,
     total: {},
   },
   endpoint: {
-    summary: {},
-    breakdown: {},
+    summary: { requestStats: [], deliverability: "" },
+    breakdown: initialBreakdownState,
     total: {},
   },
 }
