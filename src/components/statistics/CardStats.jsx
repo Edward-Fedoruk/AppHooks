@@ -5,7 +5,7 @@ import classNames from "classnames"
 import Typography from "@material-ui/core/Typography"
 import CardStatsBlock from "./CardStatsBlock"
 
-const styles = ({ palette }) => ({
+const styles = ({ palette, breakpoints }) => ({
   statsBlock: {
     display: "flex",
     flexWrap: "wrap",
@@ -13,6 +13,13 @@ const styles = ({ palette }) => ({
     alignItems: "center",
     height: "65px",
     padding: "0 12px",
+
+    [breakpoints.down(600)]: { 
+      position: "absolute",
+      top: "50%",
+      left: "100%",
+      transform: "translateY(-50%)",
+    },
   },
 
   deliverPercent: {
@@ -33,11 +40,19 @@ const styles = ({ palette }) => ({
   stats: {
     display: "flex",
     justifyContent: "space-between",
+
+    [breakpoints.down(600)]: { 
+      width: "50%",
+      position: "relative",
+      flexWrap: "wrap",
+    },
   },
 
   divider: {
     width: "1px",
     backgroundColor: "#D7DEF1",
+    
+    [breakpoints.down(600)]: { display: "none" },
   },
 
 })
