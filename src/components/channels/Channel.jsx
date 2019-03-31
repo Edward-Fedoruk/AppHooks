@@ -51,10 +51,7 @@ export class Channel extends Component {
 
   render() {
     const {
-      classes, 
-      endpoints,
-      errorMessage,
-      successMessage,
+      classes, endpoints, errorMessage, successMessage,
     } = this.props
     return (
       <Fragment>
@@ -64,7 +61,7 @@ export class Channel extends Component {
         <ChannelsForms />
 
         <div className={classes.contentWrap}>
-          {endpoints.length && <ChannelChartCard />}
+          {endpoints.length ? <ChannelChartCard /> : null}
           <Endpoints endpoints={endpoints} />
         </div>
       </Fragment>

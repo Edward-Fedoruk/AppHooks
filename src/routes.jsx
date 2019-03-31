@@ -31,8 +31,8 @@ const WithNavigation = () => (
     <Route component={AppNavigation} />
     <Route path="/" exact component={App} />
     <Route path="/channels" exact component={Channels} />
-    <Route path="/channels/:channelId/:stageId" exact component={withLazyLoading(Channel)} />
     <Route path="/channels/:channelId/:stageId/:endpointId" exact component={withLazyLoading(Endpoint)} />
+    <Route path="/channels/:channelId/:stageId" exact component={withLazyLoading(Channel)} />
     <Route path="/logs" exact component={withLazyLoading(AccessLogs)} />
     <Route path="/logs/:id" exact component={LogInfo} />
     <Route path="/webhooks" exact component={withLazyLoading(WebhooksRules)} />
