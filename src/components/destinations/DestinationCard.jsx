@@ -7,12 +7,16 @@ import { compose } from "redux"
 import CardStats from "../statistics/CardStats"
 import DestinationCardMenu from "./DestinationCardMenu"
 
-const styles = ({ palette }) => ({
+const styles = ({ palette, breakpoints }) => ({
   paper: {
     width: "100%",
     maxWidth: "870px",
     padding: "16px 25px",
     marginTop: "13px",
+
+    [breakpoints.down(768)]: { 
+      padding: "15px"
+    }    
   },
 
   link: {
@@ -26,6 +30,10 @@ const styles = ({ palette }) => ({
     display: "flex",
     marginBottom: "40px",
     alignItems: "center",
+
+    [breakpoints.down(600)]: { 
+      marginBottom: "0px",
+    } 
   },
 
   name: {
@@ -55,15 +63,11 @@ const DestinationCard = ({ destInfo, classes }) => {
 
 DestinationCard.propTypes = {
   classes: PropTypes.object.isRequired,
-  destInfo: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    application_id: PropTypes.number.isRequired,
-    application_stage_id: PropTypes.number.isRequired,
-  }),
+  destInfo: PropTypes.object,
 }
 
 DestinationCard.defaultProps = {
-  destInfo: {},
+  destInfo: { statistics: {} },
 }
 
 export default compose(
