@@ -16,6 +16,7 @@ import DestinationCard from "./DestinationCard"
 import ConfirmDialog from "../ConfirmDialog"
 import { toggleDestinationDeleteDialog } from "../../actions/ui"
 import Placeholder from "../Placeholder"
+import { toggleCreateDestinationForm } from "../../actions/ui"
 
 export class Destinations extends Component {
   static propTypes = {
@@ -25,6 +26,7 @@ export class Destinations extends Component {
     match: PropTypes.object.isRequired,
     destinationDeleteDialog: PropTypes.bool.isRequired,
     toggleDestinationDeleteDialog: PropTypes.func.isRequired,
+    toggleCreateDestinationForm: PropTypes.func.isRequired,
     destInfo: PropTypes.object.isRequired,
   }
 
@@ -62,11 +64,11 @@ export class Destinations extends Component {
       </div>
     ) : (
       <Placeholder
-        title="There is no Endpoint here yet."
-        subtitle="To create new Endpoint"
+        title="There is no Destination here yet."
+        subtitle="To create new Destination"
         button="click here"
         imgSrc={destinationsImg}
-        // buttonAction={toggleCreateEndpointForm}
+        buttonAction={toggleCreateDestinationForm}
       />
     )
   }
@@ -82,6 +84,7 @@ const mapDispatchToProps = dispatch => ({
   fetchDestinations: endpointId => dispatch(fetchDestinations(endpointId)),
   deleteDestination: (endpointId, destId) => dispatch(deleteDestination(endpointId, destId)),
   toggleDestinationDeleteDialog: () => dispatch(toggleDestinationDeleteDialog({})),
+  toggleCreateDestinationForm: () => dispatch(toggleCreateDestinationForm()),
 })
 
 export default compose(
