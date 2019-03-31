@@ -4,7 +4,7 @@ import { withStyles } from "@material-ui/core"
 import Typography from "@material-ui/core/Typography"
 import classNames from "classnames"
 
-const styles = ({ palette }) => ({
+const styles = ({ palette, breakpoints }) => ({
   statsBlock: {
     display: "flex",
     flexWrap: "wrap",
@@ -12,7 +12,6 @@ const styles = ({ palette }) => ({
     alignItems: "center",
     height: "65px",
     padding: "0 12px",
-    // borderRight: "1px solid #828CB8",
   },
 
   category: {
@@ -33,26 +32,55 @@ const styles = ({ palette }) => ({
     width: "1px",
     backgroundColor: "#D7DEF1",
   },
+
+  dividerMobile: { [breakpoints.down(600)]: { display: "none" } },
+
+  categoryCountMobile: { [breakpoints.down(600)]: { fontSize: "12px" } },
+
+  categoryMobile: { [breakpoints.down(600)]: { fontSize: "12px" } },
+
+  statsBlockWrapMobile: {
+    [breakpoints.down(600)]: { 
+      display: "flex",
+      flexDirection: "row-reverse",
+    },
+  },
+
+  statsBlockMobile: {
+    [breakpoints.down(600)]: { 
+      justifyContent: "flex-start",
+      padding: "0",
+      height: "30px",
+      width: "100%",
+    },
+  },
+
 })
 
 const CardStatsBlock = ({
-  classes, name, amount,
-  leftDivider, RightDivider, className,
-}) => (
-  <Fragment>
-    {leftDivider && <div className={classes.divider} />}
+  classes, name, amount, enableMobile,
+  leftDivider, RightDivider,
+}) => {
+  const dividerClass = classNames(classes.divider, {[classes.dividerMobile]: enableMobile})
+  const statsBlockClass = classNames(classes.statsBlock, {[classes.statsBlockMobile]: enableMobile})
+  const categoryCountClass = classNames(classes.categoryCount, {[classes.categoryCountMobile]: enableMobile})
+  const categoryClass = classNames(classes.category, {[classes.categoryMobile]: enableMobile})
 
-    <div className={classNames(classes.statsBlock, className)}>
-      <div>
-        <Typography variant="body1" className={classes.categoryCount}>{ amount }</Typography>
-        <Typography variant="caption" className={classes.category}>{ name }</Typography>
+  return (
+    <Fragment>
+      {leftDivider && <div className={dividerClass} />}
+
+      <div className={statsBlockClass}>
+        <div className={enableMobile ? classes.statsBlockWrapMobile : ""}>
+          <Typography variant="body1" className={categoryCountClass}>{ amount }</Typography>
+          <Typography variant="caption" className={categoryClass}>{ name } </Typography>
+        </div>
       </div>
-    </div>
 
-    {RightDivider && <div className={classes.divider} />}
-  </Fragment>
-)
-
+      {RightDivider && <div className={dividerClass} />}
+    </Fragment>
+  )
+}
 
 CardStatsBlock.propTypes = {
   classes: PropTypes.object.isRequired,
@@ -60,7 +88,7 @@ CardStatsBlock.propTypes = {
   name: PropTypes.string,
   leftDivider: PropTypes.bool,
   RightDivider: PropTypes.bool,
-  className: PropTypes.string,
+  enableMobile: PropTypes.bool,
 }
 
 CardStatsBlock.defaultProps = {
@@ -68,6 +96,7 @@ CardStatsBlock.defaultProps = {
   name: "",
   leftDivider: false,
   RightDivider: true,
+  enableMobile: true,
   className: "",
 }
 
