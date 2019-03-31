@@ -16,10 +16,13 @@ import EndpointTopBar from "./EndpointTopBar"
 import CreateDestination from "../destinations/CreateDestination"
 import Destinations from "../destinations/Destinations"
 import EditDestination from "../destinations/EditDestination"
+import EndpointChartCard from "../statistics/EndpointChartCard"
 
-const styles = () => ({
+const styles = ({ breakpoints }) => ({
   contentWrap: {
     padding: "25px 35px",
+
+    [breakpoints.down(768)]: { padding: "25px 0" },
   },
 
   placeholder: {
@@ -32,11 +35,7 @@ export class Endpoint extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
     fetchEndpoint: PropTypes.func.isRequired,
-    match: PropTypes.shape({
-      channelId: PropTypes.string.isRequired,
-      stageId: PropTypes.string.isRequired,
-      endpointId: PropTypes.string.isRequired,
-    }).isRequired,
+    match: PropTypes.object.isRequired,
     errorMessage: PropTypes.string.isRequired,
     successMessage: PropTypes.string,
   }
@@ -67,6 +66,7 @@ export class Endpoint extends Component {
         <SuccessSnackbar message={successMessage} />
 
         <div className={classes.contentWrap}>
+          <EndpointChartCard />
           <Destinations />
         </div>
       </Fragment>
