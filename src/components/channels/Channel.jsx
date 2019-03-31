@@ -1,5 +1,3 @@
-/* eslint-disable react/jsx-one-expression-per-line */
-/* eslint-disable no-nested-ternary */
 import React, { Component, Fragment } from "react"
 import PropTypes from "prop-types"
 import { connect } from "react-redux"
@@ -10,17 +8,17 @@ import withNavigation from "../withNavigation"
 import { fetchChannel } from "../../actions/channel"
 import StageTopBar from "../stages/StageTopBar"
 import Endpoints from "../endpoints/Endpoints"
-import Placeholder from "../Placeholder"
-import endpointImg from "../../assets/endpoints.png"
 import ErrorSnackbar from "../utils/ErrorSnackbar"
 import { createErrorMessageSelector } from "../../actions/utils"
 import SuccessSnackbar from "../utils/SuccessSnackbar"
 import ChannelsForms from "./ChannelsForms"
 import ChannelChartCard from "../statistics/ChannelChartCard"
 
-const styles = () => ({
-  contentWrap: {
+const styles = ({ breakpoints }) => ({
+  contentWrap: { 
     padding: "25px 35px",
+
+    [breakpoints.down(768)]: { padding: "25px 0px" },
   },
 
   placeholder: {
@@ -53,8 +51,9 @@ export class Channel extends Component {
 
   render() {
     const {
-      classes, endpoints,
-      stages, errorMessage,
+      classes, 
+      endpoints,
+      errorMessage,
       successMessage,
     } = this.props
     return (
@@ -65,20 +64,8 @@ export class Channel extends Component {
         <ChannelsForms />
 
         <div className={classes.contentWrap}>
-          <ChannelChartCard />
-
-          {endpoints.length
-            ? <Endpoints endpoints={endpoints} />
-            : stages.length ? (
-              <Placeholder
-                title="There is no Endpoint here yet."
-                subtitle="To create new Endpoint"
-                button="click here"
-                imgSrc={endpointImg}
-                className={classes.placeholder}
-              />
-            ) : null}
-
+          {endpoints.length && <ChannelChartCard />}
+          <Endpoints endpoints={endpoints} />
         </div>
       </Fragment>
     )
@@ -102,7 +89,6 @@ const mapStateToProps = ({
 
   return {
     endpoints,
-    stages,
     errorMessage: errorSelector(errorHandler),
     successMessage: view.successMessage,
   }

@@ -9,6 +9,9 @@ import EndpointCard from "./EndpointCard"
 import ConfirmDialog from "../ConfirmDialog"
 import { deleteEndpoint } from "../../actions/endpoint"
 import { toggleEndpointDeleteDialog } from "../../actions/ui"
+import Placeholder from "../Placeholder"
+import endpointImg from "../../assets/endpoints.png"
+import { toggleCreateEndpointForm } from "../../actions/ui"
 
 const styles = () => ({
   endpointsTitle: {
@@ -34,7 +37,7 @@ const styles = () => ({
 })
 
 const Endpoints = ({
-  classes, endpoints, deleteEndpointAction,
+  classes, endpoints, deleteEndpointAction, toggleCreateEndpointForm,
   endpointInfo, toggleEndpointDeleteDialog, endpointDeleteDialog,
 }) => {
   const deleteEndpoint = () => {
@@ -47,8 +50,8 @@ const Endpoints = ({
     deleteEndpointAction(channelId, stageId, endpointId)
     toggleEndpointDeleteDialog()
   }
-
-  return (
+  console.log(endpoints.length)
+  return endpoints.length ? (
     <Fragment>
       <div className={classes.endpointsTitle}>
         <Title styles={{ fontSize: "20px" }}>Endpoints</Title>
@@ -67,6 +70,14 @@ const Endpoints = ({
         Are you sure you want to delete this endpoint? It can`t be undone
       </ConfirmDialog>
     </Fragment>
+  ) : (
+    <Placeholder
+      title="There is no Endpoint here yet."
+      subtitle="To create new Endpoint"
+      button="click here"
+      imgSrc={endpointImg}
+      buttonAction={toggleCreateEndpointForm}
+    />
   )
 }
 
@@ -78,6 +89,7 @@ Endpoints.propTypes = {
   deleteEndpointAction: PropTypes.func.isRequired,
   endpointDeleteDialog: PropTypes.bool.isRequired,
   toggleEndpointDeleteDialog: PropTypes.func.isRequired,
+  toggleCreateEndpointForm: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = ({ view }) => ({
@@ -87,6 +99,7 @@ const mapStateToProps = ({ view }) => ({
 
 const mapDispatchToProps = dispatch => ({
   toggleEndpointDeleteDialog: () => dispatch(toggleEndpointDeleteDialog({})),
+  toggleCreateEndpointForm: () => dispatch(toggleCreateEndpointForm({})),
   deleteEndpointAction: (channelId, stageId, endpointId) => dispatch(deleteEndpoint(channelId, stageId, endpointId)),
 })
 
