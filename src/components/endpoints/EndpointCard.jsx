@@ -21,6 +21,8 @@ const styles = ({ palette }) => ({
     fontSize: "14px",
     display: "block",
     maxWidth: "70%",
+    textOverflow: "ellipsis",
+    overflow: "hidden",
   },
 
   endpointHeader: {
@@ -35,6 +37,9 @@ const styles = ({ palette }) => ({
     color: palette.primary.main,
     marginRight: "20px",
     cursor: "pointer",
+    maxWidth: "20%",
+    textOverflow: "ellipsis",
+    overflow: "hidden",
   },
 
 })
