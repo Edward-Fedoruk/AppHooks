@@ -6,8 +6,12 @@ import { compose } from "redux"
 import CardStatsBlock from "./CardStatsBlock"
 import Typography from "@material-ui/core/Typography"
 
-const style = () => ({
-  root: { width: "50%" },
+const style = ({ breakpoints }) => ({
+  root: { 
+    width: "50%",
+    
+    [breakpoints.down(768)]: { width: "100%" },
+  },
   
   summaryStats: {
     display: "flex",
@@ -57,9 +61,9 @@ const style = () => ({
 const GeneralStats = ({ classes, total, summary }) => (
   <div className={classes.root}>
     <div className={classes.summaryStats}>
-      <CardStatsBlock leftDivider name="Inputs" amount={total.inputs} />
-      <CardStatsBlock name="Destinations" amount={total.destinations} />
-      <CardStatsBlock name="Requests" amount={total.requests} />
+      <CardStatsBlock enableMobile={false} leftDivider name="Inputs" amount={total.inputs} />
+      <CardStatsBlock enableMobile={false} name="Destinations" amount={total.destinations} />
+      <CardStatsBlock enableMobile={false} name="Requests" amount={total.requests} />
     </div>
     <div className={classes.statsWrap}>
       <div className={classes.radialChartWrap}>
