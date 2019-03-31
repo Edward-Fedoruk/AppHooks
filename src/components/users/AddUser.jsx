@@ -22,7 +22,7 @@ const styles = ({ breakpoints }) => ({
   add: {
     marginLeft: "16px",
     width: "170px",
-    height: "16px",
+    height: "30px",
     textTransform: "capitalize",
   },
 })
