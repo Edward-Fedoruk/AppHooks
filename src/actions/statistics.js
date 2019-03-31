@@ -70,7 +70,7 @@ const handleStageBreakdownResponse = compose(
 
 const handleEndpointBreakdownResponse = compose(
   setEndpointStats("BREAKDOWN"),
-  transformBreakdownData
+  transformBreakdownData,
 )
 
 export const stageBreakdown = (channelId, stageId) => (dispatch) => {
@@ -88,47 +88,50 @@ const generateStatsForChart = data => {
     .map(([name, value], i) => ({ name, angle: value, color: colors[i] }))
 }
 
-const transformSummary = ({ data }) => {
-  return { requestStats: generateStatsForChart(data), deliverability: data.deliverability}
-}
+const transformSummary = ({ data }) => ({ 
+  requestStats: generateStatsForChart(data), 
+  deliverability: data.deliverability
+})
 
-const handleSummaryResponse = compose(
+const handleStageSummaryResponse = compose(
   setStageStats("SUMMARY"),
+  transformSummary
+)
+
+const handleEndpointSummaryResponse = compose(
+  setEndpointStats("SUMMARY"),
   transformSummary
 )
 
 export const stageSummary = (channelId, stageId) => (dispatch) => {
   axios.get(`apps/${channelId}/${stageId}/statistics/deliverability/summary`)
-    .then(compose(dispatch, handleSummaryResponse))
-    .catch(() => {})
+    .then(compose(dispatch, handleStageSummaryResponse))
+    .catch(response => console.log(response))
 }
 
 export const stageTotal = (channelId, stageId) => (dispatch) => {
   axios.get(`apps/${channelId}/${stageId}/statistics/total`)
     .then(({ data }) => dispatch(setStageStats("TOTAL")(data)))
-    .catch(() => {})
+    .catch(response => console.log(response))
 }
 
 export const endpointsBreakdown = endpointId => (dispatch) => {
+  console.log(endpointId)
   axios.get(`endpoints/${endpointId}/statistics/deliverability/breakdown`)
     .then(compose(dispatch, handleEndpointBreakdownResponse))
-    .catch(() => {})
+    .catch(response => console.log(response))
 }
 
-export const endpointsSummary = endpointId => () => {
+export const endpointsSummary = endpointId => (dispatch) => {
   axios.get(`endpoints/${endpointId}/statistics/deliverability/summary`)
-    .then((response) => {
-      console.log(response)
-    })
-    .catch(() => {})
+    .then(compose(dispatch, handleEndpointSummaryResponse))
+    .catch(response => console.log(response))
 }
 
-export const endpointsTotal = endpointId => () => {
+export const endpointsTotal = endpointId => (dispatch) => {
   axios.get(`endpoints/${endpointId}/statistics/total`)
-    .then((response) => {
-      console.log(response)
-    })
-    .catch(() => {})
+    .then(({ data }) => dispatch(setEndpointStats("TOTAL")(data)))
+    .catch(response => console.log(response))
 }
 
 export const generalBreakdown = () => () => {
