@@ -8,7 +8,6 @@ const App = () => (
     <Placeholder 
       imgSrc={webhooks}
       title="Here will be all statistics"
-
     />
   </div>
 )
