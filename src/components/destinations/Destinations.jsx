@@ -10,10 +10,12 @@ import { withRouter } from "react-router-dom"
 // import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails"
 // import Typography from "@material-ui/core/Typography"
 // import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
+import destinationsImg from "../../assets/destinations.svg"
 import { fetchDestinations, deleteDestination } from "../../actions/destination"
 import DestinationCard from "./DestinationCard"
 import ConfirmDialog from "../ConfirmDialog"
 import { toggleDestinationDeleteDialog } from "../../actions/ui"
+import Placeholder from "../Placeholder"
 
 export class Destinations extends Component {
   static propTypes = {
@@ -41,11 +43,11 @@ export class Destinations extends Component {
 
   render() {
     const { destinations, destinationDeleteDialog, toggleDestinationDeleteDialog } = this.props
-    return (
+    return destinations.length ? (
       <div>
         {destinations.map(dest => (
-          <div>
-            <DestinationCard key={dest.id} destInfo={dest} />
+          <div key={dest.id}>
+            <DestinationCard destInfo={dest} />
           </div>
         ))}
 
@@ -58,6 +60,14 @@ export class Destinations extends Component {
           Are you sure you want to delete this destination? It can`t be undone
         </ConfirmDialog>
       </div>
+    ) : (
+      <Placeholder
+        title="There is no Endpoint here yet."
+        subtitle="To create new Endpoint"
+        button="click here"
+        imgSrc={destinationsImg}
+        // buttonAction={toggleCreateEndpointForm}
+      />
     )
   }
 }
