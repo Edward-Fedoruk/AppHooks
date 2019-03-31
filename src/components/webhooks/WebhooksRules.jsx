@@ -7,7 +7,7 @@ import RulesTable from "./RulesTable"
 import withNavigation from "../withNavigation"
 import TopBar from "../utils/TopBar"
 import Placeholder from "../Placeholder"
-import webhooks from "../../assets/webhooks.png"
+import webhooks from "../../assets/webhooks.svg"
 import FormDrawer from "../FormDrawer"
 import { fetchRules } from "../../actions/rules"
 import { toggleEditForm as toggleEdit, toggleCreateForm } from "../../actions/ui"
@@ -110,6 +110,9 @@ export class WebhooksRules extends Component {
               <Placeholder
                 imgSrc={webhooks}
                 title="Here should be WebHooks rules."
+                subtitle="create the"
+                button="first one"
+                buttonAction={toggleCreateForm}
               />
             )}
         </div>
