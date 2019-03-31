@@ -9,12 +9,17 @@ import GeneralStats from "./GeneralStats"
 import { stageSummary, stageBreakdown, stageTotal } from "../../actions/statistics"
 import DynamicTimeChart from "./DynamicTimeChart"
 
-const styles = () => ({
+const styles = ({ breakpoints }) => ({
   card: {
     padding: "14px 25px 17px 25px",
     display: "flex",
     justifyContent: "space-between",
     width: "100%",
+    flexWrap: "wrap",
+
+    [breakpoints.down(768)]: { 
+      padding: "14px 0px 17px 0px",
+    },
   },
 })
 
@@ -35,6 +40,7 @@ export class ChannelChartCard extends Component {
     const {
       getStagesStats, stageTotal, stageBreakdown, match: { params },
     } = this.props
+    console.log(params)
     getStagesStats(params.channelId, params.stageId)
     stageTotal(params.channelId, params.stageId)
     stageBreakdown(params.channelId, params.stageId)
