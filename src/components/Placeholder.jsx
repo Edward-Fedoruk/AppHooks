@@ -11,10 +11,7 @@ const styles = ({ breakpoints }) => ({
     flexWrap: "wrap",
     alignItems: "center",
     justifyContent: "center",
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
+    padding: "100px 0",
   },
 
   subtitle: {
@@ -22,7 +19,7 @@ const styles = ({ breakpoints }) => ({
     fontSize: "15px",
 
     [breakpoints.down(600)]: {
-      fontSize: "10px",
+      fontSize: "13px",
     },
   },
 
@@ -47,15 +44,14 @@ const styles = ({ breakpoints }) => ({
   },
 
   wrap: {
-    display: "flex",
-    flexWrap: "wrap",
     width: "auto",
     marginLeft: "10px",
   },
 })
 
 const Placeholder = ({
-  classes, title, subtitle, button, className, imgSrc, children,
+  classes, title, subtitle, button, 
+  className, imgSrc, children, buttonAction,
 }) => (
   <div className={classNames(classes.placeholder, className)}>
     <img src={imgSrc} alt="stages" />
@@ -65,7 +61,7 @@ const Placeholder = ({
         ? (
           <Typography variant="subtitle2" className={classes.subtitle}>
             { subtitle }
-            <span className={classes.textButton}>
+            <span onClick={buttonAction} className={classes.textButton}>
               {" "}
               { button }
             </span>
@@ -83,6 +79,7 @@ Placeholder.defaultProps = {
   button: "",
   className: "",
   children: "",
+  buttonAction: () => {},
 }
 
 Placeholder.propTypes = {
@@ -92,6 +89,7 @@ Placeholder.propTypes = {
   button: PropTypes.string,
   className: PropTypes.string,
   imgSrc: PropTypes.string.isRequired,
+  buttonAction: PropTypes.func.isRequired,
   children: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
 }
 
