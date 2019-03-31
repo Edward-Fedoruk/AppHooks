@@ -13,7 +13,7 @@ import {
 } from "react-timeseries-charts"
 import Typography from "@material-ui/core/Typography"
 
-const styles = () => ({
+const styles = ({ breakpoints }) => ({
   dot: {
     width: "10px",
     height: "10px",
@@ -34,7 +34,12 @@ const styles = () => ({
     fontStyle: "normal",
     padding: "0 30px 0 5px",
   },
-  timeChartWrap: { width: "50%" },
+
+  timeChartWrap: { 
+    width: "50%",
+
+    [breakpoints.down(768)]: { width: "100%" },
+  },
 })
 
 const YAxisStyle = { 
@@ -87,6 +92,9 @@ export class DynamicTimeChart extends Component {
 
   render() {
     const { XYChartData, classes } = this.props
+    const timeRange = this.state.timeRange === undefined 
+      ? new TimeRange([(Date.parse(new Date()) - 60000 * 5 * 5), Date.parse(new Date())]) 
+      : this.state.timeRange
 
     return (
       <div className={classes.timeChartWrap}>
@@ -106,7 +114,7 @@ export class DynamicTimeChart extends Component {
             minTime={XYChartData.serverErrors.range().begin()} 
             maxTime={XYChartData.serverErrors.range().end()} 
             onTimeRangeChanged={this.handleTimeRangeChange} 
-            timeRange={this.state.timeRange}
+            timeRange={timeRange}
             timeAxisStyle={timeAxisStyle}
             enablePanZoom
           >
