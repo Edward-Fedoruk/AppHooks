@@ -1,7 +1,5 @@
 import { TimeSeries, TimeRange } from "pondjs"
 
-
-
 const initialBreakdownState = {
   chartRange: new TimeRange([(Date.parse(new Date()) - 60000 * 5 * 5), Date.parse(new Date())]),
   serverErrors: new TimeSeries({ 
@@ -32,10 +30,15 @@ const initialState = {
     breakdown: initialBreakdownState,
     total: {},
   },
+  general: {
+    summary: { requestStats: [], deliverability: "" },
+    breakdown: initialBreakdownState,
+    total: {},
+  },
 }
 
 export default (state = initialState, action) => {
-  const matches = /(STAGE|ENDPOINT)_(SUMMARY|BREAKDOWN|TOTAL)_STATS/.exec(action.type)
+  const matches = /(GENERAL|STAGE|ENDPOINT)_(SUMMARY|BREAKDOWN|TOTAL)_STATS/.exec(action.type)
 
   if (matches !== null) {
     const entityType = matches[1].toLowerCase()
