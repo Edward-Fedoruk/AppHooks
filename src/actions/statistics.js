@@ -144,16 +144,12 @@ export const generalBreakdown = () => () => {
 
 export const generalSummary = () => () => {
   axios.get("/statistics/deliverability/summary")
-    .then((response) => {
-      console.log(response)
-    })
+    .then((response) => { console.log(response) })
     .catch(() => {})
 }
 
 export const generalInProcess = () => () => {
   axios.get("/statistics/hooks/in-process")
-    .then((response) => {
-      console.log(response)
-    })
+    .then((response) => { console.log(response) })
     .catch(() => {})
 }
